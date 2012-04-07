@@ -1,0 +1,248 @@
+// these default settings get executed whenever "config.cfg" is not available
+// do not modify anything below, instead change settings in game, or add to autoexec.cfg
+
+name "unnamed"
+
+invmouse 0         // 1 for flightsim mode
+sensitivity 3      // similar number to quake
+fov 100            // 90 is default in other games
+
+musicvol 60       // set higher if you want (max 255)
+soundvol 255      // sounds average volume is actually set per sound, average 100
+
+gamma 100          // set to your liking, 100 = default
+
+fullbrightmodels 60 // make player models a bit easier to see
+
+// console
+
+consize 5            // console is 5 lines
+miniconsize 5        // mini-console is 5 lines
+miniconwidth 40      // mini-console is 40% of screen width
+fullconsize 75       // full console is 75% of screen height
+miniconfilter 0x300  // display chat and team chat in mini-console
+confilter (&~ 0x2FFF $miniconfilter) // don't display other player frags or mini-console stuff in console
+fullconfilter 0xFFFF // display all messages in full console
+
+// WASD
+
+bind W forward
+bind A left
+bind S backward
+bind D right
+
+bind UP "forward"
+bind DOWN "backward"
+bind RIGHT "right"
+bind LEFT "left"
+
+// old style weapon binds
+//bind 0 "weapon 0 1 2"
+//bind 1 "weapon 1 2 4"
+//bind 2 "weapon 2 1 4"
+//bind 3 "weapon 3 4 2"
+//bind 4 "weapon 4 3 2"
+//bind 5 "weapon 5 3 1"
+//bind 6 "weapon 6 2 4"
+
+// new style weapon binds
+bind 0 "setweapon FI"
+bind 1 "setweapon SG"
+bind 2 "setweapon CG"
+bind 3 "setweapon RL"
+bind 4 "setweapon RI"
+bind 5 "setweapon GL"
+bind 6 "setweapon PI"
+bind 7 "setweapon FI"
+
+bind SPACE "jump"
+bind MOUSE2 "jump"
+bind MOUSE1 "attack"
+bind MOUSE3 "weapon"
+specbind MOUSE1 "nextfollow"
+specbind MOUSE2 "nextfollow -1"
+specbind MOUSE3 "follow"
+specbind SPACE "follow"
+
+bind R dropflag
+
+bind TAB "showscores"
+
+bind T "saycommand"
+bind Y "sayteamcommand"
+bind BACKQUOTE "saycommand /"
+bind SLASH "saycommand /"
+
+bind I taunt
+
+bind E edittoggle
+bind LCTRL "allowspedit"
+bind RCTRL "allowspedit"
+
+bind KP_MINUS "conskip 5"
+bind KP_PLUS "conskip -1000"
+
+bindvar F1 paused
+bindvar PAUSE paused
+
+bind F11 "toggleconsole"
+bind F12 "screenshot"
+
+bind INSERT "addbot"
+bind DELETE "delbot"
+
+hudgun 1
+
+//////////////////////////////////
+// universal scrollwheel + modifier commands:
+
+defaultmodifier = 0
+modifier = $defaultmodifier
+domodifier = [ modifier = $arg1; onrelease [ modifier = $defaultmodifier ] ]
+
+universaldelta = [
+  do [delta_@(if $editing [ result edit ] [ result game ])_@modifier @arg1]
+]
+
+bind MOUSE4 [ universaldelta 1 ]	// also used for editing, see below
+bind MOUSE5 [ universaldelta -1 ]
+
+//////////////////////////////////
+
+delta_game_0 = [ if (= $arg1 1) [ weapon 2 3 5 4 1 6 0 ] [ weapon 4 1 6 2 3 5 0 ] ]
+
+//zfov = 120
+//delta_game_1 = [
+//  zfov = (+ $zfov (* $arg1 (div $zfov -5)))
+//  if (< $zfov 10)  [ zfov = 10 ]
+//  if (> $zfov 120) [ zfov = 120 ]
+//  fov $zfov
+//]
+
+//bind G [ domodifier 1 ]
+
+bind G [ togglezoom ]
+bind Z [ togglezoom ]
+
+//////////////////////////////////
+// Sauerbraten Editing related bindings
+// found in autoexec.cfg in your sauerbraten directory
+
+editbind SPACE  [ cancelsel ]
+editbind MOUSE1 [ if $blendpaintmode [paintblendmap] [editdrag] ]
+editbind MOUSE3 [ selcorners ]
+editbind MOUSE2 [ if $blendpaintmode [rotateblendbrush] [editextend] ]
+
+editbind J [ gotosel ]
+
+editbind KP_ENTER [ entselect insel ]
+editbind N        [ selentfindall ]
+
+editbind    LSHIFT  [ editcut ]
+editbindmod LCTRL   [ passthrough ]
+editbindmod LALT    [ hmapedit ]
+editbind DELETE     [ editdel ]
+
+editbind T [ saycommand ]
+editbind X [ editflip ]
+editbind C [ editcopy ]
+editbind V [ editpaste ]
+editbind Z [ undo; passthroughsel 0]
+editbind U [ undo; passthroughsel 0]
+editbind I [ redo ]
+editbind H [ if $hmapedit [ editface 1 -1 ] [ hmapedit 1 ] ]
+
+editbind O [ domodifier 15 ] // vSlot: offset H
+editbind P [ domodifier 16 ] // vSlot: offset V
+
+editbindvar 5 hidehud
+editbindvar 6 entselsnap
+editbindvar 7 outline
+editbindvar 8 wireframe
+bindvar 9 thirdperson
+editbindvar 0 allfaces
+editbind K calclight
+editbindvar L fullbright
+editbindvar M showmat
+
+editbind PERIOD selentedit
+
+editbind F2 showtexgui
+editbind F3 [if (cleargui 1) [] [showentgui]]
+editbind F4 [if (cleargui 1) [] [showgui mapmodels]]
+editbind F5 savemap
+editbind F6 [ notepad (mapcfgname) ]
+editbind F9 [echo (getseltex) : (gettexname (getseltex))] // echo texture info
+
+// commands below are used with scroll wheel (and universaldelta).
+// if you have no scroll wheel or don't want to use it,
+// you can either change the binds of universaldelta
+// ex:  bind MOUSE4 [ universaldelta 1 ]
+//      bind MOUSE5 [ universaldelta -1 ]
+// can be changed to:
+//      bind PAGEUP [ universaldelta 1 ]
+//      bind PAGEDOWN [ universaldelta -1 ]
+// so that the PAGEUP and PAGEDOWN key act just like a scroll wheel
+//
+// or you can rebind all the commands to seperate keys
+// ex:  bind T [ domodifier 6 ]
+// can be changed to:
+//      bind HOME [ edittex 1 ]
+//      bind END [ edittex -1 ]
+
+
+editbind G [ domodifier 1 ] // domodifier 1 -> executes delta_edit_1
+editbind F [ domodifier 2 ] // etc...
+editbind Q [ domodifier 3 ]
+editbind R [ domodifier 4 ]
+editbind Y [ domodifier 6 ]
+editbind B [ domodifier 9 ]
+editbind COMMA  [ domodifier 10; onrelease entautoview ]
+
+delta_edit_0 = [
+    if $blendpaintmode [
+        scrollblendbrush $arg1
+    ] [
+        editfacewentpush $arg1 1 // Fill and Empty cube
+    ]
+]
+delta_edit_1 = [ nodebug [ gridpower (+ $arg1 $gridpower) ] ]
+delta_edit_2 = [ editfacewentpush $arg1 0 ] // push face/corners selected
+delta_edit_3 = [ editfacewentpush $arg1 2 ] // push corner pointed at by cursor
+delta_edit_4 = [ if $blendpaintmode [rotateblendbrush $arg1] [editrotate $arg1] ] // rotate 90 degrees
+delta_edit_5 = [ entproperty 0 $arg1 ]  // and the others
+delta_edit_6 = [ edittex $arg1 ] // change textures
+delta_edit_9 = [ selectbrush $arg1 ] // change heightmap brushes
+delta_edit_10 = [ entautoview $arg1 ]
+
+editbind 1 [ domodifier 11 ]
+editbind 2 [ domodifier 12 ]
+editbind 3 [ domodifier 13 ]
+editbind 4 [ domodifier 14 ]
+
+delta_edit_11 = [ entproperty 0 (* $arg1 $multiplier) ]
+delta_edit_12 = [ entproperty 1 (* $arg1 $multiplier) ]
+delta_edit_13 = [ entproperty 2 (* $arg1 $multiplier) ]
+delta_edit_14 = [ entproperty 3 (* $arg1 $multiplier) ]
+
+delta_edit_15 = [ vdelta [voffset (* $arg1 $multiplier2) 0] ] // vSlot: offset H
+delta_edit_16 = [ vdelta [voffset 0 (* $arg1 $multiplier2)] ] // vSlot: offset V
+delta_edit_17 = [ vdelta [vrotate $arg1] ] // vSlot: rotate
+delta_edit_18 = [ vdelta [vscale (if (< $arg1 0) 0.5 2)] ] // vSlot: scale
+
+//editbind LALT [multiplier = 10;onrelease [multiplier = 1]]
+//editbind RALT [multiplier2 = 32;onrelease [multiplier2 = 16]]
+multiplier = 1
+multiplier2 = 16
+
+//Blendmap Painting
+editbind KP0 [setblendpaintmode 0]
+editbind KP1 [setblendpaintmode 1]
+editbind KP2 [setblendpaintmode 2]
+editbind KP3 [setblendpaintmode 3]
+editbind KP4 [setblendpaintmode 4]
+editbind KP5 [setblendpaintmode 5]
+
+editbind KP8 [scrollblendbrush -1]
+editbind KP9 [scrollblendbrush 1]
+

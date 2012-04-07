@@ -1,0 +1,2826 @@
+// standard shader definitions
+
+fpopts = [
+    @(if (= $shaderprecision 0) [result "OPTION ARB_precision_hint_fastest;"])
+    @(if (= $shaderprecision 2) [result "OPTION ARB_precision_hint_nicest;"])
+]
+
+vpstart = [
+    !!ARBvp1.0
+    @(if $apple_ff_bug [result [
+        ATTRIB opos = vertex.position;
+        DP4 result.position.x, state.matrix.mvp.row[0], opos;
+        DP4 result.position.y, state.matrix.mvp.row[1], opos;
+        DP4 result.position.z, state.matrix.mvp.row[2], opos;
+        DP4 result.position.w, state.matrix.mvp.row[3], opos;
+    ]] [result [
+        OPTION ARB_position_invariant;
+        ATTRIB opos = vertex.position; 
+    ]])
+]
+
+fpstart = [
+    !!ARBfp1.0
+    @fpopts
+]
+
+macro normalize [
+    DP3 %1.w, %2, %2;
+    RSQ %1.w, %1.w;
+    MUL %1.xyz, %1.w, %2;
+]
+
+fogcoord = [
+    DP4 result.fogcoord, -opos, state.matrix.modelview.row[2];
+]
+
+macro rgbafog [
+    TEMP fog;
+    SUB fog.x, state.fog.params.z, fragment.fogcoord.x;
+    MUL_SAT fog.x, fog.x, state.fog.params.w;
+    LRP result.color, fog.x, %1, %2;
+]
+
+lazyshader = [
+    defershader $arg1 $arg2 [
+        shader @arg1 @arg2 [@@arg3] [@@arg4]
+    ]
+]
+
+vertexparam0 = "program.env[16]"
+vertexparam1 = "program.env[17]"
+vertexparam2 = "program.env[18]"
+vertexparam3 = "program.env[19]"
+vertexparam4 = "program.env[20]"
+vertexparam5 = "program.env[21]"
+vertexparam6 = "program.env[22]"
+vertexparam7 = "program.env[23]"
+
+pixelparam0 = "program.env[16]"
+pixelparam1 = "program.env[17]"
+pixelparam2 = "program.env[18]"
+pixelparam3 = "program.env[19]"
+pixelparam4 = "program.env[20]"
+pixelparam5 = "program.env[21]"
+pixelparam6 = "program.env[22]"
+pixelparam7 = "program.env[23]"
+
+lmcoordscale = (divf 1 32767)
+
+///////////////////////////////////////////////////
+//
+// used for any textured polys that don't have a shader set
+//
+///////////////////////////////////////////////////
+
+shader 0 "default" [        
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MUL result.color, fragment.color, diffuse;
+    END
+]
+
+shader 0 "rect" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], RECT;
+    MUL result.color, fragment.color, diffuse;
+    END
+]
+
+shader 0 "cubemap" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], CUBE;
+    MUL result.color, fragment.color, diffuse;
+    END
+]
+
+shader 0 "rgbonly" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MUL result.color.xyz, fragment.color, diffuse;
+    MOV result.color.w, fragment.color;
+    END
+]
+
+//////////////////////////////////////////////////////////////////////
+//
+// same, but now without texture sampling (some HUD stuff needs this)
+//
+//////////////////////////////////////////////////////////////////////
+
+shader 0 "notexture" [        
+    @vpstart
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    MOV result.color, fragment.color;
+    END
+]
+
+shader 4 "notextureglsl" [
+    void main(void)
+    {
+        gl_Position = ftransform();
+        gl_FrontColor = gl_Color;
+    }
+] [
+    void main(void)
+    {
+        gl_FragColor = gl_Color;
+    }
+]
+
+//////////////////////////////////////////////////////////////////////
+//
+// fogged variants of default shaders
+//
+//////////////////////////////////////////////////////////////////////
+
+shader 0 "fogged" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    @fogcoord
+    END 
+] [ 
+    @fpstart
+    OPTION ARB_fog_linear;
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MUL result.color, fragment.color, diffuse;
+    END
+]   
+
+shader 0 "foggednotexture" [
+    @vpstart
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    MOV result.color, fragment.color;
+    END
+]
+
+shader 4 "foggednotextureglsl" [
+    #pragma CUBE2_fog
+    void main(void)
+    {
+        gl_Position = ftransform();
+        gl_FrontColor = gl_Color;
+    }
+] [
+    void main(void)
+    {
+        gl_FragColor = gl_Color;
+    }
+]
+
+//////////////////////////////////////////////////////////////////////
+//
+// for filling the z-buffer only (i.e. multi-pass rendering, OQ)
+//
+//////////////////////////////////////////////////////////////////////
+
+shader 0 "nocolor" [
+    @vpstart
+    END
+] [
+    @fpstart
+    END
+]
+
+// some OpenGL implementations don't have consistent depth computation between assembly and GLSL shaders
+shader 4 "nocolorglsl" [
+    void main() { gl_Position = ftransform(); } 
+] [
+    void main() {}
+]
+
+////////////////////////////////////////////////////////
+//
+// default lightmapped world shader.. does texcoord gen
+//
+///////////////////////////////////////////////////////
+
+worldshader = [
+    stype = 0
+    if (>= (strstr $arg1 "env") 0) [stype = (+ $stype 2)]
+    shader $stype $arg1 [
+        @vpstart
+        ADD result.texcoord[0].xy, vertex.texcoord[0], program.env[0];
+        MUL result.texcoord[1].xy, vertex.texcoord[1], @lmcoordscale; 
+
+        @arg2
+
+        #pragma CUBE2_shadowmap
+        #pragma CUBE2_dynlight
+        @fogcoord
+        #pragma CUBE2_water
+
+        END
+    ] [
+        @fpstart
+        OPTION ARB_fog_linear;
+        TEMP diffuse, lm;
+        TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+        TEX lm,      fragment.texcoord[1], texture[1], 2D;
+
+        #pragma CUBE2_shadowmap lm
+        #pragma CUBE2_dynlight lm
+
+        @arg3
+
+        MUL diffuse, diffuse, program.env[6];
+        @(if (< $numargs 4) [result [MUL result.color, diffuse, lm;]] [result $arg4])
+
+        #pragma CUBE2_water
+
+        END
+    ]
+]
+
+glareworldshader = [
+    variantshader (if (< (strstr $arg1 "env") 0) 0 2) $arg1 4 [
+        @vpstart
+        ADD result.texcoord[0].xy, vertex.texcoord[0], program.env[0];
+        MUL result.texcoord[1].xy, vertex.texcoord[1], @lmcoordscale; 
+
+        @arg2
+
+        @fogcoord
+
+        END
+    ] [
+        @fpstart
+        OPTION ARB_fog_linear;
+
+        @arg3
+
+        END
+    ]
+]
+
+worldshader "stdworld" [] []
+
+defershader 0 "decalworld" [
+  worldshader "decalworld" [] [
+    TEMP decal;
+    TEX decal, fragment.texcoord[0], texture[2], 2D;
+    LRP diffuse.rgb, decal.w, decal, diffuse;
+  ]
+]
+
+defershader 0 "glowworld" [
+  defpixelparam "glowcolor" 0 1 1 1 // glow color
+  worldshader "glowworld" [] [] [
+    TEMP glow;
+    TEX glow, fragment.texcoord[0], texture[2], 2D;
+    MUL glow.rgb, glow, @pixelparam0;
+    MAD result.color.rgb, lm, diffuse, glow;
+    MUL result.color.a, lm.a, program.env[6];
+  ]
+  glareworldshader "glowworld" [] [
+    TEMP glow, k;
+    TEX glow, fragment.texcoord[0], texture[2], 2D;
+    MUL glow.rgb, glow, @pixelparam0;
+    MAX k.x, glow.r, glow.g;
+    MAX k.x, k.x, glow.b;
+    MUL k.x, k.x, k.x;
+    MUL_SAT k.x, k.x, 32;
+    MUL result.color.rgb, k.x, glow;
+    #pragma CUBE2_variantoverride TEX result.color.a, fragment.texcoord[1], texture[1], 2D; #
+    MOV result.color.a, program.env[6];
+  ]
+]
+
+defershader 0 "pulseworld" [
+  defvertexparam "pulsespeed" 1 1 // pulse frequency (Hz)
+  worldshader "pulseworld" [
+    TEMP k;
+    MUL k.x, program.env[6], @vertexparam1.x;
+    FRC k.x, k.x;
+    MAD k.x, k.x, 2, -1;
+    ABS result.texcoord[2], k.x;
+  ] [
+    TEMP pulse;
+    TEX pulse, fragment.texcoord[0], texture[2], 2D;
+    LRP diffuse.rgb, fragment.texcoord[2].x, pulse, diffuse;
+  ]
+]
+
+defershader 0 "pulseglowworld" [
+  defvertexparam "glowcolor" 0 1 1 1 // glow color
+  defvertexparam "pulseglowspeed" 1 1 // pulse frequency (Hz)
+  defvertexparam "pulseglowcolor" 2 0 0 0 // pulse glow color
+  worldshader "pulseglowworld" [
+    TEMP k, col;
+    MUL k.x, program.env[6], @vertexparam1.x;
+    FRC k.x, k.x;
+    MAD k.x, k.x, 2, -1;
+    ABS k.x, k.x;
+    SUB col.xyz, @vertexparam2, @vertexparam0; 
+    MAD result.texcoord[2].xyz, k.x, col, @vertexparam0;
+  ] [] [
+    TEMP glow;
+    TEX glow, fragment.texcoord[0], texture[2], 2D;
+    MUL glow.rgb, glow, fragment.texcoord[2];
+    MAD result.color.rgb, lm, diffuse, glow;
+    MUL result.color.a, lm.a, program.env[6];
+  ]
+  glareworldshader "pulseglowworld" [
+    TEMP k, col;
+    MUL k.x, program.env[6], @vertexparam1.x;
+    FRC k.x, k.x;
+    MAD k.x, k.x, 2, -1;
+    ABS k.x, k.x;
+    SUB col.xyz, @vertexparam2, @vertexparam0; 
+    MAD result.texcoord[2].xyz, k.x, col, @vertexparam0;
+  ] [
+    TEMP glow, k;
+    TEX glow, fragment.texcoord[0], texture[2], 2D;
+    MUL glow.rgb, glow, fragment.texcoord[2];
+    MAX k.x, glow.r, glow.g;
+    MAX k.x, k.x, glow.b;
+    MUL k.x, k.x, k.x;
+    MUL_SAT k.x, k.x, 32;
+    MUL result.color.rgb, k.x, glow;
+    #pragma CUBE2_variantoverride TEX result.color.a, fragment.texcoord[1], texture[1], 2D; #
+    MOV result.color.a, program.env[6];
+  ]
+]
+
+shader 0 "fogworld" [
+    @vpstart
+    END
+] [
+    @fpstart
+    MOV result.color, state.fog.color;
+    END
+]
+
+shader 0 "noglareworld" [
+    @vpstart
+    END
+] [
+    @fpstart
+    MOV result.color, 0;
+    END
+]
+
+shader 0 "noglareblendworld" [
+    @vpstart
+    MUL result.texcoord[0].xy, vertex.texcoord[1], @lmcoordscale; 
+    @fogcoord
+    END
+] [
+    @fpstart
+    MOV result.color.rgb, 0;
+    TEX result.color.a, fragment.texcoord[0], texture[1], 2D;
+    END
+]
+
+shader 0 "noglarealphaworld" [
+    @vpstart
+    END
+] [
+    @fpstart
+    MOV result.color.rgb, 0;
+    MOV result.color.a, program.env[6];
+    END
+]
+ 
+defershader 2 "envworld" [
+  defpixelparam "envscale" 0 0.2 0.2 0.2 // reflectivity 
+  worldshader "envworld" [
+    MOV result.texcoord[2].xyz, vertex.normal;
+    SUB result.texcoord[3].xyz, program.env[4], opos;
+  ] [
+    ATTRIB normal = fragment.texcoord[2];
+    ATTRIB camvec = fragment.texcoord[3];
+    TEMP rvec;
+    DP3 rvec.w, camvec, normal;
+    MUL rvec.xyz, rvec.w, normal; 
+    MAD rvec.xyz, rvec, 2, -camvec; 
+
+    TEMP reflect;
+    TEX reflect, rvec, texture[2], CUBE;
+  ] [
+    MUL diffuse, diffuse, lm;
+    LRP result.color.rgb, @pixelparam0, reflect, diffuse;
+    MOV result.color.a, diffuse.a;
+  ]
+
+  defpixelparam "envscale" 0 0.2 0.2 0.2 // reflectivity 
+  worldshader "envworldfast" [
+    TEMP camvec, rvec;
+    SUB camvec.xyz, program.env[4], opos;
+    DP3 rvec.w, camvec, vertex.normal;
+    MUL rvec.xyz, rvec.w, vertex.normal; 
+    MAD result.texcoord[2].xyz, rvec, 2, -camvec; 
+  ] [
+    TEMP reflect;
+    TEX reflect, fragment.texcoord[2], texture[2], CUBE;
+  ] [
+    MUL diffuse, diffuse, lm;
+    LRP result.color.rgb, @pixelparam0, reflect, diffuse;
+    MOV result.color.a, diffuse.a;
+  ]
+
+  defpixelparam "envscale" 0 0.2 0.2 0.2 // reflectivity 
+  worldshader "envworldalt" [] []
+
+  altshader envworld envworldalt
+  fastshader envworld envworldfast 2
+  fastshader envworld envworldalt 1
+]
+
+shader 0 depthfxworld [
+    @vpstart
+    TEMP z;
+    DP4 z.x, -opos, state.matrix.modelview.row[2];
+    MAD result.texcoord[0], z.x, program.env[0], program.env[1];
+    END
+] [
+    @fpstart
+    MOV result.color, fragment.texcoord[0];
+    END
+]
+
+shader 0 depthfxsplitworld [
+    @vpstart
+    TEMP z;
+    DP4 z.x, -opos, state.matrix.modelview.row[2];
+    MAD result.texcoord[0], z.x, program.env[0], program.env[1];
+    END
+] [
+    @fpstart
+    TEMP ranges;
+    MOV ranges.x, fragment.texcoord[0];
+    FRC ranges.yzw, fragment.texcoord[0];
+    MAD result.color, ranges.yzxw, { -0.00390625, -0.00390625, 0, 0 }, ranges; 
+    END
+]
+
+// bumptype:
+//    e -> reserve envmap texture slot
+//    o -> orthonormalize
+//    t -> tangent space cam
+//    r -> envmap reflection
+//    R -> modulate envmap reflection with spec map
+//    s -> spec
+//    S -> spec map
+//    p -> parallax
+//    P -> steep parallax (7 steps)
+//    g -> glow
+//    G -> pulse glow
+//    i -> glare intensity
+
+btopt = [ >= (strstr $bumptype $arg1) 0 ]
+
+bumpvariantshader = [
+    bumptype = $arg2
+    normtex = (if (btopt "e") [result "texture[4]"] [result "texture[3]"])
+    glowtex = (if (btopt "e") [result "texture[5]"] [result "texture[4]"])
+    stype = (if (btopt "e") [result 3] [result 1])
+    if (! (btopt "i")) [
+        if (btopt "G") [
+            defpixelparam "glowcolor" 0 1 1 1 // glow color
+            defvertexparam "pulseglowspeed" 4 1     // pulse frequency (Hz)
+            defpixelparam "pulseglowcolor" 5 0 0 0 // pulse glow color
+        ] [if (btopt "g") [
+            defpixelparam "glowcolor" 0 1 1 1  // glow color
+        ]]
+        if (btopt "S") [
+            defpixelparam "specscale" 1 6 6 6 // spec map multiplier
+        ] [if (btopt "s") [
+            defpixelparam "specscale" 1 1 1 1 // spec multiplier
+        ]]
+        if (|| (btopt "p") (btopt "P")) [
+            defpixelparam "parallaxscale" 2 0.06 -0.03 // parallax scaling
+        ]
+        if (btopt "R") [
+            defpixelparam "envscale" 3 1 1 1 // reflectivity map multiplier
+        ] [if (btopt "r") [
+            defpixelparam "envscale" 3 0.2 0.2 0.2 // reflectivity 
+        ]]
+    ] [
+        if (btopt "s") [stype = (+ $stype 8)]
+    ]
+    variantshader $stype $arg1 (if (btopt "i") [result 4] [result -1]) [
+        @vpstart
+        ADD result.texcoord[0].xy, vertex.texcoord[0], program.env[0];
+        // need to store these in Z/W to keep texcoords < 6, otherwise kills performance on Radeons
+        // but slows lightmap access in fragment shader a bit, so avoid when possible
+        @(if (|| $minimizetcusage (btopt "r")) [result [
+            MUL result.texcoord[0].zw, vertex.texcoord[1].wzyx, @lmcoordscale;
+        ]] [result [
+            MUL result.texcoord[1].xy, vertex.texcoord[1], @lmcoordscale;
+        ]])
+        @fogcoord
+        
+        @(if (btopt "o") [result [
+            ATTRIB normal = vertex.normal;
+            TEMP camv, tangent, binormal;
+            MAD tangent, vertex.color, 2, -1;
+            XPD binormal.xyz, normal, tangent;
+            MUL binormal.xyz, binormal, tangent.w;
+ 
+            @@(if (btopt "t") [result [
+                // trans eye vector into TS
+                SUB camv.xyz, program.env[4], opos;
+                DP3 @(if (btopt "r") [result "result.texcoord[1].x"] [result "result.texcoord[2].x"]), camv, tangent;
+                DP3 @(if (btopt "r") [result "result.texcoord[1].y"] [result "result.texcoord[2].y"]), camv, binormal;
+                DP3 @(if (btopt "r") [result "result.texcoord[1].z"] [result "result.texcoord[2].z"]), camv, normal;
+            ]])
+            @@(if (btopt "r") [result [
+                @@(if (! (btopt "t")) [result [
+                    SUB result.texcoord[1].xyz, program.env[4], opos;
+                ]])
+
+                // calculate tangent -> world transform
+                MOV result.texcoord[2].xyz, tangent;
+                MOV result.texcoord[3].xyz, binormal;
+                MOV result.texcoord[4].xyz, normal;
+            ]])
+        ]])
+
+        @(if (btopt "G") [result [
+            TEMP pulse, pulsecol;
+            MUL pulse, program.env[6], @vertexparam4.x;
+            FRC pulse, pulse;
+            MAD pulse, pulse, 2, -1;
+            ABS result.texcoord[1].w, pulse.x;
+        ]])
+
+        @(if (|| (! (btopt "i")) (btopt "s")) [result [
+            #pragma CUBE2_dynlight
+        ]])
+        @(if (! (btopt "i")) [result [
+            #pragma CUBE2_shadowmap
+            #pragma CUBE2_water
+        ]])
+
+        END
+    ] [
+        @fpstart
+        OPTION ARB_fog_linear;
+        ATTRIB @(if (|| (btopt "p") (btopt "P")) [result "htc"] [result "dtc"]) = fragment.texcoord[0];
+        ATTRIB lmtc = @(if (|| $minimizetcusage (btopt "r")) [result "fragment.texcoord[0]"] [result "fragment.texcoord[1]"]);
+        @(if (btopt "r") [result [
+            ATTRIB cam = fragment.texcoord[1];
+        ]] [if (btopt "t") [result [
+            ATTRIB cam = fragment.texcoord[2];
+        ]]]) 
+        TEMP diffuse, lmc, lmlv, bump;
+
+        @(if (|| (! (btopt "i")) (btopt "s")) [result [
+            TEX lmc,  @(if (|| $minimizetcusage (btopt "r")) [result "lmtc.wzyx"] [result "lmtc"]), texture[1], 2D;
+            MUL result.color.a, lmc, program.env[6];
+            TEX lmlv, @(if (|| $minimizetcusage (btopt "r")) [result "lmtc.wzyx"] [result "lmtc"]), texture[2], 2D;
+            MAD lmlv.xyz, lmlv, 2, -1;    
+        ]])
+
+        @(if (btopt "t") [result [
+            TEMP camvts;
+            @(normalize camvts cam)
+        ]])
+
+        @(if (btopt "p") [result [
+            TEMP height;
+            TEX height, htc, @@normtex, 2D;
+            MAD height.w, height.w, @pixelparam2.x, @pixelparam2.y;    
+            TEMP dtc;
+            MAD dtc.xy, height.w, camvts, htc;
+        ]])
+
+        @(if (btopt "P") [result [
+            PARAM step = -0.142857142857143; // 1 / 7
+            TEMP duv, dtc, cc;
+            RCP duv.w, camvts.z;
+            MUL duv.xyz, duv.w, camvts;
+            MUL duv.xyz, duv, step;
+            MUL duv.xy, duv, @pixelparam2.x;
+
+            MAD dtc.xy, duv, @pixelparam2.y, htc;
+            MOV dtc.z, 1.0;
+            TEX bump, dtc, @@normtex, 2D; 
+
+            @@(loopconcat i 7 [concatword [
+                SLT cc.x, bump.w, dtc.z;
+                MAD dtc.xyz, duv, cc.x, dtc;
+                TEX bump, dtc, @@normtex, 2D;
+            ]])
+        ]])
+
+        @(if (|| (! (btopt "i")) (btopt "S")) [result [
+            TEX @(if (btopt "i") [result "diffuse.a"] [result "diffuse"]), dtc, texture[0], 2D;
+        ]])
+        @(if (! (btopt "i")) [result [
+            MUL diffuse.rgb, diffuse, program.env[6];
+        ]])
+
+        @(if (|| (! (btopt "i")) (btopt "s")) [result [
+            @(if (! (btopt "P")) [result [TEX bump, dtc, @normtex, 2D;]])
+            MAD bump.xyz, bump, 2, -1;
+        ]])
+
+        @(if (btopt "s") [result [
+            PARAM specfactor = @(if (btopt "i") 128 32);
+            TEMP he;
+            ADD he.xyz, camvts, lmlv;
+            @(normalize he he)
+            DP3_SAT he.w, he, bump;
+            POW he.w, he.w, specfactor.x;
+            @(if (btopt "i") [result [MUL_SAT he.w, he, 64;]])
+            @(if (btopt "S") [result [MUL he.w, he, diffuse;]])
+            @(if (btopt "i") [result [
+                MUL diffuse.rgb, he.w, @pixelparam1;
+            ]] [result [
+                MAD diffuse.rgb, he.w, @pixelparam1, diffuse;
+            ]])
+        ]])
+
+        @(if (|| (! (btopt "i")) (btopt "s")) [result [
+            DP3_SAT lmlv.w, bump, lmlv;
+            MUL lmc.rgb, lmc, lmlv.w;
+            MAX lmc.rgb, lmc, program.env[5];
+
+            @(if (btopt "i") [result [
+                #pragma CUBE2_dynlight lmc
+
+                MUL @(if (btopt "g") [result "diffuse.rgb"] [result "result.color.rgb"]), diffuse, lmc;
+            ]] [result [
+                #pragma CUBE2_shadowmap lmc
+                #pragma CUBE2_dynlight lmc
+
+                MUL @(if (|| (btopt "g") (btopt "r")) [result "diffuse.rgb"] [result "result.color.rgb"]), diffuse, lmc;
+            ]])
+        ]])
+
+        @(if (btopt "r") [result [
+            TEMP rvec;
+            @(if (btopt "t") [result [
+                TEMP rvects;
+                DP3 rvects.w, cam, bump;
+                MUL rvects.xyz, rvects.w, bump; 
+                MAD rvects.xyz, rvects, 2, -cam; 
+
+                MUL rvec.xyz, rvects.x, fragment.texcoord[2];
+                MAD rvec.xyz, rvects.y, fragment.texcoord[3], rvec; 
+                MAD rvec.xyz, rvects.z, fragment.texcoord[4], rvec;
+            ]] [result [
+                TEMP bumpw;
+                MUL bumpw.xyz, bump.x, fragment.texcoord[2];
+                MAD bumpw.xyz, bump.y, fragment.texcoord[3], bumpw; 
+                MAD bumpw.xyz, bump.z, fragment.texcoord[4], bumpw;
+
+                DP3 rvec.w, cam, bumpw;
+                MUL rvec.xyz, rvec.w, bumpw; 
+                MAD rvec.xyz, rvec, 2, -cam; 
+            ]])
+
+            TEMP reflect;
+            TEX reflect, rvec, texture[3], CUBE;
+            @@(if (btopt "R") [result [
+                TEMP rmod;
+                MUL rmod.rgb, diffuse.w, @pixelparam3;
+            ]] [result [
+                PARAM rmod = @pixelparam3;
+            ]])
+            LRP @(if (btopt "g") [result "diffuse.rgb"] [result "result.color.rgb"]), rmod, reflect, diffuse;
+        ]])
+
+        @(if (btopt "g") [result [
+            TEMP glow;
+            TEX glow, dtc, @@glowtex, 2D;
+            @@(if (btopt "G") [result [
+                TEMP pulsecol;
+                LRP pulsecol.rgb, fragment.texcoord[1].w, @pixelparam5, @pixelparam0;
+            ]])
+            @@(if (btopt "i") [result [
+                TEMP k;
+                MUL glow.rgb, glow, @(if (btopt "G") [result "pulsecol"] [result $pixelparam0]);
+                MAX k.x, glow.r, glow.g;
+                MAX k.x, k.x, glow.b;
+                MUL k.x, k.x, k.x; 
+                MUL_SAT k.x, k.x, 32; 
+                @(if (btopt "s") [result [
+                    MAD result.color.rgb, k.x, glow, diffuse;
+                ]] [result [
+                    MUL result.color.rgb, k.x, glow;
+                    #pragma CUBE2_variantoverride TEX result.color.a, @(if $minimizetcusage [result "lmtc.wzyx"] [result "lmtc"]), texture[1], 2D; #
+                    MOV result.color.a, program.env[6]; 
+                ]])
+            ]] [result [
+                MAD result.color.rgb, glow, @(if (btopt "G") [result "pulsecol"] [result $pixelparam0]), diffuse;
+            ]])
+        ]])
+
+        @(if (! (btopt "i")) [result [
+            #pragma CUBE2_water
+        ]])
+
+        END
+    ]
+]
+
+bumpshader = [
+    defershader (if (>= (strstr $arg2 "e") 0) [result 3] [result 1]) $arg1 [
+        bumpvariantshader @arg1 @arg2
+        if (|| (btopt "g") (btopt "s")) [
+            bumpvariantshader @@arg1 (strreplace (concatword @@arg2 "i") "r")
+        ]
+    ]
+]
+
+bumpshader "bumpworld" ""
+bumpshader "bumpspecworld" "ots"
+fastshader bumpspecworld bumpworld 2
+altshader bumpspecworld bumpworld
+bumpshader "bumpspecmapworld" "otsS"
+fastshader bumpspecmapworld bumpworld 2
+altshader bumpspecmapworld bumpworld
+
+bumpshader "bumpglowworld" "g"
+bumpshader "bumpspecglowworld" "otsg"
+altshader bumpspecglowworld bumpglowworld
+bumpshader "bumpspecmapglowworld" "otsSg"
+fastshader bumpspecmapglowworld bumpglowworld 2
+altshader bumpspecmapglowworld bumpglowworld
+
+bumpshader "bumppulseglowworld" "gG"
+bumpshader "bumpspecpulseglowworld" "otsgG"
+altshader bumpspecpulseglowworld bumppulseglowworld
+bumpshader "bumpspecmappulseglowworld" "otsSgG"
+fastshader bumpspecmappulseglowworld bumppulseglowworld 2
+altshader bumpspecmappulseglowworld bumppulseglowworld
+
+bumpshader "bumpparallaxworld" "pot"
+fastshader bumpparallaxworld bumpworld 1
+altshader bumpparallaxworld bumpworld
+bumpshader "bumpspecparallaxworld" "pots"
+fastshader bumpspecparallaxworld bumpparallaxworld 2
+fastshader bumpspecparallaxworld bumpworld 1
+altshader bumpspecparallaxworld bumpworld
+bumpshader "bumpspecmapparallaxworld" "potsS"
+fastshader bumpspecmapparallaxworld bumpparallaxworld 2
+fastshader bumpspecmapparallaxworld bumpworld 1
+altshader bumpspecmapparallaxworld bumpworld
+
+bumpshader "bumpparallaxglowworld" "potg"
+fastshader bumpparallaxglowworld bumpglowworld 1
+altshader bumpparallaxglowworld bumpglowworld
+bumpshader "bumpspecparallaxglowworld" "potsg"
+fastshader bumpspecparallaxglowworld bumpparallaxglowworld 2
+fastshader bumpspecparallaxglowworld bumpglowworld 1
+altshader bumpspecparallaxglowworld bumpglowworld
+bumpshader "bumpspecmapparallaxglowworld" "potsSg"
+fastshader bumpspecmapparallaxglowworld bumpparallaxglowworld 2
+fastshader bumpspecmapparallaxglowworld bumpglowworld 1
+altshader bumpspecmapparallaxglowworld bumpglowworld
+
+bumpshader "bumpparallaxpulseglowworld" "potgG"
+fastshader bumpparallaxpulseglowworld bumppulseglowworld 1
+altshader bumpparallaxpulseglowworld bumppulseglowworld
+bumpshader "bumpspecparallaxpulseglowworld" "potsgG"
+fastshader bumpspecparallaxpulseglowworld bumpparallaxpulseglowworld 2
+fastshader bumpspecparallaxpulseglowworld bumppulseglowworld 1
+altshader bumpspecparallaxpulseglowworld bumppulseglowworld
+bumpshader "bumpspecmapparallaxpulseglowworld" "potsSgG"
+fastshader bumpspecmapparallaxpulseglowworld bumpparallaxpulseglowworld 2
+fastshader bumpspecmapparallaxpulseglowworld bumppulseglowworld 1
+altshader bumpspecmapparallaxpulseglowworld bumppulseglowworld
+
+bumpshader "bumpenvworldalt" "e"
+bumpshader "bumpenvworld" "eor"
+altshader bumpenvworld bumpenvworldalt
+fastshader bumpenvworld bumpenvworldalt 2
+bumpshader "bumpenvspecworld" "eotsr"
+altshader bumpenvspecworld bumpenvworldalt
+fastshader bumpenvspecworld bumpenvworldalt 2
+bumpshader "bumpenvspecmapworld" "eotsSrR"
+altshader bumpenvspecmapworld bumpenvworldalt
+fastshader bumpenvspecmapworld bumpenvworldalt 2
+
+bumpshader "bumpenvglowworldalt" "eg"
+bumpshader "bumpenvglowworld" "eorg"
+altshader bumpenvglowworld bumpenvglowworldalt
+fastshader bumpenvglowworld bumpenvglowworldalt 2
+bumpshader "bumpenvspecglowworld" "eotsrg"
+altshader bumpenvspecglowworld bumpenvglowworldalt
+fastshader bumpenvspecglowworld bumpenvglowworldalt 2
+bumpshader "bumpenvspecmapglowworld" "eotsSrRg"
+altshader bumpenvspecmapglowworld bumpenvglowworldalt
+fastshader bumpenvspecmapglowworld bumpenvglowworldalt 2
+
+bumpshader "bumpenvpulseglowworldalt" "egG"
+bumpshader "bumpenvpulseglowworld" "eorgG"
+altshader bumpenvpulseglowworld bumpenvpulseglowworldalt
+fastshader bumpenvpulseglowworld bumpenvpulseglowworldalt 2
+bumpshader "bumpenvspecpulseglowworld" "eotsrgG"
+altshader bumpenvspecpulseglowworld bumpenvpulseglowworldalt
+fastshader bumpenvspecpulseglowworld bumpenvpulseglowworldalt 2
+bumpshader "bumpenvspecmappulseglowworld" "eotsSrRgG"
+altshader bumpenvspecmappulseglowworld bumpenvpulseglowworldalt
+fastshader bumpenvspecmappulseglowworld bumpenvpulseglowworldalt 2
+
+bumpshader "bumpenvparallaxworldalt" "epot"
+altshader bumpenvparallaxworldalt bumpenvworldalt
+bumpshader "bumpenvparallaxworld" "epotr"
+altshader bumpenvparallaxworld bumpenvparallaxworldalt
+fastshader bumpenvparallaxworld bumpenvparallaxworldalt 2
+fastshader bumpenvparallaxworld bumpenvworldalt 1
+bumpshader "bumpenvspecparallaxworld" "epotsr"
+altshader bumpenvspecparallaxworld bumpenvparallaxworldalt
+fastshader bumpenvspecparallaxworld bumpenvparallaxworldalt 2
+fastshader bumpenvspecparallaxworld bumpenvworldalt 1
+bumpshader "bumpenvspecmapparallaxworld" "epotsSrR"
+altshader bumpenvspecmapparallaxworld bumpenvparallaxworldalt
+fastshader bumpenvspecmapparallaxworld bumpenvparallaxworldalt 2
+fastshader bumpenvspecmapparallaxworld bumpenvworldalt 1
+
+bumpshader "bumpenvparallaxglowworldalt" "epotg"
+altshader bumpenvparallaxglowworldalt bumpenvglowworldalt
+bumpshader "bumpenvparallaxglowworld" "epotrg"
+altshader bumpenvparallaxglowworld bumpenvparallaxglowworldalt
+fastshader bumpenvparallaxglowworld bumpenvparallaxglowworldalt 2
+fastshader bumpenvparallaxglowworld bumpenvglowworldalt 1
+bumpshader "bumpenvspecparallaxglowworld" "epotsrg"
+altshader bumpenvspecparallaxglowworld bumpenvparallaxglowworldalt
+fastshader bumpenvspecparallaxglowworld bumpenvparallaxglowworldalt 2
+fastshader bumpenvspecparallaxglowworld bumpenvglowworldalt 1
+bumpshader "bumpenvspecmapparallaxglowworld" "epotsSrRg"
+altshader bumpenvspecmapparallaxglowworld bumpenvparallaxglowworldalt
+fastshader bumpenvspecmapparallaxglowworld bumpenvparallaxglowworldalt 2
+fastshader bumpenvspecmapparallaxglowworld bumpenvglowworldalt 1
+
+bumpshader "bumpenvparallaxpulseglowworldalt" "epotgG"
+altshader bumpenvparallaxpulseglowworldalt bumpenvpulseglowworldalt
+bumpshader "bumpenvparallaxpulseglowworld" "epotrgG"
+altshader bumpenvparallaxpulseglowworld bumpenvparallaxpulseglowpulseglowworldalt
+fastshader bumpenvparallaxpulseglowworld bumpenvparallaxpulseglowpulseglowworldalt 2
+fastshader bumpenvparallaxpulseglowworld bumpenvpulseglowworldalt 1
+bumpshader "bumpenvspecparallaxpulseglowworld" "epotsrgG"
+altshader bumpenvspecparallaxpulseglowworld bumpenvparallaxpulseglowworldalt
+fastshader bumpenvspecparallaxpulseglowworld bumpenvparallaxpulseglowworldalt 2
+fastshader bumpenvspecparallaxpulseglowworld bumpenvpulseglowworldalt 1
+bumpshader "bumpenvspecmapparallaxpulseglowworld" "epotsSrRgG"
+altshader bumpenvspecmapparallaxpulseglowworld bumpenvparallaxpulseglowworldalt
+fastshader bumpenvspecmapparallaxpulseglowworld bumpenvparallaxpulseglowworldalt 2
+fastshader bumpenvspecmapparallaxpulseglowworld bumpenvpulseglowworldalt 1
+
+//bumpshader "steepworld" "Pot"
+
+////////////////////////////////////////////////
+//
+// phong lighting model shader
+//
+////////////////////////////////////////////////
+
+// skeletal animation for matrices and dual quaternions
+
+skelmatanim = [
+    result [
+        PARAM mats[] = { program.env[ 10 .. @@(- (min (- $maxvpenvparams $reservevpparams) 256) 1) ] };
+        @(if (> $arg1 1) [result "ATTRIB weights = vertex.attrib[6];"])
+        ATTRIB bones = vertex.attrib[7]; 
+        ADDRESS bone;
+        TEMP mx, my, mz;
+
+        ARL bone.x, bones.x;
+        @(if (= $arg1 1) [result [
+            MOV mx, mats[bone.x];
+            MOV my, mats[bone.x+1];
+            MOV mz, mats[bone.x+2];
+        ]] [result [
+            MUL mx, weights.x, mats[bone.x];
+            MUL my, weights.x, mats[bone.x+1];
+            MUL mz, weights.x, mats[bone.x+2];
+            ARL bone.x, bones.y;
+            MAD mx, weights.y, mats[bone.x], mx;
+            MAD my, weights.y, mats[bone.x+1], my;
+            MAD mz, weights.y, mats[bone.x+2], mz;
+        ]])
+        @(if (>= $arg1 3) [result [
+            ARL bone.x, bones.z;
+            MAD mx, weights.z, mats[bone.x], mx;
+            MAD my, weights.z, mats[bone.x+1], my;
+            MAD mz, weights.z, mats[bone.x+2], mz;
+        ]])
+        @(if (>= $arg1 4) [result [
+            ARL bone.x, bones.w;
+            MAD mx, weights.w, mats[bone.x], mx;
+            MAD my, weights.w, mats[bone.x+1], my;
+            MAD mz, weights.w, mats[bone.x+2], mz;
+        ]])
+
+        TEMP opos;
+        DP4 opos.x, mx, spos;
+        DP4 opos.y, my, spos;
+        DP4 opos.z, mz, spos;
+        MOV opos.w, spos.w;
+
+        @(if $arg2 [result [
+            TEMP onormal;
+            DP3 onormal.x, mx, snormal;
+            DP3 onormal.y, my, snormal;
+            DP3 onormal.z, mz, snormal;
+        ]])
+
+        @(if $arg3 [result [
+            TEMP otangent;
+            DP3 otangent.x, mx, stangent;
+            DP3 otangent.y, my, stangent;
+            DP3 otangent.z, mz, stangent;
+        ]])
+    ]
+]
+
+skelquatanim = [
+    result [
+        PARAM quats[] = { program.env[ 10 .. @@(- (min (- $maxvpenvparams $reservevpparams) 256) 1) ] };
+        @(if (> $arg1 1) [result "ATTRIB weights = vertex.attrib[6];"])
+        ATTRIB bones = vertex.attrib[7]; 
+        ADDRESS bone;
+        TEMP dqreal, dqdual, dir;
+        
+        ARL bone.x, bones.x;
+        @(if (= $arg1 1) [result [
+            MOV dqreal, quats[bone.x];
+            MOV dqdual, quats[bone.x+1];
+        ]] [result [ 
+            MUL dqreal, weights.x, quats[bone.x];
+            MUL dqdual, weights.x, quats[bone.x+1];
+            ARL bone.x, bones.y;
+            MAD dqreal, weights.y, quats[bone.x], dqreal;
+            MAD dqdual, weights.y, quats[bone.x+1], dqdual;
+            @(if (>= $arg1 3) [result [
+                ARL bone.x, bones.z;
+                MAD dqreal, weights.z, quats[bone.x], dqreal;
+                MAD dqdual, weights.z, quats[bone.x+1], dqdual;
+            ]])
+            @(if (>= $arg1 4) [result [
+                ARL bone.x, bones.w;
+                MAD dqreal, weights.w, quats[bone.x], dqreal;
+                MAD dqdual, weights.w, quats[bone.x+1], dqdual;
+            ]])
+
+            TEMP len;
+            DP4 len.x, dqreal, dqreal;
+            RSQ len.x, len.x;
+            MUL dqreal, dqreal, len.x;
+            MUL dqdual, dqdual, len.x;
+        ]])
+
+        TEMP opos;    
+        XPD opos.xyz, dqreal, spos;
+        MAD opos.xyz, spos, dqreal.w, opos;
+        ADD opos.xyz, opos, dqdual;
+        XPD opos.xyz, dqreal, opos;    
+        MAD opos.xyz, dqdual, dqreal.w, opos;
+        MAD opos.xyz, dqreal, -dqdual.w, opos;
+        MAD opos.xyz, 2, opos, spos;
+        MOV opos.w, spos.w;
+
+        @(if $arg2 [result [
+            TEMP onormal;
+            XPD onormal.xyz, dqreal, snormal;
+            MAD onormal.xyz, dqreal.w, snormal, onormal;
+            XPD onormal.xyz, dqreal, onormal;
+            MAD onormal.xyz, 2, onormal, snormal;
+        ]])
+
+        @(if $arg3 [result [
+            TEMP otangent;
+            XPD otangent.xyz, dqreal, stangent;
+            MAD otangent.xyz, dqreal.w, stangent, otangent;
+            XPD otangent.xyz, dqreal, otangent;
+            MAD otangent.xyz, 2, otangent, stangent;
+        ]])
+    ]
+]
+
+// model shadowmapping
+
+shadowmapcastervertexshader = [
+    result [
+        @(if (< $numargs 1) [result $vpstart] [result [
+            !!ARBvp1.0
+            ATTRIB spos = vertex.position;
+            @arg1
+            DP4 result.position.x, opos, state.matrix.mvp.row[0];
+            DP4 result.position.y, opos, state.matrix.mvp.row[1];
+            DP4 result.position.w, opos, state.matrix.mvp.row[3];
+        ]])
+
+        TEMP z;
+        DP4 z.x, opos, state.matrix.mvp.row[2];
+
+        @(if (>= $numargs 1) [result "MOV result.position.z, z.x;"])
+
+        SUB result.texcoord[0].x, 1, z.x;
+        MOV result.texcoord[0].y, 1;
+        MOV result.texcoord[0].z, 0;
+        MOV result.texcoord[0].w, program.env[1].x;
+
+        END
+    ]
+]
+
+shader 0 shadowmapcaster (shadowmapcastervertexshader) [
+    @fpstart
+    MOV result.color, fragment.texcoord[0];
+    END
+]
+loop i 4 [
+    variantshader 0 shadowmapcaster 0 (shadowmapcastervertexshader (skelmatanim (+ $i 1) 0 0)) []
+    variantshader 0 shadowmapcaster 1 (shadowmapcastervertexshader (skelquatanim (+ $i 1) 0 0)) []
+]        
+
+shader 0 "shadowmapreceiver" [
+    @vpstart
+    TEMP z;
+    DP4 z, state.matrix.mvp.row[2], opos;
+    @(if $ati_minmax_bug [result [
+        MOV result.texcoord[0].xyw, 0;
+        SUB result.texcoord[0].z, program.env[0].y, z;
+    ]] [result [
+        SUB result.texcoord[0], program.env[0].y, z;
+    ]])
+    END
+] [
+    @fpstart
+    MOV result.color, fragment.texcoord[0];
+    END
+]
+
+// model stencil shadows
+
+notexturemodelvertexshader = [
+    result [
+        @(if (< $numargs 1) [result $vpstart] [result [
+            !!ARBvp1.0
+            ATTRIB spos = vertex.position;
+            @arg1
+            DP4 result.position.x, opos, state.matrix.mvp.row[0];
+            DP4 result.position.y, opos, state.matrix.mvp.row[1];
+            DP4 result.position.z, opos, state.matrix.mvp.row[2];
+            DP4 result.position.w, opos, state.matrix.mvp.row[3];
+        ]])
+
+        MOV result.color, vertex.color;
+        @fogcoord
+        END
+    ]
+]
+
+shader 0 notexturemodel (notexturemodelvertexshader) [
+    @fpstart
+    OPTION ARB_fog_linear;
+    MOV result.color, fragment.color;
+    END
+]
+loop i 4 [
+    variantshader 0 notexturemodel 0 (notexturemodelvertexshader (skelmatanim (+ $i 1) 0 0)) []
+    variantshader 0 notexturemodel 1 (notexturemodelvertexshader (skelquatanim (+ $i 1) 0 0)) []
+]
+
+// mdltype:
+//    e -> envmap
+//    n -> normalmap
+//    s -> spec
+//    m -> masks
+//    B -> matrix skeletal animation
+//    b -> dual-quat skeletal animation
+//    i -> glare intensity
+
+mdlopt = [ >= (strstr $modeltype $arg1) 0 ]
+
+modelvertexshader = [
+    modeltype = $arg1
+    result [
+        @(if (|| (mdlopt "b") (mdlopt "B")) [result [
+            !!ARBvp1.0
+            ATTRIB spos = vertex.position;
+            ATTRIB snormal = vertex.normal;
+            @(if (mdlopt "n") [result "ATTRIB stangent = vertex.attrib[1];"])
+        ]] [result [
+            @vpstart
+            ATTRIB onormal = vertex.normal;
+            @(if (mdlopt "n") [result "ATTRIB otangent = vertex.attrib[1];"])
+        ]])
+        PARAM ocampos = program.env[1];
+        PARAM lightdir = program.env[0];
+        PARAM lightscale = program.env[2];
+
+        @(if (mdlopt "B") [skelmatanim $arg2 1 (mdlopt "n")])
+        @(if (mdlopt "b") [skelquatanim $arg2 1 (mdlopt "n")])
+        @(if (|| (mdlopt "b") (mdlopt "B")) [result [
+            DP4 result.position.x, opos, state.matrix.mvp.row[0];
+            DP4 result.position.y, opos, state.matrix.mvp.row[1];
+            DP4 result.position.z, opos, state.matrix.mvp.row[2];
+            DP4 result.position.w, opos, state.matrix.mvp.row[3];
+        ]])
+
+        @(if (|| (mdlopt "n") (mdlopt "s") (mdlopt "i")) [result [
+            MOV result.color, vertex.color;
+        ]])
+        ADD result.texcoord[0].xy, vertex.texcoord[0], program.env[5].yzww;
+      
+        @(if (|| (mdlopt "e") (mdlopt "s")) [result [
+            TEMP camvec;
+            SUB camvec, ocampos, opos;
+            @(normalize camvec camvec)
+        ]])
+
+        @(if (mdlopt "n") [
+            if (mdlopt "e") [result [
+                DP3 result.texcoord[1].x, state.matrix.texture.row[0], camvec;
+                DP3 result.texcoord[1].y, state.matrix.texture.row[1], camvec;
+                DP3 result.texcoord[1].z, state.matrix.texture.row[2], camvec;
+
+                // composition of tangent -> object and object -> world transforms
+                //   becomes tangent -> world
+                TEMP wnormal, wtangent, wbitangent;
+                DP3 wnormal.x, state.matrix.texture.row[0], onormal;
+                DP3 wnormal.y, state.matrix.texture.row[1], onormal;
+                DP3 wnormal.z, state.matrix.texture.row[2], onormal;
+                MOV result.texcoord[4].xyz, wnormal;
+                DP3 wtangent.x, state.matrix.texture.row[0], otangent;
+                DP3 wtangent.y, state.matrix.texture.row[1], otangent;
+                DP3 wtangent.z, state.matrix.texture.row[2], otangent;
+                MOV result.texcoord[2].xyz, wtangent;
+                XPD wbitangent.xyz, wnormal, wtangent;
+                MUL result.texcoord[3].xyz, wbitangent, @(if (|| (mdlopt "b") (mdlopt "B")) [result "stangent.w"] [result "otangent.w"]);
+            ]] [result [
+                TEMP obitangent;
+                XPD obitangent.xyz, onormal, otangent;
+                MUL obitangent.xyz, obitangent, @(if (|| (mdlopt "b") (mdlopt "B")) [result "stangent.w"] [result "otangent.w"]);
+
+                DP3 result.texcoord[1].x, lightdir, otangent;
+                DP3 result.texcoord[1].y, lightdir, obitangent;
+                DP3 result.texcoord[1].z, lightdir, onormal;
+
+                @(if (mdlopt "s") [result [
+                    TEMP halfangle;
+                    ADD halfangle.xyz, lightdir, camvec;
+                    DP3 result.texcoord[2].x, halfangle, otangent;
+                    DP3 result.texcoord[2].y, halfangle, obitangent;
+                    DP3 result.texcoord[2].z, halfangle, onormal;
+                ]])
+            ]]
+        ] [result [
+            @(if (mdlopt "s") [result [
+                MOV result.texcoord[1].xyz, onormal;
+                ADD result.texcoord[2].xyz, lightdir, camvec; 
+            ]] [if (! (mdlopt "i")) [result [
+                TEMP light;
+                DP3 light.y, onormal, lightdir;
+                MAD light.x, light.y, lightscale.x, lightscale.y;
+                MAD light.x, light.y, light.x, lightscale.z;
+                MIN light.x, light.x, 1;
+                MUL result.color.xyz, light.x, vertex.color;
+                MOV result.color.w, vertex.color.w;
+            ]]])
+            @(if (mdlopt "e") [result [
+                TEMP rvec, invfresnel;
+                DP3 invfresnel.x, camvec, onormal;
+                MUL rvec.xyz, invfresnel.x, onormal; 
+                MAD rvec.xyz, rvec, 2, -camvec;
+                DP3 result.texcoord[3].x, state.matrix.texture.row[0], rvec;
+                DP3 result.texcoord[3].y, state.matrix.texture.row[1], rvec;
+                DP3 result.texcoord[3].z, state.matrix.texture.row[2], rvec;
+                MAX invfresnel.x, invfresnel.x, 0;
+                MAD result.texcoord[3].w, program.env[3].x, invfresnel.x, program.env[3].y;
+            ]])
+        ]])
+
+        @fogcoord
+
+        END
+    ] 
+]
+
+modelfragmentshader = [
+    modeltype = $arg1
+    result [
+        @fpstart
+        OPTION ARB_fog_linear;
+        ATTRIB dtc = fragment.texcoord[0];
+        @(if (mdlopt "n") [if (mdlopt "e") [result [
+            PARAM lightdir = program.env[1];
+        ]] [result [
+            ATTRIB lightdir = fragment.texcoord[1];
+        ]]])
+        @(if (mdlopt "s") [result [
+            @(if (&& (! (mdlopt "n")) (! (mdlopt "i"))) [result [
+                PARAM lightdir = program.env[0];
+            ]])
+            PARAM specfactor = @(if (mdlopt "i") 256 128);
+        ]])
+        @(if (&& (|| (mdlopt "s") (mdlopt "n")) (! (mdlopt "i"))) [result "PARAM lightscale = program.env[2];"])
+        @(if (|| (mdlopt "s") (mdlopt "m")) [result "PARAM maskscale = program.env[4];"])
+
+        TEMP light;
+        TEX light, dtc, texture[0], 2D;
+        MUL light.rgb, light, 2;
+
+        @(if (mdlopt "m") [result [
+            TEMP masks, glow;
+            TEX masks, dtc, texture[1], 2D;
+            MUL glow.rgb, light, maskscale.y;
+        ]])
+
+        @(if (mdlopt "n") [if (mdlopt "e") [result [
+            TEMP normal, normts;
+            TEX normts, dtc, texture[3], 2D;
+            SUB normts.xyz, normts, 0.5;
+            MUL normal.xyz, normts.x, fragment.texcoord[2];
+            MAD normal.xyz, normts.y, fragment.texcoord[3], normal;
+            MAD normal.xyz, normts.z, fragment.texcoord[4], normal;  
+            @(normalize normal normal)
+        ]] [result [
+            TEMP normal;
+            TEX normal, dtc, texture[3], 2D;
+            SUB normal.xyz, normal, 0.5;
+            @(normalize normal normal)
+        ]]])
+
+        @(if (mdlopt "s") [result [
+            TEMP spec, halfangle;
+            @(if (mdlopt "n") [
+                if (mdlopt "e") [result [
+                    ADD halfangle, lightdir, fragment.texcoord[1];
+                    @(normalize halfangle halfangle)
+                ]] [result [
+                    @(normalize halfangle fragment.texcoord[2])
+                ]]
+            ] [result [
+                TEMP normal;
+                @(normalize normal fragment.texcoord[1])
+                @(normalize halfangle fragment.texcoord[2])
+            ]])
+            DP3_SAT spec.x, halfangle, normal;
+            POW spec.x, spec.x, specfactor.x;
+            MUL spec.x, spec.x, maskscale.x;
+            @(if (mdlopt "m") [result "MUL spec.x, spec.x, masks.r;"])   // specmap in red channel
+        ]])
+
+        @(if (mdlopt "i") [
+            if (mdlopt "s") [result [
+                MUL spec.x, spec.x, maskscale.z;
+                MUL @(if (mdlopt "m") [result "light.rgb"] [result "result.color.rgb"]), spec.x, fragment.color;
+            ]] [
+                if (! (mdlopt "m")) [result "MOV result.color.rgb, 0;"]
+            ]
+        ] [result [
+            @(if (|| (mdlopt "s") (mdlopt "n")) [result [
+                TEMP intensity;
+                DP3 intensity.y, normal, lightdir;
+                MAD intensity.x, intensity.y, lightscale.x, lightscale.y;
+                MAD_SAT intensity.x, intensity.y, intensity.x, lightscale.z; 
+            ]])
+            @(if (mdlopt "s") [result [
+                MAD light.rgb, intensity.x, light, spec.x;
+            ]] [if (mdlopt "n") [result [
+                MUL light.rgb, intensity.x, light;
+            ]]])
+            MUL @(if (mdlopt "m") [result "light.rgb"] [result "result.color"]), light, fragment.color;
+        ]])
+
+        @(if (mdlopt "m") [result [
+            @(if (mdlopt "e") [result [
+                LRP light.rgb, masks.g, glow, light;
+
+                TEMP reflect;
+                @(if (mdlopt "n") [result [
+                    TEMP camvec, invfresnel, rvec;
+                    @(normalize camvec fragment.texcoord[1])
+                    DP3 invfresnel.x, camvec, normal;
+                    MUL rvec.xyz, invfresnel.x, normal; 
+                    MAD rvec.xyz, rvec, 2, -camvec; 
+
+                    MAX invfresnel.x, invfresnel, 0;
+                    MAD invfresnel.x, program.env[3].x, invfresnel.x, program.env[3].y;
+
+                    TEX reflect, rvec, texture[2], CUBE;
+                    MUL masks.b, masks.b, invfresnel.x; // envmap mask in blue channel
+                ]] [result [
+                    TEX reflect, fragment.texcoord[3], texture[2], CUBE;
+                    MUL masks.b, masks.b, fragment.texcoord[3].w; // envmap mask in blue channel
+                ]])
+                LRP result.color.rgb, masks.b, reflect, light;
+            ]] [if (mdlopt "i") [result [
+                TEMP k;
+                MUL k.x, masks.g, masks.g;
+                MUL_SAT k.x, k.x, maskscale.w;
+                @(if (mdlopt "s") [result [
+                    MAD result.color.rgb, k.x, glow, light;
+                ]] [result [
+                    MUL result.color.rgb, k.x, glow;
+                ]])
+            ]] [result [
+                LRP result.color.rgb, masks.g, glow, light;
+            ]]])
+        ]])
+
+        @(if (|| (mdlopt "m") || (mdlopt "i")) [result [
+            MUL result.color.a, light.a, fragment.color.a;
+        ]])
+
+        END
+    ]
+]
+
+modelshader = [
+    defershader 0 $arg1 [
+        basemodeltype = [@@arg2]
+        shader 0 @arg1 (modelvertexshader $basemodeltype) (modelfragmentshader $basemodeltype)
+        loop i 4 [
+            variantshader 0 @@arg1 0 (modelvertexshader (concatword "B" $basemodeltype) (+ $i 1)) []
+            variantshader 0 @@arg1 1 (modelvertexshader (concatword "b" $basemodeltype) (+ $i 1)) []
+        ]
+        glaremodeltype = (strreplace (concatword $basemodeltype "i") "e") 
+        if (< (strstr $glaremodeltype "s") 0) [glaremodeltype = (strreplace $glaremodeltype "n")]
+        variantshader 0 @arg1 2 (modelvertexshader $glaremodeltype) (modelfragmentshader $glaremodeltype)
+        loop i 4 [
+            variantshader 0 @@arg1 2 (modelvertexshader (concatword "B" $glaremodeltype) (+ $i 1)) 2
+            variantshader 0 @@arg1 3 (modelvertexshader (concatword "b" $glaremodeltype) (+ $i 1)) 2
+        ]
+    ]
+]
+
+////////////////////////////////////////////////
+//
+// gourad lighting model shader: cheaper, non-specular version for vegetation etc. gets used when spec==0
+//
+////////////////////////////////////////////////
+
+modelshader "nospecmodel" ""
+modelshader "masksnospecmodel" "m"
+modelshader "envmapnospecmodel" "me"
+altshader envmapnospecmodel masksnospecmodel
+
+modelshader "bumpnospecmodel" "n"
+modelshader "bumpmasksnospecmodel" "nm"
+modelshader "bumpenvmapnospecmodel" "nme"
+altshader bumpenvmapnospecmodel bumpmasksnospecmodel
+
+////////////////////////////////////////////////
+//
+// phong lighting model shader
+//
+////////////////////////////////////////////////
+
+modelshader "stdmodel" "s"
+fastshader stdmodel nospecmodel 1
+modelshader "masksmodel" "sm"
+fastshader masksmodel masksnospecmodel 1
+modelshader "envmapmodel" "sme"
+altshader envmapmodel masksmodel
+fastshader envmapmodel envmapnospecmodel 1
+
+modelshader "bumpmodel" "ns"
+fastshader bumpmodel bumpnospecmodel 1
+modelshader "bumpmasksmodel" "nsm"
+fastshader bumpmasksmodel bumpmasksnospecmodel 1
+modelshader "bumpenvmapmodel" "nsme"
+altshader bumpenvmapmodel bumpmasksmodel
+fastshader bumpenvmapmodel bumpenvmapnospecmodel 1
+
+////////////////////////////////////////////////
+//
+// separable blur with up to 7 taps
+//
+////////////////////////////////////////////////
+
+blurshader = [
+    shader 0 $arg1 [
+        !!ARBvp1.0
+        MOV result.position, vertex.position;
+        MOV result.texcoord[0], vertex.texcoord[0];
+        TEMP tc1, tc2;
+        MAD tc1, program.env[1], { 1, 1, 0, 0 }, vertex.texcoord[0];
+        MAD tc2, program.env[1], { -1, -1, 0, 0 }, vertex.texcoord[0];
+        MOV result.texcoord[1], tc1;
+        MOV result.texcoord[2], tc2;
+        @(loopconcat i (min (- $arg2 1) 2) [concatword [
+            ADD tc1.@@arg3, tc1, program.env[1].@(at "z w" $i);
+            SUB tc2.@@arg3, tc2, program.env[1].@(at "z w" $i);
+            MOV result.texcoord[@@(+ (* $i 2) 3)], tc1;
+            MOV result.texcoord[@@(+ (* $i 2) 4)], tc2;
+        ]])
+        END
+    ] [
+        @fpstart
+        TEMP val, blur1, blur2;
+        TEX val, fragment.texcoord[0], texture[0], @arg4;
+        MUL val, val, program.env[0].x;
+        @(if (> $arg2 3) [result [
+            TEMP tc1, tc2;
+        ]])
+        @(loopconcat i $arg2 [concatword [
+            @(if (< $i 3) [result [
+                TEX blur1, fragment.texcoord[@@(+ (* $i 2) 1)], texture[0], @@@@arg4;
+                TEX blur2, fragment.texcoord[@@(+ (* $i 2) 2)], texture[0], @@@@arg4;
+            ]] [result [
+                ADD tc1, fragment.texcoord[0], program.env[@@(+ $i 0)];
+                SUB tc2, fragment.texcoord[0], program.env[@@(+ $i 0)];
+                TEX blur1, tc1, texture[0], @@@@arg4;
+                TEX blur2, tc2, texture[0], @@@@arg4;
+            ]])
+            ADD blur1, blur1, blur2;
+            @(if (< $i 3) [result [
+                MAD @(if (= (+ $i 1) $arg2) [result "result.color"] [result "val"]), blur1, program.env[0].@(at "y z w" $i), val;
+            ]] [result [
+                MAD @(if (= (+ $i 1) $arg2) [result "result.color"] [result "val"]), blur1, program.env[2].@(at "x y z w" (- $i 3)), val;
+            ]])
+        ]])
+        END
+    ]
+]
+
+loop i 7 [
+    blurshader (format "blurx%1" (+ $i 1)) (+ $i 1) x 2D
+    blurshader (format "blury%1" (+ $i 1)) (+ $i 1) y 2D
+    if (> $i 0) [
+        altshader (format "blurx%1" (+ $i 1)) (format "blurx%1" $i)
+        altshader (format "blury%1" (+ $i 1)) (format "blury%1" $i)
+    ]
+    if $usetexrect [
+        blurshader (format "blurx%1rect" (+ $i 1)) (+ $i 1) x RECT
+        blurshader (format "blury%1rect" (+ $i 1)) (+ $i 1) y RECT
+        if (> $i 0) [
+            altshader (format "blurx%1rect" (+ $i 1)) (format "blurx%1rect" $i)
+            altshader (format "blury%1rect" (+ $i 1)) (format "blury%1rect" $i)
+        ]
+    ]
+]
+
+////////////////////////////////////////////////
+//
+// full screen shaders: 
+//
+////////////////////////////////////////////////
+
+fsvs = [
+    !!ARBvp1.0
+    MOV result.position, vertex.position;   // woohoo, no mvp :) 
+    MOV result.texcoord[0], vertex.texcoord[0];
+]
+
+fsps = [
+    @fpstart
+    TEMP sample;
+    TEX sample, fragment.texcoord[0], texture[0], RECT;
+]
+
+setup4corners = [
+    ADD result.texcoord[1], vertex.texcoord[0], { -1.5, -1.5, 0, 0 };        
+    ADD result.texcoord[2], vertex.texcoord[0], {  1.5, -1.5, 0, 0 };        
+    ADD result.texcoord[3], vertex.texcoord[0], { -1.5,  1.5, 0, 0 };        
+    ADD result.texcoord[4], vertex.texcoord[0], {  1.5,  1.5, 0, 0 };        
+]
+
+sample4corners = [
+    TEMP s00, s02, s20, s22;
+    TEX s00, fragment.texcoord[1], texture[0], RECT;
+    TEX s02, fragment.texcoord[2], texture[0], RECT;
+    TEX s20, fragment.texcoord[3], texture[0], RECT;
+    TEX s22, fragment.texcoord[4], texture[0], RECT;
+]
+
+// some simple ones that just do an effect on the RGB value...
+
+lazyshader 0 "invert" [ @fsvs END ] [ @fsps SUB result.color, 1, sample;   END ]
+lazyshader 0 "gbr"    [ @fsvs END ] [ @fsps MOV result.color, sample.yzxw; END ]
+lazyshader 0 "bw"     [ @fsvs END ] [ @fsps DP3 result.color, sample, 0.333; END ]
+
+// sobel
+
+lazyshader 0 "sobel" [ @fsvs @setup4corners END ] [
+    @fsps
+    @sample4corners
+
+    TEMP t, u;
+
+    ADD t, s00, s20;
+    SUB t, t, s02;
+    SUB t, t, s22;
+    MUL t, t, t;
+
+    ADD u, s00, s02;
+    SUB u, u, s20;
+    SUB u, u, s22;
+    MUL u, u, u;
+
+    ADD t, t, u;
+
+    ADD result.color, sample, t;
+    END
+]
+
+// rotoscope
+
+lazyshader 0 "rotoscope" [
+    @fsvs
+    PARAM scale = program.env[0];
+    // stuff two sets of texture coordinates into each one to get around hardware attribute limits
+    MAD result.texcoord[1], { -1.0, -1.0,  1.0, 0.0 }, scale.x, vertex.texcoord[0].xyyx;
+    MAD result.texcoord[2], { -1.0,  0.0, -1.0, 1.0 }, scale.x, vertex.texcoord[0].xyyx;
+    MAD result.texcoord[3], { -1.0,  1.0,  0.0, 1.0 }, scale.x, vertex.texcoord[0].xyyx;
+    MAD result.texcoord[4], {  0.0, -1.0,  1.0, 1.0 }, scale.x, vertex.texcoord[0].xyyx;
+    END
+] [
+    @fpstart
+    ATTRIB t11 = fragment.texcoord[0];
+    ATTRIB t00_12 = fragment.texcoord[1];
+    ATTRIB t01_20 = fragment.texcoord[2];
+    ATTRIB t02_21 = fragment.texcoord[3];
+    ATTRIB t10_22 = fragment.texcoord[4];
+    TEMP c00, c01, c02, c10, c11, c12, c20, c21, c22;
+
+    TEX c00, t00_12, texture[0], RECT;
+    TEX c01, t01_20, texture[0], RECT;
+    TEX c02, t02_21, texture[0], RECT;
+    TEX c10, t10_22, texture[0], RECT;
+    TEX c11, t11, texture[0], RECT;
+    TEX c12, t00_12.wzyx, texture[0], RECT;
+    TEX c20, t01_20.wzyx, texture[0], RECT;
+    TEX c21, t02_21.wzyx, texture[0], RECT;
+    TEX c22, t10_22.wzyx, texture[0], RECT;
+
+    TEMP diag1, diag2, xedge, yedge;
+    SUB diag1, c00, c22;
+    SUB diag2, c02, c20;
+    SUB xedge, c01, c21;
+    MAD xedge, xedge, 2.0, diag1;
+    ADD xedge, xedge, diag2;
+    SUB yedge, c10, c12;
+    MAD yedge, yedge, 2.0, diag1;
+    SUB yedge, yedge, diag2;
+    MUL xedge, xedge, xedge;
+    MUL yedge, yedge, yedge;
+
+    TEMP sobel;
+    ADD sobel, xedge, yedge;
+    MAX sobel.x, sobel.x, sobel.y;
+    MAX sobel.x, sobel.x, sobel.z;
+    SLT sobel.x, sobel.x, 0.1;
+
+    TEMP hue;
+    DP3 hue.x, c11, 1; 
+    RCP hue.w, hue.x;
+    MUL c11, c11, hue.w;
+    SGE hue.xyz, hue.x, { 0.2, 0.8, 1.5, 0.0 };
+    DP3 hue.x, hue, { 0.5, 0.5, 1.5, 0.0 };
+    MUL c11, c11, hue.x;
+
+    MAX sobel.x, sobel.x, hue.z;
+    MUL result.color, c11, sobel.x;
+
+    END
+]
+
+blur3shader = [
+    lazyshader 0 $arg1 [ 
+        !!ARBvp1.0
+        MOV result.position, vertex.position;
+        ADD result.texcoord[0], vertex.texcoord[0], { @(if $arg2 -0.5 0), @(if $arg3 -0.5 0), 0, 0 };
+        ADD result.texcoord[1], vertex.texcoord[0], { @(if $arg2 0.5 0), @(if $arg3 0.5 0), 0, 0 };
+        END 
+    ] [
+        @fpstart
+        TEMP c1, c2;
+        TEX c1, fragment.texcoord[0], texture[0], RECT;
+        TEX c2, fragment.texcoord[1], texture[0], RECT;
+        ADD c1, c1, c2;
+        MUL result.color, c1, 0.5;
+        END
+    ]
+]
+blur3shader hblur3 1 0
+blur3shader vblur3 0 1
+
+blur5shader = [
+    lazyshader 0 $arg1 [ 
+        @fsvs 
+        ADD result.texcoord[1], vertex.texcoord[0], { @(if $arg2 -1.333 0), @(if $arg3 -1.333 0), 0, 0 };
+        ADD result.texcoord[2], vertex.texcoord[0], { @(if $arg2 1.333 0), @(if $arg3 1.333 0), 0, 0 };
+        END 
+    ] [
+        @fpstart
+        TEMP c0, c1, c2;
+        TEX c0, fragment.texcoord[0], texture[0], RECT;
+        TEX c1, fragment.texcoord[1], texture[0], RECT;
+        TEX c2, fragment.texcoord[2], texture[0], RECT;
+        ADD c1, c1, c2;
+        MUL c0, c0, 0.4;
+        MAD result.color, c1, 0.3, c0;
+        END
+    ]
+]
+blur5shader hblur5 1 0
+blur5shader vblur5 0 1
+
+rotoscope = [
+    clearpostfx
+    if (>= $numargs 1) [addpostfx rotoscope 0 0 0 $arg1]
+    if (>= $numargs 2) [
+        if (= $arg2 1) [addpostfx hblur3; addpostfx vblur3]
+        if (= $arg2 2) [addpostfx hblur5; addpostfx vblur5]
+    ]
+]
+
+// bloom-ish
+
+shader 0 "glare" [
+    !!ARBvp1.0
+    MOV result.position, vertex.position;
+    MOV result.texcoord[0], vertex.texcoord[0];
+    END
+] [
+    @fpstart
+    TEMP glare;
+    TEX glare, fragment.texcoord[0], texture[0], 2D;
+    MUL result.color, glare, program.env[0];
+    END
+]
+
+lazyshader 0 "bloom_scale" [ @fsvs @setup4corners END ] [
+    @fsps
+    @sample4corners
+    TEMP t;
+    ADD t, s02, s00;
+    ADD t, t, s22;
+    ADD t, t, s20;
+    ADD t, t, sample;
+    MUL result.color, t, 0.2; 
+    END
+]
+
+lazyshader 0 "bloom_init" [ @fsvs END ] [
+    @fsps
+    TEMP t;
+    MAX t, sample.r, sample.g;
+    MAX t, t, sample.b;
+    MUL t, t, t;
+    MUL result.color, t, sample;
+    END
+]
+
+bloomshader = [
+  defershader 0 $arg1 [
+    forceshader "bloom_scale"
+    forceshader "bloom_init"
+    shader 0 @arg1 [
+        @fsvs
+        TEMP tc;
+        MOV tc, vertex.texcoord[0];
+        @@(loopconcat i $arg2 [concat "MUL tc, tc, 0.5; MOV result.texcoord[" (+ $i 1) "], tc;"])
+        END
+    ] [
+        @fsps
+        TEMP scaled, bloom;
+        @@(loopconcat i $arg2 [
+            format [
+                TEX @(if (> $i 0) [result "scaled"] [result "bloom"]), fragment.texcoord[%1], texture[%1], RECT;
+                @(if (> $i 0) [result [
+                    ADD bloom, bloom, scaled;
+                ]])
+            ] (+ $i 1)
+        ])
+        MAD result.color, bloom, program.env[0].x, sample;
+        END
+    ]
+  ]
+]
+
+bloomshader bloom1 1
+bloomshader bloom2 2
+bloomshader bloom3 3
+bloomshader bloom4 4
+bloomshader bloom5 5
+bloomshader bloom6 6
+
+setupbloom = [
+    addpostfx bloom_init 1 1 "+0"
+    loop i (- $arg1 1) [
+        addpostfx bloom_scale (+ $i 2) (+ $i 2) (concatword "+" (+ $i 1))
+    ]
+    addpostfx (concatword bloom $arg1) 0 0 (loopconcat i (+ $arg1 1) [result $i]) $arg2
+]
+
+bloom = [
+    clearpostfx
+    if (>= $numargs 1) [setupbloom 6 $arg1]
+]
+
+////////////////////////////////////////////////
+//
+// miscellaneous effect shaders: 
+//
+////////////////////////////////////////////////
+
+// wobbles the vertices of an explosion sphere
+// and generates all texcoords 
+// and blends the edge color
+// and modulates the texture
+explosionshader = [
+    shader 0 $arg1 [
+        !!ARBvp1.0
+        ATTRIB opos = vertex.position; 
+        OUTPUT spos = result.position;
+        
+        TEMP wobble; // uses a simple linear oscillation instead of more expensive sinusoidal
+        DP3 wobble.w, opos, program.env[0]; // generate wobble offset based off vertex normal and sphere center
+        MAD wobble.w, program.env[1].w, 0.002, wobble.w; // wobble frequency
+        FRC wobble.w, wobble.w; // 0..1
+        SUB wobble.w, wobble.w, 0.5; // -0.5..0.5
+        ABS wobble.w, wobble.w; // now oscillates up and down between 0..0.5
+        MUL wobble.w, wobble.w, 0.5; // wobble amplitude
+        
+        MAD wobble.xyz, wobble.w, opos, opos;
+        MOV wobble.w, opos.w;
+        
+        @(if (>= (strstr $arg1 "soft") 0) [result [
+            TEMP projtc;
+            DP4 projtc.x, state.matrix.mvp.row[0], wobble; 
+            DP4 projtc.y, state.matrix.mvp.row[1], wobble; 
+            DP4 projtc.z, state.matrix.mvp.row[2], wobble; 
+            DP4 projtc.w, state.matrix.mvp.row[3], wobble;
+            MOV spos, projtc;
+
+            DP4 projtc.z, state.matrix.modelview.row[2], -wobble; 
+            MAD projtc.z, projtc, program.env[5].x, program.env[5].y;
+            ADD projtc.xy, projtc, projtc.w;
+            MUL projtc.xy, projtc, program.env[6];
+            MOV result.texcoord[3], projtc;
+        ]] [result [
+            DP4 spos.x, state.matrix.mvp.row[0], wobble; 
+            DP4 spos.y, state.matrix.mvp.row[1], wobble; 
+            DP4 spos.z, state.matrix.mvp.row[2], wobble; 
+            DP4 spos.w, state.matrix.mvp.row[3], wobble;
+        ]])
+
+        MOV result.color, vertex.color;
+
+        @arg2 
+        
+        @fogcoord
+        END
+    ] [ 
+        @fpstart
+        OPTION ARB_fog_linear;
+        TEMP dtc, diffuse, blend;
+        
+        TEX dtc, @arg3, texture[0], 2D;
+        MAD dtc.xy, dtc, 0.1, fragment.texcoord[0]; // use color texture as noise to distort texcoords
+        TEX diffuse, dtc, texture[0], 2D;
+        
+        TEX blend, fragment.texcoord[1], texture[1], 2D; // get blend factors from modulation texture 
+
+        @(if (>= (strstr $arg1 "glare") 0) [result [
+            TEMP k;
+            MUL k.x, blend.a, blend.a;
+            MUL diffuse.rgb, diffuse, 8;
+            ADD diffuse.b, diffuse, k.x;
+            MUL diffuse, diffuse, k.x;
+        ]] [result [
+            MAD diffuse, diffuse, 4, { 0, 0, -0.5, 0 }; // intensify and over saturate + blue tint
+            MAD diffuse, diffuse, blend.a, { 0, 0, 0.5, 0 }; // dup alpha into RGB channels + blue bias
+        ]])
+
+        @(if (>= (strstr $arg1 "soft") 0) [result [
+            MUL result.color.rgb, diffuse, fragment.color;
+
+            TEMP depth;
+            TXP depth, fragment.texcoord[3], texture[2], @(if (>= (strstr $arg1 "rect") 0) [result "RECT"] [result "2D"]);
+            @(if (>= (strstr $arg1 "soft8") 0) [result [
+                DP4 depth.x, depth, program.env[6]; 
+                SUB_SAT depth.x, depth.x, fragment.texcoord[3].z;
+            ]] [result [
+                MAD_SAT depth.x, depth.x, program.env[5].z, -fragment.texcoord[3].z;
+            ]])
+            MUL depth.x, depth.x, fragment.color.a;
+            MAX depth.x, depth.x, program.env[5].w;
+            MUL result.color.a, diffuse.a, depth.x;
+        ]] [result [
+            MUL result.color, diffuse, fragment.color;
+        ]])
+
+        END
+    ]
+]
+
+loop i (if $usetexrect 6 4) [
+    explosionshader (concatword "explosion2d" (at ["" "glare" "soft" "soft8" "softrect" "soft8rect"] $i)) [
+        TEMP dtc; //blow up the tex coords
+        MAD dtc.x, program.env[1].x, -1.414, 1.768; // -2, 2.5; -> -2*sqrt(0.5), 2.5*sqrt(0.5);
+        MUL dtc.x, dtc.x, dtc.x;
+        MUL dtc.xy, opos, dtc.x;
+        //MAD dtc, dtc, 0.5, 0.5; centering at 0.5 not really needed for color sample since texture isn't clamped, so can just fold in the multiplication as above
+        MAD result.texcoord[0].xy, program.env[1].w, 0.0004, dtc;
+        MAD result.texcoord[1].xy, opos, 0.5, 0.5; //using wobble makes it look too spherical at a distance
+    ] "fragment.texcoord[1]"
+    explosionshader (concatword "explosion3d" (at ["" "glare" "soft" "soft8" "softrect" "soft8rect"] $i)) [
+        MOV result.texcoord[0], vertex.texcoord[0];
+
+        TEMP texgen;
+        DP4 texgen.x, opos, program.env[2];
+        DP4 texgen.y, opos, program.env[3];
+        MOV result.texcoord[1].xy, texgen;
+        MAD result.texcoord[2].xy, program.env[1].w, -0.0005, texgen;
+    ] "fragment.texcoord[2]"
+]
+
+shader 0 "particlenotexture" [
+    @vpstart
+    MUL result.texcoord[0], vertex.color, program.env[4];
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    MOV result.color, fragment.texcoord[0];
+    END
+]
+
+particleshader = [
+    shader 0 $arg1 [
+        @vpstart
+        MOV result.texcoord[0], vertex.texcoord[0];
+        MUL result.texcoord[1], vertex.color, program.env[4];
+
+        @(if (>= (strstr $arg1 "soft") 0) [result [
+            TEMP projtc;
+            DP4 projtc.x, state.matrix.mvp.row[0], opos;
+            DP4 projtc.y, state.matrix.mvp.row[1], opos;
+            DP4 projtc.w, state.matrix.mvp.row[3], opos;
+
+            ADD projtc.xy, projtc, projtc.w;
+            MUL projtc.xy, projtc, program.env[6];
+            MOV result.texcoord[2].xyw, projtc;
+
+            TEMP offset;
+            MAD offset.xyz, vertex.texcoord[0], { 2.82842712474619, 2.82842712474619, 0, 0 }, { -1.4142135623731, -1.4142135623731, 1, 0 };
+            MOV result.texcoord[3].xyz, offset;
+
+            DP4 offset.z, state.matrix.modelview.row[2], -opos;
+            MAD offset.z, offset.z, program.env[5].x, program.env[5].y;
+            MOV result.texcoord[4].xyz, offset;
+        ]])
+
+        @fogcoord
+        END
+    ] [
+        @fpstart
+        OPTION ARB_fog_linear;
+        TEMP diffuse;
+        TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+        @(if (>= (strstr $arg1 "soft") 0) [result [
+            TEMP depth, offset;
+            TXP depth, fragment.texcoord[2], texture[2], @(if (>= (strstr $arg1 "rect") 0) [result "RECT"] [result "2D"]);
+            DP3 offset.x, fragment.texcoord[3], fragment.texcoord[4];
+            @(if (>= (strstr $arg1 "soft8") 0) [result [
+                DP4 depth.x, depth, program.env[6];
+                SUB_SAT depth.x, depth.x, offset.x;
+            ]] [result [
+                MAD_SAT depth.x, depth.x, program.env[5].z, -offset.x;
+            ]])
+            MUL diffuse.a, diffuse.a, depth.x;
+        ]])
+        MUL result.color, fragment.texcoord[1], diffuse;
+        END
+    ]     
+]
+
+loop i (if $usetexrect 5 3) [
+    particleshader (concatword "particle" (at ["" "soft" "soft8" "softrect" "soft8rect"] $i))
+]
+
+shader 0 "blendbrush" [
+    @vpstart
+    DP4 result.texcoord[0].x, opos, program.env[0];
+    DP4 result.texcoord[0].y, opos, program.env[1];
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    TEMP brush;
+    TEX brush, fragment.texcoord[0], texture[0], 2D;
+    MUL result.color, fragment.color, brush;
+    END
+]
+
+lazyshader 0 "moviergb" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    END
+] [
+    @fpstart
+    TEX result.color, fragment.texcoord[0], texture[0], RECT;
+    END
+]
+
+lazyshader 0 "movieyuv" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    END
+] [
+    @fpstart
+    TEMP sample;
+    TEX sample, fragment.texcoord[0], texture[0], RECT;
+    DP4 result.color.b, sample, { 0.256788, 0.504125, 0.097905, 0.062745 };
+    DP4 result.color.g, sample, { -0.148224, -0.290992, 0.439216, 0.501961 };
+    DP4 result.color.r, sample, { 0.439216, -0.367788, -0.071427, 0.501961 };
+    END
+]
+
+lazyshader 0 "moviey" [
+    @vpstart
+    ADD result.texcoord[0], vertex.texcoord[0], { -1.5, 0, 0, 0 };
+    ADD result.texcoord[1], vertex.texcoord[0], { -0.5, 0, 0, 0 };
+    ADD result.texcoord[2], vertex.texcoord[0], {  0.5, 0, 0, 0 };
+    ADD result.texcoord[3], vertex.texcoord[0], {  1.5, 0, 0, 0 };
+    END
+] [
+    @fpstart
+    TEMP sample1, sample2, sample3, sample4;
+    TEX sample1, fragment.texcoord[0], texture[0], RECT;
+    TEX sample2, fragment.texcoord[1], texture[0], RECT;
+    TEX sample3, fragment.texcoord[2], texture[0], RECT;
+    TEX sample4, fragment.texcoord[3], texture[0], RECT;
+    DP4 result.color.b, sample1, { 0.256788, 0.504125, 0.097905, 0.062745 };
+    DP4 result.color.g, sample2, { 0.256788, 0.504125, 0.097905, 0.062745 };
+    DP4 result.color.r, sample3, { 0.256788, 0.504125, 0.097905, 0.062745 };
+    DP4 result.color.a, sample4, { 0.256788, 0.504125, 0.097905, 0.062745 };
+    END
+]
+
+lazyshader 0 "movieu" [
+    @vpstart
+    ADD result.texcoord[0], vertex.texcoord[0], { -3, 0, 0, 0 };
+    ADD result.texcoord[1], vertex.texcoord[0], { -1, 0, 0, 0 };
+    ADD result.texcoord[2], vertex.texcoord[0], {  1, 0, 0, 0 };
+    ADD result.texcoord[3], vertex.texcoord[0], {  3, 0, 0, 0 };
+    END
+] [
+    @fpstart
+    TEMP sample1, sample2, sample3, sample4;
+    TEX sample1, fragment.texcoord[0], texture[0], RECT;
+    TEX sample2, fragment.texcoord[1], texture[0], RECT;
+    TEX sample3, fragment.texcoord[2], texture[0], RECT;
+    TEX sample4, fragment.texcoord[3], texture[0], RECT;
+    DP4 result.color.b, sample1, { -0.148224, -0.290992, 0.439216, 0.501961  };
+    DP4 result.color.g, sample2, { -0.148224, -0.290992, 0.439216, 0.501961  };
+    DP4 result.color.r, sample3, { -0.148224, -0.290992, 0.439216, 0.501961  };
+    DP4 result.color.a, sample4, { -0.148224, -0.290992, 0.439216, 0.501961  };
+    END
+]
+
+lazyshader 0 "moviev" [
+    @vpstart
+    ADD result.texcoord[0], vertex.texcoord[0], { -3, 0, 0, 0 };
+    ADD result.texcoord[1], vertex.texcoord[0], { -1, 0, 0, 0 };
+    ADD result.texcoord[2], vertex.texcoord[0], {  1, 0, 0, 0 };
+    ADD result.texcoord[3], vertex.texcoord[0], {  3, 0, 0, 0 };
+    END
+] [
+    @fpstart
+    TEMP sample1, sample2, sample3, sample4;
+    TEX sample1, fragment.texcoord[0], texture[0], RECT;
+    TEX sample2, fragment.texcoord[1], texture[0], RECT;
+    TEX sample3, fragment.texcoord[2], texture[0], RECT;
+    TEX sample4, fragment.texcoord[3], texture[0], RECT;
+    DP4 result.color.b, sample1, { 0.439216, -0.367788, -0.071427, 0.501961 };
+    DP4 result.color.g, sample2, { 0.439216, -0.367788, -0.071427, 0.501961 };
+    DP4 result.color.r, sample3, { 0.439216, -0.367788, -0.071427, 0.501961 };
+    DP4 result.color.a, sample4, { 0.439216, -0.367788, -0.071427, 0.501961 };
+    END
+]
+
+///////////////////////////////////////////////////
+//
+// reflective/refractive water shaders:
+//
+///////////////////////////////////////////////////
+
+watershader = [
+    spec = $arg2
+    rgbfog = $arg3
+    distort = $arg4
+    combine = $arg5
+    lazyshader 0 $arg1 [
+        @vpstart
+        TEMP tc;
+        PARAM campos = program.env[0];
+        PARAM seconds = program.env[1];
+        @(if $spec [result "PARAM lightpos = program.env[2];"])
+
+        DP4 result.texcoord[0].x, state.matrix.texture.row[0], opos;
+        DP4 result.texcoord[0].y, state.matrix.texture.row[1], opos;
+        @(if (>= (strstr $arg1 "underwater") 0) [result [
+            SUB result.texcoord[0].z, program.env[7], opos.z;
+        ]] [result [
+            SUB result.texcoord[0].z, opos.z, program.env[7]; 
+        ]])
+        DP4 result.texcoord[0].w, state.matrix.texture.row[3], opos;
+        MUL tc, vertex.texcoord[0], 0.1;
+        MAD result.texcoord[1].xy, seconds, 0.04, tc;
+        MAD result.texcoord[2].xy, seconds, -0.02, tc;
+        SUB result.texcoord[3].xyz, campos, opos;
+        @(if $spec [result "SUB result.texcoord[4].xyz, lightpos, opos;"])
+
+        MOV result.color, vertex.color;
+
+        @fogcoord
+
+        END
+    ] [
+        @fpstart
+        @(if $rgbfog [result "OPTION ARB_fog_linear;"])
+        TEMP he, light, cam, bump, invfresnel, temp, dudv;
+
+        ATTRIB projtc = fragment.texcoord[0];
+        ATTRIB tc1 = fragment.texcoord[1];
+        ATTRIB tc2 = fragment.texcoord[2];
+        ATTRIB camts = fragment.texcoord[3];
+        @(if $spec [result "ATTRIB lightts = fragment.texcoord[4];"])
+
+        @(normalize cam camts)
+        @(if $spec [result [
+            @(normalize light lightts)
+            ADD he.xyz, cam, light;
+            @(normalize he he)
+        ]])
+
+        TEX dudv, tc1, texture[2], 2D;
+        MAD dudv.xy, dudv, 2, -1;
+
+        @distort
+
+        @(if $spec [result [
+            PARAM specfactor = 96;
+
+            DP3_SAT he.x, he, bump;
+            POW he.x, he.x, specfactor.w;
+    
+            MUL light.w, program.env[4].x, light.w;
+            RCP_SAT light.w, light.w;
+            MAD light.xyz, light.w, -program.env[3], program.env[3];
+        ]])
+
+        @combine
+
+        END
+    ]
+]
+
+watershader "waterglare" 1 1 [
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [
+    MUL he.x, he.x, he.x;
+    MUL he.x, he.x, 32;
+    MUL result.color.rgb, he.x, light;
+    MOV result.color.a, 0;
+]
+lazyshader 0 "waterglarefast" [
+    @vpstart
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    MOV result.color, 0;
+    END
+]
+fastshader waterglare waterglarefast 2
+altshader waterglare waterglarefast
+
+lazyshader 0 "underwater" [
+    @vpstart
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    TEMP col;
+    MUL col.rgb, fragment.color, program.env[5].x;
+    MUL col.rgb, col, 0.8;
+    MUL col.a, 0.5, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+    END
+]
+
+watershader "underwaterrefract" 0 1 [
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX dudv, temp, texture[2], 2D;
+    MAD dudv.xy, dudv, 2, -1;
+
+    RCP temp.w, projtc.w;
+    MUL temp.xy, projtc, temp.w; 
+    MAD temp.xy, dudv, 0.01, temp;
+
+    TEX result.color, temp, texture[3], 2D;
+] []
+watershader "underwaterrefractfast" 0 1 [
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP result.color, temp, texture[3], 2D;
+] []
+fastshader underwaterrefract underwaterrefractfast 2
+altshader underwaterrefract underwaterrefractfast
+
+watershader "underwaterfade" 0 1 [
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX dudv, temp, texture[2], 2D;
+    MAD dudv.xy, dudv, 2, -1;
+
+    RCP temp.w, projtc.w;
+    MUL temp.xy, projtc, temp.w; 
+
+    TEMP fade;
+    TEX fade.a, temp, texture[3], 2D;
+    MOV_SAT fade.r, fragment.position.z;
+    MAD fade.a, fade, 4, projtc.z;
+    MUL result.color.a, fade.a, fade.r;
+
+    MAD temp.xy, dudv, 0.01, temp;
+    TEX result.color.rgb, temp, texture[3], 2D;
+] []
+watershader "underwaterfadefast" 0 1 [
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP result.color.rgb, temp, texture[3], 2D;
+
+    TEMP fade;
+    TXP fade.a, projtc, texture[3], 2D;
+    MAD result.color.a, fade, 4, projtc.z;
+] []
+fastshader underwaterfade underwaterfadefast 2
+altshader underwaterfade underwaterfadefast
+
+watershader "water" 1 0 [
+    MAD temp.xy, dudv, 0.025, tc2; 
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    MAD temp.x, invfresnel.x, 0.4, 0.6;
+    MUL temp.x, temp.x, program.env[5].x;
+
+    TEMP col;
+    MUL col.rgb, temp.x, fragment.color;
+    MAD col.rgb, he.x, light, col; 
+    MUL col.a, invfresnel.x, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+]
+watershader "waterfast" 0 0 [
+    MAD temp.xy, dudv, 0.025, tc2; 
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [    
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    MAD temp.x, invfresnel.x, 0.4, 0.6;
+    MUL temp.x, temp.x, program.env[5].x;
+
+    TEMP col;
+    MUL col.rgb, temp.x, fragment.color;
+    MUL col.a, invfresnel.x, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+]
+fastshader water waterfast 1
+altshader water waterfast
+
+watershader "waterreflect" 1 0 [
+    TEMP reflect;
+
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP reflect, temp, texture[0], 2D;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    MUL temp.rgb, fragment.color, program.env[5].x;
+    LRP temp.rgb, invfresnel.x, temp, reflect;
+
+    TEMP col;
+    MAD col.rgb, he.x, light, temp;
+    MUL col.a, invfresnel.x, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+]
+watershader "waterreflectfast" 0 0 [
+    TEMP reflect;
+
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP reflect, temp, texture[0], 2D;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    MUL temp.rgb, fragment.color, program.env[5].x;
+
+    TEMP col;
+    LRP col.rgb, invfresnel.x, temp, reflect;
+    MUL col.a, invfresnel.x, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+]
+fastshader waterreflect waterreflectfast 2
+altshader waterreflect waterreflectfast
+
+watershader "waterrefract" 1 1 [
+    TEMP reflect, refract;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+    TEX dudv, temp, texture[2], 2D;
+    MAD dudv.xy, dudv, 2, -1;
+
+    RCP temp.w, projtc.w;
+    MUL temp.xy, projtc, temp.w; 
+    MAD temp.xy, dudv, 0.01, temp;
+
+    TEX reflect, temp, texture[0], 2D;
+    TEX refract, temp, texture[3], 2D;
+] [
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP temp.rgb, invfresnel.x, refract, reflect;
+    MAD result.color.rgb, he.x, light, temp;
+    MOV result.color.a, 0;
+]
+watershader "waterrefractfast" 0 1 [
+    TEMP reflect, refract;
+
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP reflect, temp, texture[0], 2D;
+    TXP refract, temp, texture[3], 2D;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP result.color, invfresnel.x, refract, reflect;
+]
+fastshader waterrefract waterrefractfast 2
+altshader waterrefract waterrefractfast
+
+watershader "waterfade" 1 1 [
+    TEMP distort, reflect, refract, fade;
+    
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+    TEX dudv, temp, texture[2], 2D;
+    MAD dudv.xy, dudv, 2, -1;
+    
+    RCP temp.w, projtc.w;
+    MUL temp.xy, projtc, temp.w; 
+    MAD distort.xy, dudv, 0.01, temp;
+
+    TEX reflect, distort, texture[0], 2D;
+    TEX refract, distort, texture[3], 2D;
+    TEX fade.a, temp, texture[3], 2D;
+    MOV_SAT fade.r, fragment.position.z;
+    MAD fade.a, fade, 4, projtc.z;
+    MUL result.color.a, fade.a, fade.r;
+] [
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP temp.rgb, invfresnel.x, refract, reflect;
+    MAD result.color.rgb, he.x, light, temp;
+]   
+watershader "waterfadefast" 0 1 [
+    TEMP reflect, refract, fade;
+    
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP reflect, temp, texture[0], 2D;
+    TXP refract, temp, texture[3], 2D;
+    TXP fade.a, projtc, texture[3], 2D;
+    MAD result.color.a, fade, 4, projtc.z;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+] [ 
+    DP3_SAT invfresnel.x, cam, bump;
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP result.color.rgb, invfresnel.x, refract, reflect;
+]
+fastshader waterfade waterfadefast 2
+altshader waterfade waterrefract
+
+watershader "waterenv" 1 0 [
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+
+    TEMP rvec, reflect;
+    DP3_SAT invfresnel.x, cam, bump;
+    MUL rvec.xyz, invfresnel.x, bump;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[0], CUBE;
+] [
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    MUL temp.rgb, fragment.color, program.env[5].x;
+    LRP temp.rgb, invfresnel.x, temp, reflect;
+
+    TEMP col;
+    MAD col.rgb, he.x, light, temp;
+    MUL col.a, invfresnel.x, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+]
+watershader "waterenvfast" 0 0 [
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+
+    TEMP rvec, reflect;
+    DP3_SAT invfresnel.x, cam, bump;
+    MUL rvec.xyz, invfresnel.x, bump;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[0], CUBE;
+] [
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    MUL temp.rgb, fragment.color, program.env[5].x;
+
+    TEMP col;
+    LRP col.rgb, invfresnel.x, temp, reflect;
+    MUL col.a, invfresnel.x, program.env[5].y;
+    @(rgbafog col "{0, 0, 0, 1}")
+]
+fastshader waterenv waterenvfast 2
+altshader waterenv waterenvfast
+
+watershader "waterenvrefract" 1 1 [
+    TEMP distort, reflect, refract;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+    TEX dudv, temp, texture[2], 2D;
+    MAD dudv.xy, dudv, 2, -1;
+
+    RCP temp.w, projtc.w;
+    MUL temp.xy, projtc, temp.w; 
+    MAD distort.xy, dudv, 0.01, temp;
+
+    TEX refract, distort, texture[3], 2D;
+
+    TEMP rvec;
+    DP3_SAT invfresnel.x, cam, bump;
+    MUL rvec.xyz, invfresnel.x, bump;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[0], CUBE;
+] [
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP temp.rgb, invfresnel.x, refract, reflect;
+    MAD result.color.rgb, he.x, light, temp;
+]
+watershader "waterenvrefractfast" 0 1 [
+    TEMP reflect, refract;
+
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP refract, temp, texture[3], 2D;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+
+    TEMP rvec;
+    DP3_SAT invfresnel.x, cam, bump;
+    MUL rvec.xyz, invfresnel.x, bump;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[0], CUBE;
+] [
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP result.color.rgb, invfresnel.x, refract, reflect;
+]
+fastshader waterenvrefract waterenvrefractfast 2
+altshader waterenvrefract waterenvrefractfast
+
+watershader "waterenvfade" 1 1 [
+    TEMP distort, reflect, refract, fade;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+    TEX dudv, temp, texture[2], 2D;
+    MAD dudv.xy, dudv, 2, -1;
+
+    RCP temp.w, projtc.w;
+    MUL temp.xy, projtc, temp.w; 
+    MAD distort.xy, dudv, 0.01, temp;
+
+    TEX refract, distort, texture[3], 2D;
+    TEX fade.a, temp, texture[3], 2D;
+    MOV_SAT fade.r, fragment.position.z;
+    MAD fade.a, fade, 4, projtc.z;
+    MUL result.color.a, fade.a, fade.r;
+
+    TEMP rvec;
+    DP3_SAT invfresnel.x, cam, bump;
+    MUL rvec.xyz, invfresnel.x, bump;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[0], CUBE;
+] [
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP temp.rgb, invfresnel.x, refract, reflect;
+    MAD result.color.rgb, he.x, light, temp;
+]
+watershader "waterenvfadefast" 0 1 [
+    TEMP reflect, refract, fade;
+
+    MAD temp.xy, dudv, 0.4, projtc;
+    MOV temp.zw, projtc;
+    TXP refract, temp, texture[3], 2D;
+    TXP fade.a, projtc, texture[3], 2D;
+    MAD result.color.a, fade, 4, projtc.z;
+
+    MAD temp.xy, dudv, 0.025, tc2;
+    TEX bump, temp, texture[1], 2D;
+    MAD bump.xyz, bump, 2, -1;
+
+    TEMP rvec;
+    DP3_SAT invfresnel.x, cam, bump;
+    MUL rvec.xyz, invfresnel.x, bump;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[0], CUBE;
+] [
+    MAD invfresnel.x, invfresnel.x, 0.5, 0.5;
+    LRP result.color.rgb, invfresnel.x, refract, reflect;
+]
+fastshader waterenvfade waterenvfadefast 2
+altshader waterenvfade waterenvrefract
+
+causticshader = [
+    lazyshader 0 $arg1 [
+        @vpstart
+        DP3 result.texcoord[0].x, opos, program.env[0];
+        DP3 result.texcoord[0].y, opos, program.env[1];
+        @fogcoord
+        END
+    ] [
+        @fpstart
+        OPTION ARB_fog_linear;
+        @arg2
+        END
+    ]
+]
+causticshader caustic [
+    TEMP caustic, caustic2;
+    TEX caustic, fragment.texcoord[0], texture[0], 2D;
+    TEX caustic2, fragment.texcoord[0], texture[1], 2D;
+    MUL caustic, caustic, program.env[0].x;
+    MAD result.color, caustic2, program.env[0].y, caustic;
+]
+causticshader causticfast [
+  TEMP caustic;
+  TEX caustic, fragment.texcoord[0], texture[0], 2D;
+  MUL result.color, caustic, program.env[0].z;
+]
+fastshader caustic causticfast 2
+
+lazyshader 0 "lava" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MUL diffuse, diffuse, 2;
+    MUL result.color, fragment.color, diffuse;
+    END
+]
+
+lazyshader 0 "lavaglare" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MAD result.color, vertex.color, 2, -1;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    TEMP glow, k;
+    TEX glow, fragment.texcoord[0], texture[0], 2D;
+    MUL glow, glow, fragment.color;
+    MAX k.x, glow.r, glow.g;
+    MAX k.x, k.x, glow.b;
+    MUL k.x, k.x, k.x;
+    MUL k.x, k.x, 32;
+    MUL result.color, k.x, glow;
+    END
+]
+
+lazyshader 0 "waterfallrefract" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    DP4 result.texcoord[1].x, state.matrix.texture.row[0], opos;
+    DP4 result.texcoord[1].y, state.matrix.texture.row[1], opos;
+    DP4 result.texcoord[1].w, state.matrix.texture.row[3], opos;
+
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+
+    TEMP diffuse, dudv;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MAD dudv.xy, diffuse, 0.2, fragment.texcoord[0];
+    ADD dudv.xy, dudv, program.env[1];
+    TEX dudv, dudv, texture[2], 2D;
+
+    TEMP projtc, refract;
+    MAD projtc.xy, dudv, 4, fragment.texcoord[1];
+    MOV projtc.zw, fragment.texcoord[1];
+    TXP refract, projtc, texture[4], 2D;
+
+    LRP result.color, diffuse, fragment.color, refract;
+
+    END
+]
+
+lazyshader 0 "waterfallenvrefract" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    SUB result.texcoord[1].xyz, program.env[0], vertex.position;
+
+    TEMP absnormal;
+    ABS absnormal.xyz, vertex.normal;
+
+    MOV result.texcoord[2].xyz, absnormal.yzxw;
+    MOV result.texcoord[3].xyz, -absnormal.zxyw;
+    MOV result.texcoord[4].xyz, vertex.normal;
+
+    DP4 result.texcoord[5].x, state.matrix.texture.row[0], opos;
+    DP4 result.texcoord[5].y, state.matrix.texture.row[1], opos;
+    DP4 result.texcoord[5].w, state.matrix.texture.row[3], opos;
+
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+
+    TEMP diffuse, dudv;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MAD dudv.xy, diffuse, 0.2, fragment.texcoord[0];
+    ADD dudv.xy, dudv, program.env[1];
+    TEX dudv, dudv, texture[2], 2D;
+
+    TEMP ntc, normal, wnormal;
+    MAD ntc.xy, dudv, 0.1, fragment.texcoord[0];
+    TEX normal, ntc, texture[1], 2D;
+    MAD normal.xyz, normal, 2, -1;
+    MUL wnormal.xyz, normal.x, fragment.texcoord[2];
+    MAD wnormal.xyz, normal.y, fragment.texcoord[3], wnormal;
+    MAD wnormal.xyz, normal.z, fragment.texcoord[4], wnormal;
+
+    TEMP projtc, refract;
+    MAD projtc.xy, dudv, 4, fragment.texcoord[5];
+    MOV projtc.zw, fragment.texcoord[5];
+    TXP refract, projtc, texture[4], 2D;
+
+    TEMP cam, invfresnel, rvec, reflect;
+    @(normalize cam fragment.texcoord[1])
+    DP3 invfresnel.x, wnormal, cam;
+    MUL rvec.xyz, invfresnel.x, wnormal;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[3], CUBE;
+    CMP invfresnel.x, invfresnel.x, 1, 0;
+    MAD_SAT invfresnel.x, invfresnel.x, 0.4, 0.6;
+    LRP refract, invfresnel.x, refract, reflect;
+    LRP result.color, diffuse, fragment.color, refract;
+
+    END
+]
+altshader waterfallenvrefract waterfallrefract
+
+lazyshader 0 "waterfallenv" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    SUB result.texcoord[1].xyz, program.env[0], vertex.position;
+    
+    TEMP absnormal;
+    ABS absnormal.xyz, vertex.normal;
+
+    MOV result.texcoord[2].xyz, absnormal.yzxw;
+    MOV result.texcoord[3].xyz, -absnormal.zxyw;
+    MOV result.texcoord[4].xyz, vertex.normal;
+
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+
+    TEMP diffuse, dudv;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MAD dudv.xy, diffuse, 0.2, fragment.texcoord[0];
+    ADD dudv.xy, dudv, program.env[1];
+    TEX dudv, dudv, texture[2], 2D;
+    MAD dudv.xy, dudv, 0.1, fragment.texcoord[0];
+
+    TEMP normal, wnormal;
+    TEX normal, dudv, texture[1], 2D;
+    MAD normal.xyz, normal, 2, -1;
+    MUL wnormal.xyz, normal.x, fragment.texcoord[2];
+    MAD wnormal.xyz, normal.y, fragment.texcoord[3], wnormal;
+    MAD wnormal.xyz, normal.z, fragment.texcoord[4], wnormal;
+
+    TEMP cam, rvec, reflect;
+    @(normalize cam fragment.texcoord[1])
+    DP3 rvec.w, wnormal, cam;
+    MUL rvec.xyz, rvec.w, wnormal;
+    MAD rvec.xyz, rvec, 2, -cam;
+    TEX reflect, rvec, texture[3], CUBE;
+    MAD result.color.a, diffuse.r, 0.75, 0.25;
+    LRP result.color.rgb, diffuse, fragment.color, reflect;
+
+    END
+]
+
+lazyshader 0 "glass" [
+    @vpstart
+    PARAM campos = program.env[0];
+    ATTRIB normal = vertex.normal;
+    MOV result.texcoord[0], vertex.texcoord[0];
+    SUB result.texcoord[1].xyz, campos, opos;
+    MOV result.texcoord[2].xyz, normal;
+    MOV result.color, vertex.color;
+    @fogcoord
+    END 
+] [ 
+    @fpstart
+    ATTRIB rvec = fragment.texcoord[0];
+    ATTRIB camvec = fragment.texcoord[1];
+    ATTRIB normal = fragment.texcoord[2];
+
+    TEMP reflect;
+    TEX reflect, rvec, texture[0], CUBE;
+    
+    TEMP invfresnel;
+    @(normalize invfresnel camvec)
+    DP3 invfresnel.x, invfresnel, normal;
+    MAX invfresnel.x, invfresnel.x, 0.70;
+
+    TEMP col;
+    MUL col.rgb, fragment.color, 0.05;
+    LRP col.rgb, invfresnel.x, col, reflect;
+    MUL col.a, invfresnel.x, 0.95;
+ 
+    @(rgbafog col "{0, 0, 0, 1}")
+    END
+]
+lazyshader 0 "glassfast" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    @fogcoord
+    END 
+] [ 
+    @fpstart
+    ATTRIB rvec = fragment.texcoord[0];
+
+    TEMP reflect;
+    TEX reflect, rvec, texture[0], CUBE;
+    
+    PARAM invfresnel = 0.75;
+    TEMP col;
+    MUL col.rgb, fragment.color, 0.05;
+    LRP col.rgb, invfresnel, col, reflect;
+    MUL col.a, invfresnel, 0.95;
+
+    @(rgbafog col "{0, 0, 0, 1}")
+    END
+]
+fastshader glass glassfast 2
+altshader glass glassfast
+
+lazyshader 0 "grass" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.texcoord[1], vertex.texcoord[1];
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    TEMP diffuse, lm;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MUL diffuse.rgb, diffuse, 2;
+    TEX lm, fragment.texcoord[1], texture[1], 2D;
+    MUL lm, lm, fragment.color;
+    MUL lm.rgb, lm, lm.a;
+    MUL diffuse, diffuse, lm;
+    @(rgbafog diffuse "{0, 0, 0, 0}")
+    END
+]
+
+shader 0 "overbrightdecal" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    LRP result.color, fragment.color.a, diffuse, fragment.color;
+    END
+]
+
+shader 0 "saturatedecal" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    @fogcoord
+    END
+] [
+    @fpstart
+    OPTION ARB_fog_linear;
+    TEMP diffuse;
+    TEX diffuse, fragment.texcoord[0], texture[0], 2D;
+    MUL diffuse.xyz, diffuse, 2;
+    MUL result.color, fragment.color, diffuse;
+    END
+]
+
+shader 0 "skyboxglare" [
+    @vpstart
+    MOV result.texcoord[0], vertex.texcoord[0];
+    MOV result.color, vertex.color;
+    END
+] [
+    @fpstart
+    TEMP glare;
+    TEX glare, fragment.texcoord[0], texture[0], 2D;
+    MUL glare, glare, fragment.color;
+    //DP3 intensity, glare, { 0.33, 0.34, 0.33 };
+    //SUB_SAT intensity, intensity, 0.95;
+    //MUL intensity, intensity, 32;
+    //MUL glare, glare, intensity;
+    // ^ all folded into single dot product below
+    //DP4 result.color, glare, { 10.56, 10.88, 10.56, -30.4 }; 
+    DPH result.color.rgb, glare, { 10.56, 10.88, 10.56, -30.4 }; 
+    MOV result.color.a, glare.a;
+    END
+]
+

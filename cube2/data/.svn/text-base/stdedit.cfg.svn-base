@@ -1,0 +1,314 @@
+
+// implements some editing commands
+
+
+//////// Entity Editing ///////////////
+
+=enttype = [
+  || [strcmp * $arg1] [strcmp (enttype) $arg1]
+]
+
+=entattr = [
+  || [strcmp * $arg2] [= (entattr $arg1) $arg2]
+]
+
+// clear ents of given type
+clearents = [ 
+  if $editing [
+    entcancel
+    entselect [ =enttype $arg1 ]; 
+    echo Deleted (enthavesel) $arg1 entities; 
+    delent
+  ] 
+]
+
+// replace all ents that match current selection
+// with the values given
+replaceents = [
+  if $editing [
+    do [
+        entfind @(entget)
+        entset @(loopconcat i $numargs [result $[arg@(+ $i 1)]])
+    ]
+    echo Replaced (enthavesel) entities  
+  ]
+]
+
+selentedit      = [ saycommand ( concatword "/entset " (entget) ) ] 
+selreplaceents  = [ saycommand ( concatword "/replaceents " (entget) ) ]  
+selentfindall   = [ do [ entfind @(entget) ] ]
+
+// modify given attribute of ent by a given amount
+// arg1 attribute
+// arg2 value
+entproperty = [
+  entattr $arg1 (+ (entattr $arg1) $arg2)
+]
+
+enttypelist = [ 
+  light mapmodel playerstart envmap particles sound
+  shells bullets rockets riflerounds grenades cartridges
+  health healthboost greenarmour yellowarmour quaddamage
+  teleport teledest
+  monster carrot jumppad
+  base respawnpoint
+  spotlight
+  box barrel platform elevator
+  flag
+]
+
+enttypeselect = [     
+  enttypelength = (listlen $enttypelist)
+  next = (mod (+ (indexof $enttypelist (enttype)) $arg1) $enttypelength)
+  if (< $next 0) [ next = (+ $next $enttypelength) ]
+  do [entset @(listsplice (entget) (at $enttypelist $next) 0 1)]
+]
+
+////// Entity primary actions /////////
+
+ent_action_base           = [ entproperty 0 ( * $arg1 1 ) ]
+ent_action_teleport       = [ entproperty 0 ( * $arg1 1 ) ]
+ent_action_teledest       = [ entproperty 1 ( * $arg1 1 ) ]
+ent_action_mapmodel       = [ entproperty 1 ( * $arg1 1 ) ]
+ent_action_mapmodel       = [ entproperty 1 ( * $arg1 1 ) ]
+ent_action_spotlight      = [ entproperty 0 ( * $arg1 5 ) ]
+ent_action_light          = [ entproperty 0 ( * $arg1 5 ) ]
+ent_action_jumppad        = [ entproperty 0 ( * $arg1 5 ) ]
+ent_action_respawnpoint   = [ entproperty 0 ( * $arg1 15 ) ]
+ent_action_playerstart    = [ entproperty 0 ( * $arg1 15 ) ]
+ent_action_envmap         = [ entproperty 0 ( * $arg1 5 ) ]
+ent_action_particles      = [ entproperty 0 ( * $arg1 1 ) ]
+ent_action_sound          = [ entproperty 0 ( * $arg1 1 ) ]
+ent_action_cycle          = [ entset ( if ( > $arg1 -1 ) [ result $arg2 ] [ result $arg3 ] ) ]
+ent_action_shells         = [ ent_action_cycle $arg1 bullets quaddamage ]
+ent_action_bullets        = [ ent_action_cycle $arg1 rockets shells ]
+ent_action_rockets        = [ ent_action_cycle $arg1 riflerounds bullets ]
+ent_action_riflerounds    = [ ent_action_cycle $arg1 grenades rockets ]
+ent_action_grenades       = [ ent_action_cycle $arg1 cartridges riflerounds ]
+ent_action_cartridges     = [ ent_action_cycle $arg1 quaddamage grenades ]
+ent_action_quaddamage     = [ ent_action_cycle $arg1 shells cartridges ]
+ent_action_health         = [ ent_action_cycle $arg1 healthboost yellowarmour ]
+ent_action_healthboost    = [ ent_action_cycle $arg1 greenarmour health ]
+ent_action_greenarmour    = [ ent_action_cycle $arg1 yellowarmour healthboost ]
+ent_action_yellowarmour   = [ ent_action_cycle $arg1 health greenarmour ]
+ent_action_box            = [ entproperty 1 ( * $arg1 1 ) ]
+ent_action_barrel         = [ entproperty 1 ( * $arg1 1 ) ]
+ent_action_platform       = [ entproperty 1 ( * $arg1 1 ) ]
+ent_action_elevator       = [ entproperty 1 ( * $arg1 1 ) ]
+
+//////// Copy and Paste //////////////
+
+// 3 types of copying and pasting
+// 1. select only cubes      -> paste only cubes
+// 2. select cubes and ents  -> paste cubes and ents. same relative positions
+// 3. select only ents       -> paste last selected ent. if ents are selected, replace attrs as paste
+
+opaquepaste = 1
+entcopybuf = ""
+
+entreplace   = [ 
+  do [
+    if (enthavesel) [] [ newent @entcopybuf ]
+    entset @entcopybuf 
+  ]
+]
+
+editcopy   = [
+  if (|| [havesel] [! (enthavesel)]) [
+    entcopybuf = ""
+    entcopy
+    copy
+  ] [
+    entcopybuf = (entget)
+  ]
+]
+
+editpaste  = [ 
+  cancelpaste = (! (|| [enthavesel] [havesel]));
+  if (strcmp "" $entcopybuf) [
+    pastehilite
+    reorient // temp; real fix will be in octaedit
+    onrelease [ 
+      if $opaquepaste delcube 
+      paste
+      entpaste
+      if $cancelpaste [ cancelsel ] 
+    ] 
+  ] [
+    entreplace
+    if $cancelpaste [ cancelsel ] 
+  ] 
+]
+
+/////// Selection ///////////////
+
+// select ents with given properties
+// '*' is wildcard
+entfind    = [ 
+  if (= $numargs 0) [
+    entselect 1
+  ] [
+    entselect (concat [ && [=enttype @@arg1] ] (loopconcat i (- $numargs 1) [
+        result [ [=entattr @@i @@[arg@(+ $i 2)]] ]
+    ]))
+  ]
+]
+
+entfindinsel = [ 
+  if (= $numargs 0) [
+    entselect [ insel ]
+  ] [
+    entselect (concat [ && [insel] [=enttype @@arg1] ] (loopconcat i (- $numargs 1) [
+        result [ [=entattr @@i @@[arg@(+ $i 2)]] ]
+    ]))
+  ]
+]
+
+lse        = [
+  line = ""
+  count = 0
+  entloop [
+    line  = ( concatword $line (entget) "		" )
+    count = ( + $count 1 )
+    if (> $count 4) [
+      echo $line
+      line = ""
+      count = 0
+    ]
+  ]
+  if (> $count 0 ) [ echo $line ]
+  echo (enthavesel) entities selected
+]
+
+enttoggle  = [ entmoving 1; entmoving 0; ]
+entaddmove = [ entmoving 2 ]
+
+grabbing = 0
+
+drag       = [ dragging 1; onrelease [ dragging 0 ] ]
+corners    = [ selectcorners 1; dragging 1; onrelease [ selectcorners 0; dragging 0 ] ]
+entadd     = [ entaddmove; entmoving 0; ]
+editmove   = [ moving 1; onrelease [ moving 0 ]; result $moving ]
+entdrag    = [ entaddmove; onrelease [entmoving 0]; result $entmoving ] 
+editdrag   = [ cancelsel; || [entdrag] [ drag ] ]
+selcorners = [ if $hmapedit [ hmapselect ] [ cancelsel; || [entdrag] [ corners ] ] ]
+editextend = [ || [entdrag] [ selextend; reorient; editmove ] ]
+
+editmovewith    = [
+  if (havesel) [
+    || [editmove] [ @arg1 ]
+    onrelease [ moving 0; dragging 0 ]
+  ] [
+    @arg1
+  ]
+]
+
+editmovecorner = [ editmovewith selcorners ]
+editmovedrag   = [ editmovewith editdrag ]
+
+////// Other Editing commands /////////
+
+editfacewentpush = [ 
+  
+  if (|| [havesel] [! (enthavesel)] ) [
+    if $moving [ 
+      pushsel $arg1 
+    ] [ 
+      entcancel
+      editface $arg1 $arg2
+    ] 
+  ] [
+      if $entmoving [ entpush $arg1 ] [ ent_action_@(enttype) $arg1 ]
+  ]
+]
+
+entswithdirection = "playerstart teledest mapmodel monster box barrel platform elevator"
+
+entdirection = [
+  if ( && [enthavesel] [ = (havesel) 0 ] ) [
+    if (>= (indexof $entswithdirection (enttype)) 0) [
+      if (> $arg1 0) [
+        entproperty 0 $arg2
+        if (> (entattr 0) 360) [ entproperty 0 -360 ]          
+      ] [
+        entproperty 0 (- 0 $arg2)
+        if (< (entattr 0) 0) [ entproperty 0 360 ]
+      ]
+    ]
+    result 1
+  ] [
+    result 0
+  ]
+]
+
+editdel    = [ if (! (enthavesel)) [delcube]; delent ]
+editflip   = [ flip; entflip ]
+
+editrotate = [ 
+  || [ entdirection $arg1 15 ] [ 
+      rotate $arg1
+      entrotate $arg1 
+    ] 
+]
+
+editcut    = [  
+  hadselection = (havesel)
+  moving 1
+  if $moving [
+    copy;     entcopy
+    delcube;  delent
+    onrelease [ 
+      moving 0
+      paste
+      entpaste
+      if ( ! $hadselection ) [ cancelsel ]
+    ]
+  ]
+]
+
+passthrough = [ 
+  passthroughsel $arg1; 
+  if $arg1 [
+    passthroughcube_bak = $passthroughcube
+    passthroughcube 1
+  ] [
+    passthroughcube $passthroughcube_bak
+  ]
+  entcancel 
+  if $setting_entediting [ entediting ( ! $arg1 ) ]
+  
+]
+
+edithud = [
+    if (enthavesel) [concatword (entget) " : " (enthavesel) " selected"]
+]
+
+entcomplete = [ listcomplete $arg1 $enttypelist ]
+entcomplete newent
+entcomplete entfind
+entcomplete clearents
+
+listcomplete editmat "air water clip glass noclip lava gameclip death alpha"
+air = [ editmat air ]
+water = [ editmat water ]
+clip = [ editmat clip ]
+glass = [ editmat glass ]
+noclip = [ editmat noclip ]
+lava = [ editmat lava ]
+gameclip = [ editmat gameclip ]
+death = [ editmat death ]
+alpha = [ editmat alpha ]
+
+blendpaintmodes = ["off" "replace" "dig" "fill" "inverted dig" "inverted fill"]
+setblendpaintmode = [
+    if (> $numargs 0) [blendpaintmode $arg1] [blendpaintmode 0]
+    echo "blend paint mode set to:" (at $blendpaintmodes $blendpaintmode)
+]
+scrollblendbrush = [
+    if (> $numargs 0) [nextblendbrush $arg1] [nextblendbrush]
+    echo "blend brush set to:" (getblendbrushname (curblendbrush))
+]
+
+minimaphere = [minimapheight (at (getcampos) 2)]
+
+getsundir = [sunlightyaw (getcamyaw); sunlightpitch (getcampitch)]

@@ -1,0 +1,3 @@
+exec "packages/fonts/default.cfg"
+exec "packages/hud/digit_font.cfg"
+

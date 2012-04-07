@@ -1,0 +1,74 @@
+// fps specific cfg stuff goes here
+
+togglezoom = [ zoom (if (= $zoom 1) -1 1) ]
+sayteamcommand = [inputcommand (if (>= $numargs 1) [result $arg1] [result ""]) [sayteam $commandbuf] "[team]"]
+
+mapcomplete = [ complete $arg1 packages/base ogz ]
+mapcomplete map
+
+modenames = "ffa coop teamplay insta instateam effic efficteam tac tacteam capture regencapture ctf instactf protect instaprotect hold instahold efficctf efficprotect effichold collect instacollect efficcollect"
+loop i (listlen $modenames) [
+    mname = (at $modenames $i)
+    alias $mname [ if (mode @i) [if (> $numargs 0) [map $arg1] [map]] ]
+    mapcomplete $mname
+]
+
+spmodenames = "sp dmsp"
+loop i (listlen $spmodenames) [
+    mname = (at $spmodenames $i)
+    alias $mname [ if (mode (- @i 3)) [if (> $numargs 0) [map $arg1] [map]] ]
+    mapcomplete $mname
+]
+
+complete importcube packages/cube cgz
+
+demo = [ stopdemo; if (mode -1) [if (> $numargs 0) [map $arg1] [map]] ]
+complete demo . dmo
+
+speditlock = 1
+allowspedit = [ speditlock = 0; onrelease [speditlock = 1] ]
+
+allowedittoggle = [
+    if (&& (m_sp (getmode)) $speditlock) [
+        error "you must hold" (prettylist (searchbinds "allowspedit") "or") "to toggle editing in single player modes"
+        result 0
+    ] [
+        result 1
+    ]
+]
+
+playermodelnum = 5
+
+playermodeldir0 = "mrfixit"
+playermodelicon0 = "mrfixit"
+playermodelname0 = "Mr. Fixit"
+playermodelstory0 = [Which orc do you choose when the mission calls for an all-purpose wrecking machine? Who do you call when the odds are stacked against you? Mr. Fixit, that's who. Gifted with the ability to perform deconstructive surgery with any weapon, this orc gets the job done fast and with extreme prejudice.]
+
+playermodeldir1 = "snoutx10k"
+playermodelicon1 = "snoutx10k"
+playermodelname1 = "IronSnout X10K"
+playermodelstory1 = [IronSnout X10K is a hybrid model of the IronSnout series. Bred in the bowels of a top secret underground facility, this walking fragging machine is for one purpose: to annihilate the opposition. Part pig, part machine, IronSnout X10K knows no fear and fears no fragger.]
+
+playermodeldir2 = "ogro2"
+playermodelicon2 = "ogro"
+playermodelname2 = "Ogro"
+playermodelstory2 = [Ogro is smaller than a normal ogre, but just as fat and only slightly less stupid. As opposed to common belief, he is not an evil creature, only killing as is absolutely necessary.]
+
+playermodeldir3 = "inky"
+playermodelicon3 = "inky"
+playermodelname3 = "Inky"
+playermodelstory3 = [Inky is the aspiring younger sibling of an infamous transdimensional celebrity. Often teased as being only the "Lesser Evil", Inky searches the battlefields for infamy of his own, claiming it one fragger at a time.]
+
+playermodeldir4 = "captaincannon"
+playermodelicon4 = "captaincannon"
+playermodelname4 = "Captain Cannon"
+playermodelstory4 = [Cannon Jones dared to imbibe the old imported beer can that had languished at the bottom of his refrigerator. Unbeknownst to Cannon, it had been bombarded with stray gamma radiation. After some serious indigestion, the mild-mannered Cannon Jones became the mighty Captain Cannon! Captain Cannon now has only one known weakness: his overbearingly righteous sense of justice.]
+ 
+playermodeldir = [getalias (concatword "playermodeldir" (if (> $numargs 0) [result $arg1] [result $playermodel]))]
+playermodelicon = [getalias (concatword "playermodelicon" (if (> $numargs 0) [result $arg1] [result $playermodel]))]
+playermodelname = [getalias (concatword "playermodelname" (if (> $numargs 0) [result $arg1] [result $playermodel]))]
+playermodelstory = [getalias (concatword "playermodelstory" (if (> $numargs 0) [result $arg1] [result $playermodel]))]
+
+playasong = [ music (concatword "fanatic/" (+ 1 (rnd 8)) ".ogg") playasong ]
+playasong
+
