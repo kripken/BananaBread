@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>dmo</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Maps.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Sauerbraten demo</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ogz</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Maps.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Sauerbraten map</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+	</array>
+	<key>LSMinimumSystemVersionByArchitecture</key>
+	<dict>
+		<key>x86_64</key>
+		<string>10.6.0</string>
+		<key>i386</key>
+		<string>10.4.0</string>
+		<key>ppc</key>
+		<string>10.4.0</string>
+	</dict>
+	<key>CFBundleExecutable</key>
+	<string>sauerbraten</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Sauerbraten help</string>
+	<key>CFBundleIconFile</key>
+	<string>sauerbraten</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.dot3labs.sauerbraten</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>SauerbratenServer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sauerbraten</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1.4</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>SDLApplication</string>
+</dict>
+</plist>

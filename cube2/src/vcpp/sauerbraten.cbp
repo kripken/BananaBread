@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="sauerbraten" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="..\..\bin\sauerbraten.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\default" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="-t0 -w640 -h480 -qhome" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-Wall" />
+					<Add option="-fsigned-char" />
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fno-exceptions" />
+					<Add option="-fno-rtti" />
+					<Add directory="..\enet\include" />
+					<Add directory="..\include" />
+					<Add directory="..\engine" />
+					<Add directory="..\shared" />
+					<Add directory="..\vcpp" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\vcpp" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="SDL" />
+					<Add library="SDL_image" />
+					<Add library="SDL_mixer" />
+					<Add library="zdll" />
+					<Add library="opengl32" />
+					<Add library="enet" />
+					<Add library="ws2_32" />
+					<Add library="winmm" />
+					<Add directory="..\lib" />
+				</Linker>
+			</Target>
+			<Target title="debug">
+				<Option output="..\..\bin\sauerbraten.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="-t0 -w640 -h480 -qhome" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-fsigned-char" />
+					<Add directory="..\enet\include" />
+					<Add directory="..\include" />
+					<Add directory="..\engine" />
+					<Add directory="..\shared" />
+					<Add directory="..\vcpp" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\vcpp" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="SDL" />
+					<Add library="SDL_image" />
+					<Add library="SDL_mixer" />
+					<Add library="zdll" />
+					<Add library="opengl32" />
+					<Add library="enet" />
+					<Add library="ws2_32" />
+					<Add library="winmm" />
+					<Add directory="..\lib" />
+				</Linker>
+			</Target>
+			<Target title="server">
+				<Option output="..\..\bin\sauerbraten-server.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\server" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="-t0 -w640 -h480 -qhome" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-Wall" />
+					<Add option="-fsigned-char" />
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fno-exceptions" />
+					<Add option="-fno-rtti" />
+					<Add option="-DSTANDALONE" />
+					<Add directory="..\enet\include" />
+					<Add directory="..\include" />
+					<Add directory="..\engine" />
+					<Add directory="..\shared" />
+					<Add directory="..\vcpp" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\vcpp" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="-mwindows" />
+					<Add library="SDL" />
+					<Add library="zdll" />
+					<Add library="enet" />
+					<Add library="ws2_32" />
+					<Add library="winmm" />
+					<Add directory="..\lib" />
+				</Linker>
+			</Target>
+			<Target title="master">
+				<Option output="..\..\bin\sauerbraten-master.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\master" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="-t0 -w640 -h480 -qhome" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-Wall" />
+					<Add option="-fsigned-char" />
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fno-exceptions" />
+					<Add option="-fno-rtti" />
+					<Add option="-DSTANDALONE" />
+					<Add directory="..\enet\include" />
+					<Add directory="..\include" />
+					<Add directory="..\engine" />
+					<Add directory="..\shared" />
+					<Add directory="..\vcpp" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="..\vcpp" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="zdll" />
+					<Add library="enet" />
+					<Add library="ws2_32" />
+					<Add library="winmm" />
+					<Add directory="..\lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Linker>
+			<Add option="-mwindows" />
+		</Linker>
+		<Unit filename="..\engine\3dgui.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\animmodel.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\bih.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\bih.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\blend.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\blob.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\client.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\command.cpp" />
+		<Unit filename="..\engine\console.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\cubeloader.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\decal.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\depthfx.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\dynlight.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\engine.h">
+			<Option compile="1" />
+			<Option weight="0" />
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\explosion.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\glare.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\grass.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\iqm.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\lensflare.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\lightmap.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\lightmap.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\lightning.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\main.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\master.cpp">
+			<Option target="master" />
+		</Unit>
+		<Unit filename="..\engine\material.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\md2.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\md3.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\md5.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\menus.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\model.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\movie.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\mpr.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\normal.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\obj.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\octa.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\octa.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\octaedit.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\octarender.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\physics.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\pvs.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\ragdoll.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\rendergl.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\rendermodel.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\renderparticles.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\rendersky.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\rendertarget.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\rendertext.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\renderva.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\scale.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\server.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+			<Option target="server" />
+		</Unit>
+		<Unit filename="..\engine\serverbrowser.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\shader.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\shadowmap.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\skelmodel.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\smd.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\sound.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\textedit.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\texture.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\texture.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\varray.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\vertmodel.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\water.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\world.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\world.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\engine\worldio.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+			<Option target="server" />
+		</Unit>
+		<Unit filename="..\fpsgame\ai.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\ai.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\aiman.h">
+			<Option target="default" />
+			<Option target="debug" />
+			<Option target="server" />
+		</Unit>
+		<Unit filename="..\fpsgame\capture.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\client.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\collect.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\ctf.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\entities.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+			<Option target="server" />
+		</Unit>
+		<Unit filename="..\fpsgame\extinfo.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\fps.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\game.h">
+			<Option compile="1" />
+			<Option weight="0" />
+			<Option target="default" />
+			<Option target="debug" />
+			<Option target="server" />
+		</Unit>
+		<Unit filename="..\fpsgame\monster.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\movable.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\render.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\scoreboard.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\server.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+			<Option target="server" />
+		</Unit>
+		<Unit filename="..\fpsgame\waypoint.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\fpsgame\weapon.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\GL\glext.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_active.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_audio.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_byteorder.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_cdrom.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_config.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_config_macosx.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_config_win32.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_copying.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_cpuinfo.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_endian.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_error.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_events.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_getenv.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_image.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_joystick.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_keyboard.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_keysym.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_loadso.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_main.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_mixer.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_mouse.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_mutex.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_name.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_opengl.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_platform.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_quit.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_rwops.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_stdinc.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_syswm.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_thread.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_timer.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_types.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_version.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\SDL_video.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\begin_code.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\close_code.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\include\zconf.h" />
+		<Unit filename="..\include\zlib.h" />
+		<Unit filename="..\shared\command.h" />
+		<Unit filename="..\shared\crypto.cpp" />
+		<Unit filename="..\shared\cube.h">
+			<Option compile="1" />
+			<Option weight="0" />
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\shared\ents.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\shared\geom.cpp">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\shared\geom.h">
+			<Option target="default" />
+			<Option target="debug" />
+		</Unit>
+		<Unit filename="..\shared\iengine.h" />
+		<Unit filename="..\shared\igame.h" />
+		<Unit filename="..\shared\stream.cpp" />
+		<Unit filename="..\shared\tools.cpp" />
+		<Unit filename="..\shared\tools.h" />
+		<Unit filename="..\shared\zip.cpp" />
+		<Unit filename="mingw.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

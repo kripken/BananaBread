@@ -1,0 +1,27 @@
+/* note ':s' becomes 'sauerbraten' */
+
+/* tabs */
+"Main" = "Main";
+"Maps" = "Maps";
+"Keys" = "Keys";
+"Server" = "Server";
+"EisenStern" = "EisenStern";
+"Help" = "Help";
+
+"Ok" = "Ok";
+"Cancel" = "Cancel";
+"Start" = "Start";
+"Stop" = "Stop";
+"ServerAlertMesg" = "Error - Can't launch server";
+
+"ClientAlertTitle" = "Can't start :s";
+"ClientAlertMesg" = "Try moving the game folder contain :s so that the path doesn't contain weird characters, or start :s manually.";
+
+"InitAlertTitle" = "Invalid installation";
+"InitAlertMesg" = "Cannot find game data and executable";
+
+"FileAlertTitle" = "Invalid file location";
+"FileAlertMesg" = "Can only load files that are within the :s/packages/ folder. Do you want to show this folder?";
+
+/* for MOD convenience */
+"forumURL" = "http://www.cubeengine.com/forum.php4";

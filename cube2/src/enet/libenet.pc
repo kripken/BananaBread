@@ -1,0 +1,10 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libenet
+Description: Low-latency UDP networking library supporting optional reliability
+Version: 1.3.3
+Cflags: -I${includedir}
+Libs: -L${libdir} -lenet

@@ -1,0 +1,5 @@
+#include "winresrc.h"
+#define IDI_ICON1 1
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+IDI_ICON1 ICON "cube2.ico"
