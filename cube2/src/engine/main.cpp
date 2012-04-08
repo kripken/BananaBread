@@ -588,7 +588,7 @@ void setupscreen(int &usedcolorbits, int &useddepthbits, int &usedfsaa)
         hasbpp = SDL_VideoModeOK(scr_w, scr_h, colorbits, SDL_OPENGL|flags)==colorbits;
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-#if SDL_VERSION_ATLEAST(1, 2, 11)
+#if SDL_VERSION_ATLEAST(1, 2, 11) && !EMSCRIPTEN
     if(vsync>=0) SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, vsync);
 #endif
     static int configs[] =
@@ -772,7 +772,11 @@ static void ignoremousemotion()
 {
     SDL_Event e;
     SDL_PumpEvents();
+#if !EMSCRIPTEN
     while(SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_EVENTMASK(SDL_MOUSEMOTION)));
+#else
+    while(SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_MOUSEMOTION, SDL_MOUSEMOTION));
+#endif
 }
 
 static void resetmousemotion()
