@@ -7,4 +7,11 @@ src/native/fpsgame/*.cpp
 src/native/engine/*.cpp
 src/native/shared/*.cpp
 src/native/enet/
+src/web/fpsgame/*.h
+src/web/engine/*.h
+src/web/shared/*.h
+src/web/fpsgame/*.cpp
+src/web/engine/*.cpp
+src/web/shared/*.cpp
+src/web/enet/
 
