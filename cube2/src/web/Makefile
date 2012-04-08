@@ -1,7 +1,12 @@
-CXXFLAGS= -O3 -fomit-frame-pointer
+EMSCRIPTEN = ~/Dev/emscripten
+CXX = $(EMSCRIPTEN)/emcc
+EMCONFIGURE = $(EMSCRIPTEN)/emconfigure
+EMMAKE = $(EMSCRIPTEN)/emmake
+
+CXXFLAGS= -O0
 override CXXFLAGS+= -Wall -fsigned-char -fno-exceptions -fno-rtti
 
-PLATFORM= $(shell uname -s)
+PLATFORM= emscripten
 PLATFORM_PREFIX= native
 
 INCLUDES= -Ishared -Iengine -Ifpsgame -Ienet/include
@@ -20,8 +25,8 @@ WINDRES= windres
 CLIENT_INCLUDES= $(INCLUDES) -Iinclude
 CLIENT_LIBS= -mwindows -Llib -lSDL -lSDL_image -lSDL_mixer -lzdll -lopengl32 -lenet -lws2_32 -lwinmm
 else	
-CLIENT_INCLUDES= $(INCLUDES) -I/usr/X11R6/include `sdl-config --cflags`
-CLIENT_LIBS= -Lenet/.libs -lenet -L/usr/X11R6/lib -lX11 `sdl-config --libs` -lSDL_image -lSDL_mixer -lz -lGL
+CLIENT_INCLUDES= $(INCLUDES)
+CLIENT_LIBS= -Lenet/.libs -lenet -lX11 -lSDL_image -lSDL_mixer -lz -lGL
 endif
 ifeq ($(PLATFORM),Linux)
 CLIENT_LIBS+= -lrt
@@ -121,11 +126,11 @@ all: client
 # server
 
 enet/Makefile:
-	cp -r enet/* enet/  
-	cd enet; ./configure --enable-shared=no --enable-static=yes
+	cp -r ../enet/* enet/  
+	cd enet; $(EMCONFIGURE) ./configure --enable-shared=no --enable-static=yes
 	
 libenet: enet/Makefile
-	$(MAKE)	-C enet/ all
+	$(EMMAKE) $(MAKE)	-C enet/ all
 
 clean-enet: enet/Makefile
 	$(MAKE) -C enet/ clean
