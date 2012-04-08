@@ -121,7 +121,7 @@ all: client
 # server
 
 enet/Makefile:
-	cp -r enet/* enet/  
+	cp -r ../enet/* enet/  
 	cd enet; ./configure --enable-shared=no --enable-static=yes
 	
 libenet: enet/Makefile
