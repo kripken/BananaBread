@@ -824,7 +824,11 @@ bool checkgrayscale(SDL_Surface *s)
     // gray scale images have 256 levels, no colorkey, and the palette is a ramp
     if(s->format->palette)
     {
+#if !EMSCRIPTEN // XXX
         if(s->format->palette->ncolors != 256 || s->format->colorkey) return false;
+#else
+        if(s->format->palette->ncolors != 256) return false;
+#endif
         const SDL_Color *colors = s->format->palette->colors;
         loopi(256) if(colors[i].r != i || colors[i].g != i || colors[i].b != i) return false;
     }
@@ -843,7 +847,11 @@ SDL_Surface *fixsurfaceformat(SDL_Surface *s)
     switch(s->format->BytesPerPixel)
     {
         case 1:
+#if !EMSCRIPTEN // XXX
             if(!checkgrayscale(s)) return s->format->colorkey ? creatergbasurface(s) : creatergbsurface(s);
+#else
+            if(!checkgrayscale(s)) return creatergbasurface(s);
+#endif
             break;
         case 3:
             if(s->format->Rmask != rgbmasks[0] || s->format->Gmask != rgbmasks[1] || s->format->Bmask != rgbmasks[2]) 
