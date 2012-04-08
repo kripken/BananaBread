@@ -1,0 +1,10 @@
+*.o
+*.gch
+src/native/fpsgame/*.h
+src/native/engine/*.h
+src/native/shared/*.h
+src/native/fpsgame/*.cpp
+src/native/engine/*.cpp
+src/native/shared/*.cpp
+src/native/enet/
+
