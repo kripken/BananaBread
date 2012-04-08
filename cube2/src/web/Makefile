@@ -167,8 +167,11 @@ master: $(MASTER_OBJS)
 
 install: all
 else
-client:	libenet $(CLIENT_OBJS)
-	$(CXX) $(CXXFLAGS) -o sauer_client $(CLIENT_OBJS) $(CLIENT_LIBS)
+client.bc:	libenet $(CLIENT_OBJS)
+	$(CXX) $(CXXFLAGS) -o client.bc $(CLIENT_OBJS) $(CLIENT_LIBS)
+
+client: client.bc
+	$(CXX) $(CXXFLAGS) client.bc -o client.html
 
 server:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_server $(SERVER_OBJS) $(SERVER_LIBS)  
