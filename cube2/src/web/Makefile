@@ -171,7 +171,7 @@ client.bc:	libenet $(CLIENT_OBJS)
 	$(CXX) $(CXXFLAGS) -o client.bc $(CLIENT_OBJS) $(CLIENT_LIBS)
 
 client: client.bc
-	$(CXX) $(CXXFLAGS) client.bc -o client.html
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o client.html --preload-file data/ --preload-file packages/textures/ --preload-file packages/fonts/
 
 server:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_server $(SERVER_OBJS) $(SERVER_LIBS)  
