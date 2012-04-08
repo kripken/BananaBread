@@ -445,20 +445,32 @@ int listfiles(const char *dir, const char *ext, vector<char *> &files)
 }
 
 #ifndef STANDALONE
+#ifndef EMSCRIPTEN
 static int rwopsseek(SDL_RWops *rw, int pos, int whence)
+#else
+static long rwopsseek(SDL_RWops *rw, long pos, int whence)
+#endif
 {
     stream *f = (stream *)rw->hidden.unknown.data1;
     if((!pos && whence==SEEK_CUR) || f->seek(pos, whence)) return (int)f->tell();
     return -1;
 }
 
+#ifndef EMSCRIPTEN
 static int rwopsread(SDL_RWops *rw, void *buf, int size, int nmemb)
+#else
+static size_t rwopsread(SDL_RWops *rw, void *buf, size_t size, size_t nmemb)
+#endif
 {
     stream *f = (stream *)rw->hidden.unknown.data1;
     return f->read(buf, size*nmemb)/size;
 }
 
+#ifndef EMSCRIPTEN
 static int rwopswrite(SDL_RWops *rw, const void *buf, int size, int nmemb)
+#else
+static size_t rwopswrite(SDL_RWops *rw, const void *buf, size_t size, size_t nmemb)
+#endif
 {
     stream *f = (stream *)rw->hidden.unknown.data1;
     return f->write(buf, size*nmemb)/size;
