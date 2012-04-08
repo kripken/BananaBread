@@ -117,9 +117,11 @@ endif
 
 default: all
 
-all: client server
+all: client
+# server
 
 enet/Makefile:
+	cp -r enet/* enet/  
 	cd enet; ./configure --enable-shared=no --enable-static=yes
 	
 libenet: enet/Makefile
@@ -192,6 +194,20 @@ depend:
 
 engine/engine.h.gch: shared/cube.h.gch
 fpsgame/game.h.gch: shared/cube.h.gch
+
+shared/%.h: ../shared/%.h
+	cp $< $@
+engine/%.h: ../engine/%.h
+	cp $< $@
+fpsgame/%.h: ../fpsgame/%.h
+	cp $< $@
+
+shared/%.cpp: ../shared/%.cpp
+	cp $< $@
+engine/%.cpp: ../engine/%.cpp
+	cp $< $@
+fpsgame/%.cpp: ../fpsgame/%.cpp
+	cp $< $@
 
 # DO NOT DELETE
 
