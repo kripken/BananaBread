@@ -288,18 +288,44 @@ bool checkglslsupport()
     glGetObjectParameteriv_(obj, GL_OBJECT_COMPILE_STATUS_ARB, &success);
     if(!success)
     {
+        conoutf(CON_WARN, "Cannot compile fragment shader");
         glDeleteObject_(obj);
         return false;
     }
+    // EMSCRIPTEN: WebGL needs both vertex *and* fragment shaders
+    const GLcharARB *source2 =
+      "attribute vec4 vPosition;    \n"
+      "void main()                  \n"
+      "{                            \n"
+      "   gl_Position = vPosition;  \n"
+      "}                            \n";
+    GLhandleARB obj2 = glCreateShaderObject_(GL_VERTEX_SHADER_ARB);
+    if(!obj2) return false;
+    glShaderSource_(obj2, 1, &source2, NULL);
+    glCompileShader_(obj2);
+    glGetObjectParameteriv_(obj2, GL_OBJECT_COMPILE_STATUS_ARB, &success);
+    if(!success)
+    {
+        conoutf(CON_WARN, "Cannot compile vertex shader");
+        glDeleteObject_(obj);
+        glDeleteObject_(obj2);
+        return false;
+    }
+    // EMSCRIPTEN end (also lines dealing with obj2 below)
     GLhandleARB program = glCreateProgramObject_();
     if(!program)
     {
+        conoutf(CON_WARN, "Cannot create program");
         glDeleteObject_(obj);
+        glDeleteObject_(obj2);
         return false;
     } 
     glAttachObject_(program, obj);
+    glAttachObject_(program, obj2);
     glLinkProgram_(program); 
     glGetObjectParameteriv_(program, GL_OBJECT_LINK_STATUS_ARB, &success);
+    if (!success) conoutf(CON_WARN, "Cannot link program");
+
     glDeleteObject_(obj);
     glDeleteObject_(program);
     return success!=0;
