@@ -1268,6 +1268,8 @@ static void gendynlightvariant(Shader &s, const char *sname, const char *vs, con
 
 static void genshadowmapvariant(Shader &s, const char *sname, const char *vs, const char *ps, int row = 1)
 {
+    return; // XXX EMSCRIPTEN
+
     int smtc = -1, emufogtc = -1, emufogcomp = -1;
     if(!(s.type & SHADER_GLSLANG))
     {
