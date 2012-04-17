@@ -1393,6 +1393,8 @@ static void genshadowmapvariant(Shader &s, const char *sname, const char *vs, co
 
 static void genfogshader(vector<char> &vsbuf, vector<char> &psbuf, const char *vs, const char *ps)
 {
+    return; // XXX EMSCRIPTEN
+
     const char *vspragma = strstr(vs, "#pragma CUBE2_fog"), *pspragma = strstr(ps, "#pragma CUBE2_fog");
     if(!vspragma && !pspragma) return;
     static const int pragmalen = strlen("#pragma CUBE2_fog");
