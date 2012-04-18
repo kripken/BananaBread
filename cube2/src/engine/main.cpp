@@ -2,6 +2,10 @@
 
 #include "engine.h"
 
+#if EMSCRIPTEN
+#include "emscripten.h"
+#endif
+
 extern void cleargamma();
 
 void cleanup()
@@ -884,10 +888,10 @@ VARF(paused, 0, 0, 1, if(multiplayer()) paused = 0);
 VAR(menufps, 0, 60, 1000);
 VARP(maxfps, 0, 200, 1000);
 
-void limitfps(int &millis, int curmillis)
+int limitfps(int &millis, int curmillis)
 {
     int limit = mainmenu && menufps ? (maxfps ? min(maxfps, menufps) : menufps) : maxfps;
-    if(!limit) return;
+    if(!limit) return 0;
     static int fpserror = 0;
     int delay = 1000/limit - (millis-curmillis);
     if(delay < 0) fpserror = 0;
@@ -901,10 +905,11 @@ void limitfps(int &millis, int curmillis)
         }
         if(delay > 0)
         {
-            SDL_Delay(delay);
             millis += delay;
+            return delay; // XXX EMSCRIPTEN
         }
     }
+    return 0;
 }
 
 #if defined(WIN32) && !defined(_DEBUG) && !defined(__GNUC__)
@@ -997,17 +1002,11 @@ int getclockmillis()
     return max(millis, totalmillis);
 }
 
+void main_loop_caller();
+void main_loop_iter();
+
 int main(int argc, char **argv)
 {
-    #ifdef WIN32
-    //atexit((void (__cdecl *)(void))_CrtDumpMemoryLeaks);
-    #ifndef _DEBUG
-    #ifndef __GNUC__
-    __try {
-    #endif
-    #endif
-    #endif
-
     setlogfile(NULL);
 
     int dedicated = 0;
@@ -1192,11 +1191,29 @@ int main(int argc, char **argv)
     inputgrab(grabinput = true);
     ignoremousemotion();
 
-    for(;;)
-    {
-        static int frames = 0;
-        int millis = getclockmillis();
-        limitfps(millis, totalmillis);
+#if EMSCRIPTEN
+    main_loop_caller();
+#else
+    for(;;) main_loop_caller();
+#endif
+}
+
+static int millis, frames = 0;
+
+void main_loop_caller()
+{
+        millis = getclockmillis();
+        int delay = limitfps(millis, totalmillis);
+#if EMSCRIPTEN
+        emscripten_async_call(main_loop_iter, delay);
+#else
+        if (delay > 0) SDL_Delay(delay);
+        main_loop_iter();
+#endif
+}
+
+void main_loop_iter()
+{
         int elapsed = millis-totalmillis;
         if(multiplayer(false)) curtime = game::ispaused() ? 0 : elapsed;
         else
@@ -1231,19 +1248,16 @@ int main(int argc, char **argv)
         updateparticles();
         updatesounds();
 
-        if(minimized) continue;
+        if(minimized) return;
 
         inbetweenframes = false;
         if(mainmenu) gl_drawmainmenu(screen->w, screen->h);
         else gl_drawframe(screen->w, screen->h);
         swapbuffers();
         renderedframe = inbetweenframes = true;
-    }
-    
-    ASSERT(0);   
-    return EXIT_FAILURE;
 
-    #if defined(WIN32) && !defined(_DEBUG) && !defined(__GNUC__)
-    } __except(stackdumper(0, GetExceptionInformation()), EXCEPTION_CONTINUE_SEARCH) { return 0; }
-    #endif
+#if EMSCRIPTEN
+        main_loop_caller();
+#endif
 }
+
