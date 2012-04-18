@@ -1146,8 +1146,8 @@ int main(int argc, char **argv)
     execfile("data/stdedit.cfg");
     execfile("data/menus.cfg");
     execfile("data/sounds.cfg");
-    execfile("data/brush.cfg");
-    execfile("mybrushes.cfg", false);
+    //execfile("data/brush.cfg"); XXX Emscripten disable brushes
+    //execfile("mybrushes.cfg", false);
     if(game::savedservers()) execfile(game::savedservers(), false);
     
     identflags |= IDF_PERSIST;
