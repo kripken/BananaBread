@@ -1,5 +1,9 @@
 // rendergl.cpp: core opengl rendering stuff
 
+#if EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 #include "engine.h"
 
 bool hasVBO = false, hasDRE = false, hasOQ = false, hasTR = false, hasFBO = false, hasDS = false, hasTF = false, hasBE = false, hasBC = false, hasCM = false, hasNP2 = false, hasTC = false, hasTE = false, hasMT = false, hasD3 = false, hasAF = false, hasVP2 = false, hasVP3 = false, hasPP = false, hasMDA = false, hasTE3 = false, hasTE4 = false, hasVP = false, hasFP = false, hasGLSL = false, hasGM = false, hasNVFB = false, hasSGIDT = false, hasSGISH = false, hasDT = false, hasSH = false, hasNVPCF = false, hasRN = false, hasPBO = false, hasFBB = false, hasUBO = false, hasBUE = false, hasFC = false, hasTEX = false;
@@ -1863,7 +1867,22 @@ void gl_drawframe(int w, int h)
 
     if(limitsky()) drawskybox(farplane, true);
 
+#if EMSCRIPTEN
+    // Debugging: Start GL logging on geometry rendering
+    if (!mainmenu) {
+      emscripten_run_script("console.log('SHOWING GEOM');");
+      emscripten_run_script("GL.debug = true;");
+    }
+#endif
+
     rendergeom(causticspass);
+
+#if EMSCRIPTEN
+    // Debugging: Stop GL logging after geometry rendering
+    if (!mainmenu) {
+      emscripten_run_script("throw 'we are done with one geom frame';");
+    }
+#endif
 
     extern int outline;
     if(!wireframe && editmode && outline) renderoutline();
