@@ -1009,15 +1009,17 @@ int getclockmillis()
     return max(millis, totalmillis);
 }
 
+void main2();
 void main_loop_caller();
 void main_loop_iter();
+
+static char *load = NULL, *initscript = NULL;
 
 int main(int argc, char **argv)
 {
     setlogfile(NULL);
 
     int dedicated = 0;
-    char *load = NULL, *initscript = NULL;
 
     initing = INIT_RESET;
     for(int i = 1; i<argc; i++)
@@ -1135,6 +1137,11 @@ int main(int argc, char **argv)
     inbetweenframes = true;
     renderbackground("initializing...");
 
+    emscripten_async_call(main2, 0);
+}
+
+void main2()
+{
     logoutf("init: gl: effects");
     loadshaders();
     particleinit();
