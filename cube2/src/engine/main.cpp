@@ -4,6 +4,11 @@
 
 #if EMSCRIPTEN
 #include "emscripten.h"
+#else
+void emscripten_async_call(void (*func)(), int delay) {
+  if (delay > 0) SDL_Delay(delay);
+  func();
+}
 #endif
 
 extern void cleargamma();
@@ -1206,12 +1211,8 @@ void main_loop_caller()
 {
         millis = getclockmillis();
         int delay = limitfps(millis, totalmillis);
-#if EMSCRIPTEN
+
         emscripten_async_call(main_loop_iter, delay);
-#else
-        if (delay > 0) SDL_Delay(delay);
-        main_loop_iter();
-#endif
 }
 
 void main_loop_iter()
