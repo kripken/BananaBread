@@ -1871,7 +1871,7 @@ void gl_drawframe(int w, int h)
     // Debugging: Start GL logging on geometry rendering
     if (!mainmenu) {
       emscripten_run_script("console.log('SHOWING GEOM');");
-      emscripten_run_script("GL.debug = true;");
+      emscripten_run_script("GL.debug = Runtime.debug = true;");
     }
 #endif
 
