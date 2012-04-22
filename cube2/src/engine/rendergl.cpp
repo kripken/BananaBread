@@ -1805,6 +1805,18 @@ int xtraverts, xtravertsva;
 
 void gl_drawframe(int w, int h)
 {
+#if EMSCRIPTEN
+    // Debugging: Start GL logging on geometry rendering
+    if (!mainmenu) {
+      emscripten_run_script("console.log('SHOWING GEOM');");
+      emscripten_run_script("GL.debug = Runtime.debug = true;");
+      printf("check to see me logged\n");
+      GLint valzzz;
+      glGetIntegerv(GL_MAX_TEXTURE_SIZE, &valzzz);
+      emscripten_run_script("alert('logging!')");
+    }
+#endif
+
     defaultshader->set();
 
     updatedynlights();
@@ -1866,14 +1878,6 @@ void gl_drawframe(int w, int h)
     if(wireframe && editmode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
 
     if(limitsky()) drawskybox(farplane, true);
-
-#if EMSCRIPTEN
-    // Debugging: Start GL logging on geometry rendering
-    if (!mainmenu) {
-      emscripten_run_script("console.log('SHOWING GEOM');");
-      emscripten_run_script("GL.debug = Runtime.debug = true;");
-    }
-#endif
 
     rendergeom(causticspass);
 
