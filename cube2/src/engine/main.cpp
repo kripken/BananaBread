@@ -1017,6 +1017,11 @@ static char *load = NULL, *initscript = NULL;
 
 int main(int argc, char **argv)
 {
+#if EMSCRIPTEN
+    // Debugging: Start logging to off
+    emscripten_run_script("GL.debug = Runtime.debug = false;");
+#endif
+
     setlogfile(NULL);
 
     int dedicated = 0;
