@@ -1805,7 +1805,7 @@ int xtraverts, xtravertsva;
 
 void gl_drawframe(int w, int h)
 {
-#if EMSCRIPTEN
+#if 0 // EMSCRIPTEN
     // Debugging: Start GL logging on geometry rendering
     if (!mainmenu) {
       emscripten_run_script("console.log('SHOWING GEOM');");
@@ -1881,7 +1881,7 @@ void gl_drawframe(int w, int h)
 
     rendergeom(causticspass);
 
-#if EMSCRIPTEN
+#if 0 // EMSCRIPTEN
     // Debugging: Stop GL logging after geometry rendering
     if (!mainmenu) {
       emscripten_run_script("throw 'we are done with one geom frame';");
