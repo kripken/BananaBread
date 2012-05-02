@@ -1224,7 +1224,11 @@ void main_loop_caller()
         millis = getclockmillis();
         int delay = limitfps(millis, totalmillis);
 
+#if EMSCRIPTEN
+        emscripten_async_call(main_loop_iter, -1); // Use requestAnimationFrame
+#else
         emscripten_async_call(main_loop_iter, delay);
+#endif
 }
 
 void main_loop_iter()
