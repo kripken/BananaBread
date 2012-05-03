@@ -12,7 +12,7 @@ Building
 --------
 
 Do 'make' in cube2/src/web for a web build. You can also do 'make' in
-src/native for a native linux build.
+cube2/src/native for a native linux build.
 
 
 Running
@@ -20,7 +20,7 @@ Running
 
 0. Run
      python -m SimpleHTTPServer 8888
-   in cube/
+   in cube2/
 1. Load localhost:8888/client.html
 2. Press the "fullscreen" button
 3. Click "GO!"
