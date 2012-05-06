@@ -92,8 +92,8 @@ bool initwarning(const char *desc, int level, int type)
 #define SCR_MINH 200
 #define SCR_MAXW 10000
 #define SCR_MAXH 10000
-#define SCR_DEFAULTW 1024
-#define SCR_DEFAULTH 768
+#define SCR_DEFAULTW 800
+#define SCR_DEFAULTH 600
 VARF(scr_w, SCR_MINW, -1, SCR_MAXW, initwarning("screen resolution"));
 VARF(scr_h, SCR_MINH, -1, SCR_MAXH, initwarning("screen resolution"));
 VARF(colorbits, 0, 0, 32, initwarning("color depth"));
