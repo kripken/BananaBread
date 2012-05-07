@@ -1211,7 +1211,7 @@ void main2()
     ignoremousemotion();
 
 #if EMSCRIPTEN
-    main_loop_caller();
+    emscripten_set_main_loop(main_loop_caller, 0);
 #else
     for(;;) main_loop_caller();
 #endif
@@ -1222,13 +1222,11 @@ static int millis, frames = 0;
 void main_loop_caller()
 {
         millis = getclockmillis();
+#if !EMSCRIPTEN
         int delay = limitfps(millis, totalmillis);
-
-#if EMSCRIPTEN
-        emscripten_async_call(main_loop_iter, -1); // Use requestAnimationFrame
-#else
-        emscripten_async_call(main_loop_iter, delay);
+        if (delay > 0) SDL_Delay(delay);
 #endif
+        main_loop_iter();
 }
 
 void main_loop_iter()
@@ -1274,9 +1272,5 @@ void main_loop_iter()
         else gl_drawframe(screen->w, screen->h);
         swapbuffers();
         renderedframe = inbetweenframes = true;
-
-#if EMSCRIPTEN
-        main_loop_caller();
-#endif
 }
 
