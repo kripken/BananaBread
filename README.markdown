@@ -5,7 +5,7 @@ BananaBread
 A port of the Cube 2/Sauerbraten first person shooter to the web,
 compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 
-Code is zlib licensed, content is CC-BY or CC-BY-SA.
+Online demo: http://syntensity.com/static/bb/client.html
 
 
 Building
@@ -24,17 +24,16 @@ Running
 1. Load localhost:8888/client.html
 2. Press the "fullscreen" button
 3. Click "GO!"
-4. Move with WASD, jump with space, look around with the mouse. You can shoot
-   a little by clicking the mouse. Some editing stuff works (press 'e' and fly
-   around)
+4. See instructions in disclaimer.html
 
-Please note that
 
- * The C++ game code has not been optimized at all in any way yet
- * The generated JavaScript is itself not fully optimized yet, nor even minified
- * The level you see when you press "GO!" was made by azakai, a person with 0
-   artistic talent
- * The game assets (textures) have not been optimized for faster downloads at all 
+License
+-------
 
-So this is a very *very* early demo - ignore performance and content quality!
+Code is zlib licensed (just like Sauerbraten). Content is CC-BY or
+CC-BY-SA, see license files in specific directories. An exception
+are the character models, their license is sadly more restrictive (we
+hope to get new ones when possible), see details in
+
+  packages/models/snoutx10k/
 
