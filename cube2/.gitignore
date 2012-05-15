@@ -15,4 +15,7 @@ src/web/engine/*.cpp
 src/web/shared/*.cpp
 src/web/enet/
 *~
+*.BAK
+*.html
+*.data
 
