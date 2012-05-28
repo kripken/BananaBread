@@ -36,4 +36,5 @@ are the character models, their license is sadly more restrictive (we
 hope to get new ones when possible), see details in
 
   packages/models/snoutx10k/
+  packages/models/hudguns/
 
