@@ -1141,7 +1141,7 @@ int main(int argc, char **argv)
     if(!setfont("default")) fatal("no default font specified");
 
     inbetweenframes = true;
-    renderbackground("initializing...");
+    renderbackground("starting..."); //"initializing...");
 
     emscripten_async_call(main2, 0);
 }
