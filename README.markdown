@@ -30,10 +30,16 @@ Running
 License
 -------
 
-Code is zlib licensed (just like Sauerbraten). Content is CC-BY or
-CC-BY-SA, see license files in specific directories. An exception
-are the character models, their license is sadly more restrictive (we
-hope to get new ones when possible), see details in
+Code is zlib licensed (just like Sauerbraten).
+
+New content created for this project specifically (for example, by
+Gregor Koch or Alon Zakai) is all CC-BY. If there isn't a specific
+license file, this is the license.
+
+Existing content is mostly CC-BY or CC-BY-SA, see license files in
+specific directories. An exception are the character models, their license
+is sadly more restrictive (we hope to get new ones when possible), see
+details in
 
   packages/models/snoutx10k/
   packages/models/hudguns/
