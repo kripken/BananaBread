@@ -395,6 +395,8 @@ void preloadusedmapmodels(bool msg, bool bih)
     loadprogress = 0;
 }
 
+hashtable<const char *, model *> missingmodels; // XXX EMSCRIPTEN: models that fail to load once, we will never try to load again
+
 model *loadmodel(const char *name, int i, bool msg)
 {
     if(!name)
@@ -410,6 +412,7 @@ model *loadmodel(const char *name, int i, bool msg)
     else
     { 
         if(lightmapping > 1) return NULL;
+        if(missingmodels.access(name)) return NULL; // XXX EMSCRIPTEN
         if(msg)
         {
             defformatstring(filename)("packages/models/%s", name);
@@ -424,7 +427,11 @@ model *loadmodel(const char *name, int i, bool msg)
             DELETEP(m);
         }
         loadingmodel = NULL;
-        if(!m) return NULL;
+        if(!m)
+        {
+            missingmodels.access(name, NULL); // XXX EMSCRIPTEN
+            return NULL;
+        }
         mdllookup.access(m->name(), m);
     }
     if(mapmodels.inrange(i) && !mapmodels[i].m) mapmodels[i].m = m;
