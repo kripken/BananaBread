@@ -18,4 +18,8 @@ src/web/enet/
 *.BAK
 *.html
 *.data
-
+init.cfg
+config.cfg
+restore.cfg
+servers.cfg
+*.diff
