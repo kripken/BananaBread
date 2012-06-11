@@ -1273,5 +1273,15 @@ void main_loop_iter()
         else gl_drawframe(screen->w, screen->h);
         swapbuffers();
         renderedframe = inbetweenframes = true;
+
+#if EMSCRIPTEN
+        static bool first = true;
+        if (first)
+        {
+            first = false;
+            // Stop the loading music
+            emscripten_run_script("console.log('startup complete.'); Module['loadingMusic'].pause(); Module['loadingMusic'] = null;");
+        }
+#endif
 }
 
