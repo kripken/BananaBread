@@ -171,7 +171,31 @@ client.bc:	libenet $(CLIENT_OBJS)
 	$(CXX) $(CXXFLAGS) -o client.bc $(CLIENT_OBJS) $(CLIENT_LIBS)
 
 client: client.bc
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js --preload-file data/ --preload-file packages/textures/ --preload-file packages/fonts/ --preload-file packages/icons/ --preload-file packages/particles/ --preload-file packages/hud/ --preload-file packages/skyboxes/philo --preload-file packages/yo_frankie --preload-file packages/base/silly.ogz --preload-file packages/base/silly.cfg --preload-file packages/base/silly_msg.png --preload-file packages/sounds/aard/ --preload-file packages/sounds/q009/ --preload-file packages/sounds/yo_frankie/ --preload-file packages/models/frankie/ --preload-file packages/models/nut/ --preload-file packages/models/snoutx10k --preload-file packages/models/hudguns/ --preload-file packages/models/vwep/ --preload-file packages/models/debris/ --preload-file packages/models/projectiles/ --preload-file packages/caustics/ -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 --pre-js src/web/pre.js #-O2 --closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py preload.data --preload \
+	                                                          data/ \
+	                                                          packages/textures/ \
+	                                                          packages/fonts/ \
+	                                                          packages/icons/ \
+	                                                          packages/particles/ \
+	                                                          packages/hud/ \
+	                                                          packages/skyboxes/philo \
+	                                                          packages/yo_frankie \
+	                                                          packages/base/silly.ogz \
+	                                                          packages/base/silly.cfg \
+	                                                          packages/base/silly_msg.png \
+	                                                          packages/sounds/aard/ \
+	                                                          packages/sounds/q009/ \
+	                                                          packages/sounds/yo_frankie/ \
+	                                                          packages/models/frankie/ \
+	                                                          packages/models/nut/ \
+	                                                          packages/models/snoutx10k/ \
+	                                                          packages/models/hudguns/ \
+	                                                          packages/models/vwep/ \
+	                                                          packages/models/debris/ \
+	                                                          packages/models/projectiles/ \
+	                                                          packages/caustics/ \
+	                                                          --pre-run > preload.js
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 --pre-js src/web/pre.js #-O2 --closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
 
 server:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_server $(SERVER_OBJS) $(SERVER_LIBS)  
