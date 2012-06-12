@@ -50,9 +50,10 @@ namespace game
     static playermodelinfo playermodels[10];
     static int numplayermodels = 0;
 
-    void setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
-                            const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
-                            const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll) // XXX EMSCRIPTEN: load different player models at runtime
+    // XXX EMSCRIPTEN: load different player models at runtime
+    void __attribute__((used)) setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
+                                                  const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
+                                                  const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll)
     {
         assert(numplayermodels < MAX_PLAYER_MODELS);
         playermodelinfo &p = playermodels[numplayermodels++];
