@@ -416,7 +416,6 @@ namespace game
 
     void preload()
     {
-        return; // XXX EMSCRIPTEN, do not preload everything, we don't need it all
         if(hudgun) preloadweapons();
         preloadbouncers();
         preloadplayermodel();
