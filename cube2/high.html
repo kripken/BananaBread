@@ -69,6 +69,36 @@
       };
       Module.setStatus('Downloading...');
     </script>
+    <h4>
+    This is the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D FPS compiled from C++ and OpenGL to JavaScript and WebGL
+    using <a href="http://emscripten.org">Emscripten</a>. Code is zlib licensed and on <a href="https://github.com/kripken/BananaBread">github</a>.
+    </h4>
+    <p>
+    The demo might take time to download. Afterwards, press the "fullscreen" button and then "GO!".
+    Move with WASD, jump with space, look around with the mouse. You can shoot
+       a little by clicking the mouse. Some editing stuff works (press 'e' and fly
+       around, drag the acorn, etc). You can change the resolution in the menu options (Options->Res tab).
+      Add a bot by bringing up the main menu (` or escape) and selecting "add bot". Then walk
+      around the bot to initialize the AI.
+    </p><p>
+    This is a very <b>very</b> early demo - ignore performance and content quality! Notes:
+    <ul>
+    <li><b>Very little</b> optimization for speed has been done</li>
+    <li>The level you see when you press "GO!" was made by azakai, a person with <b>0</b>
+       artistic talent</li>
+    <li>The game assets (textures) have <b>not</b> been optimized for faster downloads at all</li>
+    <li>Very recent development versions of browsers are needed to get all
+    functionality to work:
+      <ul>
+        <li>Fullscreen is known to work in at least Firefox 15+ and Chrome 20+</li>
+        <li>Mouse lock is known to work in at least Firefox 15+, looks like for Chrome it is
+            <a href="http://code.google.com/p/chromium/issues/detail?id=72754">planned for Chrome 21</a></li>
+        <li>Sound is known to work in Firefox, but fails in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
+      </ul>
+    </li>
+    </ul>
+    </p>
+    <center>version 0.1.0</center>
     <script type='text/javascript' src='preload_high.js'></script>
     <script type='text/javascript' src='setup_high.js'></script>
     <script type='text/javascript' src='bb.js'></script>
