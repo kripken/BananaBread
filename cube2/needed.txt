@@ -1,0 +1,19 @@
+Necessary files to upload (run this in sftp)
+============================================
+
+put bb.html
+put bb.js
+put low.html
+put medium.html
+put high.html
+put preload_low.js
+put preload_medium.js
+put preload_high.js
+put low.data
+put medium.data
+put high.data
+put setup_low.js
+put setup_medium.js
+put setup_high.js
+put OutThere_0.ogg
+
