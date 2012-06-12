@@ -45,32 +45,40 @@ namespace game
         }
     }
 
-    static const playermodelinfo playermodels[1] =
+    // XXX EMSCRIPTEN: load different player models at runtime
+    static const int MAX_PLAYER_MODELS = 10;
+    static playermodelinfo playermodels[10];
+    static int numplayermodels = 0;
+
+    void setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
+                            const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
+                            const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll) // XXX EMSCRIPTEN: load different player models at runtime
     {
-/*
-        { "frankie", "frankie", "frankie", "snoutx10k/hudguns", NULL, "snoutx10k/wings", { "snoutx10k/armor/blue", "snoutx10k/armor/green", "snoutx10k/armor/yellow" }, "frankie", "frankie", "frankie", true },
-    };
-*/
-// XXX EMSCRIPTEN
-        { "snoutx10k", "snoutx10k/blue", "snoutx10k/red", "snoutx10k/hudguns", NULL, "snoutx10k/wings", { "snoutx10k/armor/blue", "snoutx10k/armor/green", "snoutx10k/armor/yellow" }, "snoutx10k", "snoutx10k_blue", "snoutx10k_red", true },
-    };
-/*
-        { "mrfixit", "mrfixit/blue", "mrfixit/red", "mrfixit/hudguns", NULL, "mrfixit/horns", { "mrfixit/armor/blue", "mrfixit/armor/green", "mrfixit/armor/yellow" }, "mrfixit", "mrfixit_blue", "mrfixit_red", true },
-        //{ "ogro/green", "ogro/blue", "ogro/red", "mrfixit/hudguns", "ogro/vwep", NULL, { NULL, NULL, NULL }, "ogro", "ogro_blue", "ogro_red", false },
-        { "ogro2", "ogro2/blue", "ogro2/red", "mrfixit/hudguns", NULL, NULL, { NULL, NULL, NULL }, "ogro", "ogro_blue", "ogro_red", true },
-        { "inky", "inky/blue", "inky/red", "inky/hudguns", NULL, "inky/quad", { "inky/armor/blue", "inky/armor/green", "inky/armor/yellow" }, "inky", "inky_blue", "inky_red", true },
-        { "captaincannon", "captaincannon/blue", "captaincannon/red", "captaincannon/hudguns", NULL, "captaincannon/quad", { "captaincannon/armor/blue", "captaincannon/armor/green", "captaincannon/armor/yellow" }, "captaincannon", "captaincannon_blue", "captaincannon_red", true }
-    };
-*/
+        assert(numplayermodels < MAX_PLAYER_MODELS);
+        playermodelinfo &p = playermodels[numplayermodels++];
+        p.ffa = ffa ? newstring(ffa) : NULL;
+        p.blueteam = blueteam ? newstring(blueteam) : NULL;
+        p.redteam = redteam ? newstring(redteam) : NULL;
+        p.hudguns = hudguns ? newstring(hudguns) : NULL;
+        p.vwep = vwep ? newstring(vwep) : NULL;
+        p.quad = quad ? newstring(quad) : NULL;
+        p.armour[0] = armour0 ? newstring(armour0) : NULL;
+        p.armour[1] = armour1 ? newstring(armour1) : NULL;
+        p.armour[2] = armour2 ? newstring(armour2) : NULL;
+        p.ffaicon = ffaicon ? newstring(ffaicon) : NULL;
+        p.blueicon = blueicon ? newstring(blueicon) : NULL;
+        p.redicon = redicon ? newstring(redicon) : NULL;
+        p.ragdoll = ragdoll;
+    }
 
     int chooserandomplayermodel(int seed)
     {
-        return (seed&0xFFFF)%(sizeof(playermodels)/sizeof(playermodels[0]));
+        return (seed&0xFFFF)%(numplayermodels);
     }
 
     const playermodelinfo *getplayermodelinfo(int n)
     {
-        if(size_t(n) >= sizeof(playermodels)/sizeof(playermodels[0])) return NULL;
+        if(size_t(n) >= numplayermodels) return NULL;
         return &playermodels[n];
     }
 

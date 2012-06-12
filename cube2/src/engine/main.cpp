@@ -1203,6 +1203,13 @@ void main2()
 
     if(initscript) execute(initscript);
 
+#if 0 //EMSCRIPTEN
+    emscripten_run_script("setPlayerModels()");
+#else
+    game::setplayermodelinfo("snoutx10k", "snoutx10k", "snoutx10k", "snoutx10k/hudguns", NULL, NULL, NULL, NULL, NULL, "snoutx10k", "snoutx10k", "snoutx10k", true);
+    game::setplayermodelinfo("frankie", "frankie", "frankie", NULL, "nada", NULL, NULL, NULL, NULL, "frankie", "frankie", "frankie", false);
+#endif
+
     logoutf("init: mainloop");
 
     initmumble();
