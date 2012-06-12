@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>BananaBread</title>
+    <style>
+      body { background: #DDDDEE }
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      canvas.emscripten { border: 1px solid black; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten { text-align: center; }
+    </style>
+  </head>
+  <body>
+    <hr/>
+    <div class="emscripten" id="status">Downloading...</div>
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    <hr/>
+    <div class="emscripten"><input type="button" value="fullscreen" onclick="Module.requestFullScreen()"></div>
+    <hr/>
+    <textarea class="emscripten" id="output" rows="8"></textarea>
+    <hr>
+    <script type='text/javascript'>
+      // connect to canvas
+      var Module = {
+        print: (function() {
+          var element = document.getElementById('output');
+          element.value = ''; // clear browser cache
+          return function(text) {
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+            element.value += text + "\n";
+            element.scrollTop = 99999; // focus on bottom
+          };
+        })(),
+        printErr: function(text) {
+          if (0) { // XXX disabled for safety typeof dump == 'function') {
+            dump(text + '\n'); // fast, straight to the real console
+          } else {
+            console.log(text);
+          }
+        },
+        canvas: document.getElementById('canvas'),
+        setStatus: function(text) {
+          if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
+          document.getElementById('status').innerHTML = text;
+          if (text) {
+            var counter = 0;
+            Module.setStatus.interval = setInterval(function() {
+              counter++;
+              counter %= 3;
+              var dots = ' ';
+              for (var i = 0; i < counter; i++) dots += '.';
+              dots += '*';
+              for (var i = counter; i < 2; i++) dots += '.';
+              document.getElementById('status').innerHTML = text.replace('...', dots);
+            }, 300);
+          }
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Downloading: ' + (this.totalDependencies-left) + '/' + this.totalDependencies + '...' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+    </script>
+    <script type='text/javascript' src='preload_high.js'></script>
+    <script type='text/javascript' src='setup_high.js'></script>
+    <script type='text/javascript' src='bb.js'></script>
+  </body>
+</html>
+

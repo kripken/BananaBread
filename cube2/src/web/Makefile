@@ -170,32 +170,54 @@ else
 client.bc:	libenet $(CLIENT_OBJS)
 	$(CXX) $(CXXFLAGS) -o client.bc $(CLIENT_OBJS) $(CLIENT_LIBS)
 
+BASE_FILES = data/ \
+             packages/textures/ \
+             packages/fonts/ \
+             packages/icons/ \
+             packages/particles/ \
+             packages/sounds/aard/ \
+             packages/sounds/q009/ \
+             packages/sounds/yo_frankie/ \
+             packages/music/ \
+             packages/caustics/ \
+             packages/models/debris/ \
+             packages/models/projectiles/ \
+             packages/hud/
+
+SILLY_FILES = packages/base/silly.ogz \
+              packages/base/silly.cfg \
+              packages/base/silly_msg.png \
+              packages/models/nut/ \
+              packages/yo_frankie \
+	            packages/skyboxes/philo/
+
+FRANKIE_MODEL_FILES = packages/models/frankie/
+
+HUDGUNS_FILES = packages/models/hudguns/ \
+                packages/models/snoutx10k/hudguns
+# dupe snout/hugguns and snout/ ?
+
+SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
+	                      packages/models/snoutx10k/
+
+LOW_FILES = $(BASE_FILES) \
+            $(SILLY_FILES) \
+            $(FRANKIE_MODEL_FILES)
+
+MEDIUM_FILES = $(BASE_FILES) \
+               $(SILLY_FILES) \
+               $(FRANKIE_MODEL_FILES) \
+               $(HUDGUNS_FILES)
+
+HIGH_FILES = $(BASE_FILES) \
+             $(SILLY_FILES) \
+             $(SNOUTX10K_MODEL_FILES) \
+             $(HUDGUNS_FILES)
+
 client: client.bc
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py preload.data --preload \
-	                                                          data/ \
-	                                                          packages/textures/ \
-	                                                          packages/fonts/ \
-	                                                          packages/icons/ \
-	                                                          packages/particles/ \
-	                                                          packages/hud/ \
-	                                                          packages/skyboxes/philo \
-	                                                          packages/yo_frankie \
-	                                                          packages/base/silly.ogz \
-	                                                          packages/base/silly.cfg \
-	                                                          packages/base/silly_msg.png \
-	                                                          packages/sounds/aard/ \
-	                                                          packages/sounds/q009/ \
-	                                                          packages/sounds/yo_frankie/ \
-	                                                          packages/models/frankie/ \
-	                                                          packages/models/nut/ \
-	                                                          packages/models/snoutx10k/ \
-	                                                          packages/models/hudguns/ \
-	                                                          packages/models/vwep/ \
-	                                                          packages/models/debris/ \
-	                                                          packages/models/projectiles/ \
-	                                                          packages/caustics/ \
-	                                                          packages/music/ \
-	                                                          --pre-run > preload.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --preload $(LOW_FILES) --pre-run > preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --preload $(HIGH_FILES) --pre-run > preload_high.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b']" --pre-js src/web/pre.js #-O2 #--closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
 
 server:	libenet $(SERVER_OBJS)
