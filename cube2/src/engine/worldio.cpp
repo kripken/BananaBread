@@ -2,6 +2,10 @@
 
 #include "engine.h"
 
+#if EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 void cutogz(char *s) 
 {   
     char *ogzp = strstr(s, ".ogz");
@@ -1251,6 +1255,12 @@ bool load_world(const char *mname, const char *cname)        // still supports a
 
     startmap(cname ? cname : mname);
     
+#if EMSCRIPTEN
+    // Stop the loading music, and play music (right here, at the very end of world loading)
+    emscripten_run_script("if (Module['loadingMusic']) { Module['loadingMusic'].pause(); Module['loadingMusic'] = null }");
+#endif
+    execute("playasong");
+
     return true;
 }
 
