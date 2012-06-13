@@ -5,7 +5,7 @@ BananaBread
 A port of the Cube 2/Sauerbraten first person shooter to the web,
 compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 
-Online demo: http://syntensity.com/static/bb/client.html
+Online demo: http://www.syntensity.com/static/bb1/high.html
 
 
 Building
