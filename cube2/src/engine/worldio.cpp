@@ -1256,8 +1256,8 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     startmap(cname ? cname : mname);
     
 #if EMSCRIPTEN
-    // Stop the loading music, and play music (right here, at the very end of world loading)
-    emscripten_run_script("if (Module['loadingMusic']) { Module['loadingMusic'].pause(); Module['loadingMusic'] = null }");
+    // Do stuff like stop the loading music etc., and play music (right here, at the very end of world loading)
+    emscripten_run_script("Module['postLoadWorld']()");
 #endif
     execute("playasong");
 

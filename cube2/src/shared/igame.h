@@ -88,9 +88,10 @@ namespace game
     extern bool serverinfoentry(g3d_gui *g, int i, const char *name, int port, const char *desc, const char *map, int ping, const vector<int> &attr, int np);
     extern bool needminimap();
 
-    extern void setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
-                                   const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
-                                   const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll); // XXX EMSCRIPTEN: load different player models at runtime
+    // XXX EMSCRIPTEN: load different player models at runtime
+    extern void EMSCRIPTEN_KEEPALIVE setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
+                                                        const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
+                                                        const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll);
 } 
  
 namespace server

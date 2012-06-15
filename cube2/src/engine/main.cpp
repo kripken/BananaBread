@@ -2,15 +2,6 @@
 
 #include "engine.h"
 
-#if EMSCRIPTEN
-#include "emscripten.h"
-#else
-void emscripten_async_call(void (*func)(), int delay) {
-  if (delay > 0) SDL_Delay(delay);
-  func();
-}
-#endif
-
 extern void cleargamma();
 
 void cleanup()

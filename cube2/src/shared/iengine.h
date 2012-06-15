@@ -1,5 +1,7 @@
 // the interface the game uses to access the engine
 
+#include <emscripten.h>
+
 extern int curtime;                     // current frame time
 extern int lastmillis;                  // last time
 extern int totalmillis;                 // total elapsed time
@@ -129,9 +131,9 @@ extern void freecode(uint *p);
 extern void executeret(const uint *code, tagval &result = *commandret);
 extern void executeret(const char *p, tagval &result = *commandret);
 extern char *executestr(const uint *code);
-extern char *executestr(const char *p);
+extern EMSCRIPTEN_KEEPALIVE char *executestr(const char *p);
 extern int execute(const uint *code);
-extern int execute(const char *p);
+extern EMSCRIPTEN_KEEPALIVE int execute(const char *p);
 extern bool executebool(const uint *code);
 extern bool executebool(const char *p);
 extern bool execfile(const char *cfgfile, bool msg = true);

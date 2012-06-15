@@ -12,6 +12,7 @@ put preload_high.js
 put low.data
 put medium.data
 put high.data
+put setup.js
 put setup_low.js
 put setup_medium.js
 put setup_high.js
