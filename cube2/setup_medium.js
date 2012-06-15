@@ -4,8 +4,6 @@ Module.setPlayerModels = function() {
 };
 
 Module.tweakDetail = function() {
-  BananaBread.execute('waterreflect 1');
-  BananaBread.execute('waterrefract 1');
-  BananaBread.execute('glare 1');
+  BananaBread.execute('maxdebris 17');
 };
 

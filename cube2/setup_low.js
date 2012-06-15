@@ -5,5 +5,6 @@ Module.setPlayerModels = function() {
 
 Module.tweakDetail = function() {
   BananaBread.execute('fog 10000'); // disable fog
+  BananaBread.execute('maxdebris 10');
 };
 
