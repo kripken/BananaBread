@@ -1,6 +1,7 @@
 Necessary files to upload (run this in sftp)
 ============================================
 
+cd syntensity/master_django/intensity/static/night/
 put bb.html
 put bb.js
 put low.html

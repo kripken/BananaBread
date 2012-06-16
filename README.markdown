@@ -7,6 +7,8 @@ compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 
 Online demo: http://www.syntensity.com/static/bb1/high.html
 
+Nightly builds (may be unstable): http://www.syntensity.com/static/night/bb.html
+
 
 Building
 --------
