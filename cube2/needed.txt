@@ -18,4 +18,5 @@ put setup_low.js
 put setup_medium.js
 put setup_high.js
 put OutThere_0.ogg
+put crunch-worker.js
 

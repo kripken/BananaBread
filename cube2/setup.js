@@ -24,5 +24,5 @@ var BananaBread = {
   },
 };
 
-Module.postRun = BananaBread.init;
+Module.postRun.push(BananaBread.init);
 
