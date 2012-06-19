@@ -192,11 +192,16 @@ SILLY_FILES = packages/base/silly.ogz \
               packages/yo_frankie \
 	            packages/skyboxes/philo/
 
+MD_FILES = packages/base/md.ogz \
+           packages/base/md.cfg \
+           packages/gk/fantasy/skyfantasy/ \
+           `find packages/gk/ -name "*.cfg"` \
+           `find packages/gk/ -name "*.dds"`
+
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
 HUDGUNS_FILES = packages/models/hudguns/ \
                 packages/models/snoutx10k/hudguns
-# dupe snout/hugguns and snout/ ?
 
 SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 	                      packages/models/snoutx10k/
@@ -211,14 +216,14 @@ MEDIUM_FILES = $(BASE_FILES) \
                $(HUDGUNS_FILES)
 
 HIGH_FILES = $(BASE_FILES) \
-             $(SILLY_FILES) \
+             $(MD_FILES) \
              $(SNOUTX10K_MODEL_FILES) \
              $(HUDGUNS_FILES)
 
 client: client.bc
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --preload $(LOW_FILES) --pre-run > preload_low.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --preload $(HIGH_FILES) --pre-run > preload_high.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=8 --preload $(LOW_FILES) --pre-run > preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=16 --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=32 --preload $(HIGH_FILES) --pre-run > preload_high.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc']" #-O2 #--closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
 
 server:	libenet $(SERVER_OBJS)
