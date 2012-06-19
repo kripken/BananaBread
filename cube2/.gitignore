@@ -23,3 +23,5 @@ config.cfg
 restore.cfg
 servers.cfg
 *.diff
+*.crn
+
