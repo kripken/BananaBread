@@ -194,9 +194,50 @@ SILLY_FILES = packages/base/silly.ogz \
 
 MD_FILES = packages/base/md.ogz \
            packages/base/md.cfg \
-           packages/gk/fantasy/skyfantasy/ \
-           `find packages/gk/ -name "*.cfg"` \
-           `find packages/gk/ -name "*.dds"`
+           packages/gk/fantasy/skyfantasyJPG/ \
+           packages/gk/fantasy/rock_formation_gk_v01/ \
+           packages/gk/fantasy/rock_formation_gk_v02/ \
+           packages/gk/fantasy/castell_wall_gk_v01/ \
+           packages/gk/fantasy/castell_wall_gk_v02/ \
+           packages/gk/fantasy/castell_wall_gk_v03/ \
+           packages/gk/fantasy/castell_wall_trim_gk_v01/ \
+           packages/gk/fantasy/stone_ground_gk_v01/ \
+           packages/gk/fantasy/stone_ground_tiles_gk_v01/ \
+           packages/gk/fantasy/wooden_roof_tiles_gk_v01/ \
+           packages/gk/fantasy/wooden_planks_gk_v01/ \
+           packages/gk/fantasy/castell_plaster_gk_v01/ \
+           packages/gk/fantasy/iron_plates_gk_v01/ \
+           packages/gk/fantasy/iron_trim_gk_v01/ \
+           packages/gk/fantasy/iron_intersection_gk_v01/
+
+MD2_FILES = packages/base/md2.ogz \
+            packages/base/md2.cfg \
+            packages/gk/fantasy/skyfantasyJPG/ \
+            packages/gk/fantasy/rock_formation_gk_v01/ \
+            packages/gk/fantasy/castell_wall_gk_v01/ \
+            packages/gk/fantasy/castell_wall_trim_gk_v01/ \
+            packages/gk/fantasy/stone_ground_gk_v01/ \
+            packages/gk/fantasy/stone_ground_tiles_gk_v01/ \
+            packages/gk/fantasy/wooden_roof_tiles_gk_v01/ \
+            packages/gk/fantasy/wooden_planks_gk_v01/ \
+            packages/gk/fantasy/castell_plaster_gk_v01/ \
+            packages/gk/fantasy/iron_plates_gk_v01/ \
+            packages/gk/fantasy/iron_trim_gk_v01/
+
+
+MD3_FILES = packages/base/md3.ogz \
+            packages/base/md3.cfg \
+            packages/gk/fantasy/skyfantasyJPG/ \
+            packages/gk/fantasy/rock_formation_gk_v01/ \
+            packages/gk/fantasy/castell_wall_gk_v01/ \
+            packages/gk/fantasy/castell_wall_trim_gk_v01/ \
+            packages/gk/fantasy/stone_ground_gk_v01/ \
+            packages/gk/fantasy/stone_ground_tiles_gk_v01/ \
+            packages/gk/fantasy/wooden_roof_tiles_gk_v01/ \
+            packages/gk/fantasy/wooden_planks_gk_v01/ \
+            packages/gk/fantasy/castell_plaster_gk_v01/ \
+            packages/gk/fantasy/iron_plates_gk_v01/ \
+            packages/gk/fantasy/iron_trim_gk_v01/
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
@@ -207,11 +248,11 @@ SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 	                      packages/models/snoutx10k/
 
 LOW_FILES = $(BASE_FILES) \
-            $(SILLY_FILES) \
+            $(MD2_FILES) \
             $(FRANKIE_MODEL_FILES)
 
 MEDIUM_FILES = $(BASE_FILES) \
-               $(SILLY_FILES) \
+               $(MD3_FILES) \
                $(FRANKIE_MODEL_FILES) \
                $(HUDGUNS_FILES)
 

@@ -10,3 +10,7 @@ Module.tweakDetail = function() {
   BananaBread.execute('maxdebris 25');
 };
 
+Module.loadDefaultMap = function() {
+  BananaBread.execute('sleep 10 [ effic md ]');
+};
+

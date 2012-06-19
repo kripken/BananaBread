@@ -1196,9 +1196,11 @@ void main2()
 
 #if EMSCRIPTEN
     emscripten_run_script("Module['setPlayerModels']()");
+    emscripten_run_script("Module['loadDefaultMap']()");
 #else
     game::setplayermodelinfo("snoutx10k", "snoutx10k", "snoutx10k", "snoutx10k/hudguns", NULL, NULL, NULL, NULL, NULL, "snoutx10k", "snoutx10k", "snoutx10k", true);
     game::setplayermodelinfo("frankie", "frankie", "frankie", NULL, "nada", NULL, NULL, NULL, NULL, "frankie", "frankie", "frankie", false);
+    execute("sleep 10 [ effic silly ]");
 #endif
 
     logoutf("init: mainloop");
