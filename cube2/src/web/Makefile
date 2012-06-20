@@ -192,52 +192,39 @@ SILLY_FILES = packages/base/silly.ogz \
               packages/yo_frankie \
 	            packages/skyboxes/philo/
 
+FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
+                   `find packages/gk/fantasy/rock_formation_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/rock_formation_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/castell_wall_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/castell_wall_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/castell_wall_trim_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/castell_wall_trim_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/stone_ground_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/stone_ground_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/stone_ground_tiles_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/stone_ground_tiles_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/wooden_roof_tiles_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/wooden_roof_tiles_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/wooden_planks_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/wooden_planks_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/castell_plaster_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/castell_plaster_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/iron_plates_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/iron_plates_gk_v01/ -name "*.dds"` \
+                   `find packages/gk/fantasy/iron_trim_gk_v01/ -name "*.cfg"` \
+                   `find packages/gk/fantasy/iron_trim_gk_v01/ -name "*.dds"`
+
 MD_FILES = packages/base/md.ogz \
            packages/base/md.cfg \
-           packages/gk/fantasy/skyfantasyJPG/ \
-           packages/gk/fantasy/rock_formation_gk_v01/ \
-           packages/gk/fantasy/rock_formation_gk_v02/ \
-           packages/gk/fantasy/castell_wall_gk_v01/ \
-           packages/gk/fantasy/castell_wall_gk_v02/ \
-           packages/gk/fantasy/castell_wall_gk_v03/ \
-           packages/gk/fantasy/castell_wall_trim_gk_v01/ \
-           packages/gk/fantasy/stone_ground_gk_v01/ \
-           packages/gk/fantasy/stone_ground_tiles_gk_v01/ \
-           packages/gk/fantasy/wooden_roof_tiles_gk_v01/ \
-           packages/gk/fantasy/wooden_planks_gk_v01/ \
-           packages/gk/fantasy/castell_plaster_gk_v01/ \
-           packages/gk/fantasy/iron_plates_gk_v01/ \
-           packages/gk/fantasy/iron_trim_gk_v01/ \
-           packages/gk/fantasy/iron_intersection_gk_v01/
+           $(FANTASY_TEXTURES)
 
 MD2_FILES = packages/base/md2.ogz \
             packages/base/md2.cfg \
-            packages/gk/fantasy/skyfantasyJPG/ \
-            packages/gk/fantasy/rock_formation_gk_v01/ \
-            packages/gk/fantasy/castell_wall_gk_v01/ \
-            packages/gk/fantasy/castell_wall_trim_gk_v01/ \
-            packages/gk/fantasy/stone_ground_gk_v01/ \
-            packages/gk/fantasy/stone_ground_tiles_gk_v01/ \
-            packages/gk/fantasy/wooden_roof_tiles_gk_v01/ \
-            packages/gk/fantasy/wooden_planks_gk_v01/ \
-            packages/gk/fantasy/castell_plaster_gk_v01/ \
-            packages/gk/fantasy/iron_plates_gk_v01/ \
-            packages/gk/fantasy/iron_trim_gk_v01/
-
+            $(FANTASY_TEXTURES)
 
 MD3_FILES = packages/base/md3.ogz \
             packages/base/md3.cfg \
-            packages/gk/fantasy/skyfantasyJPG/ \
-            packages/gk/fantasy/rock_formation_gk_v01/ \
-            packages/gk/fantasy/castell_wall_gk_v01/ \
-            packages/gk/fantasy/castell_wall_trim_gk_v01/ \
-            packages/gk/fantasy/stone_ground_gk_v01/ \
-            packages/gk/fantasy/stone_ground_tiles_gk_v01/ \
-            packages/gk/fantasy/wooden_roof_tiles_gk_v01/ \
-            packages/gk/fantasy/wooden_planks_gk_v01/ \
-            packages/gk/fantasy/castell_plaster_gk_v01/ \
-            packages/gk/fantasy/iron_plates_gk_v01/ \
-            packages/gk/fantasy/iron_trim_gk_v01/
+            $(FANTASY_TEXTURES)
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
