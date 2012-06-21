@@ -14,6 +14,19 @@ Module.postLoadWorld = function() {
 
 Module.tweakDetail = function() {};
 
+Module.onFullScreen = function() {
+  var desired = 600; // for something like 600x600
+  var w, h;
+  if (screen.width >= screen.height) {
+    h = desired;
+    w = Math.floor(desired * screen.width / screen.height);
+  } else {
+    w = desired;
+    h = Math.floor(desired * screen.height / screen.width);
+  }
+  BananaBread.execute('screenres ' + w + ' ' + h);
+};
+
 // Public API
 var BananaBread = {
   init: function() {
