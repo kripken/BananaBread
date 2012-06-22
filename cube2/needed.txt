@@ -2,8 +2,8 @@ Necessary files to upload (run this in sftp)
 ============================================
 
 cd syntensity/master_django/intensity/static
-mkdir night3
-cd night3
+mkdir night4
+cd night4
 put bb.html
 put bb.js
 put low.html

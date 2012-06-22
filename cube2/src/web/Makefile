@@ -232,6 +232,21 @@ TT_FILES = packages/base/tt.ogz \
            `find packages/gk/dds/ -name "*.cfg"` \
            `find packages/gk/dds/ -name "*.dds"`
 
+CB_TEXTURES = packages/gk/cyber/ \
+              packages/gk/cyber/cybersky/
+
+CB_FILES = $(CB_TEXTURES) \
+           packages/base/cb.ogz \
+           packages/base/cb.cfg
+
+CB2_FILES = $(CB_TEXTURES) \
+            packages/base/cb2.ogz \
+            packages/base/cb2.cfg
+
+CW_FILES = $(CB_TEXTURES) \
+            packages/base/gk_cyber_world.ogz \
+            packages/base/gk_cyber_world.cfg
+
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
 HUDGUNS_FILES = packages/models/hudguns/ \
@@ -241,16 +256,16 @@ SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 	                      packages/models/snoutx10k/
 
 LOW_FILES = $(BASE_FILES) \
-            $(TT_FILES) \
+            $(CB_FILES) \
             $(FRANKIE_MODEL_FILES)
 
 MEDIUM_FILES = $(BASE_FILES) \
-               $(TT_FILES) \
+               $(CB2_FILES) \
                $(FRANKIE_MODEL_FILES) \
                $(HUDGUNS_FILES)
 
 HIGH_FILES = $(BASE_FILES) \
-             $(TT_FILES) \
+             $(CW_FILES) \
              $(SNOUTX10K_MODEL_FILES) \
              $(HUDGUNS_FILES)
 
@@ -258,8 +273,8 @@ CRUNCH_QUALITY = 1
 
 client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > preload_low.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
 	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc']" -O2 #--closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
 
 server:	libenet $(SERVER_OBJS)
