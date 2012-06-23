@@ -8,6 +8,6 @@ Module.tweakDetail = function() {
 };
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ effic cb2 ]');
+  BananaBread.execute('sleep 10 [ effic cyber1 ]');
 };
 

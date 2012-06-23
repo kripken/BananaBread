@@ -11,6 +11,6 @@ Module.tweakDetail = function() {
 };
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ effic gk_cyber_world ]');
+  BananaBread.execute('sleep 10 [ effic two_towers ]');
 };
 
