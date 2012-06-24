@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>BananaBread</title>
+    <style>
+      body { background: #DDDDEE }
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      canvas.emscripten { border: 1px solid black; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten { text-align: center; }
+    </style>
+  </head>
+  <body>
+    <h2><center>BananaBread: High-End Demo</center></h2>
+    <hr/>
+    <div class="emscripten" id="status">Downloading...</div>
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    <hr/>
+    <div class="emscripten"><input type="button" value="fullscreen" onclick="Module.requestFullScreen()"></div>
+    <hr/>
+    <textarea class="emscripten" id="output" rows="8"></textarea>
+    <hr>
+    <script type='text/javascript'>
+      // connect to canvas
+      var Module = {
+        preRun: [],        
+        postRun: [],        
+        print: (function() {
+          var element = document.getElementById('output');
+          element.value = ''; // clear browser cache
+          return function(text) {
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+            element.value += text + "\n";
+            element.scrollTop = 99999; // focus on bottom
+          };
+        })(),
+        printErr: function(text) {
+          if (0) { // XXX disabled for safety typeof dump == 'function') {
+            dump(text + '\n'); // fast, straight to the real console
+          } else {
+            console.log(text);
+          }
+        },
+        canvas: document.getElementById('canvas'),
+        setStatus: function(text) {
+          if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
+          document.getElementById('status').innerHTML = text;
+          if (text) {
+            var counter = 0;
+            Module.setStatus.interval = setInterval(function() {
+              counter++;
+              counter %= 3;
+              var dots = ' ';
+              for (var i = 0; i < counter; i++) dots += '.';
+              dots += '*';
+              for (var i = counter; i < 2; i++) dots += '.';
+              document.getElementById('status').innerHTML = text.replace('...', dots);
+            }, 300);
+          }
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing: ' + (this.totalDependencies-left) + '/' + this.totalDependencies + '...' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+    </script>
+    <h4>
+    This is the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D FPS compiled from C++ and OpenGL to JavaScript and WebGL
+    using <a href="http://emscripten.org">Emscripten</a>. Code is zlib licensed and on <a href="https://github.com/kripken/BananaBread">github</a>.
+    </h4>
+    <p>
+    The demo might take time to download. Afterwards:
+    <ul>
+      <li>Press the "fullscreen" button for the best experience.</li>
+      <li>Move with WASD, jump with space, look around with the mouse.</li>
+      <li>Shoot with the mouse, change weapons with 1-5.</li>
+      <li>You can change some settings using the main menu (` or escape). For example, add another bot with "add bot"</li>
+      <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
+    </ul>
+    </p><p>
+    This is a very <b>very</b> early demo - ignore performance and content quality! Notes:
+    <ul>
+    <li><b>Very little</b> optimization for speed has been done</li>
+    <li>The level you see is a work in progress</li>
+    <li>The game assets (textures) have <b>not</b> been optimized for faster downloads at all</li>
+    <li>Very recent development versions of browsers are needed to get all
+    functionality to work:
+      <ul>
+        <li>Fullscreen is known to work in at least Firefox 15+ and Chrome 20+</li>
+        <li>Mouse lock is known to work in at least Firefox 15+, looks like for Chrome it is
+            <a href="http://code.google.com/p/chromium/issues/detail?id=72754">planned for Chrome 21</a></li>
+        <li>Sound is known to work in Firefox, but fails in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
+      </ul>
+    </li>
+    </ul>
+    </p>
+    <center>version 0.1.1</center>
+    <script type='text/javascript' src='setup.js'></script>
+    <script type='text/javascript' src='setup_high_minus.js'></script>
+    <script type='text/javascript' src='preload_high.js'></script>
+    <script type='text/javascript' src='bb.js'></script>
+  </body>
+</html>
+
