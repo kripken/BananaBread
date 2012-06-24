@@ -229,11 +229,13 @@ MD_FILES = packages/base/md.ogz \
 
 TWO_TOWERS_FILES = packages/base/two_towers.ogz \
                    packages/base/two_towers.cfg \
+                   packages/base/two_towers.wpt \
                    $(FANTASY_TEXTURES) \
                    $(EXTRA_FANTASY_TEXTURES)
 
 MD2_FILES = packages/base/md2.ogz \
             packages/base/md2.cfg \
+            packages/base/md2.wpt \
             $(FANTASY_TEXTURES)
 
 MD3_FILES = packages/base/md3.ogz \
@@ -263,7 +265,8 @@ CW_FILES = $(CB_TEXTURES) \
 
 CYBER1_FILES = $(CB_TEXTURES) \
                packages/base/cyber1.ogz \
-               packages/base/cyber1.cfg
+               packages/base/cyber1.cfg \
+               packages/base/cyber1.wpt
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
