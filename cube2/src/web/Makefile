@@ -282,7 +282,7 @@ LOW_FILES = $(BASE_FILES) \
 
 MEDIUM_FILES = $(BASE_FILES) \
                $(CYBER1_FILES) \
-               $(FRANKIE_MODEL_FILES) \
+               $(SNOUTX10K_MODEL_FILES) \
                $(HUDGUNS_FILES)
 
 HIGH_FILES = $(BASE_FILES) \
