@@ -229,7 +229,6 @@ MD_FILES = packages/base/md.ogz \
 
 TWO_TOWERS_FILES = packages/base/two_towers.ogz \
                    packages/base/two_towers.cfg \
-                   packages/base/two_towers.wpt \
                    $(FANTASY_TEXTURES) \
                    $(EXTRA_FANTASY_TEXTURES)
 
