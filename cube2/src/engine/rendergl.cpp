@@ -825,7 +825,7 @@ void computezoom()
 FVARP(zoomsens, 1e-3f, 1, 1000);
 FVARP(zoomaccel, 0, 0, 1000);
 VARP(zoomautosens, 0, 1, 1);
-FVARP(sensitivity, 1e-3f, 3, 1000);
+FVARP(sensitivity, 1e-3f, 10, 1000); // XXX EMSCRIPTEN
 FVARP(sensitivityscale, 1e-3f, 1, 1000);
 VARP(invmouse, 0, 0, 1);
 FVARP(mouseaccel, 0, 0, 1000);
