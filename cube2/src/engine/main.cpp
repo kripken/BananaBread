@@ -581,9 +581,14 @@ void setupscreen(int &usedcolorbits, int &useddepthbits, int &usedfsaa)
         }
         if(dbgmodes) conoutf(CON_DEBUG, "selected %d x %d", scr_w, scr_h);
     }
+#if !EMSCRIPTEN
     if(scr_w < 0 && scr_h < 0) { scr_w = SCR_DEFAULTW; scr_h = SCR_DEFAULTH; }
     else if(scr_w < 0) scr_w = (scr_h*SCR_DEFAULTW)/SCR_DEFAULTH;
     else if(scr_h < 0) scr_h = (scr_w*SCR_DEFAULTH)/SCR_DEFAULTW;
+#else
+    scr_w = emscripten_run_script_int("Module['desiredWidth']");
+    scr_h = emscripten_run_script_int("Module['desiredHeight']");
+#endif
 
     bool hasbpp = true;
     if(colorbits)
