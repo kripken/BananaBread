@@ -1173,7 +1173,11 @@ void main2()
         execfile(game::defaultconfig());
         writecfg(game::restoreconfig());
     }
+#if !EMSCRIPTEN
     execfile(game::autoexec(), false);
+#else
+    emscripten_run_script("Module['autoexec']()");
+#endif
     initing = NOT_INITING;
 
     identflags &= ~IDF_PERSIST;

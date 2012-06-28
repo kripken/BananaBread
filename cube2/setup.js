@@ -12,7 +12,8 @@ Module.postLoadWorld = function() {
   Module.tweakDetail();
 };
 
-Module.tweakDetail = function() {};
+Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
+Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
 
 (function() {
   var desired = 600; // for something like 600x600
