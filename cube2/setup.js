@@ -57,6 +57,11 @@ var BananaBread = {
       ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'number']);
     BananaBread.execute = Module.cwrap('_Z7executePKc', 'number', ['string']);
     BananaBread.executeString = Module.cwrap('_Z10executestrPKc', 'string', ['string']);
+
+    var forceCamera = Module.cwrap('setforcecamera', null, ['number', 'number', 'number', 'number', 'number', 'number']);
+    BananaBread.forceCamera = function(position, orientation) {
+      forceCamera(position[0], position[1], position[2], orientation[0], orientation[1], orientation[2]);
+    };
   },
 };
 
