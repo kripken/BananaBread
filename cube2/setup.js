@@ -94,6 +94,7 @@ function CameraPath(data) {
       var factor = (now - startTime)/(timeScale*1000);
       if (startTime < 0 || factor > 1) {
         i++;
+        //alert('camera step ' + i);
         if (i >= n-1) return;
         startTime = now; // XXX + delta
         factor = 0; // XXX
