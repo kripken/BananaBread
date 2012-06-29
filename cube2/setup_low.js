@@ -8,10 +8,13 @@ Module.tweakDetail = function() {
   BananaBread.execute('maxdebris 10');
 
   new CameraPath({
-    startPosition: LinearMath.vec3.create([660.6883, 423.9656, 578.6837]),
-    endPosition: LinearMath.vec3.create([215.5453, 437.4472, 715.4446]),
-    startOrientation: LinearMath.vec3.create([7.273222, 18.63635, 0.0]),
-    endOrientation: LinearMath.vec3.create([-30.4548, -49.09093, 0.0]),
+    steps: [{
+      position: LinearMath.vec3.create([660.6883, 423.9656, 578.6837]),
+      orientation: LinearMath.vec3.create([7.273222, 18.63635, 0.0])
+    }, {
+      position: LinearMath.vec3.create([215.5453, 437.4472, 715.4446]),
+      orientation: LinearMath.vec3.create([-30.4548, -49.09093, 0.0])
+    }],
     timeScale: 15
   }).execute();
 };

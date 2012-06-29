@@ -75,23 +75,33 @@ Module.postRun.push(BananaBread.init);
 // Additional APIs
 
 function CameraPath(data) {
-  var startPosition = data.startPosition;
-  var endPosition = data.endPosition;
-  var startOrientation = data.startOrientation;
-  var endOrientation = data.endOrientation;
+  var steps = data.steps;
+  var n = data.steps.length;
   var timeScale = data.timeScale;
-  var startTime = Date.now();
+  var startTime = -1;
   var position = LinearMath.vec3.create();
   var orientation = LinearMath.vec3.create();
   var cancelled = false;
+  var i = -1;
+  var startPosition, endPosition, startOrientation, endOrientation;
 
   addEventListener('keydown', function() { cancelled = true });
 
   this.execute = function() {
     function moveCamera() {
       if (cancelled) return;
-      var factor = (Date.now() - startTime)/(timeScale*1000);
-      if (factor > 1) return;
+      var now = Date.now();
+      var factor = (now - startTime)/(timeScale*1000);
+      if (startTime < 0 || factor > 1) {
+        i++;
+        if (i >= n-1) return;
+        startTime = now; // XXX + delta
+        factor = 0; // XXX
+        startPosition = steps[i].position;
+        endPosition = steps[i+1].position;
+        startOrientation = steps[i].orientation;
+        endOrientation = steps[i+1].orientation;
+      }
       LinearMath.vec3.lerp(startPosition, endPosition, factor, position);
       LinearMath.vec3.lerp(startOrientation, endOrientation, factor, orientation);
       BananaBread.forceCamera(position, orientation);
