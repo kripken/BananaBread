@@ -2,6 +2,7 @@
 // Checks for features we cannot run without
 // Note: Modify this for your needs. If your level does not use
 //       texture compression, remove the check for it here.
+
 (function() {
   function fail(text) {
     Module.preRun.push(function() {
@@ -21,9 +22,12 @@
 })();
 
 // Loading music. Will be stopped once the first frame of the game runs
+
 Module.loadingMusic = new Audio();
 Module.loadingMusic.src = 'OutThere_0.ogg';
 Module.loadingMusic.play();
+
+// Hooks
 
 Module.postLoadWorld = function() {
   if (Module.loadingMusic) {
@@ -51,6 +55,7 @@ Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to ma
 })();
 
 // Public API
+
 var BananaBread = {
   init: function() {
     BananaBread.setPlayerModelInfo = Module.cwrap('_ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', null,
@@ -66,4 +71,33 @@ var BananaBread = {
 };
 
 Module.postRun.push(BananaBread.init);
+
+// Additional APIs
+
+function CameraPath(data) {
+  var startPosition = data.startPosition;
+  var endPosition = data.endPosition;
+  var startOrientation = data.startOrientation;
+  var endOrientation = data.endOrientation;
+  var timeScale = data.timeScale;
+  var startTime = Date.now();
+  var position = LinearMath.vec3.create();
+  var orientation = LinearMath.vec3.create();
+  var cancelled = false;
+
+  addEventListener('keydown', function() { cancelled = true });
+
+  this.execute = function() {
+    function moveCamera() {
+      if (cancelled) return;
+      var factor = (Date.now() - startTime)/(timeScale*1000);
+      if (factor > 1) return;
+      LinearMath.vec3.lerp(startPosition, endPosition, factor, position);
+      LinearMath.vec3.lerp(startOrientation, endOrientation, factor, orientation);
+      BananaBread.forceCamera(position, orientation);
+      Module.requestAnimationFrame(moveCamera);
+    }
+    moveCamera();
+  }
+}
 
