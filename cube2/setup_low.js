@@ -14,8 +14,11 @@ Module.tweakDetail = function() {
   var startTime = Date.now();
   var position = LinearMath.vec3.create();
   var orientation = LinearMath.vec3.create();
+  var cancelled = false;
+  addEventListener('keydown', function() { cancelled = true });
 
   function moveCamera() {
+    if (cancelled) return;
     var factor = (Date.now() - startTime)/(15*1000);
     if (factor > 1) return;
     LinearMath.vec3.lerp(startPosition, endPosition, factor, position);
@@ -23,7 +26,7 @@ Module.tweakDetail = function() {
     BananaBread.forceCamera(position, orientation);
     Module.requestAnimationFrame(moveCamera);
   }
-  Module.requestAnimationFrame(moveCamera);
+  moveCamera();
 };
 
 Module.loadDefaultMap = function() {
