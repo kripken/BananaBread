@@ -83,7 +83,7 @@ function CameraPath(data) {
   var orientation = LinearMath.vec3.create();
   var cancelled = false;
   var i = -1;
-  var startPosition, endPosition, startOrientation, endOrientation;
+  var pre, start, end, post;
 
   addEventListener('keydown', function() { cancelled = true });
 
@@ -98,13 +98,11 @@ function CameraPath(data) {
         if (i >= n-1) return;
         startTime = now; // XXX + delta
         factor = 0; // XXX
-        startPosition = steps[i].position;
-        endPosition = steps[i+1].position;
-        startOrientation = steps[i].orientation;
-        endOrientation = steps[i+1].orientation;
+        start = steps[i];
+        end = steps[i+1];
       }
-      LinearMath.vec3.lerp(startPosition, endPosition, factor, position);
-      LinearMath.vec3.lerp(startOrientation, endOrientation, factor, orientation);
+      LinearMath.vec3.lerp(start.position, end.position, factor, position);
+      LinearMath.vec3.lerp(start.orientation, end.orientation, factor, orientation);
       BananaBread.forceCamera(position, orientation);
       Module.requestAnimationFrame(moveCamera);
     }
