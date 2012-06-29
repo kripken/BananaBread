@@ -80,6 +80,7 @@ namespace game
     extern void setupcamera();
     extern bool detachcamera();
     extern bool collidecamera();
+    extern physent *forcecamera(); // XXX EMSCRIPTEN: Returns the camera we should use, or null to use the default
     extern void adddynlights();
     extern void particletrack(physent *owner, vec &o, vec &d);
     extern void dynlighttrack(physent *owner, vec &o, vec &hud);

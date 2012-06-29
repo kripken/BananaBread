@@ -879,7 +879,12 @@ void recomputecamera()
     computezoom();
 
     bool shoulddetach = thirdperson > 1 || game::detachcamera();
-    if(!thirdperson && !shoulddetach)
+    physent *forcecamera = game::forcecamera();
+    if (forcecamera)
+    {
+        camera1 = forcecamera;
+    }
+    else if(!thirdperson && !shoulddetach)
     {
         camera1 = player;
         detachedcamera = false;

@@ -164,6 +164,34 @@ namespace game
         return true;
     }
 
+    // XXX EMSCRIPTEN: API to allow forcing the camera view for a single frame
+    physent forcedcamera;
+    bool useforcedcamera = false;
+
+    extern "C"
+    {
+        void EMSCRIPTEN_KEEPALIVE setforcecamera(float x, float y, float z, float yaw, float pitch, float roll)
+        {
+            forcedcamera.o.x = x;
+            forcedcamera.o.y = y;
+            forcedcamera.o.z = z;
+            forcedcamera.yaw = yaw;
+            forcedcamera.pitch = pitch;
+            forcedcamera.roll = roll;
+            useforcedcamera = true;
+        }
+    }
+
+    physent *forcecamera()
+    {
+        if (useforcedcamera)
+        {
+            useforcedcamera = false;
+            return &forcedcamera;
+        }
+        return NULL;
+    }
+
     VARP(smoothmove, 0, 75, 100);
     VARP(smoothdist, 0, 32, 64);
 
