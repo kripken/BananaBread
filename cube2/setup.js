@@ -1,4 +1,25 @@
 
+// Checks for features we cannot run without
+// Note: Modify this for your needs. If your level does not use
+//       texture compression, remove the check for it here.
+(function() {
+  function fail(text) {
+    Module.preRun.push(function() {
+      Module._main = null;
+      alert(text);
+    });
+    throw text;
+  }
+  var canvas = document.createElement('canvas');
+  if (!canvas) fail('No canvas element, halting.');
+  var context = canvas.getContext('experimental-webgl');
+  if (!context) fail('No WebGL, halting.');
+  var s3tc = context.getExtension('WEBGL_compressed_texture_s3tc') ||
+             context.getExtension('MOZ_WEBGL_compressed_texture_s3tc') ||
+             context.getExtension('WEBKIT_WEBGL_compressed_texture_s3tc');
+  if (!s3tc) fail('No s3tc texture compression, halting');
+})();
+
 // Loading music. Will be stopped once the first frame of the game runs
 Module.loadingMusic = new Audio();
 Module.loadingMusic.src = 'OutThere_0.ogg';
