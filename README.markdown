@@ -53,7 +53,8 @@ Running
 0. Run
      python -m SimpleHTTPServer 8888
    in cube2/
-1. Load localhost:8888/client.html
+
+1. Load localhost:8888 in your browser
 
 
 License
