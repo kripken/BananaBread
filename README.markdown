@@ -1,13 +1,14 @@
 
-BananaBread
-===========
+The BananaBread Engine
+======================
 
-A port of the Cube 2/Sauerbraten first person shooter to the web,
-compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
+A port of the Cube 2/Sauerbraten 3D game engine/first person shooter to the
+web, compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 
-**Online demo**: http://www.syntensity.com/static/night6/bb.html
+**Online demo**: http://www.syntensity.com/static/night8/index.html
 
 **Screenshots**: http://mozakai.blogspot.com/2012/06/bananabread-02-levels.html
+
 
 Overview
 --------
@@ -24,11 +25,19 @@ Features:
    lightmaps, skeletal animation (on gpu), etc. etc.
  * Compile a single codebase both to a native application and to
    the web.
- * Streamlined and quick physics system.
+ * Streamlined and quick physics system
+  * Ragdoll physics
  * Bot AI with adjustable skill level.
  * Integrated in-game editor.
  * Fast performance both when compiled natively and to the web.
  * zlib license, see below.
+
+The original engine also has a lot of other features not yet
+enabled (but will be):
+
+ * Multiplayer
+  * Multiplayer editing
+ * Shadowmapping
 
 
 Building

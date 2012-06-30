@@ -13,7 +13,7 @@
     </style>
   </head>
   <body>
-    <h2><center>BananaBread: High-End Demo</center></h2>
+    <h2><center>BananaBread: Demo Three</center></h2>
     <hr/>
     <div class="emscripten" id="status">Downloading...</div>
     <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
@@ -73,31 +73,33 @@
       Module.setStatus('Downloading...');
     </script>
     <h4>
-    This is the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D FPS compiled from C++ and OpenGL to JavaScript and WebGL
+    This is the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D first person shooter (aka the Cube 2 Engine) compiled from C++ and OpenGL to JavaScript and WebGL
     using <a href="http://emscripten.org">Emscripten</a>. Code is zlib licensed and on <a href="https://github.com/kripken/BananaBread">github</a>.
     </h4>
     <p>
     The demo might take time to download. Afterwards:
     <ul>
-      <li>Press the "fullscreen" button for the best experience.</li>
+      <li>Press the "fullscreen" button for the best experience, otherwise the mouse will not be locked and won't function correctly.</li>
       <li>Move with WASD, jump with space, look around with the mouse.</li>
       <li>Shoot with the mouse, change weapons with 1-5.</li>
-      <li>You can change some settings using the main menu (` or escape). For example, add another bot with "add bot"</li>
+      <li>You can change some settings using the main menu (` or escape). For example, add another bot with "add bot", or change the resolution with options->res.</li>
       <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
     </ul>
     </p><p>
-    This is a very <b>very</b> early demo - ignore performance and content quality! Notes:
+    This is a <b>very</b> early demo - we are not done yet! Please note that
     <ul>
     <li><b>Very little</b> optimization for speed has been done</li>
     <li>The level you see is a work in progress</li>
-    <li>The game assets (textures) have <b>not</b> been fully optimized</li>
-    <li>Very recent development versions of browsers are needed to get all
-    functionality to work:
+    <li><b>Very recent development versions of browsers are needed to get all
+    functionality to work</b>:
       <ul>
-        <li>Fullscreen is known to work in at least Firefox 15+ and Chrome 20+</li>
+        <li>Texture compression is known to work in at least Firefox 15+ and Chrome 20+</li>
         <li>Mouse lock is known to work in at least Firefox 15+, looks like for Chrome it is
-            <a href="http://code.google.com/p/chromium/issues/detail?id=72754">planned for Chrome 21</a></li>
-        <li>Sound is known to work in Firefox, but fails in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
+            <a href="http://code.google.com/p/chromium/issues/detail?id=72754">planned for Chrome 22</a> (but it
+            <a href="http://www.chromium.org/developers/design-documents/mouse-lock">seems to be disabled by default</a>)</li>
+        <li>Fullscreen is known to work in at least Firefox 15+ and Chrome 20+</li>
+        <li>Sound efforts work in Firefox, but fail in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
+        <li>Performance is best on latest development versions as well</li>
       </ul>
     </li>
     </ul>

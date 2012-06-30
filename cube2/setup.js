@@ -5,6 +5,7 @@
 
 (function() {
   function fail(text) {
+    text = 'No ' + text + ', halting. A development version of your browser might have this feature (or it might be disabled in your current browser).';
     Module.preRun.push(function() {
       Module._main = null;
       alert(text);
@@ -12,13 +13,17 @@
     throw text;
   }
   var canvas = document.createElement('canvas');
-  if (!canvas) fail('No canvas element, halting.');
+  if (!canvas) fail('canvas element');
   var context = canvas.getContext('experimental-webgl');
-  if (!context) fail('No WebGL, halting.');
+  if (!context) fail('WebGL');
   var s3tc = context.getExtension('WEBGL_compressed_texture_s3tc') ||
              context.getExtension('MOZ_WEBGL_compressed_texture_s3tc') ||
              context.getExtension('WEBKIT_WEBGL_compressed_texture_s3tc');
-  if (!s3tc) fail('No s3tc texture compression, halting');
+  if (!s3tc) fail('texture compression');
+  var pointerLock = canvas['requestPointerLock'] ||
+                    canvas['mozRequestPointerLock'] ||
+                    canvas['webkitRequestPointerLock'];
+  if (!pointerLock) fail('pointer lock/mouse lock');
 })();
 
 // Loading music. Will be stopped once the first frame of the game runs
@@ -41,7 +46,8 @@ Module.autoexec = function(){}; // called during autoexec on load, so useful to 
 Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
 
 (function() {
-  var desired = 600; // for something like 600x600
+  var fraction = 0.75;
+  var desired = Math.min(fraction*screen.availWidth, fraction*screen.availHeight, 600);
   var w, h;
   if (screen.width >= screen.height) {
     h = desired;
