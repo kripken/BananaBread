@@ -78,31 +78,36 @@ function CameraPath(data) {
   var steps = data.steps;
   var n = data.steps.length;
   var timeScale = data.timeScale;
-  var startTime = -1;
   var position = LinearMath.vec3.create();
+  var temp = LinearMath.vec3.create();
   var orientation = LinearMath.vec3.create();
   var cancelled = false;
-  var i = -1;
-  var pre, start, end, post;
+  var sigma = data.sigma || 0.75;
 
   addEventListener('keydown', function() { cancelled = true });
 
   this.execute = function() {
+    var startTime = Date.now();
     function moveCamera() {
       if (cancelled) return;
       var now = Date.now();
-      var factor = (now - startTime)/(timeScale*1000);
-      if (startTime < 0 || factor > 1) {
-        i++;
-        //alert('camera step ' + i);
-        if (i >= n-1) return;
-        startTime = now; // XXX + delta
-        factor = 0; // XXX
-        start = steps[i];
-        end = steps[i+1];
+      var t = (Date.now() - startTime)/(timeScale*1000);
+      if (t > n-1) return;
+      var i = Math.round(t);
+      var factors = 0;
+      position[0] = position[1] = position[2] = orientation[0] = orientation[1] = orientation[2] = 0;
+      for (var j = i-2; j <= i+2; j++) {
+        var curr = steps[j];
+        if (!curr) continue;
+        var factor = Math.exp(-Math.pow((j-t)/sigma, 2));
+        LinearMath.vec3.scale(curr.position, factor, temp);
+        LinearMath.vec3.add(position, temp);
+        LinearMath.vec3.scale(curr.orientation, factor, temp);
+        LinearMath.vec3.add(orientation, temp);
+        factors += factor;
       }
-      LinearMath.vec3.lerp(start.position, end.position, factor, position);
-      LinearMath.vec3.lerp(start.orientation, end.orientation, factor, orientation);
+      LinearMath.vec3.scale(position, 1/factors);
+      LinearMath.vec3.scale(orientation, 1/factors);
       BananaBread.forceCamera(position, orientation);
       Module.requestAnimationFrame(moveCamera);
     }

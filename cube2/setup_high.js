@@ -65,8 +65,12 @@ Module.tweakDetail = function() {
     }, {
       position: LinearMath.vec3.create([4330.775, 2420.04, 1731.584]),
       orientation: LinearMath.vec3.create([-254.3631, -7.272726, 0.0])
+    }, {
+      position: LinearMath.vec3.create([4530.775, 2425.04, 1800.584]),
+      orientation: LinearMath.vec3.create([-275.3631, -9.272726, 0.0])
     }],
-    timeScale: 5
+    timeScale: 4.33,
+    sigma: 0.75
   }).execute();
 };
 
