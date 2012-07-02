@@ -89,6 +89,8 @@ function CameraPath(data) {
   var orientation = LinearMath.vec3.create();
   var cancelled = false;
   var sigma = data.sigma || 0.75;
+  var lasti = -1;
+  var debug = data.debug;
 
   addEventListener('keydown', function() { cancelled = true });
 
@@ -100,6 +102,11 @@ function CameraPath(data) {
       var t = (Date.now() - startTime)/(timeScale*1000);
       if (t > n-1) return;
       var i = Math.round(t);
+      if (debug && i != lasti) {
+        lasti = i;
+        alert('now on ' + i);
+        startTime += (Date.now() - now); // ignore alert wait time
+      }
       var factors = 0;
       position[0] = position[1] = position[2] = orientation[0] = orientation[1] = orientation[2] = 0;
       for (var j = i-2; j <= i+2; j++) {

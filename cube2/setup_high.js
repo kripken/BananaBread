@@ -42,8 +42,17 @@ Module.tweakDetail = function() {
       position: LinearMath.vec3.create([3252.219, 2234.031, 1553.28]),
       orientation: LinearMath.vec3.create([178.1809, 30.45453, 0.0])
     }, {
+      position: LinearMath.vec3.create([3259.742, 2174.635, 1598.427]),
+      orientation: LinearMath.vec3.create([145.0909, 6.818192, 0.0])
+    }, {
+      position: LinearMath.vec3.create([3251.713, 2123.673, 1614.099]),
+      orientation: LinearMath.vec3.create([62.09092, -7.636365, 0.0])
+    }, {
+      position: LinearMath.vec3.create([3245.892, 2112.35, 1615.566]),
+      orientation: LinearMath.vec3.create([33.99992, -5.818166, 0.0])
+    }, {
       position: LinearMath.vec3.create([3243.335, 2111.635, 1633.693]),
-      orientation: LinearMath.vec3.create([134.0901, -8.636374, 0.0])
+      orientation: LinearMath.vec3.create([10, -40.636374, 0.0])
     }, {
       position: LinearMath.vec3.create([3160.278, 2084.209, 1624.748]),
       orientation: LinearMath.vec3.create([2.72652, 10.90908, 0.0])
