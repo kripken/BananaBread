@@ -7,6 +7,8 @@ Module.tweakDetail = function() {
   BananaBread.execute('fog 10000'); // disable fog
   BananaBread.execute('maxdebris 10');
 
+  //BananaBread.execute('sensitivity 15');
+
   new CameraPath({
     steps: [{
       position: LinearMath.vec3.create([660.6883, 423.9656, 578.6837]),
@@ -18,6 +20,7 @@ Module.tweakDetail = function() {
     timeScale: 15
   }).execute();
 
+/*
   new BananaBread.Event({
     onInit: function() {
       this.position = LinearMath.vec3.create([466, 747, 686]);
@@ -30,7 +33,24 @@ Module.tweakDetail = function() {
     },
     totalMs: Infinity
   }).run();
+*/
 
+  function shootFirework() {
+    console.log('shoost!');
+    new BananaBread.Effects.Fireworks([{
+      position: LinearMath.vec3.create([466, 747, 686+16]),
+      velocity: LinearMath.vec3.create([30*(Math.random()-0.5), 30*(Math.random()-0.5), 160 + Math.random()*80]),
+      msLeft: 3000.0,
+      childMinZ: 686 + 10,
+      minVelocityZ: -10,
+      childMsLeft: 600,
+      size: 1.0
+    }]);
+
+    var next = Math.min(Math.random(), Math.random())*1000;
+    setTimeout(shootFirework, next);
+  }
+  shootFirework();
 };
 
 Module.loadDefaultMap = function() {

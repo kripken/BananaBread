@@ -125,8 +125,66 @@ BananaBread.Event = function(data) {
     }
     iteration();
   };
-  data.onInit();
+  if (data.onInit) data.onInit(data);
 }
+
+BananaBread.Effects = {
+  Fireworks: function(shots) {
+    var event = new BananaBread.Event({
+      totalMs: Infinity,
+
+      onFrame: function(ms) {
+
+        var secs = ms/1000;
+        var newShots = [];
+
+        shots = shots.filter(function(shot) {
+          LinearMath.vec3.add(shot.position, LinearMath.vec3.scale(LinearMath.vec3.create(shot.velocity), secs));
+          shot.velocity[2] -= secs * 200; // gravity
+          BananaBread.splash(BananaBread.PARTICLE.SPARK, shot.color, 15*shot.size, 70*shot.size, Math.max(50, ms*2), shot.position, 1, 1);
+          //Effect.addDynamicLight(shot.position, shot.size*60, shot.color);
+          shot.msLeft -= ms;
+          if (shot.msLeft > 0 &&
+              (!shot.minZ || shot.velocity[2] > 0 || shot.position[2] > shot.minZ) &&
+              (!shot.minVelocityZ || shot.velocity[2] > shot.minVelocityZ)) {
+            return true;
+          } else {
+            var num = Math.floor(Math.random()*15*shot.size);
+            for (var i = 0; i < num; i++) {
+              //Effect.fireball(PARTICLE.EXPLOSION_NO_GLARE, shot.position, shot.size*5, 0.25, shot.color, shot.size*5);
+              //Effect.addDynamicLight(shot.position, shot.size*90, shot.color, 0.25, 0.1, 0, 10);
+//                        Sound.play("yo_frankie/DeathFlash.wav", shot.position.addNew(new Vector3(0, 0, 10/shot.size)));
+              if (shot.size >= 0.6) {
+                //Sound.play('olpc/MichaelBierylo/sfx_DoorSlam.wav', shot.position);
+              }
+
+              newShots.push({
+                position: LinearMath.vec3.create(shot.position),
+                velocity: LinearMath.vec3.add(
+                  LinearMath.vec3.create(shot.velocity),
+                  LinearMath.vec3.create([50*(Math.random()-0.5), 50*(Math.random()-0.5), 50*(Math.random()-0.5)])
+                ),
+                minZ: shot.childMinZ,
+                childMinZ: shot.childMinZ,
+                msLeft: shot.childMsLeft*Math.random()*2,
+                childMsLeft: shot.childMsLeft*Math.random(),
+                color: Math.floor(Math.random()*255) + (Math.floor(Math.random()*255) << 8) + (Math.floor(Math.random()*255) << 16),
+                size: shot.size/2.5,
+              });
+            }
+            return false;
+          }
+        });
+      
+        shots.push.apply(shots, newShots);
+
+        if (shots.length == 0) this.totalMs = 0;
+      },
+    });
+
+    event.run();
+  }
+};
 
 function CameraPath(data) { // TODO: namespace this
   var steps = data.steps;
