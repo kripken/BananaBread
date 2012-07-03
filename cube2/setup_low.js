@@ -17,6 +17,20 @@ Module.tweakDetail = function() {
     }],
     timeScale: 15
   }).execute();
+
+  new BananaBread.Event({
+    onInit: function() {
+      this.position = LinearMath.vec3.create([466, 747, 686]);
+    },
+    onFrame: function(ms) {
+      if (0.1*Math.random() < ms/1000) {
+        //BananaBread.splash = function(type,          color,    radius, num, fade, p,             size, gravity) {
+        BananaBread.splash(BananaBread.PARTICLE.SPARK, 0xAA33FF, 50,    20,   1000,   this.position, 1,   1);
+      }
+    },
+    totalMs: Infinity
+  }).run();
+
 };
 
 Module.loadDefaultMap = function() {

@@ -73,6 +73,37 @@ var BananaBread = {
     BananaBread.forceCamera = function(position, orientation) {
       forceCamera(position[0], position[1], position[2], orientation[0], orientation[1], orientation[2]);
     };
+
+    BananaBread.PARTICLE = {};
+    var i = 0;
+    BananaBread.PARTICLE.BLOOD = (i++);
+    BananaBread.PARTICLE.WATER = (i++);
+    BananaBread.PARTICLE.SMOKE = (i++);
+    BananaBread.PARTICLE.STEAM = (i++);
+    BananaBread.PARTICLE.FLAME = (i++);
+    BananaBread.PARTICLE.FIREBALL1 = (i++);
+    BananaBread.PARTICLE.FIREBALL2 = (i++);
+    BananaBread.PARTICLE.FIREBALL3 = (i++);
+    BananaBread.PARTICLE.STREAK = (i++);
+    BananaBread.PARTICLE.LIGHTNING = (i++);
+    BananaBread.PARTICLE.EXPLOSION = (i++);
+    BananaBread.PARTICLE.EXPLOSION_BLUE = (i++);
+    BananaBread.PARTICLE.SPARK = (i++);
+    BananaBread.PARTICLE.EDIT = (i++);
+    BananaBread.PARTICLE.SNOW = (i++);
+    BananaBread.PARTICLE.MUZZLE_FLASH1 = (i++);
+    BananaBread.PARTICLE.MUZZLE_FLASH2 = (i++);
+    BananaBread.PARTICLE.MUZZLE_FLASH3 = (i++);
+    BananaBread.PARTICLE.HUD_ICON = (i++);
+    BananaBread.PARTICLE.HUD_ICON_GREY = (i++);
+    BananaBread.PARTICLE.TEXT = (i++);
+    BananaBread.PARTICLE.METER = (i++);
+    BananaBread.PARTICLE.METER_VS = (i++);
+    BananaBread.PARTICLE.LENS_FLARE = (i++);
+    var splash = Module.cwrap('bb_splash', null, ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number']);
+    BananaBread.splash = function(type, color, radius, num, fade, p, size, gravity) {
+      splash(type, color, radius, num, fade, p[0], p[1], p[2], size, gravity);
+    };
   },
 };
 
@@ -80,7 +111,24 @@ Module.postRun.push(BananaBread.init);
 
 // Additional APIs
 
-function CameraPath(data) {
+BananaBread.Event = function(data) {
+  this.run = function() {
+    var start = Date.now();
+    var last = start;
+    function iteration() {
+      var now = Date.now();
+      var ms = now - last;
+      last = now;
+      if (ms > data.totalMs) return;
+      data.onFrame(ms);
+      Module.requestAnimationFrame(iteration);
+    }
+    iteration();
+  };
+  data.onInit();
+}
+
+function CameraPath(data) { // TODO: namespace this
   var steps = data.steps;
   var n = data.steps.length;
   var timeScale = data.timeScale;
