@@ -203,8 +203,9 @@ function CameraPath(data) { // TODO: namespace this
   var sigma = data.sigma || 0.75;
   var lasti = -1;
   var debug = data.debug;
+  var loop = data.loop;
 
-  addEventListener('keydown', function() { cancelled = true });
+  if (!data.uncancellable) addEventListener('keydown', function() { cancelled = true });
 
   this.execute = function() {
     var startTime = Date.now();
@@ -212,7 +213,7 @@ function CameraPath(data) { // TODO: namespace this
       if (cancelled) return;
       var now = Date.now();
       var t = (Date.now() - startTime)/(timeScale*1000);
-      if (t > n-1) return;
+      if (t > n-1 && !loop) return;
       var i = Math.round(t);
       if (debug && i != lasti) {
         lasti = i;
@@ -222,7 +223,9 @@ function CameraPath(data) { // TODO: namespace this
       var factors = 0;
       position[0] = position[1] = position[2] = orientation[0] = orientation[1] = orientation[2] = 0;
       for (var j = i-2; j <= i+2; j++) {
-        var curr = steps[j];
+        var jj = j;
+        if (loop && jj >= n) jj = jj % n;
+        var curr = steps[jj];
         if (!curr) continue;
         var factor = Math.exp(-Math.pow((j-t)/sigma, 2));
         LinearMath.vec3.scale(curr.position, factor, temp);

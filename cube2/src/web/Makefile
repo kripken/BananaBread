@@ -275,6 +275,11 @@ HUDGUNS_FILES = packages/models/hudguns/ \
 SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 	                      packages/models/snoutx10k/
 
+FIREWORKS_FILES = $(BASE_FILES) \
+                  packages/base/fireworks.ogz \
+                  packages/yo_frankie \
+	                packages/skyboxes/philo/
+
 LOW_FILES = $(BASE_FILES) \
             $(MD2_FILES) \
             $(FRANKIE_MODEL_FILES)
@@ -292,6 +297,7 @@ HIGH_FILES = $(BASE_FILES) \
 CRUNCH_QUALITY = 64
 
 client: client.bc
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fireworks.data --preload $(FIREWORKS_FILES) --pre-run > preload_fireworks.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > preload_low.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
