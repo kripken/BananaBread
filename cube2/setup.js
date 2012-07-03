@@ -156,11 +156,13 @@ BananaBread.Effects = {
           } else {
             var num = Math.floor(Math.random()*15*shot.size);
             for (var i = 0; i < num; i++) {
-              //Effect.fireball(PARTICLE.EXPLOSION_NO_GLARE, shot.position, shot.size*5, 0.25, shot.color, shot.size*5);
-              //Effect.addDynamicLight(shot.position, shot.size*90, shot.color, 0.25, 0.1, 0, 10);
+              if (shot.size > 0.1) {
+                BananaBread.splash(BananaBread.PARTICLE.EXPLOSION, shot.color, 0, 1, Math.max(150, ms*3), shot.position, 15*shot.size, 0);
+              }
               if (shot.size >= 0.6) {
                 BananaBread.playSound('q009/explosion.ogg', shot.position);
               }
+              //Effect.addDynamicLight(shot.position, shot.size*90, shot.color, 0.25, 0.1, 0, 10);
 
               newShots.push({
                 position: LinearMath.vec3.create(shot.position),

@@ -44,12 +44,13 @@ Module.tweakDetail = function() {
       childMinZ: 686 + 10,
       minVelocityZ: -10,
       childMsLeft: 600,
-      size: 1.0
+      size: 1.0,
+      color: 0xffffff
     }]);
 
-    var next = Math.min(Math.random(), Math.random())*1000;
-    setTimeout(shootFirework, next);
+    setTimeout(shootFirework, Math.random()*3500);
   }
+  shootFirework();
   shootFirework();
 };
 
