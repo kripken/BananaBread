@@ -576,6 +576,17 @@ int playsoundname(const char *s, const vec *loc, int vol, int loops, int fade, i
     return playsound(id, loc, NULL, loops, fade, chanid, radius, expire);
 }
 
+extern "C" {
+
+void EMSCRIPTEN_KEEPALIVE bb_playsoundname(const char *s, float x, float y, float z)
+{
+    static vec temp;
+    temp.x = x; temp.y = y; temp.z = z;
+    playsoundname(s, &temp);
+}
+
+}
+
 void sound(int *n) { playsound(*n); }
 COMMAND(sound, "i");
 

@@ -104,6 +104,11 @@ var BananaBread = {
     BananaBread.splash = function(type, color, radius, num, fade, p, size, gravity) {
       splash(type, color, radius, num, fade, p[0], p[1], p[2], size, gravity);
     };
+
+    var playSoundName = Module.cwrap('bb_playsoundname', null, ['string', 'number', 'number', 'number']);
+    BananaBread.playSound = function(name, position) {
+      playSoundName(name, position[0], position[1], position[2]);
+    };
   },
 };
 
@@ -153,9 +158,8 @@ BananaBread.Effects = {
             for (var i = 0; i < num; i++) {
               //Effect.fireball(PARTICLE.EXPLOSION_NO_GLARE, shot.position, shot.size*5, 0.25, shot.color, shot.size*5);
               //Effect.addDynamicLight(shot.position, shot.size*90, shot.color, 0.25, 0.1, 0, 10);
-//                        Sound.play("yo_frankie/DeathFlash.wav", shot.position.addNew(new Vector3(0, 0, 10/shot.size)));
               if (shot.size >= 0.6) {
-                //Sound.play('olpc/MichaelBierylo/sfx_DoorSlam.wav', shot.position);
+                BananaBread.playSound('q009/explosion.ogg', shot.position);
               }
 
               newShots.push({
