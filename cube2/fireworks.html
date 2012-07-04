@@ -79,6 +79,12 @@
     <p>
     The fireworks shown here are controlled from normal JavaScript code, which uses an API to call the compiled game engine's particle system
     </p>
+    <p>
+    Limitations:
+    <ul>
+      <li>Sound efforts work in Firefox, but fail in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
+    </ul>
+    </p>
     <script type='text/javascript' src='gl-matrix.js'></script>
     <script type='text/javascript' src='setup.js'></script>
     <script type='text/javascript' src='setup_fireworks.js'></script>
