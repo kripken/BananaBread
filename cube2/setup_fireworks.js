@@ -8,6 +8,12 @@ Module.tweakDetail = function() {
   BananaBread.execute('maxdebris 10');
   BananaBread.execute('waterreflect 1');
   BananaBread.execute('playasong = [ ]');
+  // clear console and avoid messages right after load too
+  BananaBread.execute('clearconsole');
+  BananaBread.execute('sleep 10 [ clearconsole ]');
+  BananaBread.execute('sleep 333 [ clearconsole ]');
+  BananaBread.execute('sleep 1000 [ clearconsole ]');
+  BananaBread.execute('sleep 3000 [ clearconsole ]');
 
   new CameraPath({
     steps: [{
@@ -34,8 +40,7 @@ Module.tweakDetail = function() {
     new BananaBread.Effects.Fireworks([{
       position: LinearMath.vec3.create([x, y, z+16]),
       velocity: LinearMath.vec3.create([30*(Math.random()-0.5), 30*(Math.random()-0.5), 160 + Math.random()*80]),
-      msLeft: 1000.0,
-      color: Math.floor(Math.random()*255) + (Math.floor(Math.random()*255) << 8) + (Math.floor(Math.random()*255) << 16)
+      msLeft: 1000.0
     }]);
     setTimeout(shootFirework, Math.random()*4000);
   }

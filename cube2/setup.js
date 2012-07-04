@@ -157,9 +157,16 @@ BananaBread.Effects = {
             BananaBread.splash(BananaBread.PARTICLE.SPARK, 0xffffff, 1, 20, Math.max(50, ms*2), shot.position, 1, 1);
             return true;
           } else {
-            BananaBread.splash(BananaBread.PARTICLE.SPARK, shot.color, 150, 30, Math.max(500, ms*7), shot.position, 1, 1);
-            BananaBread.splash(BananaBread.PARTICLE.EXPLOSION, shot.color, 0, 1, Math.max(150, ms*3), shot.position, 15, 0);
-            BananaBread.playSound(BananaBread.Utils.randomPick(['q009/explosion.ogg', 'olpc/MichaelBierylo/sfx_DoorSlam.wav']), shot.position);
+            var size = Math.ceil(Math.random()*3); // 1, 2 or 3
+            var color;
+            for (var i = 0; i < 2; i++) {
+              color = Math.floor(Math.random()*255) + (Math.floor(Math.random()*255) << 8) + (Math.floor(Math.random()*255) << 16);
+              BananaBread.splash(BananaBread.PARTICLE.SPARK, color, 100+25*size, 7+3*size, Math.max(300, ms*7), shot.position, 1+size, 1);
+            }
+            if (size > 1) {
+              BananaBread.splash(BananaBread.PARTICLE.EXPLOSION, color, 0, 1, Math.max(175, ms*3), shot.position, 5*size, 0);
+            }
+            BananaBread.playSound(size == 3 ? 'q009/explosion.ogg' : 'olpc/MichaelBierylo/sfx_DoorSlam.wav', shot.position);
             return false;
           }
         });
