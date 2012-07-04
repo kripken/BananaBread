@@ -8,12 +8,7 @@ Module.tweakDetail = function() {
   BananaBread.execute('maxdebris 10');
   BananaBread.execute('waterreflect 1');
   BananaBread.execute('playasong = [ ]');
-  // clear console and avoid messages right after load too
-  BananaBread.execute('clearconsole');
-  BananaBread.execute('sleep 10 [ clearconsole ]');
-  BananaBread.execute('sleep 333 [ clearconsole ]');
-  BananaBread.execute('sleep 1000 [ clearconsole ]');
-  BananaBread.execute('sleep 3000 [ clearconsole ]');
+  BananaBread.execute("consize 0");
 
   BananaBread.glare = 1;
   BananaBread.execute('glare 1');
