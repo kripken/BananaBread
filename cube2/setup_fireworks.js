@@ -15,6 +15,9 @@ Module.tweakDetail = function() {
   BananaBread.execute('sleep 1000 [ clearconsole ]');
   BananaBread.execute('sleep 3000 [ clearconsole ]');
 
+  BananaBread.glare = 1;
+  BananaBread.execute('glare 1');
+
   new CameraPath({
     steps: [{
       position: LinearMath.vec3.create([443, 697, 539]),
@@ -52,4 +55,9 @@ Module.tweakDetail = function() {
 Module.loadDefaultMap = function() {
   BananaBread.execute('sleep 10 [ effic fireworks ]');
 };
+
+function toggleGlare() {
+  BananaBread.glare = 1 - BananaBread.glare;
+  BananaBread.execute('glare ' + BananaBread.glare);
+}
 

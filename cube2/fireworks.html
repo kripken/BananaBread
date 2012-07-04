@@ -13,15 +13,15 @@
     </style>
   </head>
   <body>
-    <h3><center>BananaBread: Scripting Fireworks from JavaScript</center></h3>
-    <hr/>
+    <h4><center>BananaBread: Scripting Fireworks from JavaScript</center></h4>
     <div class="emscripten" id="status">Downloading...</div>
     <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     <hr/>
-    <div class="emscripten"><input type="button" value="fullscreen" onclick="Module.requestFullScreen()"></div>
-    <hr/>
+    <div class="emscripten">
+      <input type="button" value="fullscreen" onclick="Module.requestFullScreen()">
+      <input type="button" value="toggle glare" onclick="toggleGlare()">
+    </div>
     <textarea class="emscripten" id="output" rows="8"></textarea>
-    <hr>
     <script type='text/javascript'>
       // connect to canvas
       var Module = {
