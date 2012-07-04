@@ -34,17 +34,14 @@ Module.tweakDetail = function() {
     new BananaBread.Effects.Fireworks([{
       position: LinearMath.vec3.create([x, y, z+16]),
       velocity: LinearMath.vec3.create([30*(Math.random()-0.5), 30*(Math.random()-0.5), 160 + Math.random()*80]),
-      msLeft: 3000.0,
-      childMinZ: 686 + 10,
-      minVelocityZ: -10,
-      childMsLeft: 600,
-      size: 1.0,
-      color: 0xffffff
+      msLeft: 1000.0,
+      color: Math.floor(Math.random()*255) + (Math.floor(Math.random()*255) << 8) + (Math.floor(Math.random()*255) << 16)
     }]);
-    setTimeout(shootFirework, Math.random()*3500);
+    setTimeout(shootFirework, Math.random()*4000);
   }
-  shootFirework();
-  shootFirework();
+  for (var i = 0; i < 3; i++) {
+    shootFirework();
+  }
 };
 
 Module.loadDefaultMap = function() {

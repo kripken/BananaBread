@@ -152,38 +152,14 @@ BananaBread.Effects = {
         shots = shots.filter(function(shot) {
           LinearMath.vec3.add(shot.position, LinearMath.vec3.scale(LinearMath.vec3.create(shot.velocity), secs));
           shot.velocity[2] -= secs * 200; // gravity
-          BananaBread.splash(BananaBread.PARTICLE.SPARK, shot.color, 15*shot.size, 70*shot.size, Math.max(50, ms*2), shot.position, 1, 1);
-          //Effect.addDynamicLight(shot.position, shot.size*60, shot.color);
           shot.msLeft -= ms;
-          if (shot.msLeft > 0 &&
-              (!shot.minZ || shot.velocity[2] > 0 || shot.position[2] > shot.minZ) &&
-              (!shot.minVelocityZ || shot.velocity[2] > shot.minVelocityZ)) {
+          if (shot.msLeft > 0) {
+            BananaBread.splash(BananaBread.PARTICLE.SPARK, 0xffffff, 1, 20, Math.max(50, ms*2), shot.position, 1, 1);
             return true;
           } else {
-            var num = Math.floor(Math.random()*15*shot.size);
-            for (var i = 0; i < num; i++) {
-              if (shot.size > 0.1) {
-                BananaBread.splash(BananaBread.PARTICLE.EXPLOSION, shot.color, 0, 1, Math.max(150, ms*3), shot.position, 15*shot.size, 0);
-              }
-              if (shot.size >= 0.6) {
-                BananaBread.playSound(BananaBread.Utils.randomPick(['q009/explosion.ogg', 'olpc/MichaelBierylo/sfx_DoorSlam.wav']), shot.position);
-              }
-              //Effect.addDynamicLight(shot.position, shot.size*90, shot.color, 0.25, 0.1, 0, 10);
-
-              newShots.push({
-                position: LinearMath.vec3.create(shot.position),
-                velocity: LinearMath.vec3.add(
-                  LinearMath.vec3.create(shot.velocity),
-                  LinearMath.vec3.create([50*(Math.random()-0.5), 50*(Math.random()-0.5), 50*(Math.random()-0.5)])
-                ),
-                minZ: shot.childMinZ,
-                childMinZ: shot.childMinZ,
-                msLeft: shot.childMsLeft*Math.random()*2,
-                childMsLeft: shot.childMsLeft*Math.random(),
-                color: Math.floor(Math.random()*255) + (Math.floor(Math.random()*255) << 8) + (Math.floor(Math.random()*255) << 16),
-                size: shot.size/2.5,
-              });
-            }
+            BananaBread.splash(BananaBread.PARTICLE.SPARK, shot.color, 150, 30, Math.max(500, ms*7), shot.position, 1, 1);
+            BananaBread.splash(BananaBread.PARTICLE.EXPLOSION, shot.color, 0, 1, Math.max(150, ms*3), shot.position, 15, 0);
+            BananaBread.playSound(BananaBread.Utils.randomPick(['q009/explosion.ogg', 'olpc/MichaelBierylo/sfx_DoorSlam.wav']), shot.position);
             return false;
           }
         });
