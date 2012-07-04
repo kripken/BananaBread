@@ -30,7 +30,7 @@ Module.tweakDetail = function() {
 
   function shootFirework() {
     var x = 530, y = 530, z = 526;
-    BananaBread.playSound('q009/explosion.ogg', LinearMath.vec3.create([x, y, z]));
+    BananaBread.playSound(BananaBread.Utils.randomPick(['q009/glauncher.ogg', 'q009/glauncher2.ogg', 'q009/glauncher3.ogg']), LinearMath.vec3.create([x, y, z]));
     new BananaBread.Effects.Fireworks([{
       position: LinearMath.vec3.create([x, y, z+16]),
       velocity: LinearMath.vec3.create([30*(Math.random()-0.5), 30*(Math.random()-0.5), 160 + Math.random()*80]),

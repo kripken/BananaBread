@@ -116,6 +116,12 @@ Module.postRun.push(BananaBread.init);
 
 // Additional APIs
 
+BananaBread.Utils = {
+  randomPick: function(items) {
+    return items[Math.floor(Math.random()*items.length)];
+  },
+};
+
 BananaBread.Event = function(data) {
   this.run = function() {
     var start = Date.now();
@@ -160,7 +166,7 @@ BananaBread.Effects = {
                 BananaBread.splash(BananaBread.PARTICLE.EXPLOSION, shot.color, 0, 1, Math.max(150, ms*3), shot.position, 15*shot.size, 0);
               }
               if (shot.size >= 0.6) {
-                BananaBread.playSound('q009/explosion.ogg', shot.position);
+                BananaBread.playSound(BananaBread.Utils.randomPick(['q009/explosion.ogg', 'olpc/MichaelBierylo/sfx_DoorSlam.wav']), shot.position);
               }
               //Effect.addDynamicLight(shot.position, shot.size*90, shot.color, 0.25, 0.1, 0, 10);
 

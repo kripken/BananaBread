@@ -277,6 +277,7 @@ SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 
 FIREWORKS_FILES = $(BASE_FILES) \
                   packages/base/fireworks.ogz \
+                  packages/sounds/olpc/MichaelBierylo/sfx_DoorSlam.wav \
                   packages/yo_frankie \
 	                packages/skyboxes/philo/
 
