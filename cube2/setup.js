@@ -43,17 +43,32 @@ Module.postLoadWorld = function() {
 
   BananaBread.execute('sensitivity 10');
 
-  // Pause until the user presses fullscreen
+  // Pause and fade out until the user presses fullscreen
+  function setOpacity(opacity) {
+    var styleSheet = document.styleSheets[0];
+    var rules = styleSheet.cssRules;
+    for (var i = 0; i < rules.length; i++) {
+      if (rules[i].cssText.substr(0, 15) == 'div.emscripten ') {
+        styleSheet.deleteRule(i);
+        i--;
+      }
+    }
+    styleSheet.insertRule('div.emscripten { text-align: center; opacity: ' + opacity + ' }', 0);
+  }
+
   Module.pauseMainLoop();
   Module.setStatus('Press "fullscreen" to start the game');
+  setOpacity(0.1);
 
   Module.fullscreenLow = function() {
+    setOpacity(1);
     Module.setStatus('');
     Module.requestFullScreen();
     Module.resumeMainLoop();
   };
 
   Module.fullscreenHigh = function() {
+    setOpacity(1);
     Module.setStatus('');
     BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
     Module.requestFullScreen();
