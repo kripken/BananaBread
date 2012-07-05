@@ -40,6 +40,25 @@ Module.postLoadWorld = function() {
     Module.loadingMusic = null;
   }
   Module.tweakDetail();
+
+  BananaBread.execute('sensitivity 10');
+
+  // Pause until the user presses fullscreen
+  Module.pauseMainLoop();
+  Module.setStatus('Press "fullscreen" to start the game');
+
+  Module.fullscreenLow = function() {
+    Module.setStatus('');
+    Module.requestFullScreen();
+    Module.resumeMainLoop();
+  };
+
+  Module.fullscreenHigh = function() {
+    Module.setStatus('');
+    BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
+    Module.requestFullScreen();
+    Module.resumeMainLoop();
+  };
 };
 
 Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
@@ -59,15 +78,6 @@ Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to ma
   Module.desiredWidth = w;
   Module.desiredHeight = h;
 })();
-
-Module.fullscreenLow = function() {
-  Module.requestFullScreen();
-};
-
-Module.fullscreenHigh = function() {
-  BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
-  Module.requestFullScreen();
-};
 
 // Public API
 
