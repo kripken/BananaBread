@@ -60,6 +60,15 @@ Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to ma
   Module.desiredHeight = h;
 })();
 
+Module.fullscreenLow = function() {
+  Module.requestFullScreen();
+};
+
+Module.fullscreenHigh = function() {
+  BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
+  Module.requestFullScreen();
+};
+
 // Public API
 
 var BananaBread = {
