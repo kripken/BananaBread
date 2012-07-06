@@ -15,7 +15,9 @@
     </style>
   </head>
   <body>
-    <h3><center>BananaBread: Demo One</center></h3>
+    <div class="emscripten_main">
+      <h3><center>BananaBread Demo 1</center></h3>
+    </div>
     <div class="emscripten_toparea">
       <div id="status">Downloading...</div>
       <div>
@@ -93,12 +95,11 @@
         <li>Press 9 to toggle thirdperson mode (to see your own character)</li>
       </ul>
       </p><p>
-      This is a <b>very</b> early demo - we are not done yet! Please note that
-      <ul>
-      <li><b>Very little</b> optimization for speed has been done</li>
-      <li>The level you see is a work in progress</li>
-      <li><b>Very recent development versions of browsers are needed to get all
-      functionality to work</b>:
+      This is an early demo - we are <b>not</b> done yet with level design, optimization or polish!
+      </p>
+      <p>
+        Please note that <b>very</b> recent development versions of browsers are needed to get all
+        functionality to work:
         <ul>
           <li>Texture compression is known to work in at least Firefox 15+ and Chrome 20+</li>
           <li>Mouse lock is known to work in at least Firefox 15+, looks like for Chrome it is
@@ -108,8 +109,6 @@
           <li>Sound efforts work in Firefox, but fail in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
           <li>Performance is best on latest development versions as well</li>
         </ul>
-      </li>
-      </ul>
       </p>
     </div>
     <script type='text/javascript' src='gl-matrix.js'></script>
