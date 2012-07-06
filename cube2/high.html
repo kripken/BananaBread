@@ -9,7 +9,8 @@
       .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
       canvas.emscripten { border: 1px solid black; }
       textarea.emscripten { font-family: monospace; width: 80%; }
-      div.emscripten { text-align: center; opacity: 1 }
+      div.emscripten { text-align: center }
+      div.emscripten_main { opacity: 1 }
       div.emscripten_toparea { text-align: center }
     </style>
   </head>
@@ -22,7 +23,7 @@
         <input type="button" value="fullscreen (full resolution)" onclick="Module.fullscreenHigh()">
       </div>
     </div>
-    <div class="emscripten">
+    <div class="emscripten_main">
       <hr/>
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
       <textarea class="emscripten" id="output" rows="8"></textarea>

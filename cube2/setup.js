@@ -48,16 +48,16 @@ Module.postLoadWorld = function() {
     var styleSheet = document.styleSheets[0];
     var rules = styleSheet.cssRules;
     for (var i = 0; i < rules.length; i++) {
-      if (rules[i].cssText.substr(0, 15) == 'div.emscripten ') {
+      if (rules[i].cssText.substr(0, 20) == 'div.emscripten_main ') {
         styleSheet.deleteRule(i);
         i--;
       }
     }
-    styleSheet.insertRule('div.emscripten { text-align: center; opacity: ' + opacity + ' }', 0);
+    styleSheet.insertRule('div.emscripten_main { opacity: ' + opacity + ' }', 0);
   }
 
   Module.pauseMainLoop();
-  Module.setStatus('Press "fullscreen" to start the game');
+  Module.setStatus('<b>Press "fullscreen" to start the game</b>');
   setOpacity(0.1);
 
   Module.fullscreenLow = function() {
