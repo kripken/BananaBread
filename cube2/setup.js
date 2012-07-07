@@ -40,13 +40,47 @@ Module.postLoadWorld = function() {
     Module.loadingMusic = null;
   }
   Module.tweakDetail();
+
+  BananaBread.execute('sensitivity 10');
+
+  // Pause and fade out until the user presses fullscreen
+  function setOpacity(opacity) {
+    var styleSheet = document.styleSheets[0];
+    var rules = styleSheet.cssRules;
+    for (var i = 0; i < rules.length; i++) {
+      if (rules[i].cssText.substr(0, 20) == 'div.emscripten_main ') {
+        styleSheet.deleteRule(i);
+        i--;
+      }
+    }
+    styleSheet.insertRule('div.emscripten_main { opacity: ' + opacity + ' }', 0);
+  }
+
+  Module.pauseMainLoop();
+  Module.setStatus('<b>Press "fullscreen" to start the game</b>');
+  setOpacity(0.1);
+
+  Module.fullscreenLow = function() {
+    setOpacity(1);
+    Module.setStatus('');
+    Module.requestFullScreen();
+    Module.resumeMainLoop();
+  };
+
+  Module.fullscreenHigh = function() {
+    setOpacity(1);
+    Module.setStatus('');
+    BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
+    Module.requestFullScreen();
+    Module.resumeMainLoop();
+  };
 };
 
 Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
 Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
 
 (function() {
-  var fraction = 0.75;
+  var fraction = 0.70;
   var desired = Math.min(fraction*screen.availWidth, fraction*screen.availHeight, 600);
   var w, h;
   if (screen.width >= screen.height) {

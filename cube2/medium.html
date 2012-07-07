@@ -9,102 +9,108 @@
       .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
       canvas.emscripten { border: 1px solid black; }
       textarea.emscripten { font-family: monospace; width: 80%; }
-      div.emscripten { text-align: center; }
+      div.emscripten { text-align: center }
+      div.emscripten_main { opacity: 1 }
+      div.emscripten_toparea { text-align: center }
     </style>
   </head>
   <body>
-    <h3><center>BananaBread: Demo Two</center></h3>
-    <hr/>
-    <div class="emscripten" id="status">Downloading...</div>
-    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-    <hr/>
-    <div class="emscripten"><input type="button" value="fullscreen" onclick="Module.requestFullScreen()"></div>
-    <hr/>
-    <textarea class="emscripten" id="output" rows="8"></textarea>
-    <hr>
-    <script type='text/javascript'>
-      // connect to canvas
-      var Module = {
-        preRun: [],        
-        postRun: [],        
-        print: (function() {
-          var element = document.getElementById('output');
-          element.value = ''; // clear browser cache
-          return function(text) {
-            // These replacements are necessary if you render to raw HTML
-            //text = text.replace(/&/g, "&amp;");
-            //text = text.replace(/</g, "&lt;");
-            //text = text.replace(/>/g, "&gt;");
-            //text = text.replace('\n', '<br>', 'g');
-            element.value += text + "\n";
-            element.scrollTop = 99999; // focus on bottom
-          };
-        })(),
-        printErr: function(text) {
-          if (0) { // XXX disabled for safety typeof dump == 'function') {
-            dump(text + '\n'); // fast, straight to the real console
-          } else {
-            console.log(text);
+    <div class="emscripten_main">
+      <h3><center>BananaBread Demo 2</center></h3>
+    </div>
+    <div class="emscripten_toparea">
+      <div id="status">Downloading...</div>
+      <div>
+        <input type="button" value="fullscreen (low resolution)" onclick="Module.fullscreenLow()">
+        <input type="button" value="fullscreen (full resolution)" onclick="Module.fullscreenHigh()">
+      </div>
+    </div>
+    <div class="emscripten_main">
+      <hr/>
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+      <textarea class="emscripten" id="output" rows="8"></textarea>
+      <hr>
+      <script type='text/javascript'>
+        // connect to canvas
+        var Module = {
+          preRun: [],
+          postRun: [],
+          print: (function() {
+            var element = document.getElementById('output');
+            element.value = ''; // clear browser cache
+            return function(text) {
+              // These replacements are necessary if you render to raw HTML
+              //text = text.replace(/&/g, "&amp;");
+              //text = text.replace(/</g, "&lt;");
+              //text = text.replace(/>/g, "&gt;");
+              //text = text.replace('\n', '<br>', 'g');
+              element.value += text + "\n";
+              element.scrollTop = 99999; // focus on bottom
+            };
+          })(),
+          printErr: function(text) {
+            if (0) { // XXX disabled for safety typeof dump == 'function') {
+              dump(text + '\n'); // fast, straight to the real console
+            } else {
+              console.log(text);
+            }
+          },
+          canvas: document.getElementById('canvas'),
+          setStatus: function(text) {
+            if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
+            document.getElementById('status').innerHTML = text;
+            if (text) {
+              var counter = 0;
+              Module.setStatus.interval = setInterval(function() {
+                counter++;
+                counter %= 3;
+                var dots = ' ';
+                for (var i = 0; i < counter; i++) dots += '.';
+                dots += '*';
+                for (var i = counter; i < 2; i++) dots += '.';
+                document.getElementById('status').innerHTML = text.replace('...', dots);
+              }, 300);
+            }
+          },
+          totalDependencies: 0,
+          monitorRunDependencies: function(left) {
+            this.totalDependencies = Math.max(this.totalDependencies, left);
+            Module.setStatus(left ? 'Preparing: ' + (this.totalDependencies-left) + '/' + this.totalDependencies + '...' : 'All downloads complete.');
           }
-        },
-        canvas: document.getElementById('canvas'),
-        setStatus: function(text) {
-          if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
-          document.getElementById('status').innerHTML = text;
-          if (text) {
-            var counter = 0;
-            Module.setStatus.interval = setInterval(function() {
-              counter++;
-              counter %= 3;
-              var dots = ' ';
-              for (var i = 0; i < counter; i++) dots += '.';
-              dots += '*';
-              for (var i = counter; i < 2; i++) dots += '.';
-              document.getElementById('status').innerHTML = text.replace('...', dots);
-            }, 300);
-          }
-        },
-        totalDependencies: 0,
-        monitorRunDependencies: function(left) {
-          this.totalDependencies = Math.max(this.totalDependencies, left);
-          Module.setStatus(left ? 'Preparing: ' + (this.totalDependencies-left) + '/' + this.totalDependencies + '...' : 'All downloads complete.');
-        }
-      };
-      Module.setStatus('Downloading...');
-    </script>
-    <h4>
-    This is the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D first person shooter (aka the Cube 2 Engine) compiled from C++ and OpenGL to JavaScript and WebGL
-    using <a href="http://emscripten.org">Emscripten</a>. Code is zlib licensed and on <a href="https://github.com/kripken/BananaBread">github</a>.
-    </h4>
-    <p>
-    The demo might take time to download. Afterwards:
-    <ul>
-      <li>Press the "fullscreen" button for the best experience, otherwise the mouse will not be locked and won't function correctly.</li>
-      <li>Move with WASD, jump with space, look around with the mouse.</li>
-      <li>Shoot with the mouse, change weapons with 1-5.</li>
-      <li>You can change some settings using the main menu (` or escape). For example, add another bot with "add bot", or change the resolution with options->res.</li>
-      <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
-      <li>Press 9 to toggle thirdperson mode (to see your own character)</li>
-    </ul>
-    </p><p>
-    This is a <b>very</b> early demo - we are not done yet! Please note that
-    <ul>
-    <li><b>Very little</b> optimization for speed has been done</li>
-    <li>The level you see is a work in progress</li>
-    <li><b>Very recent development versions of browsers are needed to get all
-    functionality to work</b>:
+        };
+        Module.setStatus('Downloading...');
+      </script>
+      <h4>
+      This is the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D first person shooter (aka the Cube 2 Engine) compiled from C++ and OpenGL to JavaScript and WebGL
+      using <a href="http://emscripten.org">Emscripten</a>. Code is zlib licensed and on <a href="https://github.com/kripken/BananaBread">github</a>.
+      </h4>
+      <p>
+      The demo might take time to download. Afterwards:
       <ul>
-        <li>Texture compression is known to work in at least Firefox 15+ and Chrome 20+</li>
-        <li>Mouse lock is known to work in at least Firefox 15+, looks like for Chrome it is
-            <a href="http://code.google.com/p/chromium/issues/detail?id=72754">planned for Chrome 22</a> (but it
-            <a href="http://www.chromium.org/developers/design-documents/mouse-lock">seems to be disabled by default</a>)</li>
-        <li>Fullscreen is known to work in at least Firefox 15+ and Chrome 20+</li>
-        <li>Sound efforts work in Firefox, but fail in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
-        <li>Performance is best on latest development versions as well</li>
+        <li>Press the "fullscreen" button for the best experience, otherwise the mouse will not be locked and won't function correctly.</li>
+        <li>Move with WASD, jump with space, look around with the mouse.</li>
+        <li>Shoot with the mouse, change weapons with 1-5.</li>
+        <li>You can change some settings using the main menu (` or escape). For example, add another bot with "add bot", or change the resolution with options->res.</li>
+        <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
+        <li>Press 9 to toggle thirdperson mode (to see your own character)</li>
       </ul>
-    </li>
-    </ul>
-    </p>
+      </p><p>
+      This is an early demo - we are <b>not</b> done yet with level design, optimization or polish!
+      </p>
+      <p>
+        Please note that <b>very</b> recent development versions of browsers are needed to get all
+        functionality to work:
+        <ul>
+          <li>Texture compression is known to work in at least Firefox 15+ and Chrome 20+</li>
+          <li>Mouse lock is known to work in at least Firefox 15+, looks like for Chrome it is
+              <a href="http://code.google.com/p/chromium/issues/detail?id=72754">planned for Chrome 22</a> (but it
+              <a href="http://www.chromium.org/developers/design-documents/mouse-lock">seems to be disabled by default</a>)</li>
+          <li>Fullscreen is known to work in at least Firefox 15+ and Chrome 20+</li>
+          <li>Sound efforts work in Firefox, but fail in Chrome due to <a href="http://code.google.com/p/chromium/issues/detail?id=124926">a problem with BlobBuilder</a></li>
+          <li>Performance is best on latest development versions as well</li>
+        </ul>
+      </p>
+    </div>
     <script type='text/javascript' src='gl-matrix.js'></script>
     <script type='text/javascript' src='setup.js'></script>
     <script type='text/javascript' src='setup_medium.js'></script>
