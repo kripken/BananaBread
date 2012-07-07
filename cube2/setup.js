@@ -61,17 +61,17 @@ Module.postLoadWorld = function() {
   setOpacity(0.1);
 
   Module.fullscreenLow = function() {
+    Module.requestFullScreen();
     setOpacity(1);
     Module.setStatus('');
-    Module.requestFullScreen();
     Module.resumeMainLoop();
   };
 
   Module.fullscreenHigh = function() {
+    Module.requestFullScreen();
     setOpacity(1);
     Module.setStatus('');
     BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
-    Module.requestFullScreen();
     Module.resumeMainLoop();
   };
 };
