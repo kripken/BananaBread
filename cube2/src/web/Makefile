@@ -232,6 +232,28 @@ TWO_TOWERS_FILES = packages/base/two_towers.ogz \
                    $(FANTASY_TEXTURES) \
                    $(EXTRA_FANTASY_TEXTURES)
 
+ZOOM_FILES = packages/base/zoom.ogz \
+             packages/base/zoom.cfg \
+             packages/gk/future/diamond_plate_big_gk/ \
+             packages/gk/future/diamond_plate_gk/ \
+             packages/gk/future/wall_plate_01_gk/ \
+             packages/gk/future/wall_plate_03_gk/ \
+             packages/gk/future/wall_plate_04_gk/ \
+             packages/gk/future/wall_plate_05_gk/ \
+             packages/gk/future/wall_plate_06_gk/ \
+             packages/gk/future/wall_plate_07_gk/ \
+             packages/gk/future/wall_plate_08_gk/ \
+             packages/gk/future/wall_plate_09_gk/ \
+             packages/gk/future/wall_plate_10_gk/ \
+             packages/gk/future/wall_plate_11_gk/ \
+             packages/gk/future/wall_plate_12_gk/ \
+             packages/gk/future/wall_plate_13_gk/ \
+             packages/gk/future/wall_plate_14_gk/ \
+             packages/gk/future/wall_plate_15_gk/ \
+             packages/gk/future/wall_plate_16_gk/ \
+             packages/gk/future/wall_plate_17_gk/ \
+             packages/gk/future/lamps_02_gk/
+
 MD2_FILES = packages/base/md2.ogz \
             packages/base/md2.cfg \
             packages/base/md2.wpt \
@@ -282,7 +304,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 	                packages/skyboxes/philo/
 
 LOW_FILES = $(BASE_FILES) \
-            $(MD2_FILES) \
+            $(ZOOM_FILES) \
             $(FRANKIE_MODEL_FILES)
 
 MEDIUM_FILES = $(BASE_FILES) \
