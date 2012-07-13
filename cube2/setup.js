@@ -34,6 +34,20 @@ Module.loadingMusic.play();
 
 // Hooks
 
+Module.setOpacity = function(rule, opacity, more) {
+  var styleSheet = document.styleSheets[0];
+  var rules = styleSheet.cssRules;
+  for (var i = 0; i < rules.length; i++) {
+    if (rules[i].cssText.substr(0, rule.length) == rule) {
+      styleSheet.deleteRule(i);
+      i--;
+    }
+  }
+  styleSheet.insertRule(rule + ' { opacity: ' + opacity + '; ' + (more || '') + ' }', 0);
+}
+
+Module.setOpacity('canvas.emscripten', 0.1, 'border: 1px solid black');
+
 Module.postLoadWorld = function() {
   if (Module.loadingMusic) {
     Module.loadingMusic.pause();
@@ -44,32 +58,24 @@ Module.postLoadWorld = function() {
   BananaBread.execute('sensitivity 10');
 
   // Pause and fade out until the user presses fullscreen
-  function setOpacity(opacity) {
-    var styleSheet = document.styleSheets[0];
-    var rules = styleSheet.cssRules;
-    for (var i = 0; i < rules.length; i++) {
-      if (rules[i].cssText.substr(0, 20) == 'div.emscripten_main ') {
-        styleSheet.deleteRule(i);
-        i--;
-      }
-    }
-    styleSheet.insertRule('div.emscripten_main { opacity: ' + opacity + ' }', 0);
-  }
 
   Module.pauseMainLoop();
-  Module.setStatus('<b>Press "fullscreen" to start the game</b>');
-  setOpacity(0.1);
+  setTimeout(function() {
+    Module.setStatus('<b>Press "fullscreen" to start the game</b>');
+  }, 0);
+  Module.setOpacity('div.emscripten_main', 0.1);
+  Module.setOpacity('canvas.emscripten', 1, 'border: 1px solid black');
 
   Module.fullscreenLow = function() {
     Module.requestFullScreen();
-    setOpacity(1);
+    Module.setOpacity('div.emscripten_main', 1);
     Module.setStatus('');
     Module.resumeMainLoop();
   };
 
   Module.fullscreenHigh = function() {
     Module.requestFullScreen();
-    setOpacity(1);
+    Module.setOpacity('div.emscripten_main', 1);
     Module.setStatus('');
     BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
     Module.resumeMainLoop();
