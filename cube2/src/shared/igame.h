@@ -88,6 +88,7 @@ namespace game
     extern void serverinfoendcolumn(g3d_gui *g, int i);
     extern bool serverinfoentry(g3d_gui *g, int i, const char *name, int port, const char *desc, const char *map, int ping, const vector<int> &attr, int np);
     extern bool needminimap();
+    extern void startgame(); // XXX EMSCRIPTEN: Made this public so we can call it asynchronously
 
     // XXX EMSCRIPTEN: load different player models at runtime
     extern void EMSCRIPTEN_KEEPALIVE setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,

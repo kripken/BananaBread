@@ -413,7 +413,7 @@ namespace game
             emptymap(0, true, name);
             senditemstoserver = false;
         }
-        startgame();
+        // XXX EMSCRIPTEN: startgame() will be called asynchronously
     }
 
     void setmode(int mode)

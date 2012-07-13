@@ -1261,6 +1261,8 @@ bool load_world(const char *mname, const char *cname)        // still supports a
 #endif
     execute("playasong");
 
+    game::startgame(); // XXX EMSCRIPTEN: do this from here so we can break this function up into async parts
+
     return true;
 }
 
