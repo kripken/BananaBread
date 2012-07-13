@@ -304,7 +304,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 	                packages/skyboxes/philo/
 
 LOW_FILES = $(BASE_FILES) \
-            $(ZOOM_FILES) \
+            $(MD2_FILES) \
             $(FRANKIE_MODEL_FILES)
 
 MEDIUM_FILES = $(BASE_FILES) \
@@ -317,7 +317,7 @@ HIGH_FILES = $(BASE_FILES) \
              $(SNOUTX10K_MODEL_FILES) \
              $(HUDGUNS_FILES)
 
-CRUNCH_QUALITY = 64
+CRUNCH_QUALITY = 16
 
 client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fireworks.data --preload $(FIREWORKS_FILES) --pre-run > preload_fireworks.js

@@ -10,6 +10,6 @@ Module.tweakDetail = function() {
 };
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ effic zoom ]');
+  BananaBread.execute('sleep 10 [ effic md2 ; sleep 20000 [ addbot ] ]');
 };
 
