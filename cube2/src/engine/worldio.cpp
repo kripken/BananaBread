@@ -983,13 +983,31 @@ static uint mapcrc = 0;
 uint getmapcrc() { return mapcrc; }
 void clearmapcrc() { mapcrc = 0; }
 
+// XXX EMSCRIPTEN: globalize parts of load world to run it in async parts
+void load_world_1();
+void load_world_2();
+void load_world_3();
+void load_world_4();
+void load_world_5();
+void load_world_6();
+stream *load_world_f;
+octaheader load_world_hdr;
+int load_world_loadingstart;
+Texture *load_world_mapshot;
+const char *load_world_mname;
+const char *load_world_cname;
+
 bool load_world(const char *mname, const char *cname)        // still supports all map formats that have existed since the earliest cube betas!
 {
-    int loadingstart = SDL_GetTicks();
+    load_world_mname = mname;
+    load_world_cname = cname;
+    int &loadingstart = load_world_loadingstart;
+    loadingstart = SDL_GetTicks();
     setmapfilenames(mname, cname);
     stream *f = opengzfile(ogzname, "rb");
+    load_world_f = f;
     if(!f) { conoutf(CON_ERROR, "could not read map %s", ogzname); return false; }
-    octaheader hdr;
+    octaheader &hdr = load_world_hdr;
     if(f->read(&hdr, 7*sizeof(int))!=int(7*sizeof(int))) { conoutf(CON_ERROR, "map %s has malformatted header", ogzname); delete f; return false; }
     lilswap(&hdr.version, 6);
     if(strncmp(hdr.magic, "OCTA", 4)!=0 || hdr.worldsize <= 0|| hdr.numents < 0) { conoutf(CON_ERROR, "map %s has malformatted header", ogzname); delete f; return false; }
@@ -1008,7 +1026,7 @@ bool load_world(const char *mname, const char *cname)        // still supports a
 
     resetmap();
 
-    Texture *mapshot = textureload(picname, 3, true, false);
+    Texture *mapshot = load_world_mapshot = textureload(picname, 3, true, false);
     renderbackground("loading...", mapshot, mname, game::getmapinfo());
 
     setvar("mapversion", hdr.version, true, false);
@@ -1188,6 +1206,22 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     renderprogress(0, "loading slots...");
     loadvslots(f, hdr.numvslots);
 
+    emscripten_push_main_loop_blocker(load_world_1);
+    emscripten_push_main_loop_blocker(load_world_2);
+    emscripten_push_main_loop_blocker(load_world_3);
+    emscripten_push_main_loop_blocker(load_world_4);
+    emscripten_push_main_loop_blocker(load_world_5);
+    emscripten_push_main_loop_blocker(load_world_6);
+
+    return true;
+}
+
+void load_world_1()
+{
+    stream *f = load_world_f;
+    octaheader &hdr = load_world_hdr;
+    int &loadingstart = load_world_loadingstart;
+
     renderprogress(0, "loading octree...");
     bool failed = false;
     worldroot = loadchildren(f, ivec(0, 0, 0), hdr.worldsize>>1, failed);
@@ -1238,16 +1272,37 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     if(hdr.version <= 25) fixlightmapnormals();
     extern void fixrotatedlightmaps();
     if(hdr.version <= 31) fixrotatedlightmaps();
+}
 
+void load_world_2()
+{
     preloadusedmapmodels(true);
 
     game::preload();
-    flushpreloadedmodels();
+}
 
+void load_world_3()
+{
+    flushpreloadedmodels();
+}
+
+void load_world_4()
+{
     entitiesinoctanodes();
     attachentities();
     initlights();
+}
+
+void load_world_5()
+{
     allchanged(true);
+}
+
+void load_world_6()
+{
+    Texture *mapshot = load_world_mapshot;
+    const char *mname = load_world_mname;
+    const char *cname = load_world_cname;
 
     renderbackground("loading...", mapshot, mname, game::getmapinfo());
 
@@ -1262,8 +1317,6 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     execute("playasong");
 
     game::startgame(); // XXX EMSCRIPTEN: do this from here so we can break this function up into async parts
-
-    return true;
 }
 
 void savecurrentmap() { save_world(game::getclientmap()); }
