@@ -1191,7 +1191,11 @@ static bool texturedata(ImageData &d, const char *tname, Slot::Tex *tex = NULL, 
         string dfile;
         copystring(dfile, file);
         memcpy(dfile + flen - 4, ".dds", 4);
-        if(!raw && hasTC && loaddds(dfile, d)) return true;
+        if(!raw && hasTC)
+        {
+            if (loaddds(dfile, d)) return true;
+            conoutf(CON_ERROR, "dds requested, but failed to load: %s", dfile); // XXX EMSCRIPTEN: warn on missing/bad DDS files
+        }
         if(!dds || dbgdds) { if(msg) conoutf(CON_ERROR, "could not load texture %s", dfile); return false; }
     }
         
