@@ -12,6 +12,7 @@ Module.tweakDetail = function() {
 
   BananaBread.glare = 1;
   BananaBread.execute('glare 1');
+  BananaBread.execute('glarescale 2');
 
   new CameraPath({
     steps: [{
@@ -55,4 +56,14 @@ function toggleGlare() {
   BananaBread.glare = 1 - BananaBread.glare;
   BananaBread.execute('glare ' + BananaBread.glare);
 }
+
+Module.postLoadWorld = function() {
+  if (Module.loadingMusic) {
+    Module.loadingMusic.pause();
+    Module.loadingMusic = null;
+  }
+  Module.tweakDetail();
+};
+
+Module.setOpacity('canvas.emscripten', 1, 'border: 1px solid black');
 
