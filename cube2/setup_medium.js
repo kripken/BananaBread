@@ -5,6 +5,9 @@ Module.setPlayerModels = function() {
 
 Module.tweakDetail = function() {
   BananaBread.execute('maxdebris 17');
+  BananaBread.execute('glare 1');
+  BananaBread.execute('glarescale 8.0');
+  BananaBread.execute('blurglare 7');
 };
 
 Module.loadDefaultMap = function() {

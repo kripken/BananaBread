@@ -238,6 +238,7 @@ ZOOM_FILES = packages/base/zoom.ogz \
              packages/base/zoom.cfg \
              `find packages/gk/future/ -name "*.cfg"` \
              `find packages/gk/future/ -name "*.dds"` \
+             `find packages/gk/future/ -name "*_si.png"` \
              `find packages/gk/future/skysfJPG/ -name "*.jpg"`
 
 MD2_FILES = packages/base/md2.ogz \

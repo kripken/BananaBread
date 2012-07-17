@@ -157,7 +157,7 @@ Module.postRun.push(function() {
   var n = 0;
   for (var x in Module.preloadedAudios) n++;
   console.log('successfully preloaded audios: ' + n);
-  if (n == 0) alert('An error occurred and your browser could not load the audio files. Running will continue without sound effects.');
+  if (n == 0) alert('Your browser could not load the audio files. Running will continue without sound effects.');
 });
 
 // Additional APIs
