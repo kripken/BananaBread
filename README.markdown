@@ -5,7 +5,12 @@ The BananaBread Engine
 A port of the Cube 2/Sauerbraten 3D game engine/first person shooter to the
 web, compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 
-**Online demo**: http://www.syntensity.com/static/night12
+Demos
+-----
+
+**FPS-type games**: http://www.syntensity.com/static/night14
+
+**Non-game example**: http://www.syntensity.com/static/night14/fireworks.html
 
 **Screenshots**: http://mozakai.blogspot.com/2012/06/bananabread-02-levels.html
 
