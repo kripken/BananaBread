@@ -36,7 +36,7 @@ static void loadshaders2();
 static void loadshaders3();
 static char *loadshaders_glsl;
 static int loadshaders_glsl_len;
-static const int loadshaders_glsl_chunks = 6;
+static const int loadshaders_glsl_chunks = 12;
 static char *loadshaders_glsl_curr;
 
 void loadshaders()

@@ -1142,7 +1142,7 @@ int main(int argc, char **argv)
 
 #if EMSCRIPTEN
     emscripten_set_main_loop(main_loop_caller, 0);
-    emscripten_set_main_loop_expected_blockers(15);
+    emscripten_set_main_loop_expected_blockers(21);
 #endif
     emscripten_push_main_loop_blocker(main2);
 }
