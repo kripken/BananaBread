@@ -5,12 +5,8 @@ cd syntensity/master_django/intensity/static
 mkdir night14
 cd night14
 put index.html
+put main.html
 put bb.js
-put fireworks.html
-put low.html
-put medium.html
-put high.html
-put high_minus.html
 put preload_fireworks.js
 put preload_low.js
 put preload_medium.js

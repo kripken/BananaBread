@@ -278,3 +278,25 @@ function CameraPath(data) { // TODO: namespace this
   }
 }
 
+// Load scripts
+
+(function() {
+  function loadChildScript(name) {
+    var js = document.createElement('script');
+    js.src = name;
+    document.body.appendChild(js);
+  }
+
+  try {
+    var urlParts = window.location.toString().split('?')[1].split(',');
+  } catch(e) {
+    alert('invalid URL, cannot parse out setup/preload: ' + window.location);
+    window.location = 'index.html';
+    return;
+  }
+  var setup = urlParts[0], preload = urlParts[1];
+  loadChildScript('setup_' + setup + '.js');
+  loadChildScript('preload_' + preload + '.js');
+  loadChildScript('bb.js');
+})();
+
