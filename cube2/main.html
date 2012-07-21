@@ -19,6 +19,7 @@
       <h3><center>BananaBread Demo</center></h3>
     </div>
     <div class="emscripten_toparea">
+      <progress value="0" max="100" id="progress"></progress>  
       <div id="status">Downloading...</div>
       <div>
         <input type="button" value="fullscreen (low resolution)" onclick="Module.fullscreenLow()">
@@ -58,7 +59,20 @@
           canvas: document.getElementById('canvas'),
           setStatus: function(text) {
             if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
-            document.getElementById('status').innerHTML = text;
+            var m = text.match(/([^(]+)\((\d+)\/(\d+)\)/);
+            var statusElement = document.getElementById('status');
+            var progressElement = document.getElementById('progress');
+            if (m) {
+              text = m[1];
+              progressElement.value = parseInt(m[2]);
+              progressElement.max = parseInt(m[3]);
+              progressElement.hidden = false;
+            } else {
+              progressElement.value = null;
+              progressElement.max = null;
+              progressElement.hidden = true;
+            }
+            statusElement.innerHTML = text;
             if (text) {
               var counter = 0;
               Module.setStatus.interval = setInterval(function() {
@@ -68,7 +82,7 @@
                 for (var i = 0; i < counter; i++) dots += '.';
                 dots += '*';
                 for (var i = counter; i < 2; i++) dots += '.';
-                document.getElementById('status').innerHTML = text.replace('...', dots);
+                statusElement.innerHTML = text.replace('...', dots);
               }, 300);
             }
           },
