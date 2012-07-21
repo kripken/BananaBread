@@ -31,6 +31,14 @@ VAR(maxfsuniforms, 1, 0, 0);
 VAR(maxvaryings, 1, 0, 0);
 VAR(dbgshader, 0, 0, 2);
 
+// XXX EMSCRIPTEN: split up shader loading, it takes a while
+static void loadshaders2(); 
+static void loadshaders3();
+static void loadshaders4();
+static char *loadshaders_glsl;
+static int loadshaders_glsl_len;
+static char *loadshaders_glsl_split;
+
 void loadshaders()
 {
     if(renderpath==R_ASMSHADER || renderpath==R_ASMGLSLANG)
@@ -64,7 +72,29 @@ void loadshaders()
 
     initshaders = true;
     standardshader = true;
-    execfile(renderpath==R_GLSLANG ? "data/glsl.cfg" : "data/stdshader.cfg");
+
+    // XXX EMSCRIPTEN: load glsl.cfg and split it up. Find a \n]\n to split at
+    loadshaders_glsl = loadfile(renderpath==R_GLSLANG ? "data/glsl.cfg" : "data/stdshader.cfg", &loadshaders_glsl_len);
+    loadshaders_glsl_split = strstr(loadshaders_glsl + loadshaders_glsl_len/2, "\n]\n") + 2;
+    *loadshaders_glsl_split = 0; // we can put a 0 on the second \n
+
+    emscripten_push_main_loop_blocker(loadshaders2);
+    emscripten_push_main_loop_blocker(loadshaders3);
+    emscripten_push_main_loop_blocker(loadshaders4);
+}
+
+void loadshaders2()
+{
+    execute(loadshaders_glsl);
+}
+
+void loadshaders3()
+{
+    execute(loadshaders_glsl_split + 1);
+}
+
+void loadshaders4()
+{
     standardshader = false;
     initshaders = false;
     defaultshader = lookupshaderbyname("default");

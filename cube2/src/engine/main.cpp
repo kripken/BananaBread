@@ -1005,10 +1005,10 @@ int getclockmillis()
     return max(millis, totalmillis);
 }
 
-void main2();
-void main3();
-void main_loop_caller();
-void main_loop_iter();
+static void main2();
+static void main3();
+static void main_loop_caller();
+static void main_loop_iter();
 
 static char *load = NULL, *initscript = NULL;
 
@@ -1142,16 +1142,16 @@ int main(int argc, char **argv)
 
 #if EMSCRIPTEN
     emscripten_set_main_loop(main_loop_caller, 0);
-    emscripten_set_main_loop_expected_blockers(8);
+    emscripten_set_main_loop_expected_blockers(11);
 #endif
     emscripten_push_main_loop_blocker(main2);
-    emscripten_push_main_loop_blocker(main3);
 }
 
 void main2()
 {
     logoutf("init: gl: effects");
     loadshaders();
+    emscripten_push_main_loop_blocker(main3);
 }
 
 void main3()
