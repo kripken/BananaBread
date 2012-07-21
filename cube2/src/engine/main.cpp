@@ -1006,6 +1006,7 @@ int getclockmillis()
 }
 
 void main2();
+void main3();
 void main_loop_caller();
 void main_loop_iter();
 
@@ -1139,13 +1140,22 @@ int main(int argc, char **argv)
     inbetweenframes = true;
     renderbackground("starting..."); //"initializing...");
 
-    emscripten_async_call(main2, 0);
+#if EMSCRIPTEN
+    emscripten_set_main_loop(main_loop_caller, 0);
+    emscripten_set_main_loop_expected_blockers(8);
+#endif
+    emscripten_push_main_loop_blocker(main2);
+    emscripten_push_main_loop_blocker(main3);
 }
 
 void main2()
 {
     logoutf("init: gl: effects");
     loadshaders();
+}
+
+void main3()
+{
     particleinit();
     initdecals();
 
@@ -1220,10 +1230,8 @@ void main2()
     inputgrab(grabinput = true);
     ignoremousemotion();
 
-#if EMSCRIPTEN
-    emscripten_set_main_loop(main_loop_caller, 0);
-#else
-    for(;;) main_loop_caller();
+#if !EMSCRIPTEN
+    for(;;) main_loop_caller(); // otherwise in emscripten we already set the main loop
 #endif
 }
 
