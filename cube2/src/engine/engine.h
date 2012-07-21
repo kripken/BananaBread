@@ -318,7 +318,7 @@ extern vec decodenormal(ushort norm);
 extern void reduceslope(ivec &n);
 extern void findtjoints();
 extern void octarender();
-extern void allchanged(bool load = false);
+extern void allchanged(bool load = false, void (*next)() = NULL); // XXX EMSCRIPTEN next is a continuation, if we want to split this up
 extern void clearvas(cube *c);
 extern vtxarray *newva(int x, int y, int z, int size);
 extern void destroyva(vtxarray *va, bool reparent = true);

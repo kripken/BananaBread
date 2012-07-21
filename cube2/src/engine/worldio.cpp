@@ -1211,7 +1211,6 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     emscripten_push_main_loop_blocker(load_world_3);
     emscripten_push_main_loop_blocker(load_world_4);
     emscripten_push_main_loop_blocker(load_world_5);
-    emscripten_push_main_loop_blocker(load_world_6);
 
     return true;
 }
@@ -1295,7 +1294,7 @@ void load_world_4()
 
 void load_world_5()
 {
-    allchanged(true);
+    allchanged(true, load_world_6);
 }
 
 void load_world_6()

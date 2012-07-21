@@ -1767,29 +1767,70 @@ void precachetextures()
     loadprogress = 0;
 }
 
-void allchanged(bool load)
+// XXX EMSCRIPTEN: split up during load
+static void allchanged2();
+static void allchanged3();
+static void allchanged4();
+static void allchanged5();
+static bool allchanged_load;
+static void (*allchanged_next)();
+
+void allchanged(bool load, void (*next)())
 {
+    allchanged_load = load;
+    allchanged_next = next;
+
     renderprogress(0, "clearing vertex arrays...");
     clearvas(worldroot);
     resetqueries();
     resetclipplanes();
-    if(load) initenvmaps();
+
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged2);
+    else allchanged2();
+}
+
+void allchanged2()
+{
+    if(allchanged_load) initenvmaps();
     guessshadowdir();
     entitiesinoctanodes();
     tjoints.setsize(0);
+
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged3);
+    else allchanged3();
+}
+
+void allchanged3()
+{
     if(filltjoints) findtjoints();
+
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged4);
+    else allchanged4();
+}
+
+void allchanged4()
+{
     octarender();
-    if(load) precachetextures();
+
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged5);
+    else allchanged5();
+}
+
+void allchanged5()
+{
+    if(allchanged_load) precachetextures();
     setupmaterials();
     invalidatepostfx();
     updatevabbs(true);
     resetblobs();
-    if(load) 
+    if(allchanged_load) 
     {
         seedparticles();
         genenvmaps();
         drawminimap();
     }
+
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged_next);
 }
 
 void recalc()
