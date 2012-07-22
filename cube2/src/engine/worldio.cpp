@@ -1208,10 +1208,6 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     loadvslots(f, hdr.numvslots);
 
     emscripten_push_main_loop_blocker(load_world_1);
-    emscripten_push_main_loop_blocker(load_world_2);
-    emscripten_push_main_loop_blocker(load_world_3);
-    emscripten_push_main_loop_blocker(load_world_4);
-    emscripten_push_main_loop_blocker(load_world_5);
 
     return true;
 }
@@ -1272,6 +1268,8 @@ void load_world_1()
     if(hdr.version <= 25) fixlightmapnormals();
     extern void fixrotatedlightmaps();
     if(hdr.version <= 31) fixrotatedlightmaps();
+
+    emscripten_push_main_loop_blocker(load_world_2);
 }
 
 void load_world_2()
@@ -1279,11 +1277,13 @@ void load_world_2()
     preloadusedmapmodels(true);
 
     game::preload();
+
+    emscripten_push_main_loop_blocker(load_world_3);
 }
 
 void load_world_3()
 {
-    flushpreloadedmodels();
+    flushpreloadedmodels(load_world_4);
 }
 
 void load_world_4()
@@ -1291,6 +1291,8 @@ void load_world_4()
     entitiesinoctanodes();
     attachentities();
     initlights();
+
+    emscripten_push_main_loop_blocker(load_world_5);
 }
 
 void load_world_5()

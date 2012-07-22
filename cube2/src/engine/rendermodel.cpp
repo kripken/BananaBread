@@ -362,15 +362,24 @@ void preloadmodel(const char *name)
     preloadmodels.add(newstring(name));
 }
 
-void flushpreloadedmodels()
+// XXX EMSCRIPTEN: asynchronizing
+static void flushpreloadedmodels_iter();
+static void (*flushpreloadedmodels_func)();
+
+void flushpreloadedmodels(void (*func)())
 {
-    loopv(preloadmodels)
+    flushpreloadedmodels_func = func;
+    flushpreloadedmodels_iter();
+}
+
+void flushpreloadedmodels_iter()
+{
+    if (preloadmodels.length())
     {
-        loadprogress = float(i+1)/preloadmodels.length();
-        loadmodel(preloadmodels[i], -1, true);
+        loadmodel(preloadmodels.pop(), -1, true);
+        emscripten_push_uncounted_main_loop_blocker(flushpreloadedmodels_iter);
     }
-    preloadmodels.deletearrays();
-    loadprogress = 0;
+    else emscripten_push_main_loop_blocker(flushpreloadedmodels_func);
 }
 
 void preloadusedmapmodels(bool msg, bool bih)
