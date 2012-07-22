@@ -985,6 +985,9 @@ void clearmapcrc() { mapcrc = 0; }
 
 // XXX EMSCRIPTEN: globalize parts of load world to run it in async parts
 void load_world_1();
+void load_world_1a();
+void load_world_1b();
+void load_world_1c();
 void load_world_2();
 void load_world_3();
 void load_world_4();
@@ -996,6 +999,7 @@ int load_world_loadingstart;
 Texture *load_world_mapshot;
 const char *load_world_mname;
 const char *load_world_cname;
+bool load_world_failed;
 
 bool load_world(const char *mname, const char *cname)        // still supports all map formats that have existed since the earliest cube betas!
 {
@@ -1216,17 +1220,30 @@ void load_world_1()
 {
     stream *f = load_world_f;
     octaheader &hdr = load_world_hdr;
-    int &loadingstart = load_world_loadingstart;
 
     renderprogress(0, "loading octree...");
     bool failed = false;
     worldroot = loadchildren(f, ivec(0, 0, 0), hdr.worldsize>>1, failed);
     if(failed) conoutf(CON_ERROR, "garbage in map");
- 
-    renderprogress(0, "validating...");
-    validatec(worldroot, hdr.worldsize>>1);
+    load_world_failed = failed;
 
-    if(!failed)
+    emscripten_push_main_loop_blocker(load_world_1a);
+}
+
+void load_world_1a()
+{
+    renderprogress(0, "validating...");
+    validatec(worldroot, load_world_hdr.worldsize>>1);
+
+    emscripten_push_main_loop_blocker(load_world_1b);
+}
+
+void load_world_1b()
+{
+    stream *f = load_world_f;
+    octaheader &hdr = load_world_hdr;
+
+    if(!load_world_failed)
     {
         if(hdr.version >= 7) loopi(hdr.lightmaps)
         {
@@ -1247,7 +1264,19 @@ void load_world_1()
             f->read(lm.data, lm.bpp * LM_PACKW * LM_PACKH);
             lm.finalize();
         }
+    }
 
+    emscripten_push_main_loop_blocker(load_world_1c);
+}
+
+void load_world_1c()
+{
+    stream *f = load_world_f;
+    octaheader &hdr = load_world_hdr;
+    int &loadingstart = load_world_loadingstart;
+
+    if(!load_world_failed)
+    {
         if(hdr.version >= 25 && hdr.numpvs > 0) loadpvs(f, hdr.numpvs);
         if(hdr.version >= 28 && hdr.blendmap) loadblendmap(f, hdr.blendmap);
     }
