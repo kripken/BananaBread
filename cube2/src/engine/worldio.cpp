@@ -999,8 +999,9 @@ const char *load_world_cname;
 
 bool load_world(const char *mname, const char *cname)        // still supports all map formats that have existed since the earliest cube betas!
 {
-    load_world_mname = mname;
-    load_world_cname = cname;
+    load_world_mname = newstring(mname);
+    load_world_cname = newstring(cname);
+
     int &loadingstart = load_world_loadingstart;
     loadingstart = SDL_GetTicks();
     setmapfilenames(mname, cname);
@@ -1316,6 +1317,9 @@ void load_world_6()
     execute("playasong");
 
     game::startgame(); // XXX EMSCRIPTEN: do this from here so we can break this function up into async parts
+
+    delete load_world_mname;
+    delete load_world_cname;
 }
 
 void savecurrentmap() { save_world(game::getclientmap()); }
