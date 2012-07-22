@@ -413,7 +413,8 @@ namespace game
             emptymap(0, true, name);
             senditemstoserver = false;
         }
-        // XXX EMSCRIPTEN: startgame() will be called asynchronously
+        startgame(); // XXX EMSCRIPTEN: load_world is async, so this is not technically correct. but doing it from the end of load_world makes it
+                     //                 get out of sync with lifesequence (server sends us the lifesequence, then later startgame makes it -1
     }
 
     void setmode(int mode)

@@ -1316,8 +1316,6 @@ void load_world_6()
 #endif
     execute("playasong");
 
-    game::startgame(); // XXX EMSCRIPTEN: do this from here so we can break this function up into async parts
-
     if (load_world_mname) delete load_world_mname;
     if (load_world_cname) delete load_world_cname;
 }
