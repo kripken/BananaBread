@@ -319,8 +319,9 @@ function CameraPath(data) { // TODO: namespace this
 // Load scripts
 
 (function() {
-  function loadChildScript(name) {
+  function loadChildScript(name, then) {
     var js = document.createElement('script');
+    if (then) js.onload = then;
     js.src = name;
     document.body.appendChild(js);
   }
@@ -333,8 +334,10 @@ function CameraPath(data) { // TODO: namespace this
     return;
   }
   var setup = urlParts[0], preload = urlParts[1];
-  loadChildScript('setup_' + setup + '.js');
-  loadChildScript('preload_' + preload + '.js');
-  loadChildScript('bb.js');
+  loadChildScript('setup_' + setup + '.js', function() {
+    loadChildScript('preload_' + preload + '.js', function() {
+      loadChildScript('bb.js');
+    });
+  });
 })();
 
