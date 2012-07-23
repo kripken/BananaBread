@@ -37,6 +37,7 @@
         var Module = {
           preRun: [],
           postRun: [],
+          preloadPlugins: [],
           print: (function() {
             var element = document.getElementById('output');
             element.value = ''; // clear browser cache

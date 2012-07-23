@@ -24,4 +24,5 @@ put setup_high_minus.js
 put OutThere_0.ogg
 put crunch-worker.js
 put gl-matrix.js
+put zee-worker.js
 

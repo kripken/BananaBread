@@ -1009,7 +1009,11 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     int &loadingstart = load_world_loadingstart;
     loadingstart = SDL_GetTicks();
     setmapfilenames(mname, cname);
+#if EMSCRIPTEN // we gunzip the ogz file in parallel during preloading, to speed this up
+    stream *f = openrawfile(ogzname, "rb");
+#else
     stream *f = opengzfile(ogzname, "rb");
+#endif
     load_world_f = f;
     if(!f) { conoutf(CON_ERROR, "could not read map %s", ogzname); return false; }
     octaheader &hdr = load_world_hdr;
