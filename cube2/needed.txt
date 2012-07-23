@@ -2,21 +2,21 @@ Necessary files to upload (run this in sftp)
 ============================================
 
 cd syntensity/master_django/intensity/static
-mkdir night14
-cd night14
+mkdir night15
+cd night15
 put index.html
 put main.html
 put bb.js
-put preload_fireworks.js
+#put preload_fireworks.js
 put preload_low.js
 put preload_medium.js
 put preload_high.js
-put fireworks.data
+#put fireworks.data
 put low.data
 put medium.data
 put high.data
 put setup.js
-put setup_fireworks.js
+#put setup_fireworks.js
 put setup_low.js
 put setup_medium.js
 put setup_high.js
@@ -25,5 +25,6 @@ put OutThere_0.ogg
 put crunch-worker.js
 put gl-matrix.js
 put zee-worker.js
+
 tar -czvf night15.tar.gz index.html main.html bb.js preload_fireworks.js preload_low.js preload_medium.js preload_high.js fireworks.data low.data medium.data high.data setup.js setup_fireworks.js setup_low.js setup_medium.js setup_high.js setup_high_minus.js OutThere_0.ogg crunch-worker.js gl-matrix.js zee-worker.js
 

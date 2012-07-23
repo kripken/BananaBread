@@ -307,7 +307,7 @@ HIGH_FILES = $(BASE_FILES) \
 CRUNCH_QUALITY = 16
 
 client: client.bc
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fireworks.data --preload $(FIREWORKS_FILES) --pre-run > preload_fireworks.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fireworks.data --preload $(FIREWORKS_FILES) --pre-run > preload_fireworks.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > preload_low.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
