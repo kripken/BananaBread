@@ -39,7 +39,7 @@ static int loadshaders_glsl_len;
 static const int loadshaders_glsl_chunks = 12;
 static char *loadshaders_glsl_curr;
 
-void loadshaders()
+void loadshaders(bool firstload)
 {
     if(renderpath==R_ASMSHADER || renderpath==R_ASMGLSLANG)
     {
@@ -77,8 +77,14 @@ void loadshaders()
     loadshaders_glsl = loadfile(renderpath==R_GLSLANG ? "data/glsl.cfg" : "data/stdshader.cfg", &loadshaders_glsl_len);
     loadshaders_glsl_curr = loadshaders_glsl;
 
-    loopi(loadshaders_glsl_chunks) emscripten_push_main_loop_blocker(loadshaders2);
-    emscripten_push_main_loop_blocker(loadshaders3);
+    if (firstload)
+    {
+        loopi(loadshaders_glsl_chunks) emscripten_push_main_loop_blocker(loadshaders2);
+        emscripten_push_main_loop_blocker(loadshaders3);
+    } else {
+        loopi(loadshaders_glsl_chunks) loadshaders2();
+        loadshaders3();
+    }
 }
 
 void loadshaders2()

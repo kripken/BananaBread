@@ -1150,7 +1150,7 @@ int main(int argc, char **argv)
 void main2()
 {
     logoutf("init: gl: effects");
-    loadshaders();
+    loadshaders(true);
     emscripten_push_main_loop_blocker(main3);
 }
 
