@@ -143,6 +143,10 @@ void restorebackground()
 
 void renderbackground(const char *caption, Texture *mapshot, const char *mapname, const char *mapinfo, bool restore, bool force)
 {
+#if EMSCRIPTEN
+    return;
+#endif
+
     if(!inbetweenframes && !force) return;
 
     stopsounds(); // stop sounds while loading
@@ -321,7 +325,9 @@ float loadprogress = 0;
 
 void renderprogress(float bar, const char *text, GLuint tex, bool background)   // also used during loading
 {
-    return; // XXX EMSCRIPTEN
+#if EMSCRIPTEN
+    return;
+#endif
 
     if(!inbetweenframes || envmapping) return;
 
@@ -1285,10 +1291,13 @@ void main_loop_iter()
 
         if(minimized) return;
 
-        inbetweenframes = false;
-        if(mainmenu) gl_drawmainmenu(screen->w, screen->h);
-        else gl_drawframe(screen->w, screen->h);
-        swapbuffers();
-        renderedframe = inbetweenframes = true;
+        extern bool maploaded;
+        if (maploaded) {
+            inbetweenframes = false;
+            if(mainmenu) gl_drawmainmenu(screen->w, screen->h);
+            else gl_drawframe(screen->w, screen->h);
+            swapbuffers();
+            renderedframe = inbetweenframes = true;
+        }
 }
 
