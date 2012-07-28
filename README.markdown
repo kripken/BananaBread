@@ -8,7 +8,7 @@ web, compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 Demos
 -----
 
-**FPS-type games**: http://www.syntensity.com/static/night15
+**FPS-type games**: http://dl.dropbox.com/u/80664946/index.html
 
 **Non-game example**: http://www.syntensity.com/static/night14/fireworks.html
 
