@@ -87,7 +87,6 @@ var Module = {
     Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
   }
 };
-Module.setStatus('Downloading...');
 
 // Loading music. Will be stopped once the first frame of the game runs
 
@@ -159,6 +158,8 @@ Module.postLoadWorld = function() {
   BananaBread.execute('sensitivity 10');
 
   // Pause and fade out until the user presses fullscreen
+
+  document.getElementById('fullscreen_buttons').hidden = 0;
 
   Module.pauseMainLoop();
   setTimeout(function() {
