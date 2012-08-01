@@ -6,6 +6,7 @@ mkdir night15
 cd night15
 put index.html
 put main.html
+put info.html
 put bb.js
 #put preload_fireworks.js
 put preload_low.js
@@ -26,5 +27,5 @@ put crunch-worker.js
 put gl-matrix.js
 put zee-worker.js
 
-tar -czvf night15.tar.gz index.html main.html bb.js preload_fireworks.js preload_low.js preload_medium.js preload_high.js fireworks.data low.data medium.data high.data setup.js setup_fireworks.js setup_low.js setup_medium.js setup_high.js setup_high_minus.js OutThere_0.ogg crunch-worker.js gl-matrix.js zee-worker.js
+tar -czvf night15.tar.gz index.html main.html info.html bb.js preload_fireworks.js preload_low.js preload_medium.js preload_high.js fireworks.data low.data medium.data high.data setup.js setup_fireworks.js setup_low.js setup_medium.js setup_high.js setup_high_minus.js OutThere_0.ogg crunch-worker.js gl-matrix.js zee-worker.js
 
