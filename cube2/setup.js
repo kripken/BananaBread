@@ -58,6 +58,17 @@ var Module = {
   monitorRunDependencies: function(left) {
     this.totalDependencies = Math.max(this.totalDependencies, left);
     Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+  },
+  onFullScreen: function(isFullScreen) {
+    if (isFullScreen) {
+      Module.resumeMainLoop();
+      Module.setOpacity('canvas.emscripten', 1, 'border: 1px solid black');
+      Module.setStatus('');
+    } else {
+      Module.pauseMainLoop();
+      Module.setOpacity('canvas.emscripten', 0.333, 'border: 1px solid black');
+      Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
+    }
   }
 };
 
