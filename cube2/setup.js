@@ -50,10 +50,12 @@ var Module = {
       Module.resumeMainLoop();
       Module.setOpacity(1);
       Module.setStatus('');
+      BananaBread.execute('musicvol $oldmusicvol');
     } else {
       Module.pauseMainLoop();
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
+      BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
   }
 };
@@ -155,6 +157,9 @@ Module.postLoadWorld = function() {
   Module.tweakDetail();
 
   BananaBread.execute('sensitivity 10');
+  setTimeout(function() {
+    BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
+  }, 1); // Do after startup finishes so music will be prepared up
 
   // Pause and fade out until the user presses fullscreen
 
