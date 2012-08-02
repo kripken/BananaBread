@@ -150,6 +150,8 @@ Module.setOpacity = function(opacity) {
 Module.setOpacity(0.1);
 
 Module.postLoadWorld = function() {
+  document.title = 'BananaBread';
+
   if (Module.loadingMusic) {
     Module.loadingMusic.pause();
     Module.loadingMusic = null;
