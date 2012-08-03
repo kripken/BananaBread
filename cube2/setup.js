@@ -396,6 +396,7 @@ function CameraPath(data) { // TODO: namespace this
 
   try {
     var urlParts = window.location.toString().split('?')[1].split(',');
+    var debug = window.location.toString().indexOf('debug') >= 0
   } catch(e) {
     alert('invalid URL, cannot parse out setup/preload: ' + window.location);
     window.location = 'index.html';
@@ -404,7 +405,7 @@ function CameraPath(data) { // TODO: namespace this
   var setup = urlParts[0], preload = urlParts[1];
   loadChildScript('setup_' + setup + '.js', function() {
     loadChildScript('preload_' + preload + '.js', function() {
-      loadChildScript('bb.js');
+      loadChildScript('bb' + (debug ? '.debug' : '') + '.js');
     });
   });
 })();
