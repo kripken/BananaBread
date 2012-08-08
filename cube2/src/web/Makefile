@@ -234,17 +234,37 @@ TWO_TOWERS_FILES = packages/base/two_towers.ogz \
                    $(FANTASY_TEXTURES) \
                    $(EXTRA_FANTASY_TEXTURES)
 
+ZOOM_TEXTURES = `find packages/gk/future/ -name "*.cfg"` \
+                `find packages/gk/future/ -name "*.dds"` \
+                `find packages/gk/future/ -name "*_si.png"` \
+                `find packages/gk/future/skysfJPG/ -name "*.jpg"`
+
 ZOOM_FILES = packages/base/zoom.ogz \
              packages/base/zoom.cfg \
-             `find packages/gk/future/ -name "*.cfg"` \
-             `find packages/gk/future/ -name "*.dds"` \
-             `find packages/gk/future/ -name "*_si.png"` \
-             `find packages/gk/future/skysfJPG/ -name "*.jpg"`
+             $(ZOOM_TEXTURES)
+
+ZOOMIN_FILES = packages/base/zoomin.ogz \
+               packages/base/zoomin.cfg \
+               $(ZOOM_TEXTURES)
+
+ZOOMOUT_FILES = packages/base/zoomout.ogz \
+                packages/base/zoomout.cfg \
+                $(ZOOM_TEXTURES)
 
 MD2_FILES = packages/base/md2.ogz \
             packages/base/md2.cfg \
             packages/base/md2.wpt \
             $(FANTASY_TEXTURES)
+
+COLOS_FILES = packages/base/colos.ogz \
+              packages/base/colos.cfg \
+              $(FANTASY_TEXTURES) \
+              $(EXTRA_FANTASY_TEXTURES)
+
+CAVE_FILES = packages/base/cave.ogz \
+             packages/base/cave.cfg \
+             $(FANTASY_TEXTURES) \
+             $(EXTRA_FANTASY_TEXTURES)
 
 MD3_FILES = packages/base/md3.ogz \
             packages/base/md3.cfg \
@@ -291,16 +311,21 @@ FIREWORKS_FILES = $(BASE_FILES) \
 	                packages/skyboxes/philo/
 
 LOW_FILES = $(BASE_FILES) \
-            $(MD2_FILES) \
+            $(COLOS_FILES) \
             $(FRANKIE_MODEL_FILES)
 
 MEDIUM_FILES = $(BASE_FILES) \
-               $(ZOOM_FILES) \
+               $(ZOOMIN_FILES) \
                $(SNOUTX10K_MODEL_FILES) \
                $(HUDGUNS_FILES)
 
 HIGH_FILES = $(BASE_FILES) \
-             $(TWO_TOWERS_FILES) \
+             $(ZOOMOUT_FILES) \
+             $(SNOUTX10K_MODEL_FILES) \
+             $(HUDGUNS_FILES)
+
+FOUR_FILES = $(BASE_FILES) \
+             $(CAVE_FILES) \
              $(SNOUTX10K_MODEL_FILES) \
              $(HUDGUNS_FILES)
 
@@ -311,6 +336,7 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > preload_low.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(FOUR_FILES) --pre-run > preload_four.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" #-O2 #--closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
 
 server:	libenet $(SERVER_OBJS)
