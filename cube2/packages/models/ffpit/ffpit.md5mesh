@@ -29,7 +29,7 @@ joints {
 }
 
 mesh {
-	// meshes: FFpit
+	// meshes: ffpit
 	shader "07 - Default"
 
 	numverts 389
