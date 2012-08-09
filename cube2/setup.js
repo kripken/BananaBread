@@ -159,6 +159,8 @@ Module.postLoadWorld = function() {
   Module.tweakDetail();
 
   BananaBread.execute('sensitivity 10');
+  BananaBread.execute('clearconsole');
+
   setTimeout(function() {
     BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
   }, 1); // Do after startup finishes so music will be prepared up
