@@ -6,7 +6,6 @@ Module.setPlayerModels = function() {
 Module.tweakDetail = function() {
   BananaBread.execute('fog 10000'); // disable fog
   BananaBread.execute('maxdebris 10');
-  //BananaBread.execute('sensitivity 15');
 };
 
 Module.loadDefaultMap = function() {

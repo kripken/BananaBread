@@ -273,9 +273,7 @@ MD3_FILES = packages/base/md3.ogz \
 
 TT_FILES = packages/base/tt.ogz \
            packages/base/tt.cfg \
-           `find packages/gk/fantasy/skyfantasyJPG/ -name "*.jpg"` \
-           `find packages/gk/dds/ -name "*.cfg"` \
-           `find packages/gk/dds/ -name "*.dds"`
+           `find packages/gk/fantasy/skyfantasyJPG/ -name "*.jpg"`
 
 CB_TEXTURES = packages/gk/cyber/ \
               packages/gk/cyber/cybersky/
@@ -316,17 +314,12 @@ LOW_FILES = $(BASE_FILES) \
             $(FRANKIE_MODEL_FILES)
 
 MEDIUM_FILES = $(BASE_FILES) \
-               $(ZOOMIN_FILES) \
+               $(TWO_TOWERS_FILES) \
                $(SNOUTX10K_MODEL_FILES) \
                $(HUDGUNS_FILES)
 
 HIGH_FILES = $(BASE_FILES) \
-             $(ZOOMOUT_FILES) \
-             $(SNOUTX10K_MODEL_FILES) \
-             $(HUDGUNS_FILES)
-
-FOUR_FILES = $(BASE_FILES) \
-             $(CAVE_FILES) \
+             $(ZOOM_FILES) \
              $(SNOUTX10K_MODEL_FILES) \
              $(HUDGUNS_FILES)
 
@@ -337,7 +330,6 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > preload_low.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(FOUR_FILES) --pre-run > preload_four.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" #-O2 #--closure 0 #-s GL_DEBUG=1 -s LIBRARY_DEBUG=1
 
 server:	libenet $(SERVER_OBJS)
