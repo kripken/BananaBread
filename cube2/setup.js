@@ -11,6 +11,7 @@ var Module = {
     console.log(text);
   },
   canvas: document.getElementById('canvas'),
+  statusMessage: 'Starting...',
   setStatus: function(text) {
     if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
     var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
