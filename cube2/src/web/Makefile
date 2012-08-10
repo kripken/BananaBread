@@ -178,7 +178,6 @@ BASE_FILES = data/ \
              packages/sounds/aard/ \
              packages/sounds/q009/ \
              packages/sounds/yo_frankie/ \
-             packages/music/ \
              packages/gk/lava/lava_cc.dds \
              packages/gk/lava/lava_nm.dds \
              packages/caustics/ \
@@ -186,6 +185,7 @@ BASE_FILES = data/ \
              packages/models/projectiles/ \
              packages/brushes/ \
              packages/hud/
+             #packages/music/ \
 
 SILLY_FILES = packages/base/silly.ogz \
               packages/base/silly.cfg \

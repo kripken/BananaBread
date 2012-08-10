@@ -39,12 +39,12 @@ var Module = {
       Module.resumeMainLoop();
       Module.setOpacity(1);
       Module.setStatus('');
-      BananaBread.execute('musicvol $oldmusicvol');
+      //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
       Module.pauseMainLoop();
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
-      BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
+      //BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
   }
 };
