@@ -27,18 +27,6 @@ var Module = {
       progressElement.hidden = true;
     }
     statusElement.innerHTML = text;
-    if (text) {
-      var counter = 0;
-      Module.setStatus.interval = setInterval(function() {
-        counter++;
-        counter %= 3;
-        var dots = ' ';
-        for (var i = 0; i < counter; i++) dots += '.';
-        dots += '*';
-        for (var i = counter; i < 2; i++) dots += '.';
-        statusElement.innerHTML = text.replace('...', dots);
-      }, 300);
-    }
   },
   totalDependencies: 0,
   monitorRunDependencies: function(left) {
