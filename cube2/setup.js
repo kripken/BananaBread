@@ -82,6 +82,9 @@ Module.loadingMusic = new Audio();
 Module.loadingMusic.src = 'OutThere_0.ogg';
 Module.loadingMusic.play();
 
+Module.readySound = new Audio();
+Module.readySound.src = 'alarmcreatemiltaryfoot_1.ogg';
+
 // Pre-unzip ogz files, we can do this in parallel in a worker during preload
 
 (function() {
@@ -177,6 +180,10 @@ Module.postLoadWorld = function() {
     BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
     Module.resumeMainLoop();
   };
+
+  // All set!
+  Module.readySound.play();
+  Module.readySound = null;
 };
 
 Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
