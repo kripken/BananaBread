@@ -258,6 +258,7 @@ MD2_FILES = packages/base/md2.ogz \
 
 COLOS_FILES = packages/base/colos.ogz \
               packages/base/colos.cfg \
+              packages/base/colos.wpt \
               packages/models/ffflag/ \
               packages/models/ffpit/ \
               $(FANTASY_TEXTURES) \
