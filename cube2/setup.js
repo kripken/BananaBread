@@ -56,12 +56,9 @@ var Module = {
 (function() {
   function fail(text) {
     text = 'No ' + text + ', halting. A development version of your browser might have this feature (or it might be disabled in your current browser). Redirecting to troubleshooting page.';
-    Module.preRun.push(function() {
-      Module._main = null;
-      alert(text);
-      window.location = 'troubleshooting.html';
-    });
-    throw text;
+    Module._main = null;
+    alert(text);
+    window.location = 'troubleshooting.html';
   }
   var canvas = document.createElement('canvas');
   if (!canvas) fail('canvas element');
