@@ -10,7 +10,7 @@ Module.autoexec = function() {
 Module.tweakDetail = function() {
   BananaBread.execute('maxdebris 25');
   BananaBread.execute('glare 1');
-  BananaBread.execute('glarescale 8.0');
+  BananaBread.execute('glarescale 1.75');
   BananaBread.execute('blurglare 7');
   BananaBread.execute('waterreflect 1');
   BananaBread.execute('waterrefract 1');
