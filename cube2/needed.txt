@@ -31,5 +31,5 @@ put gl-matrix.js
 put zee-worker.js
 put alarmcreatemiltaryfoot_1.ogg
 
-tar -czvf night15.tar.gz index.html main.html info.html bb.js bb.debug.js preload_fireworks.js preload_low.js preload_medium.js preload_high.js fireworks.data low.data medium.data high.data setup.js setup_fireworks.js setup_low.js setup_medium.js setup_high.js setup_high_minus.js OutThere_0.ogg crunch-worker.js gl-matrix.js zee-worker.js alarmcreatemiltaryfoot_1.ogg
+zip bb.zip index.html main.html info.html bb.js bb.debug.js preload_low.js preload_medium.js preload_high.js low.data medium.data high.data setup.js setup_low.js setup_medium.js setup_high.js OutThere_0.ogg crunch-worker.js gl-matrix.js zee-worker.js alarmcreatemiltaryfoot_1.ogg
 
