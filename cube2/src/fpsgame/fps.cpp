@@ -5,10 +5,9 @@ void drawlogo()
 {
     static int total = 0;
     extern int curtime;
-    const int end = 15000;
+    const int end = 10000;
     if (total > end + 2000) return;
     total += curtime;
-
     settexture("packages/hud/ff.png");
     extern SDL_Surface *screen;
     float sz = screen->w/17, x = screen->w - sz*1.1, y = sz*0.1, tsz = 1, tx = 0, ty = 1;
