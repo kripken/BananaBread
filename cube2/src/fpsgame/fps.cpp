@@ -9,10 +9,11 @@ void drawlogo()
     total += curtime;
 
     settexture("packages/hud/ff.png");
-    if (total > 10000)
+    const int end = 15000;
+    if (total > end)
     {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glColor4f(1, 1, 1, 1 - (total - 10000)/1000.0);
+        glColor4f(1, 1, 1, 1 - (total - end)/1000.0);
     }
     glBegin(GL_TRIANGLE_STRIP);
     extern SDL_Surface *screen;
