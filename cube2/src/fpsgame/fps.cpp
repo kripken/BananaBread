@@ -5,19 +5,18 @@ void drawlogo()
 {
     static int total = 0;
     extern int curtime;
-    if (total > 12000) return;
+    const int end = 15000;
+    if (total > end + 2000) return;
     total += curtime;
 
     settexture("packages/hud/ff.png");
-    const int end = 15000;
-    if (total > end)
-    {
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glColor4f(1, 1, 1, 1 - (total - end)/1000.0);
-    }
-    glBegin(GL_TRIANGLE_STRIP);
     extern SDL_Surface *screen;
     float sz = screen->w/17, x = screen->w - sz*1.1, y = sz*0.1, tsz = 1, tx = 0, ty = 1;
+    if (total > end)
+    {
+        x += (total - end)*sz/1000.0f;
+    }
+    glBegin(GL_TRIANGLE_STRIP);
     glTexCoord2f(tx,     ty);     glVertex2f(x,    y);
     glTexCoord2f(tx+tsz, ty);     glVertex2f(x+sz, y);
     glTexCoord2f(tx,     ty+tsz); glVertex2f(x,    y+sz);
