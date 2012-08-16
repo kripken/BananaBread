@@ -256,11 +256,20 @@ MD2_FILES = packages/base/md2.ogz \
             packages/base/md2.wpt \
             $(FANTASY_TEXTURES)
 
+FFFLAG_FILES = `find packages/models/ffflag/ -name "*.cfg"` \
+               `find packages/models/ffflag/ -name "*.dds"` \
+               `find packages/models/ffflag/ -name "*.md5mesh"` \
+               `find packages/models/ffflag/ -name "*.md5anim"`
+
+FFPIT_FILES = `find packages/models/fffpit/ -name "*.cfg"` \
+              `find packages/models/fffpit/ -name "*.dds"` \
+              `find packages/models/fffpit/ -name "*.md5mesh"`
+
 COLOS_FILES = packages/base/colos.ogz \
               packages/base/colos.cfg \
               packages/base/colos.wpt \
-              packages/models/ffflag/ \
-              packages/models/ffpit/ \
+              $(FFFLAG_FILES) \
+              $(FFPIT_FILES) \
               $(FANTASY_TEXTURES) \
               $(EXTRA_FANTASY_TEXTURES)
 
