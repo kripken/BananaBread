@@ -1,5 +1,29 @@
 #include "game.h"
 
+// XXX EMSCRIPTEN: Add a temporary customizable logo in the upper right.
+void drawlogo()
+{
+    static int total = 0;
+    extern int curtime;
+    if (total > 12000) return;
+    total += curtime;
+
+    settexture("packages/hud/ff.png");
+    if (total > 10000)
+    {
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glColor4f(1, 1, 1, 1 - (total - 10000)/1000.0);
+    }
+    glBegin(GL_TRIANGLE_STRIP);
+    extern SDL_Surface *screen;
+    float sz = screen->w/17, x = screen->w - sz*1.1, y = sz*0.1, tsz = 1, tx = 0, ty = 1;
+    glTexCoord2f(tx,     ty);     glVertex2f(x,    y);
+    glTexCoord2f(tx+tsz, ty);     glVertex2f(x+sz, y);
+    glTexCoord2f(tx,     ty+tsz); glVertex2f(x,    y+sz);
+    glTexCoord2f(tx+tsz, ty+tsz); glVertex2f(x+sz, y+sz);
+    glEnd();
+}
+
 namespace game
 {
     bool intermission = false;
@@ -849,6 +873,8 @@ namespace game
         }
 
         glPopMatrix();
+
+        drawlogo();
     }
 
     int clipconsole(int w, int h)
