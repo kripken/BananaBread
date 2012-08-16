@@ -261,9 +261,9 @@ FFFLAG_FILES = `find packages/models/ffflag/ -name "*.cfg"` \
                `find packages/models/ffflag/ -name "*.md5mesh"` \
                `find packages/models/ffflag/ -name "*.md5anim"`
 
-FFPIT_FILES = `find packages/models/fffpit/ -name "*.cfg"` \
-              `find packages/models/fffpit/ -name "*.dds"` \
-              `find packages/models/fffpit/ -name "*.md5mesh"`
+FFPIT_FILES = `find packages/models/ffpit/ -name "*.cfg"` \
+              `find packages/models/ffpit/ -name "*.dds"` \
+              `find packages/models/ffpit/ -name "*.md5mesh"`
 
 COLOS_FILES = packages/base/colos.ogz \
               packages/base/colos.cfg \
