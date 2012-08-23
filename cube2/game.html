@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>BananaBread</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet" />
+  </head>
+  <body>
+    <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
+    <div id="main-container">
+      <div class="demo-title">Bananabread Demo</div>
+      <div class="section progress-area">
+        <div class="status">
+          <div class="status-content loading">
+            <div class="preview">
+              <div class="preview-content low">
+                <div class="description">
+                  A small arena to fight in. No exploration, just combat!
+                </div>
+              </div>
+              <div class="preview-content medium">
+                <div class="description">
+                  A large castle with two separated towers. Walk the grounds, climb up the towers, and make sure to look at the reflections in the water!
+                </div>
+              </div>
+              <div class="preview-content high">
+                <div class="description">
+                  A large underground complex with a huge chamber of lava as well as side rooms with pools of water and intricate columns. Notice the texture effects on the walls and other visual effects like glare on the lava itself. This level is very large and detail levels are set to the max - it is designed to stress your browser. (Tip: Find the three teleporters!)
+                </div>
+              </div>
+              <div class="level-title">Preparing<span></span></div>
+            </div>
+            <div class="progress-container">
+              <span id="status-text">Downloading...</span>
+              <progress value="0" max="100" id="progress"></progress>
+            </div>
+            <div class="status-content error hide">
+              <span class="title">Oops!</span>
+              <p>There was a problem starting Bananabread. Please see the <a href="#troubleshooting">Troubleshooting</a> section below for more information.</p>
+              <p>Technical Details: <span class="details"></span></p>
+            </div>
+          </div>
+          <div class="status-content resume hide">
+            <a class="fullscreen-button">Resume</a>
+          </div>
+          <div class="status-content fullscreen-buttons hide">
+            <div class="resolution-message">To play, choose a resolution:</div>
+            <a class="fullscreen-button low-res">Low Resolution</a>
+            <a class="fullscreen-button high-res">High Resolution</a>
+            <div class="warning">Warning: High Resolution mode will run more slowly on older/slower machines.</div>
+          </div>
+          <canvas id="canvas" class="status-content hide" oncontextmenu="event.preventDefault()"></canvas>
+        </div>
+      </div>
+      <div class="section">
+        <div class="title">Info</div>
+        <p>BananaBread is a port of the <a href="http://sauerbraten.org/">Sauerbraten</a> 3D first person shooter (aka the Cube 2 Engine),
+        compiled from C++ and OpenGL to JavaScript and WebGL using <a href="http://emscripten.org">Emscripten</a>.</p>
+        <ul>
+          <li>Code is zlib licensed and on <a href="https://github.com/kripken/BananaBread">github</a></li>
+          <li>Art assets are almost all CC-BY, some are CC-BY-SA and some are CC-BY-NC (see <a href="https://github.com/kripken/BananaBread">repo</a> for details)</li>
+        </ul>
+        <p>Notes on gameplay:</p>
+        <ul>
+          <li>Move with WASD, jump with space, look around with the mouse.</li>
+          <li>Shoot with the mouse, change weapons with 1-5.</li>
+          <li>You can change some settings using the main menu (press <code>`</code>, which is usually under the escape key). For example, add another bot with "add bot", or change the resolution with options->res.</li>
+          <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
+          <li>Press 9 to toggle thirdperson mode (to see your own character)</li>
+        </ul>
+        <p>
+          See <a href="index.html#troubleshooting">the troubleshooting section</a> if you trouble running BananaBread in your browser.
+        </p>
+      </div>
+      <div class="section" id="troubleshooting">
+        <div class="title">Troubleshooting</div>
+        <p>
+          Please note that up to date versions of modern browers are needed to run this demo, and it will not launch if it detects crucial features are missing.
+          <ul>
+            <li>The demo works properly in the <a href="http://www.mozilla.org/firefox/new/">stable release of Firefox</a>.</li>
+            <li>To get the demo to work in Chrome, you need to switch pointer lock to on (as it is disabled by default). You can switch it on by going to <code>chrome://flags</code> and switching "Pointer Lock" to on.</li>
+            <li>The demo should also work in any browser that supports the necessary web standards: Pointer lock, WebGL, compressed textures, fullscreen, and typed arrays.</li>
+          </ul>
+        </p>
+        <p>
+          If the game downloads ok but seems to get stuck during startup, check the web error console and please file an issue on <a href="https://github.com/kripken/BananaBread/">our github page</a> with that information.
+        </p>
+        <p>
+          If the game runs but crashes the tab or the browser, you should file an issue with the browser so they can fix it. We would appreciate it if you also filed an issue with us linking to it so we can track that.
+        </p>
+        <p>
+          If the game runs very slowly in an unexpected way (on a machine with decent graphics hardware that can run other 3D content well), please file an issue on our github page.
+        </p>
+        <p>
+          Known issues:
+          <ul>
+            <li>Internet Explorer can't run the demo because it does not support WebGL yet. Please ask Microsoft to support it.</li>
+            <li>Older versions of Safari lack Float64Array and cannot run the compiled code.</li>
+            <li>Sound <a href="https://code.google.com/p/chromium/issues/detail?id=138454">has some glitches in Chrome</a>.</li>
+            <li>Mesa on Firefox 15 on Linux does not support compressed textures, but it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=774134">works in Firefox 16</a>.</li>
+          </ul>
+        </p>
+      </div>
+      <div class="section">
+        <p><a href="index.html">&lt; Back to Main Page</a></p>
+      </div>
+    <script type='text/javascript' src='game/gl-matrix.js'></script>
+    <script type='text/javascript' src='js/game-setup.js'></script>
+    <script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script>
+  </body>
+</html>
+
