@@ -51,6 +51,7 @@ Building
 Do 'make' in cube2/src/web for a web build. You can also do 'make' in
 cube2/src/native for a native linux build.
 
+You then need to copy `bb*.js` and `preload*` into game/.
 
 Running
 -------
