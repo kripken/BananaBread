@@ -1,21 +1,155 @@
-<html>
-<head>
-  <title>BananaBread</title>
-</head>
-<body>
-  <center>
-    <h2>BananaBread 0.2.17</h2>
-  </center>
-  <hr>
-  <ul>
-    <li>
-      <a href="main.html?low,low"><b>Arena</b></a>
-    </li><li>
-      <a href="main.html?medium,medium"><b>Two Towers</b></a>
-    </li><li>
-      <a href="main.html?high,high"><b>Lava Chamber</b></a>
-      </li>
-  </ul>
-</body>
-</html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="js/main.js"></script>
+    <link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet" />
+  </head>
+  <body>
+    <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
+    <div id="main-container">
+      <div id="gallery">
+        <div class="title">Bananabread</div>
+        <div id="slide-container" class="slideable">
+          <div class="slide">
+            <video controls>
+              <source src="http://videos-cdn.mozilla.net/serv/drafts/HTML5%20demo.webm">
+            </video>
+          </div>
+          <div class="slide"><img src="assets/screenshots/02.png"></div>
+          <div class="slide"><img src="assets/screenshots/03.png"></div>
+          <div class="slide"><img src="assets/screenshots/05.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/06.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/07.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/09.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/10.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/11.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/12.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/13.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/14.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/15.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/16.jpg"></div>
+          <div class="slide"><img src="assets/screenshots/26.jpg"></div>
+        </div>
+        <div id="slide-counter"></div>
+      </div>
+      <div id="menu">
+        <a class="menu-item" href="game.html?low,low">
+          <div class="overlay"></div>
+          <div class="title">Play: Level 1</div>
+          <div class="sub-title">Arena</div>
+        </a>
+        <a class="menu-item" href="game.html?medium,medium">
+          <div class="overlay"></div>
+          <div class="title">Play: Level 2</div>
+          <div class="sub-title">Two Towers</div>
+        </a>
+        <a class="menu-item" href="game.html?high,high">
+          <div class="overlay"></div>
+          <div class="title">Play: Level 3</div>
+          <div class="sub-title">Lava Chamber</div>
+        </a>
+      </div>
+      <div class="section" id="about">
+        <div class="title">About</div>
+        <p>BananaBread is a 3D first person shooter that runs on the web. It takes the Cube 2: Sauerbraten engine, which is written in C++ and OpenGL, and compiles it using Emscripten into JavaScript and WebGL so that it can run in modern browsers using standards-based web APIs and without the need for plugins.</p>
 
+        <p>The project has several goals. First, to serve as a testcase for running a demanding 3D game in browsers: Having a working testcase lets us try out new browser features and to profile performance in order to make browsers faster. Another goal is to prove that games of this nature can run in JavaScript and WebGL, which many people are skeptical about. Finally, all the code in this project is open (and practically all the art assets), so others can learn from this effort and use this code to create their own browser games.</p>
+
+        <p>To learn more about how BananaBread was done, see these blogposts:</p>
+        <ul>
+          <li><a href="http://mozakai.blogspot.com/2012/05/emscripten-opengl-webgl-conversion.html">http://mozakai.blogspot.com/2012/05/emscripten-opengl-webgl-conversion.html</a></li>
+          <li><a href="http://mozakai.blogspot.com/2012/07/bananabread-or-any-compiled-codebase.html">http://mozakai.blogspot.com/2012/07/bananabread-or-any-compiled-codebase.html</a></li>
+        </ul>
+      </div>
+      <div class="section" id="gameplay">
+        <div class="title">Gameplay Instructions</div>
+          <ul>
+            <li>Move with WASD, jump with space, look around with the mouse.</li>
+            <li>Shoot with the mouse, change weapons with 1-5.</li>
+            <li>You can change some settings using the main menu (press <code>`</code>, which is usually under the escape key). For example, add another bot with "add bot", or change the resolution with options->res.</li>
+            <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
+            <li>Press 9 to toggle thirdperson mode (to see your own character)</li>
+          </ul>
+        </p>
+      </div>
+      <div class="section">
+        <div class="title">Resources</div>
+        <p>BananaBread Repo: <a href="https://github.com/kripken/BananaBread/">https://github.com/kripken/BananaBread/</a></p>
+        <p>Emscripten Repo: <a href="https://github.com/kripken/emscripten">https://github.com/kripken/emscripten</a></p>
+      </div>
+      <div class="section" id="credits">
+        <div class="title">Credits</div>
+          <div class="role">
+            Producer
+            <div class="name">Martin Best</div>
+          </div>
+          <div class="role">
+            BananaBread and Emscripten Development
+            <div class="name">Alon "kripken" Zakai &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</div>
+            <div class="name">Ehsan Akhgari</div>
+          </div>
+          <div class="role">
+            Art and Content
+            <div class="name">
+              <a href="http://maxstudios.de/contact.htm">Gregor Koch "gk" "cronos3k"</a><span class="sub-name"><a href="http://de.linkedin.com/pub/gregor-h-max-koch-msc-in-ism/1/216/991">LinkedIn Profile</a></span>
+            </div>
+            <div class="name">John "geartrooper" Siar</div>
+          </div>
+          <div class="role">
+            Music
+            <div class="name">
+              Video: Thorsten-Tobias Heinze
+            </div>
+            <div class="name">
+              Loading screen: <a href="http://opengameart.org/content/space-music-out-there">yd</a>
+            </div>
+          </div>
+          <div class="role">
+            And a huge thank you to the Cube 2: Sauerbraten devs who wrote the original game that we ported
+            <div class="name">Wouter "Aardappel" van Oortmerssen</div>
+            <div class="name">Lee "eihrul" Salzman</div>
+            <div class="name">Mike "Gilt" Dysart</div>
+            <div class="name">Robert "baby-rabbit" Pointon</div>
+            <div class="name">Quinton "quin" Reeves</div>
+            <div class="name">
+              <a href="http://sauerbraten.org/">sauerbraten.org</a>
+            </div>
+      </div>
+    </div>
+    <div class="section" id="troubleshooting">
+      <div class="title">Troubleshooting</div>
+      <p>
+        Please note that up to date versions of modern browers are needed to run this demo, and it will not launch if it detects crucial features are missing.
+        <ul>
+          <li>The demo works properly in the <a href="http://www.mozilla.org/firefox/new/">stable release of Firefox</a>.</li>
+          <li>To get the demo to work in Chrome, you need to switch pointer lock to on (as it is disabled by default). You can switch it on by going to <code>chrome://flags</code> and switching "Pointer Lock" to on.</li>
+          <li>The demo should also work in any browser that supports the necessary web standards: Pointer lock, WebGL, compressed textures, fullscreen, and typed arrays.</li>
+        </ul>
+      </p>
+      <p>
+        If the game downloads ok but seems to get stuck during startup, check the web error console and please file an issue on <a href="https://github.com/kripken/BananaBread/">our github page</a> with that information.
+      </p>
+      <p>
+        If the game runs but crashes the tab or the browser, you should file an issue with the browser so they can fix it. We would appreciate it if you also filed an issue with us linking to it so we can track that.
+      </p>
+      <p>
+        If the game runs very slowly in an unexpected way (on a machine with decent graphics hardware that can run other 3D content well), please file an issue on our github page.
+      </p>
+      <p>
+        Known issues:
+        <ul>
+          <li>Internet Explorer can't run the demo because it does not support WebGL yet. Please ask Microsoft to support it.</li>
+          <li>Older versions of Safari lack Float64Array and cannot run the compiled code.</li>
+          <li>Sound <a href="https://code.google.com/p/chromium/issues/detail?id=138454">has some glitches in Chrome</a>.</li>
+          <li>Mesa on Firefox 15 on Linux does not support compressed textures, but it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=774134">works in Firefox 16</a>.</li>
+        </ul>
+      </p>
+    </div>
+    <footer></footer>
+    <script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script>
+  </body>
+</html>
