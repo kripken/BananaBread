@@ -431,13 +431,13 @@ canvas.paused {
 }
 
 .preview-content.medium {
-  background: url('../assets/screenshots/02.png');
-  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/02.png');
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/02.png');
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.png');
-  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.png');
-  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.png');
-  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.png');
+  background: url('../assets/screenshots/02.jpg');
+  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/02.jpg');
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
+  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
+  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
+  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
   background-position: 5% 5%;
   background-size: 110% 110%;
 }
