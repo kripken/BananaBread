@@ -25,17 +25,15 @@ without any plugins.
 
 Features:
 
- * A multitude of visual effects including water reflection/
-   refraction, parallax mapping, glare, particle effects,
+ * A multitude of visual effects including water reflection/refraction,
+   parallax mapping, glare, particle effects,
    lightmaps, skeletal animation (on gpu), etc. etc.
- * Compile a single codebase both to a native application and to
-   the web.
  * Streamlined and quick physics system
   * Ragdoll physics
- * Bot AI with adjustable skill level.
- * Integrated in-game editor.
- * Fast performance both when compiled natively and to the web.
- * zlib license, see below.
+ * Bot AI with adjustable skill level
+ * Integrated in-game editor
+ * Fast performance both running on the web or natively
+ * zlib license
 
 The original engine also has a lot of other features not yet
 enabled (but will be):
@@ -79,5 +77,6 @@ is sadly more restrictive (we hope to get new ones when possible), see
 details in
 
   packages/models/snoutx10k/
+
   packages/models/hudguns/
 
