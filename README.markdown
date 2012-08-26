@@ -127,7 +127,7 @@ If there isn't a specific license file alongside some content, then this
 is the license, so you can use that content freely.
 
 Pre-existing content is mostly CC-BY or CC-BY-SA, see license files in
-specific directories. An exception is the character model, their license
+specific directories. An exception is the character model, its license
 is sadly more restrictive (for now - we hope to fix that), see details in
 
   packages/models/snoutx10k/
