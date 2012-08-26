@@ -46,10 +46,29 @@ enabled (but will be):
 Building
 --------
 
-Do 'make' in cube2/src/web for a web build. You can also do 'make' in
-cube2/src/native for a native linux build.
+Get emscripten and its dependencies,
 
-You then need to copy `bb*.js` and `preload*` into game/.
+  http://emscripten.org/
+
+It's recommended to go through the emscripten tutorial to see that it is set
+up properly.
+
+You will also need crunch if you want smaller downloads,
+
+  http://code.google.com/p/crunch/
+
+Build in crnlib using the Makefile (if it isn't in the release yet, see the
+issue filed on their site where we submitted it,
+http://code.google.com/p/crunch/issues/detail?id=1 ). You can disable
+crunch if you don't want it, remove all mentions of crunch in
+`cube2/src/web/Makefile`.
+
+Then do `make` in `cube2/src/web` for a web build. You can also do `make` in
+`cube2/src/native` for a native linux build.
+
+If you have any problems building, feel free to file an issue here or to
+find us on emscripten IRC (see emscripten site).
+
 
 Running
 -------
@@ -61,20 +80,55 @@ Running
 1. Load localhost:8888 in your browser
 
 
+Debugging
+---------
+
+If you append `,debug` to the URL of one of the levels, it will use
+`bb.debug.js` instead of `bb.js`. The debug build has not been run
+through closure compiler and is much more readable for stack traces
+and profiling and so forth.
+
+
 License
 -------
 
-Code is zlib licensed (just like Sauerbraten).
+Code is zlib licensed (just like Sauerbraten):
 
-New content created for this project specifically (for example, by
-Gregor Koch or Alon Zakai) is all CC-BY. If there isn't a specific
-license file, this is the license, so you can use that content
-freely.
+Copyright (C) 2001-2012 Sauerbraten authors (see cube2/src/readme_source.txt)
+and BananaBread authors (see below)
 
-Existing content is mostly CC-BY or CC-BY-SA, see license files in
-specific directories. An exception are the character models, their license
-is sadly more restrictive (we hope to get new ones when possible), see
-details in
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+BananaBread authors:
+
+ * Alon Zakai
+ * Gregor Koch
+ * Bobby Richter
+
+New art content created for this project specifically is all CC-BY,
+
+http://creativecommons.org/licenses/by/3.0/
+
+If there isn't a specific license file alongside some content, then this
+is the license, so you can use that content freely.
+
+Pre-existing content is mostly CC-BY or CC-BY-SA, see license files in
+specific directories. An exception is the character model, their license
+is sadly more restrictive (for now - we hope to fix that), see details in
 
   packages/models/snoutx10k/
 

@@ -340,12 +340,11 @@ HIGH_FILES = $(BASE_FILES) \
 CRUNCH_QUALITY = 16
 
 client: client.bc
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fireworks.data --preload $(FIREWORKS_FILES) --pre-run > preload_fireworks.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > preload_low.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > preload_medium.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > preload_high.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.debug.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > game/preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > game/preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > game/preload_high.js
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0
 
 server:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_server $(SERVER_OBJS) $(SERVER_LIBS)  
