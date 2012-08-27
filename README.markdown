@@ -69,6 +69,8 @@ Then do `make` in `cube2/src/web` for a web build. You can also do `make` in
 If you have any problems building, feel free to file an issue here or to
 find us on emscripten IRC (see emscripten site).
 
+See needed.txt for some possibly useful scripts to package the output.
+
 
 Running
 -------
