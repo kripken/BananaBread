@@ -8,11 +8,9 @@ web, compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 Demos
 -----
 
-**FPS-type games**: http://dl.dropbox.com/u/80664946/index.html
+**Demo**: https://developer.mozilla.org/demos/detail/bananabread
 
-**Non-game example**: http://www.syntensity.com/static/night14/fireworks.html
-
-**Screenshots**: http://mozakai.blogspot.com/2012/06/bananabread-02-levels.html
+We also have a silly non-game example, http://www.syntensity.com/static/night14/fireworks.html
 
 
 Overview
