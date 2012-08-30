@@ -220,6 +220,24 @@ a:hover {
                 rgba(5, 5, 5, 0.95) 0.1em 0.1em 0.8em;
 }
 
+#video {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(25, 25, 25, 0.9);
+  width: 640px;
+  height: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 3px;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  text-align: center;
+}
+
 .section .title {
   font-size: 2.0em;
   text-shadow: rgba(25, 25, 25, 0.9) 0.1em 0.1em 0.2em;
