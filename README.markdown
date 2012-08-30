@@ -85,6 +85,19 @@ Running
 1. Load localhost:8888 in your browser
 
 
+Customizing
+-----------
+
+To use new maps of your own, see cube2/src/web/Makefile. The makefile currently
+packages 3 maps, called low, medium and high, note how it lists all the
+relevant dependency files for each. Modifying it to include your map is
+pretty straightforward.
+
+It's useful to check that your map works in a native build first, to make
+sure there are no obvious problems with missing files or incorrect cfg
+settings.
+
+
 Debugging
 ---------
 
