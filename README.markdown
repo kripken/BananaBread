@@ -90,7 +90,7 @@ Modding
 
 To use maps of your own or make other kinds of changes or additions to the
 artwork, see the
-**[FAQ](https://github.com/kripken/BananaBread/wiki/Modding)**
+**[Modding](https://github.com/kripken/BananaBread/wiki/Modding)**
 page.
 
 
