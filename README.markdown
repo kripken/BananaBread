@@ -85,17 +85,13 @@ Running
 1. Load localhost:8888 in your browser
 
 
-Customizing
------------
+Modding
+-------
 
-To use new maps of your own, see cube2/src/web/Makefile. The makefile currently
-packages 3 maps, called low, medium and high, note how it lists all the
-relevant dependency files for each. Modifying it to include your map is
-pretty straightforward.
-
-It's useful to check that your map works in a native build first, to make
-sure there are no obvious problems with missing files or incorrect cfg
-settings.
+To use maps of your own or make other kinds of changes or additions to the
+artwork, see the
+**[FAQ](https://github.com/kripken/BananaBread/wiki/Modding)**
+page.
 
 
 Debugging
