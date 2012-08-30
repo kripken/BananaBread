@@ -66,9 +66,13 @@ var Module = {
     document.querySelector('.status-content.error').classList.remove('hide');
     Module.failed = true;
   }
-  var canvas = document.createElement('canvas');
+  try {
+    var canvas = document.createElement('canvas');
+  } catch(e){}
   if (!canvas) fail('canvas element');
-  var context = canvas.getContext('experimental-webgl');
+  try {
+    var context = canvas.getContext('experimental-webgl');
+  } catch(e){}
   if (!context) fail('WebGL');
   var s3tc = context.getExtension('WEBGL_compressed_texture_s3tc') ||
              context.getExtension('MOZ_WEBGL_compressed_texture_s3tc') ||
