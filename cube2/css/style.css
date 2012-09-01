@@ -377,7 +377,7 @@ canvas.paused {
   margin-bottom: 2em;
 }
 
-.status-content.resume {
+.status-content.ingame {
   z-index: 30;
   margin-top: 200px;
 }

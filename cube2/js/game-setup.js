@@ -40,7 +40,7 @@ var Module = {
       Module.resumeMainLoop();
       Module.setOpacity(1);
       Module.setStatus('');
-      document.querySelector('.status .resume').classList.add( 'hide' );
+      document.querySelector('.status .ingame').classList.add( 'hide' );
       document.querySelector('canvas').classList.remove( 'paused' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
@@ -48,7 +48,7 @@ var Module = {
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
       document.querySelector('canvas').classList.add( 'paused' );
-      document.querySelector('.status .resume').classList.remove( 'hide' );
+      document.querySelector('.status .ingame').classList.remove( 'hide' );
       //BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
   }
@@ -444,7 +444,7 @@ function CameraPath(data) { // TODO: namespace this
 (function(){
   var lowResButton = document.querySelector('.fullscreen-button.low-res');
   var highResButton = document.querySelector('.fullscreen-button.high-res');
-  var resumeButton = document.querySelector('.fullscreen-button.resumeit');
+  var resumeButton = document.querySelector('.fullscreen-button.resume');
   var quitButton = document.querySelector('.fullscreen-button.quit');
   lowResButton.addEventListener('click', function(e){
     Module.fullscreenLow();
