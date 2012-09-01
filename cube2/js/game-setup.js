@@ -444,7 +444,8 @@ function CameraPath(data) { // TODO: namespace this
 (function(){
   var lowResButton = document.querySelector('.fullscreen-button.low-res');
   var highResButton = document.querySelector('.fullscreen-button.high-res');
-  var resumeButton = document.querySelector('.resume .fullscreen-button');
+  var resumeButton = document.querySelector('.fullscreen-button.resumeit');
+  var quitButton = document.querySelector('.fullscreen-button.quit');
   lowResButton.addEventListener('click', function(e){
     Module.fullscreenLow();
   }, false);
@@ -454,4 +455,8 @@ function CameraPath(data) { // TODO: namespace this
   resumeButton.addEventListener('click', function(e){
     Module.resume();
   }, false);
+  quitButton.addEventListener('click', function(e){
+    window.location = 'index.html';
+  }, false);
 })();
+
