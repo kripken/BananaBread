@@ -3081,3 +3081,36 @@ void mergenormalmaps(char *heightfile, char *normalfile) // jpg/png/tga + tga ->
 COMMAND(flipnormalmapy, "ss");
 COMMAND(mergenormalmaps, "ss");
 
+// XXX EMSCRIPTEN: New commands
+
+static hashtable<int, int> *listtextures;
+static int maxlisted;
+
+void listtexcube(cube &c)
+{
+    if (!c.children)
+        loopi(6)
+        {
+            int t = c.texture[i];
+            (*listtextures)[t] = 1;
+            maxlisted = max(maxlisted, t);
+        }
+    else
+        loopi(8) listtexcube(c.children[i]);
+}
+
+//! List the textures actually used
+void listtex()
+{
+    listtextures = new hashtable<int, int>;
+    maxlisted = -1;
+    loopi(8) listtexcube(worldroot[i]);
+    loopi(maxlisted+1)
+        if (listtextures->access(i) && slots.inrange(i))
+            loopj(slots[i]->sts.length())
+                printf("%s\r\n", slots[i]->sts[j].name);
+    delete listtextures;
+}
+
+COMMAND(listtex, "");
+
