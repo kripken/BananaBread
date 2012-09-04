@@ -11,7 +11,7 @@ See the **[FAQ](https://github.com/kripken/BananaBread/wiki/FAQ)**.
 Demos
 -----
 
-**[Demo](https://developer.mozilla.org/demos/detail/bananabread)**
+A live demo is available here: **[Stable Demo](https://developer.mozilla.org/demos/detail/bananabread)**
 
 There is a non-stable testing version here: http://dl.dropbox.com/u/80664946/index.html
 
