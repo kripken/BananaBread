@@ -194,35 +194,36 @@ SILLY_FILES = packages/base/silly.ogz \
               packages/yo_frankie \
 	            packages/skyboxes/philo/
 
+# Tip: use 'listtex' in the engine to check which textures are actually used!
 FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
-                   `find packages/gk/fantasy/rock_formation_gk_v01/ -name "*.cfg"` \
+                   packages/gk/fantasy/rock_formation_gk_v01/package.cfg \
                    `find packages/gk/fantasy/rock_formation_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/castell_wall_gk_v01/ -name "*.cfg"` \
+                   packages/gk/fantasy/castell_wall_gk_v01/package.cfg \
                    `find packages/gk/fantasy/castell_wall_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/castell_wall_trim_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/castell_wall_trim_gk_v01/package.cfg \
                    `find packages/gk/fantasy/castell_wall_trim_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/stone_ground_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/stone_ground_gk_v01/package.cfg \
                    `find packages/gk/fantasy/stone_ground_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/stone_ground_tiles_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/stone_ground_tiles_gk_v01/package.cfg \
                    `find packages/gk/fantasy/stone_ground_tiles_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/wooden_roof_tiles_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/package.cfg \
                    `find packages/gk/fantasy/wooden_roof_tiles_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/wooden_planks_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/wooden_planks_gk_v01/package.cfg \
                    `find packages/gk/fantasy/wooden_planks_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/castell_plaster_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/castell_plaster_gk_v01/package.cfg \
                    `find packages/gk/fantasy/castell_plaster_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/iron_plates_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/iron_plates_gk_v01/package.cfg \
                    `find packages/gk/fantasy/iron_plates_gk_v01/ -name "*.dds"` \
-                   `find packages/gk/fantasy/iron_trim_gk_v01/ -name "*.cfg"` \
+                    packages/gk/fantasy/iron_trim_gk_v01/package.cfg \
                    `find packages/gk/fantasy/iron_trim_gk_v01/ -name "*.dds"`
 
-EXTRA_FANTASY_TEXTURES = `find packages/gk/fantasy/rock_formation_gk_v02/ -name "*.cfg"` \
+EXTRA_FANTASY_TEXTURES =  packages/gk/fantasy/rock_formation_gk_v02/package.cfg \
                          `find packages/gk/fantasy/rock_formation_gk_v02/ -name "*.dds"` \
-                         `find packages/gk/fantasy/castell_wall_gk_v02/ -name "*.cfg"` \
+                          packages/gk/fantasy/castell_wall_gk_v02/package.cfg \
                          `find packages/gk/fantasy/castell_wall_gk_v02/ -name "*.dds"` \
-                         `find packages/gk/fantasy/castell_wall_gk_v03/ -name "*.cfg"` \
+                          packages/gk/fantasy/castell_wall_gk_v03/package.cfg \
                          `find packages/gk/fantasy/castell_wall_gk_v03/ -name "*.dds"` \
-                         `find packages/gk/fantasy/iron_intersection_gk_v01/ -name "*.cfg"` \
+                          packages/gk/fantasy/iron_intersection_gk_v01/package.cfg \
                          `find packages/gk/fantasy/iron_intersection_gk_v01/ -name "*.dds"`
 
 MD_FILES = packages/base/md.ogz \
@@ -258,12 +259,12 @@ MD2_FILES = packages/base/md2.ogz \
             packages/base/md2.wpt \
             $(FANTASY_TEXTURES)
 
-FFFLAG_FILES = `find packages/models/ffflag/ -name "*.cfg"` \
+FFFLAG_FILES = packages/models/ffflag/md5.cfg \
                `find packages/models/ffflag/ -name "*.dds"` \
                `find packages/models/ffflag/ -name "*.md5mesh"` \
                `find packages/models/ffflag/ -name "*.md5anim"`
 
-FFPIT_FILES = `find packages/models/ffpit/ -name "*.cfg"` \
+FFPIT_FILES = packages/models/ffpit/md5.cfg \
               `find packages/models/ffpit/ -name "*.dds"` \
               `find packages/models/ffpit/ -name "*.md5mesh"`
 
