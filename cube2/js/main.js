@@ -89,4 +89,18 @@
     gallery.start();
   }, false);
 
+  // Load additional gallery images after page finished initial loading
+  var imageIds = ['26', '07', '05', '09', '10', '11', '06', '12', '03', '13', '14', '15', '16'];
+  var imageCounter = 0;
+  window.onload = function() {
+    function loadOne() {
+      document.getElementById('late-image-' + imageCounter).src = 'assets/screenshots/' + imageIds[imageCounter] + '.jpg';
+      imageCounter++;
+      if (imageCounter < imageIds.length) {
+        setTimeout(loadOne, 200);
+      }
+    }
+    setTimeout(loadOne, 200);
+  };
 }());
+
