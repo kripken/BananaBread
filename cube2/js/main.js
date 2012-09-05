@@ -1,27 +1,6 @@
 (function(){
   
-  var SLIDE_DURATION_AFTER_START = 5000;
-  var YOUTUBE_WIDTH = '711';
-  var YOUTUBE_HEIGHT = '400';
-
-  var __slideDuration = 8000;
-
-  var __youtubeListeners = [];
-
-  window.onYouTubeIframeAPIReady = function(){
-    while(__youtubeListeners.length){
-      __youtubeListeners.pop()();
-    }
-  };
-
-  function onYoutubeReady(listener){
-    if(window.YT && window.YT.player){
-      listener();
-    }
-    else{
-      __youtubeListeners.push(listener);
-    }
-  }
+  var SLIDE_DURATION = 5000;
 
   function makeAnchor(element){
     element.addEventListener('click', function(){
@@ -40,11 +19,7 @@
       element.style.top = '0px';
       element.style.left = left + 'px';
 
-      var _this = this;
-
       var video = element.querySelector('video');
-      var youtubeDiv = element.querySelector('div[data-youtube]');
-      var youtubePlayer;
 
       function onVideoPlay(){
         external.stop();
@@ -57,63 +32,28 @@
         external.start();
       }
 
-      function onYoutubePlayerStateChange(e){
-        if(external.currentSlide === _this){
-          if([YT.PlayerState.PLAYING, YT.PlayerState.BUFFERING].indexOf(e.data) > -1){
-            external.stop();
-          }
-          else{
-            external.start();
-          }
-        }
-      }
-
-      if(youtubeDiv){
-        youtubeUrl = youtubeDiv.getAttribute('data-youtube');
-        onYoutubeReady(function(){
-          youtubeDiv.id = youtubeDiv.id || "slide-" + Date.now() + Math.random();
-          youtubePlayer = new YT.Player(youtubeDiv.id, {
-            videoId: youtubeUrl,
-            width: YOUTUBE_WIDTH,
-            height: YOUTUBE_HEIGHT,
-            playerVars: {
-              controls: 1,
-              wmode: 'opaque'
-            },
-            events: {
-              'onStateChange': onYoutubePlayerStateChange,
+      return {
+        enter: function(skipSlideIn){
+          counterNode.className = 'slide-counter-node on';
+          if(video){
+            if(video.readyState > 0){
+              video.currentTime = 0;
             }
-          });
-        });
-      }
-
-      _this.enter = function(skipSlideIn){
-        counterNode.className = 'slide-counter-node on';
-        if(video){
-          if(video.readyState > 0){
-            video.currentTime = 0;
+            video.setAttribute('disabled', true);
+            video.addEventListener('play', onVideoPlay, false);
+            video.addEventListener('ended', onVideoEnded, false);
+            video.addEventListener('pause', onVideoPause, false);
           }
-          if(youtubePlayer){
-            youtubePlayer.seekTo(0, false);
+        },
+        exit: function(){
+          counterNode.className = 'slide-counter-node';
+          if(video){
+            video.pause();
+            video.setAttribute('disabled', true);
+            video.removeEventListener('play', onVideoPlay, false);
+            video.removeEventListener('ended', onVideoEnded, false);
+            video.removeEventListener('pause', onVideoPause, false);
           }
-          video.setAttribute('disabled', true);
-          video.addEventListener('play', onVideoPlay, false);
-          video.addEventListener('ended', onVideoEnded, false);
-          video.addEventListener('pause', onVideoPause, false);
-        }
-      };
-
-      _this.exit = function(){
-        counterNode.className = 'slide-counter-node';
-        if(youtubePlayer){
-          youtubePlayer.pauseVideo();
-        }
-        if(video){
-          video.pause();
-          video.setAttribute('disabled', true);
-          video.removeEventListener('play', onVideoPlay, false);
-          video.removeEventListener('ended', onVideoEnded, false);
-          video.removeEventListener('pause', onVideoPause, false);
         }
       };
     }
@@ -145,31 +85,23 @@
     function goToSlide(nextIndex){
       var oldSlideIndex = slideIndex;
       slides[oldSlideIndex].exit();
-      external.currentSlide = slides[nextIndex];
       slides[nextIndex].enter();
       slideIndex = nextIndex;
       container.style.left = -nextIndex * slideWidth + 'px';
     }
 
     function nextGallerySlide(){
-      __slideDuration = SLIDE_DURATION_AFTER_START;
       goToSlide((slideIndex + 1) % slides.length);
     }
 
     slides[0].enter();
 
     external = {
-      currentSlide: slides[0],
       start: function(){
-        if(interval === -1){
-          interval = setInterval(nextGallerySlide, __slideDuration);
-        }
+        interval = setInterval(nextGallerySlide, SLIDE_DURATION);
       },
       stop: function(){
-        if(interval > -1){
-          clearInterval(interval);
-          interval = -1;
-        }
+        clearInterval(interval);
       }
     };
 
