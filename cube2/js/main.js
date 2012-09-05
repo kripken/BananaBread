@@ -19,41 +19,12 @@
       element.style.top = '0px';
       element.style.left = left + 'px';
 
-      var video = element.querySelector('video');
-
-      function onVideoPlay(){
-        external.stop();
-      }
-
-      function onVideoPause(){
-      }
-
-      function onVideoEnded(){
-        external.start();
-      }
-
       return {
         enter: function(skipSlideIn){
           counterNode.className = 'slide-counter-node on';
-          if(video){
-            if(video.readyState > 0){
-              video.currentTime = 0;
-            }
-            video.setAttribute('disabled', true);
-            video.addEventListener('play', onVideoPlay, false);
-            video.addEventListener('ended', onVideoEnded, false);
-            video.addEventListener('pause', onVideoPause, false);
-          }
         },
         exit: function(){
           counterNode.className = 'slide-counter-node';
-          if(video){
-            video.pause();
-            video.setAttribute('disabled', true);
-            video.removeEventListener('play', onVideoPlay, false);
-            video.removeEventListener('ended', onVideoEnded, false);
-            video.removeEventListener('pause', onVideoPause, false);
-          }
         }
       };
     }
