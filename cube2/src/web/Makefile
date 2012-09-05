@@ -194,52 +194,110 @@ SILLY_FILES = packages/base/silly.ogz \
               packages/yo_frankie \
 	            packages/skyboxes/philo/
 
-# Tip: use 'listtex' in the engine to check which textures are actually used!
-FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
-                   packages/gk/fantasy/rock_formation_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/rock_formation_gk_v01/ -name "*.dds"` \
-                   packages/gk/fantasy/castell_wall_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/castell_wall_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/castell_wall_trim_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/castell_wall_trim_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/stone_ground_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/stone_ground_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/stone_ground_tiles_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/stone_ground_tiles_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/wooden_roof_tiles_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/wooden_planks_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/wooden_planks_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/castell_plaster_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/castell_plaster_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/iron_plates_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/iron_plates_gk_v01/ -name "*.dds"` \
-                    packages/gk/fantasy/iron_trim_gk_v01/package.cfg \
-                   `find packages/gk/fantasy/iron_trim_gk_v01/ -name "*.dds"`
-
-EXTRA_FANTASY_TEXTURES =  packages/gk/fantasy/rock_formation_gk_v02/package.cfg \
-                         `find packages/gk/fantasy/rock_formation_gk_v02/ -name "*.dds"` \
-                          packages/gk/fantasy/castell_wall_gk_v02/package.cfg \
-                         `find packages/gk/fantasy/castell_wall_gk_v02/ -name "*.dds"` \
-                          packages/gk/fantasy/castell_wall_gk_v03/package.cfg \
-                         `find packages/gk/fantasy/castell_wall_gk_v03/ -name "*.dds"` \
-                          packages/gk/fantasy/iron_intersection_gk_v01/package.cfg \
-                         `find packages/gk/fantasy/iron_intersection_gk_v01/ -name "*.dds"`
-
 MD_FILES = packages/base/md.ogz \
            packages/base/md.cfg \
            $(FANTASY_TEXTURES)
 
-TWO_TOWERS_FILES = packages/base/two_towers.ogz \
-                   packages/base/two_towers.cfg \
-                   packages/base/two_towers.wpt \
-                   $(FANTASY_TEXTURES) \
-                   $(EXTRA_FANTASY_TEXTURES)
+# Tip: use 'listtex' in the engine to check which textures are actually used! That is how these lists were generated.
+TWO_TOWERS_FILES =  packages/base/two_towers.ogz \
+                    packages/base/two_towers.cfg \
+                    packages/base/two_towers.wpt \
+                    packages/gk/fantasy/skyfantasyJPG/ \
+                    `find packages/gk/fantasy -name "*.cfg"` \
+                    packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.dds \
+                    packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.dds \
+                    packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_cc.dds \
+                    packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_nm.dds \
+                    packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
+                    packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.dds \
+                    packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
+                    packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.dds \
+                    packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.dds \
+                    packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.dds \
+                    packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
+                    packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
+                    packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
+                    packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
+                    packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.dds \
+                    packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_nm.dds \
+                    packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.dds \
+                    packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.dds \
+                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.dds \
+                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_nm.dds \
+                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.dds \
+                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_nm.dds \
+                    packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.dds \
+                    packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.dds \
+                    packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.dds \
+                    packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.dds \
+                    packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.dds \
+                    packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.dds \
+                    packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
+                    packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
+                    packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
+                    packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
+                    packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
+                    packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds \
+                    packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
+                    packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds
 
-ZOOM_TEXTURES = `find packages/gk/future/ -name "*.cfg"` \
-                `find packages/gk/future/ -name "*.dds"` \
-                `find packages/gk/future/ -name "*_si.png"` \
-                `find packages/gk/future/skysfJPG/ -name "*.jpg"`
+ZOOM_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
+                `find packages/gk/future/ -name "*.cfg"` \
+                packages/gk/future/panel_gk_000/panel_gk_000_cc.dds \
+                packages/gk/future/panel_gk_000/panel_gk_000_nm.dds \
+                packages/gk/future/panel_gk_001/panel_gk_001_cc.dds \
+                packages/gk/future/panel_gk_001/panel_gk_001_nm.dds \
+                packages/gk/future/panel_gk_001/panel_gk_001_cc.dds \
+                packages/gk/future/panel_gk_001/panel_gk_001_nm.dds \
+                packages/gk/future/panel_gk_002/panel_gk_002_cc.dds \
+                packages/gk/future/panel_gk_002/panel_gk_002_nm.dds \
+                packages/gk/future/panel_gk_003/panel_gk_003_cc.dds \
+                packages/gk/future/panel_gk_003/panel_gk_003_nm.dds \
+                packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
+                packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
+                packages/gk/future/panel_gk_005/panel_gk_005_cc.dds \
+                packages/gk/future/panel_gk_005/panel_gk_005_nm.dds \
+                packages/gk/future/panel_gk_005/panel_gk_005_cc.dds \
+                packages/gk/future/panel_gk_005/panel_gk_005_nm.dds \
+                packages/gk/future/panel_gk_006/panel_gk_006_cc.dds \
+                packages/gk/future/panel_gk_006/panel_gk_006_nm.dds \
+                packages/gk/future/panel_gk_006/panel_gk_006_cc.dds \
+                packages/gk/future/panel_gk_006/panel_gk_006_nm.dds \
+                packages/gk/future/panel_gk_007/panel_gk_007_cc.dds \
+                packages/gk/future/panel_gk_007/panel_gk_007_nm.dds \
+                packages/gk/future/panel_gk_007/panel_gk_007_cc.dds \
+                packages/gk/future/panel_gk_007/panel_gk_007_nm.dds \
+                packages/gk/future/panel_gk_008/panel_gk_008_cc.dds \
+                packages/gk/future/panel_gk_008/panel_gk_008_nm.dds \
+                packages/gk/future/panel_gk_008/panel_gk_008_cc.dds \
+                packages/gk/future/panel_gk_008/panel_gk_008_nm.dds \
+                packages/gk/future/panel_gk_009/panel_gk_009_cc.dds \
+                packages/gk/future/panel_gk_009/panel_gk_009_nm.dds \
+                packages/gk/future/panel_gk_010/panel_gk_010_cc.dds \
+                packages/gk/future/panel_gk_010/panel_gk_010_nm.dds \
+                packages/gk/future/panel_gk_010/panel_gk_010_cc.dds \
+                packages/gk/future/panel_gk_010/panel_gk_010_nm.dds \
+                packages/gk/future/panel_gk_011/panel_gk_011_cc.dds \
+                packages/gk/future/panel_gk_011/panel_gk_011_nm.dds \
+                packages/gk/future/panel_gk_011/panel_gk_011_cc.dds \
+                packages/gk/future/panel_gk_011/panel_gk_011_nm.dds \
+                packages/gk/future/panel_gk_012/panel_gk_012_cc.dds \
+                packages/gk/future/panel_gk_012/panel_gk_012_nm.dds \
+                packages/gk/future/panel_gk_014/panel_gk_014_cc.dds \
+                packages/gk/future/panel_gk_014/panel_gk_014_nm.dds \
+                packages/gk/future/panel_gk_015/panel_gk_015_cc.dds \
+                packages/gk/future/panel_gk_015/panel_gk_015_nm.dds \
+                packages/gk/future/panel_gk_016/panel_gk_016_cc.dds \
+                packages/gk/future/panel_gk_016/panel_gk_016_nm.dds \
+                packages/gk/future/panel_gk_016/panel_gk_016_cc.dds \
+                packages/gk/future/panel_gk_016/panel_gk_016_nm.dds \
+                packages/gk/future/panel_gk_017/panel_gk_017_cc.dds \
+                packages/gk/future/panel_gk_017/panel_gk_017_nm.dds \
+                packages/gk/future/panel_gk_018/panel_gk_018_cc.dds \
+                packages/gk/future/panel_gk_018/panel_gk_018_nm.dds \
+                packages/gk/future/lamps_01_gk/lamps_01_gk_cc.dds \
+                packages/gk/future/lamps_01_gk/lamps_01_gk_nm.dds \
+                packages/gk/future/lamps_01_gk/lamps_01_gk_si.png
 
 ZOOM_FILES = packages/base/zoom.ogz \
              packages/base/zoom.cfg \
@@ -273,8 +331,34 @@ COLOS_FILES = packages/base/colos.ogz \
               packages/base/colos.wpt \
               $(FFFLAG_FILES) \
               $(FFPIT_FILES) \
-              $(FANTASY_TEXTURES) \
-              $(EXTRA_FANTASY_TEXTURES)
+              packages/gk/fantasy/skyfantasyJPG/ \
+              `find packages/gk/fantasy -name "*.cfg"` \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.dds \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.dds \
+              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
+              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.dds \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.dds \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.dds \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
+              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.dds \
+              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.dds \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.dds \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.dds \
+              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.dds \
+              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.dds \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds \
+              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.dds \
+              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.dds
 
 CAVE_FILES = packages/base/cave.ogz \
              packages/base/cave.cfg \
