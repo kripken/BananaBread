@@ -149,6 +149,8 @@ Module.setOpacity = function(opacity) {
 
 Module.setOpacity(0.1);
 
+Module.fullscreenCallbacks = [];
+
 Module.postLoadWorld = function() {
   document.title = 'BananaBread';
 
@@ -187,6 +189,7 @@ Module.postLoadWorld = function() {
     Module.setOpacity(1);
     Module.setStatus('');
     Module.resumeMainLoop();
+    Module.fullscreenCallbacks.forEach(function(callback) { callback() });
   };
 
   Module.fullscreenHigh = function() {
@@ -197,6 +200,7 @@ Module.postLoadWorld = function() {
     Module.setStatus('');
     BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
     Module.resumeMainLoop();
+    Module.fullscreenCallbacks.forEach(function(callback) { callback() });
   };
 
   // All set!
@@ -365,8 +369,9 @@ function CameraPath(data) { // TODO: namespace this
   if (!data.uncancellable) addEventListener('keydown', function() { cancelled = true });
 
   this.execute = function() {
-    var startTime = Date.now();
+    var startTime = null;
     function moveCamera() {
+      if (!startTime) startTime = Date.now();
       if (cancelled) return;
       var now = Date.now();
       var t = (Date.now() - startTime)/(timeScale*1000);
@@ -396,7 +401,7 @@ function CameraPath(data) { // TODO: namespace this
       BananaBread.forceCamera(position, orientation);
       Module.requestAnimationFrame(moveCamera);
     }
-    moveCamera();
+    Module.fullscreenCallbacks.push(moveCamera);
   }
 }
 
