@@ -465,3 +465,10 @@ function CameraPath(data) { // TODO: namespace this
   }, false);
 })();
 
+// Benchmarking glue
+if (typeof Recorder != 'undefined') {
+  Module.fullscreenCallbacks.push(function() {
+    Recorder.start();
+  });
+}
+
