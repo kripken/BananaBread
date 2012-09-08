@@ -206,6 +206,8 @@ Module.postLoadWorld = function() {
   // All set!
   Module.readySound.play();
   Module.readySound = null;
+
+  Module.startupFinish = performance.now();
 };
 
 Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
@@ -405,6 +407,20 @@ function CameraPath(data) { // TODO: namespace this
   }
 }
 
+// Benchmarking glue
+if (typeof Recorder != 'undefined') {
+  Module.fullscreenCallbacks.push(function() {
+    Recorder.start();
+  });
+  Recorder.onFinish = function() {
+    console.log('startup   : ' + (Module.startupFinish - Module.startupStart) + ' ms');
+    console.log('mean frame: ' + (Module.totalTime / Module.iteratioins) + ' ms');
+    console.log('max frame : ' + Module.maxTime + ' ms');
+  };
+}
+
+Module.startupStart = performance.now();
+
 // Load scripts
 
 (function() {
@@ -464,11 +480,4 @@ function CameraPath(data) { // TODO: namespace this
     window.location = 'index.html';
   }, false);
 })();
-
-// Benchmarking glue
-if (typeof Recorder != 'undefined') {
-  Module.fullscreenCallbacks.push(function() {
-    Recorder.start();
-  });
-}
 
