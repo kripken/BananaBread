@@ -207,7 +207,7 @@ Module.postLoadWorld = function() {
   Module.readySound.play();
   Module.readySound = null;
 
-  Module.startupFinish = performance.now();
+  Module.startupFinish = Date.now();
 };
 
 Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
@@ -419,7 +419,7 @@ if (typeof Recorder != 'undefined') {
   };
 }
 
-Module.startupStart = performance.now();
+Module.startupStart = Date.now();
 
 // Load scripts
 
