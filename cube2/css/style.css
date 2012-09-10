@@ -341,8 +341,8 @@ canvas.paused {
 }
 
 .status-content {
-  width: 960px;
-  height: 600px;
+  //width: 960px;  // disabling these is a partial workaround for
+  //height: 600px; // https://code.google.com/p/chromium/issues/detail?id=147609
   position: absolute;
   display: block;
   top: 0;
