@@ -464,9 +464,11 @@ if (typeof Recorder != 'undefined') {
   previewContainer.classList.add('show');
 
   if(!Module.failed){
-    loadChildScript('game/setup_' + setup + '.js', function() {
-      loadChildScript('game/preload_' + preload + '.js', function() {
-        loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
+    loadChildScript('game/gl-matrix.js', function() {
+      loadChildScript('game/setup_' + setup + '.js', function() {
+        loadChildScript('game/preload_' + preload + '.js', function() {
+          loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
+        });
       });
     });
   }
