@@ -42,6 +42,7 @@ var Module = {
       Module.setStatus('');
       document.querySelector('.status .ingame').classList.add( 'hide' );
       document.querySelector('canvas').classList.remove( 'paused' );
+      document.querySelector('canvas').classList.remove( 'hide' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
       Module.pauseMainLoop();
@@ -49,6 +50,7 @@ var Module = {
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
       document.querySelector('canvas').classList.add( 'paused' );
       document.querySelector('.status .ingame').classList.remove( 'hide' );
+      document.querySelector('canvas').classList.add( 'hide' );
       //BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
   }

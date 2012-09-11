@@ -341,15 +341,15 @@ canvas.paused {
 }
 
 .status-content {
-  /* width: 960px;   Disabling these is a partial workaround for */
-  /* height: 600px;  https://code.google.com/p/chromium/issues/detail?id=147609 */
+  width: 960px;  /* Disabling these is a partial workaround for */
+  height: 600px; /*https://code.google.com/p/chromium/issues/detail?id=147609 */
   position: absolute;
   display: block;
   top: 0;
   left: 0;
 }
 
-.status .hide {
+.hide {
   display: none;
 }
 
