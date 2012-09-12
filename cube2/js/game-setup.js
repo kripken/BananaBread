@@ -211,6 +211,8 @@ Module.postLoadWorld = function() {
 
   if (replayingRecording) {
     Module.startupFinish = Recorder.pnow();
+  } else if (typeof Recorder != 'undefined') {
+    Recorder.pnow(); // equalize between record and replay
   }
 };
 
@@ -428,6 +430,8 @@ if (typeof Recorder != 'undefined') {
     });
 
     Module.startupStart = Recorder.pnow();
+  } else {
+    Recorder.pnow(); // equalize between record and replay
   }
 }
 
