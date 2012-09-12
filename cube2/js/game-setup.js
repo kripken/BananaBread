@@ -454,7 +454,7 @@ if (typeof Recorder != 'undefined') {
   }
   catch(e){
     // default to sanity if url parsing fails
-    urlParts = 'low,low';
+    urlParts = ['low','low'];
     debug = false;
   }
 
