@@ -373,7 +373,7 @@ extern void setbbfrommodel(dynent *d, const char *mdl);
 extern const char *mapmodelname(int i);
 extern model *loadmodel(const char *name, int i = -1, bool msg = false);
 extern void preloadmodel(const char *name);
-extern void flushpreloadedmodels(void (*func)()); // XXX EMSCRIPTEN - continuation style for asynchronicity
+extern void flushpreloadedmodels(void (*func)(void *)); // XXX EMSCRIPTEN - continuation style for asynchronicity
 
 // ragdoll
 

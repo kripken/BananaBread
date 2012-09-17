@@ -1768,14 +1768,14 @@ void precachetextures()
 }
 
 // XXX EMSCRIPTEN: split up during load
-static void allchanged2();
-static void allchanged3();
-static void allchanged4();
-static void allchanged5();
+static void allchanged2(void *);
+static void allchanged3(void *);
+static void allchanged4(void *);
+static void allchanged5(void *);
 static bool allchanged_load;
-static void (*allchanged_next)();
+static void (*allchanged_next)(void *);
 
-void allchanged(bool load, void (*next)())
+void allchanged(bool load, void (*next)(void *))
 {
     allchanged_load = load;
     allchanged_next = next;
@@ -1785,38 +1785,38 @@ void allchanged(bool load, void (*next)())
     resetqueries();
     resetclipplanes();
 
-    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged2);
-    else allchanged2();
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged2, NULL);
+    else allchanged2(NULL);
 }
 
-void allchanged2()
+void allchanged2(void*)
 {
     if(allchanged_load) initenvmaps();
     guessshadowdir();
     entitiesinoctanodes();
     tjoints.setsize(0);
 
-    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged3);
-    else allchanged3();
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged3, NULL);
+    else allchanged3(NULL);
 }
 
-void allchanged3()
+void allchanged3(void*)
 {
     if(filltjoints) findtjoints();
 
-    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged4);
-    else allchanged4();
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged4, NULL);
+    else allchanged4(NULL);
 }
 
-void allchanged4()
+void allchanged4(void*)
 {
     octarender();
 
-    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged5);
-    else allchanged5();
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged5, NULL);
+    else allchanged5(NULL);
 }
 
-void allchanged5()
+void allchanged5(void*)
 {
     if(allchanged_load) precachetextures();
     setupmaterials();
@@ -1830,7 +1830,7 @@ void allchanged5()
         drawminimap();
     }
 
-    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged_next);
+    if (allchanged_next) emscripten_push_main_loop_blocker(allchanged_next, NULL);
 }
 
 void recalc()

@@ -984,15 +984,15 @@ uint getmapcrc() { return mapcrc; }
 void clearmapcrc() { mapcrc = 0; }
 
 // XXX EMSCRIPTEN: globalize parts of load world to run it in async parts
-void load_world_1();
-void load_world_1a();
-void load_world_1b();
-void load_world_1c();
-void load_world_2();
-void load_world_3();
-void load_world_4();
-void load_world_5();
-void load_world_6();
+void load_world_1(void *);
+void load_world_1a(void *);
+void load_world_1b(void *);
+void load_world_1c(void *);
+void load_world_2(void *);
+void load_world_3(void *);
+void load_world_4(void *);
+void load_world_5(void *);
+void load_world_6(void *);
 stream *load_world_f;
 octaheader load_world_hdr;
 int load_world_loadingstart;
@@ -1216,12 +1216,12 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     renderprogress(0, "loading slots...");
     loadvslots(f, hdr.numvslots);
 
-    emscripten_push_main_loop_blocker(load_world_1);
+    emscripten_push_main_loop_blocker(load_world_1, NULL);
 
     return true;
 }
 
-void load_world_1()
+void load_world_1(void *)
 {
     stream *f = load_world_f;
     octaheader &hdr = load_world_hdr;
@@ -1232,18 +1232,18 @@ void load_world_1()
     if(failed) conoutf(CON_ERROR, "garbage in map");
     load_world_failed = failed;
 
-    emscripten_push_main_loop_blocker(load_world_1a);
+    emscripten_push_main_loop_blocker(load_world_1a, NULL);
 }
 
-void load_world_1a()
+void load_world_1a(void *)
 {
     renderprogress(0, "validating...");
     validatec(worldroot, load_world_hdr.worldsize>>1);
 
-    emscripten_push_main_loop_blocker(load_world_1b);
+    emscripten_push_main_loop_blocker(load_world_1b, NULL);
 }
 
-void load_world_1b()
+void load_world_1b(void *)
 {
     stream *f = load_world_f;
     octaheader &hdr = load_world_hdr;
@@ -1271,10 +1271,10 @@ void load_world_1b()
         }
     }
 
-    emscripten_push_main_loop_blocker(load_world_1c);
+    emscripten_push_main_loop_blocker(load_world_1c, NULL);
 }
 
-void load_world_1c()
+void load_world_1c(void *)
 {
     stream *f = load_world_f;
     octaheader &hdr = load_world_hdr;
@@ -1303,38 +1303,38 @@ void load_world_1c()
     extern void fixrotatedlightmaps();
     if(hdr.version <= 31) fixrotatedlightmaps();
 
-    emscripten_push_main_loop_blocker(load_world_2);
+    emscripten_push_main_loop_blocker(load_world_2, NULL);
 }
 
-void load_world_2()
+void load_world_2(void *)
 {
     preloadusedmapmodels(true);
 
     game::preload();
 
-    emscripten_push_main_loop_blocker(load_world_3);
+    emscripten_push_main_loop_blocker(load_world_3, NULL);
 }
 
-void load_world_3()
+void load_world_3(void *)
 {
     flushpreloadedmodels(load_world_4);
 }
 
-void load_world_4()
+void load_world_4(void *)
 {
     entitiesinoctanodes();
     attachentities();
     initlights();
 
-    emscripten_push_main_loop_blocker(load_world_5);
+    emscripten_push_main_loop_blocker(load_world_5, NULL);
 }
 
-void load_world_5()
+void load_world_5(void *)
 {
     allchanged(true, load_world_6);
 }
 
-void load_world_6()
+void load_world_6(void *)
 {
     Texture *mapshot = load_world_mapshot;
     const char *mname = load_world_mname;

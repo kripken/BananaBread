@@ -1011,8 +1011,8 @@ int getclockmillis()
     return max(millis, totalmillis);
 }
 
-static void main2();
-static void main3();
+static void main2(void *arg);
+static void main3(void *arg);
 static void main_loop_caller();
 static void main_loop_iter();
 
@@ -1150,17 +1150,17 @@ int main(int argc, char **argv)
     emscripten_set_main_loop(main_loop_caller, 0);
     emscripten_set_main_loop_expected_blockers(28);
 #endif
-    emscripten_push_main_loop_blocker(main2);
+    emscripten_push_main_loop_blocker(main2, NULL);
 }
 
-void main2()
+void main2(void *arg)
 {
     logoutf("init: gl: effects");
     loadshaders(true);
-    emscripten_push_main_loop_blocker(main3);
+    emscripten_push_main_loop_blocker(main3, NULL);
 }
 
-void main3()
+void main3(void *arg)
 {
     particleinit();
     initdecals();

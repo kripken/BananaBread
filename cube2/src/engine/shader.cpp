@@ -32,8 +32,8 @@ VAR(maxvaryings, 1, 0, 0);
 VAR(dbgshader, 0, 0, 2);
 
 // XXX EMSCRIPTEN: split up shader loading, it takes a while
-static void loadshaders2(); 
-static void loadshaders3();
+static void loadshaders2(void *); 
+static void loadshaders3(void *);
 static char *loadshaders_glsl;
 static int loadshaders_glsl_len;
 static const int loadshaders_glsl_chunks = 12;
@@ -79,15 +79,15 @@ void loadshaders(bool firstload)
 
     if (firstload)
     {
-        loopi(loadshaders_glsl_chunks) emscripten_push_main_loop_blocker(loadshaders2);
-        emscripten_push_main_loop_blocker(loadshaders3);
+        loopi(loadshaders_glsl_chunks) emscripten_push_main_loop_blocker(loadshaders2, NULL);
+        emscripten_push_main_loop_blocker(loadshaders3, NULL);
     } else {
-        loopi(loadshaders_glsl_chunks) loadshaders2();
-        loadshaders3();
+        loopi(loadshaders_glsl_chunks) loadshaders2(NULL);
+        loadshaders3(NULL);
     }
 }
 
-void loadshaders2()
+void loadshaders2(void *)
 {
     if (!loadshaders_glsl_curr) return;
 
@@ -108,7 +108,7 @@ void loadshaders2()
     loadshaders_glsl_curr = next;
 }
 
-void loadshaders3()
+void loadshaders3(void *)
 {
     free(loadshaders_glsl);
 

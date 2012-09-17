@@ -363,23 +363,23 @@ void preloadmodel(const char *name)
 }
 
 // XXX EMSCRIPTEN: asynchronizing
-static void flushpreloadedmodels_iter();
-static void (*flushpreloadedmodels_func)();
+static void flushpreloadedmodels_iter(void *);
+static void (*flushpreloadedmodels_func)(void *);
 
-void flushpreloadedmodels(void (*func)())
+void flushpreloadedmodels(void (*func)(void *))
 {
     flushpreloadedmodels_func = func;
-    flushpreloadedmodels_iter();
+    flushpreloadedmodels_iter(NULL);
 }
 
-void flushpreloadedmodels_iter()
+void flushpreloadedmodels_iter(void *)
 {
     if (preloadmodels.length())
     {
         loadmodel(preloadmodels.pop(), -1, true);
-        emscripten_push_uncounted_main_loop_blocker(flushpreloadedmodels_iter);
+        emscripten_push_uncounted_main_loop_blocker(flushpreloadedmodels_iter, NULL);
     }
-    else emscripten_push_main_loop_blocker(flushpreloadedmodels_func);
+    else emscripten_push_main_loop_blocker(flushpreloadedmodels_func, NULL);
 }
 
 void preloadusedmapmodels(bool msg, bool bih)
