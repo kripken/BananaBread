@@ -1,4 +1,3 @@
-
 // Setup compiled code parameters and interaction with the web page
 var Module = {
   failed: false,
@@ -211,6 +210,20 @@ Module.postLoadWorld = function() {
 
   if (replayingRecording) {
     Module.startupFinish = Recorder.pnow();
+
+    Recorder.onFinish.push(function() {
+      var now = Recorder.pnow();
+      var elapsedFromStart = now - Module.startupFinish;
+      console.log('elapsed from start : ' + elapsedFromStart + ' ms');
+      var cancelFS = document.mozCancelFullScreen || document.webkitCancelFullScreen;
+      cancelFS.call(document);
+    });
+
+    if (SearchArgs["autoplay"] == "low") {
+      setTimeout(function() { Module.fullscreenLow(); }, 100);
+    } else if (SearchArgs["autoplay"] == "high") {
+      setTimeout(function() { Module.fullscreenHigh(); }, 100);
+    }
   } else if (typeof Recorder != 'undefined') {
     Recorder.pnow(); // equalize between record and replay
   }
