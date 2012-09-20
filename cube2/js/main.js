@@ -1,3 +1,16 @@
+var SearchArgs = {};
+(function() {
+  var searchArgs = window.location.search.split("&");
+  for (var i = 0; i < searchArgs.length; ++i) {
+    var eqsplit = searchArgs[i].split("=");
+    if (eqsplit.length == 1) {
+      SearchArgs[eqsplit[0]] = true;
+    } else {
+      SearchArgs[eqsplit[0]] = eqsplit[1];
+    }
+  }
+})();
+
 (function(){
   
   var SLIDE_DURATION = 5000;
