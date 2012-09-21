@@ -491,8 +491,12 @@ if (typeof Recorder != 'undefined') {
   if(!Module.failed){
     loadChildScript('game/gl-matrix.js', function() {
       loadChildScript('game/setup_' + setup + '.js', function() {
-        loadChildScript('game/preload_' + preload + '.js', function() {
-          loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
+        loadChildScript('game/preload_base.js', function() {
+          loadChildScript('game/preload_character.js', function() {
+            loadChildScript('game/preload_' + preload + '.js', function() {
+              loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
+            });
+          });
         });
       });
     });

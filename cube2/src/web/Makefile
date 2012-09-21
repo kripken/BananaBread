@@ -403,53 +403,27 @@ HUDGUNS_FILES = packages/models/hudguns/ \
 SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 	                      packages/models/snoutx10k/
 
+CHARACTER_FILES = $(SNOUTX10K_MODEL_FILES) \
+                  $(HUDGUNS_FILES)
+
 FIREWORKS_FILES = $(BASE_FILES) \
                   packages/base/fireworks.ogz \
                   packages/sounds/olpc/MichaelBierylo/sfx_DoorSlam.wav \
                   packages/yo_frankie \
 	                packages/skyboxes/philo/
 
-LOW_FILES = $(BASE_FILES) \
-            $(COLOS_FILES) \
-            $(SNOUTX10K_MODEL_FILES) \
-            $(HUDGUNS_FILES)
-
-MEDIUM_FILES = $(BASE_FILES) \
-               $(TWO_TOWERS_FILES) \
-               $(SNOUTX10K_MODEL_FILES) \
-               $(HUDGUNS_FILES)
-
-HIGH_FILES = $(BASE_FILES) \
-             $(ZOOM_FILES) \
-             $(SNOUTX10K_MODEL_FILES) \
-             $(HUDGUNS_FILES)
-
-FOUR_FILES = $(BASE_FILES) \
-             $(CYBER1_FILES) \
-             $(SNOUTX10K_MODEL_FILES) \
-             $(HUDGUNS_FILES)
-
-FIVE_FILES = $(BASE_FILES) \
-             $(ZOOMOUT_FILES) \
-             $(SNOUTX10K_MODEL_FILES) \
-             $(HUDGUNS_FILES)
-
-SIX_FILES = $(BASE_FILES) \
-            $(ZOOMIN_FILES) \
-            $(SNOUTX10K_MODEL_FILES) \
-            $(HUDGUNS_FILES)
-
 CRUNCH_QUALITY = 64
 
 client: client.bc
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(LOW_FILES) --pre-run > game/preload_low.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(MEDIUM_FILES) --pre-run > game/preload_medium.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(HIGH_FILES) --pre-run > game/preload_high.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(FOUR_FILES) --pre-run > game/preload_four.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(FIVE_FILES) --pre-run > game/preload_five.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data --crunch=$(CRUNCH_QUALITY) --preload $(SIX_FILES) --pre-run > game/preload_six.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 #-s PROFILE_MAIN_LOOP=1
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 #-s PROFILE_MAIN_LOOP=1
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --crunch=$(CRUNCH_QUALITY) --preload $(BASE_FILES) --pre-run > game/preload_base.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --crunch=$(CRUNCH_QUALITY) --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(COLOS_FILES) --pre-run > game/preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(TWO_TOWERS_FILES) --pre-run > game/preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
+	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 #-s PROFILE_MAIN_LOOP=1
+	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s TOTAL_MEMORY=31457280 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 #-s PROFILE_MAIN_LOOP=1
 
 server:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_server $(SERVER_OBJS) $(SERVER_LIBS)  
