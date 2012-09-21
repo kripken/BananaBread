@@ -474,7 +474,15 @@ if (typeof Recorder != 'undefined') {
   var setup = urlParts[0], preload = urlParts[1];
 
   var levelTitleContainer = document.querySelector('.level-title span');
-  var levelTitle = setup === 'high' ? 'Lava Chamber' : setup === 'medium' ? 'Two Towers' : 'Arena'; 
+  var levelTitle;
+  switch(setup) {
+    case 'low':    levelTitle = 'Arena';        break;
+    case 'medium': levelTitle = 'Two Towers';   break;
+    case 'high':   levelTitle = 'Lava Chamber'; break;
+    case 'four':   levelTitle = 'Future';       break;
+    case 'five':   levelTitle = 'Lava Rooms';   break;
+    default: throw('unknown setup: ' + setup);
+  };
   levelTitleContainer.innerHTML = levelTitle;
 
   var previewContainer = document.querySelector('.preview-content.' + setup );
