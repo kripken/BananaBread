@@ -14,9 +14,16 @@ var Module = {
   statusMessage: 'Starting...',
   setStatus: function(text) {
     if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
-    var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
     var statusElement = document.getElementById('status-text');
     var progressElement = document.getElementById('progress');
+    if (Module.finishedDataFileDownloads >= 1 && Module.finishedDataFileDownloads < Module.expectedDataFileDownloads) {
+      // If we are in the middle of multiple datafile downloads, do not show preloading progress - show only download progress
+      var m2 = text.match(/([^ ]+) .*/);
+      if (m2) {
+        if (m2[1] == 'Preparing...') return;
+      }
+    }
+    var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
     if (m) {
       text = m[1];
       progressElement.value = parseInt(m[2])*100;
