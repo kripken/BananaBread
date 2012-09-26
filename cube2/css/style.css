@@ -152,8 +152,16 @@ a:hover {
 }
 
 #menu .menu-item:nth-child(2),
-#menu .menu-item:nth-child(3) {
+#menu .menu-item:nth-child(3),
+#menu .menu-item:nth-child(5),
+#menu .menu-item:nth-child(6) {
   margin-left: 1%;
+}
+
+#menu .menu-item:nth-child(4),
+#menu .menu-item:nth-child(5),
+#menu .menu-item:nth-child(6) {
+  margin-top: 10px;
 }
 
 #menu .menu-item:nth-child(2) {
