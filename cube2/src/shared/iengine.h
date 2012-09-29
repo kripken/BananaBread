@@ -1,6 +1,10 @@
 // the interface the game uses to access the engine
 
+#if !STANDALONE
 #include <emscripten.h>
+#else
+#define EMSCRIPTEN_KEEPALIVE
+#endif
 
 extern int curtime;                     // current frame time
 extern int lastmillis;                  // last time

@@ -117,8 +117,7 @@ endif
 
 default: all
 
-all: client
-# server
+all: client server
 
 enet/Makefile:
 	cp -r ../enet/* enet/  
