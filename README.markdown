@@ -106,6 +106,8 @@ and profiling and so forth.
 License
 -------
 
+### Code
+
 Code is zlib licensed (just like Sauerbraten):
 
 Copyright (C) 2001-2012 Sauerbraten authors (see cube2/src/readme_source.txt)
@@ -133,18 +135,18 @@ BananaBread authors:
  * Gregor Koch
  * Bobby Richter
 
-New art content created for this project specifically is all CC-BY,
+### Art
+
+All art content in this project (levels/maps, character model, etc.
+etc.) is either CC-BY or CC-BY-SA, which means you can use it in
+your projects, including commercial ones. If a directory does not
+contain a specific license file, then it is new artwork created for
+this project, which has the CC-BY license,
 
 http://creativecommons.org/licenses/by/3.0/
 
-If there isn't a specific license file alongside some content, then this
-is the license, so you can use that content freely.
+and copyright is held by the Mozilla Foundation.
 
-Pre-existing content is mostly CC-BY or CC-BY-SA, see license files in
-specific directories. An exception is the character model, its license
-is sadly more restrictive (for now - we hope to fix that), see details in
-
-  packages/models/snoutx10k/
-
-  packages/models/hudguns/
+Previously-existing content can also be CC-BY-SA, see license files in
+specific directories.
 

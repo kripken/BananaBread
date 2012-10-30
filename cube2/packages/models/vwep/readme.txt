@@ -1,4 +1,5 @@
+
 (C) John 'geartrooper' Siar
 
-Used with permission in BananaBread. See also license.txt.
+License: CC-BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
