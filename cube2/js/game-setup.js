@@ -1,5 +1,6 @@
 // Setup compiled code parameters and interaction with the web page
 var Module = {
+  TOTAL_MEMORY: 50*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
   postRun: [],
