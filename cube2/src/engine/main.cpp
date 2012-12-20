@@ -1147,7 +1147,7 @@ int main(int argc, char **argv)
     renderbackground("starting..."); //"initializing...");
 
 #if EMSCRIPTEN
-    emscripten_set_main_loop(main_loop_caller, 0);
+    emscripten_set_main_loop(main_loop_caller, 0, 0);
     emscripten_set_main_loop_expected_blockers(28);
 #endif
     emscripten_push_main_loop_blocker(main2, NULL);
