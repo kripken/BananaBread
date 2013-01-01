@@ -91,9 +91,9 @@ namespace game
     extern void startgame(); // XXX EMSCRIPTEN: Made this public so we can call it asynchronously
 
     // XXX EMSCRIPTEN: load different player models at runtime
-    extern void EMSCRIPTEN_KEEPALIVE setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
-                                                        const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
-                                                        const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll);
+    extern void setplayermodelinfo(const char *ffa, const char *blueteam, const char *redteam, const char *hudguns,
+                                   const char *vwep, const char *quad, const char *armour0, const char *armour1, const char *armour2,
+                                   const char *ffaicon, const char *blueicon, const char *redicon, bool ragdoll);
 } 
  
 namespace server

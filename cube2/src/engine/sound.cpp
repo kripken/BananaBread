@@ -578,7 +578,7 @@ int playsoundname(const char *s, const vec *loc, int vol, int loops, int fade, i
 
 extern "C" {
 
-void EMSCRIPTEN_KEEPALIVE bb_playsoundname(const char *s, float x, float y, float z)
+void bb_playsoundname(const char *s, float x, float y, float z)
 {
     static vec temp;
     temp.x = x; temp.y = y; temp.z = z;

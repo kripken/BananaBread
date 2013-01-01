@@ -1096,7 +1096,7 @@ static void splash(int type, int color, int radius, int num, int fade, const vec
 
 extern "C" {
 
-void EMSCRIPTEN_KEEPALIVE bb_splash(int type, int color, int radius, int num, int fade, float p0, float p1, float p2, float size, int gravity)
+void bb_splash(int type, int color, int radius, int num, int fade, float p0, float p1, float p2, float size, int gravity)
 {
   static vec temp;
   temp.x = p0; temp.y = p1; temp.z = p2;

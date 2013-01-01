@@ -194,7 +194,7 @@ namespace game
 
     extern "C"
     {
-        void EMSCRIPTEN_KEEPALIVE setforcecamera(float x, float y, float z, float yaw, float pitch, float roll)
+        void setforcecamera(float x, float y, float z, float yaw, float pitch, float roll)
         {
             forcedcamera.o.x = x;
             forcedcamera.o.y = y;
