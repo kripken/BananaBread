@@ -1051,6 +1051,14 @@ void logoutfv(const char *fmt, va_list args)
 
 #endif
 
+#if EMSCRIPTEN
+#include <emscripten.h>
+
+void emscripten_main_loop_caller() {
+  serverslice(true, 5);
+}
+#endif
+
 void rundedicatedserver()
 {
     logoutf("dedicated server started, waiting for clients...");
@@ -1067,6 +1075,8 @@ void rundedicatedserver()
 		}
 		serverslice(true, 5);
 	}
+#elif EMSCRIPTEN
+    emscripten_set_main_loop(emscripten_main_loop_caller, 0, 0);
 #else
     for(;;) serverslice(true, 5);
 #endif
