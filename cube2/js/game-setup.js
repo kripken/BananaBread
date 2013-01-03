@@ -213,8 +213,10 @@ Module.postLoadWorld = function() {
   };
 
   // All set!
-  Module.readySound.play();
-  Module.readySound = null;
+  if (Module.readySound) {
+    Module.readySound.play();
+    Module.readySound = null;
+  }
 
   if (replayingRecording) {
     Module.startupFinish = Recorder.pnow();
