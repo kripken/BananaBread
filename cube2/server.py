@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
-import os, sys
+'''
+Sets up websocket server support to run the server in one HTML page and the client in another HTML page. Each connects to a websocket server, which we relay together, so the two pages think they are connected to each other (see websocket_bi tests in emscripten).
+'''
+
+import os, sys, multiprocessing
 
 __rootpath__ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def path_from_root(*pathelems):
@@ -9,4 +13,29 @@ def path_from_root(*pathelems):
 sys.path += [path_from_root('tools/'), path_from_root('tools/websockify')]
 
 import websockify
+
+def websockify_func(wsp):
+  wsp.start_server()
+
+client = websockify.WebSocketProxy(verbose=True, listen_port=28785, target_host="127.0.0.1", target_port=28786, run_once=True)
+client_process = multiprocessing.Process(target=websockify_func, args=(client,))
+client_process.start()
+print 'client on process', client_process.pid
+
+server = websockify.WebSocketProxy(verbose=True, listen_port=28780, target_host="127.0.0.1", target_port=28781, run_once=True)
+server_process = multiprocessing.Process(target=websockify_func, args=(server,))
+server_process.start()
+print 'server on process', server_process.pid
+
+def relay_server(q):
+  proc = Popen([PYTHON, path_from_root('tools', 'socket_relay.py'), '28781', '28786'])
+  q.put(proc.pid)
+  proc.communicate()
+
+relay_process = multiprocessing.Process(target=relay_server)
+relay_process.start()
+print 'relay on process', relay_process.pid
+
+while 1:
+  time.sleep(1)
 
