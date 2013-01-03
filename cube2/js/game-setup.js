@@ -43,6 +43,7 @@ var Module = {
     Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
   },
   onFullScreen: function(isFullScreen) {
+    Module.isFullScreen = isFullScreen;
     if (isFullScreen) {
       Module.resumeMainLoop();
       Module.setOpacity(1);
@@ -176,46 +177,48 @@ Module.postLoadWorld = function() {
     BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
   }, 1); // Do after startup finishes so music will be prepared up
 
-  // Pause and fade out until the user presses fullscreen
+  if (!Module.isFullScreen) {
+    // Pause and fade out until the user presses fullscreen
 
-  Module.pauseMainLoop();
-  setTimeout(function() {
-    document.querySelector('.status-content.loading').classList.add('hide');
-    document.querySelector('.status-content.fullscreen-buttons').classList.remove('hide');
-  }, 0);
+    Module.pauseMainLoop();
+    setTimeout(function() {
+      document.querySelector('.status-content.loading').classList.add('hide');
+      document.querySelector('.status-content.fullscreen-buttons').classList.remove('hide');
+    }, 0);
 
-  Module.resume = function() {
-    Module.requestFullScreen();
-    Module.setOpacity(1);
-    Module.setStatus('');
-    Module.resumeMainLoop();
- };
+    Module.resume = function() {
+      Module.requestFullScreen();
+      Module.setOpacity(1);
+      Module.setStatus('');
+      Module.resumeMainLoop();
+   };
 
-  Module.fullscreenLow = function() {
-    document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
-    document.querySelector('canvas').classList.remove('hide');
-    Module.requestFullScreen();
-    Module.setOpacity(1);
-    Module.setStatus('');
-    Module.resumeMainLoop();
-    Module.fullscreenCallbacks.forEach(function(callback) { callback() });
-  };
+    Module.fullscreenLow = function() {
+      document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
+      document.querySelector('canvas').classList.remove('hide');
+      Module.requestFullScreen();
+      Module.setOpacity(1);
+      Module.setStatus('');
+      Module.resumeMainLoop();
+      Module.fullscreenCallbacks.forEach(function(callback) { callback() });
+    };
 
-  Module.fullscreenHigh = function() {
-    document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
-    document.querySelector('canvas').classList.remove('hide');
-    Module.requestFullScreen();
-    Module.setOpacity(1);
-    Module.setStatus('');
-    BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
-    Module.resumeMainLoop();
-    Module.fullscreenCallbacks.forEach(function(callback) { callback() });
-  };
+    Module.fullscreenHigh = function() {
+      document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
+      document.querySelector('canvas').classList.remove('hide');
+      Module.requestFullScreen();
+      Module.setOpacity(1);
+      Module.setStatus('');
+      BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
+      Module.resumeMainLoop();
+      Module.fullscreenCallbacks.forEach(function(callback) { callback() });
+    };
 
-  // All set!
-  if (Module.readySound) {
-    Module.readySound.play();
-    Module.readySound = null;
+    // All set!
+    if (Module.readySound) {
+      Module.readySound.play();
+      Module.readySound = null;
+    }
   }
 
   if (replayingRecording) {
