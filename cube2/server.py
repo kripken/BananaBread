@@ -4,7 +4,8 @@
 Sets up websocket server support to run the server in one HTML page and the client in another HTML page. Each connects to a websocket server, which we relay together, so the two pages think they are connected to each other (see websocket_bi tests in emscripten).
 '''
 
-import os, sys, multiprocessing
+import os, sys, multiprocessing, time
+from subprocess import Popen, PIPE, STDOUT
 
 __rootpath__ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def path_from_root(*pathelems):
@@ -27,12 +28,11 @@ server_process = multiprocessing.Process(target=websockify_func, args=(server,))
 server_process.start()
 print 'server on process', server_process.pid
 
-def relay_server(q):
-  proc = Popen([PYTHON, path_from_root('tools', 'socket_relay.py'), '28781', '28786'])
-  q.put(proc.pid)
-  proc.communicate()
+def relay_server(child):
+  child.communicate()
 
-relay_process = multiprocessing.Process(target=relay_server)
+relay_child = Popen(['python', path_from_root('tools', 'socket_relay.py'), '28781', '28786'])
+relay_process = multiprocessing.Process(target=relay_server, args=(relay_child,))
 relay_process.start()
 print 'relay on process', relay_process.pid
 
