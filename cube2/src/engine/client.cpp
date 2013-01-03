@@ -88,6 +88,7 @@ void connectserv(const char *servername, int serverport, const char *serverpassw
 
     if(servername)
     {
+#if !EMSCRIPTEN
         if(strcmp(servername, connectname)) setsvar("connectname", servername);
         if(serverport != connectport) setvar("connectport", serverport);
         addserver(servername, serverport, serverpassword && serverpassword[0] ? serverpassword : NULL);
@@ -97,6 +98,11 @@ void connectserv(const char *servername, int serverport, const char *serverpassw
             conoutf("\f3could not resolve server %s", servername);
             return;
         }
+#else
+        // hardcoded connect to 127.0.0.1 FIXME
+        address.host = 0x0100007f;
+#endif
+
     }
     else
     {

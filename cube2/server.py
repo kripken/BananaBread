@@ -2,6 +2,14 @@
 
 '''
 Sets up websocket server support to run the server in one HTML page and the client in another HTML page. Each connects to a websocket server, which we relay together, so the two pages think they are connected to each other (see websocket_bi tests in emscripten).
+
+Instructions for websocket networking:
+
+  1. Run this script
+  2. Run server.html
+  3. Run the client from index.html
+
+Note that you likely need to run the server and client in different browsers or at least browser windows, since browsers throttle background tabs.
 '''
 
 import os, sys, multiprocessing, time
