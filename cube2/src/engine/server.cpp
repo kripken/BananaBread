@@ -654,8 +654,10 @@ int curtime = 0, lastmillis = 0, totalmillis = 0;
 
 void updatemasterserver()
 {
+#if !EMSCRIPTEN
     if(mastername[0] && allowupdatemaster) requestmasterf("regserv %d\n", serverport);
     lastupdatemaster = totalmillis ? totalmillis : 1;
+#endif
 }
 
 uint totalsecs = 0;
