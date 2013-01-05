@@ -8,6 +8,7 @@ Instructions for websocket networking:
   1. Run this script
   2. Run server.html
   3. Run the client from index.html
+  4. In the client, do /connect
 
 Note that you likely need to run the server and client in different browsers or at least browser windows, since browsers throttle background tabs.
 '''
