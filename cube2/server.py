@@ -5,10 +5,25 @@ Sets up websocket server support to run the server in one HTML page and the clie
 
 Instructions for websocket networking:
 
+Mode 1: Two clients (one with embedded server)
+
   1. Run this script
-  2. Run server.html
-  3. Run the client from index.html
-  4. In the client, do /connect
+  2. Run a webserver (e.g. python -m SimpleHTTPServer 8888)
+  3. Run http://localhost:8888/game.html?low,low,windowed,serve in one browser
+  4. Run http://localhost:8888/game.html?low,low,windowed in another browser
+  5. In the second browser, do /connect
+
+  'windowed' runs in non-fullscreen mode, useful to run two browsers at once - scroll
+  all the way down to see the canvas. 'serve' runs the embedded server in that
+  client.
+
+Mode 2: Server and client
+
+  1. Run this script
+  2. Run a webserver (e.g. python -m SimpleHTTPServer 8888)
+  3. Run http://localhost:8888/server.html
+  4. Run http://localhost:8888/game.html?low,low
+  5. In the client, do /connect
 
 Note that you likely need to run the server and client in different browsers or at least browser windows, since browsers throttle background tabs.
 '''
