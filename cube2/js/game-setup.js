@@ -7,6 +7,8 @@ var Module = {
   preloadPlugins: [],
   print: function(text) {
     console.log('[STDOUT] ' + text);
+    //if (!Module.stdoutElement) Module.stdoutElement = document.getElementById('stdout');
+    //Module.stdoutElement.value += text + '\n';
   },
   printErr: function(text) {
     console.log(text);
