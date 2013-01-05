@@ -421,14 +421,14 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a #-s PROFILE_MAIN_LOOP=1
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a #-s PROFILE_MAIN_LOOP=1
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a -s SOCKET_DEBUG=1  -s SOCKET_FORCED_MESSAGING=1 #-s PROFILE_MAIN_LOOP=1
+	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a #-s PROFILE_MAIN_LOOP=1
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  
 
 server:	server.bc
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/server.bc -o server.html -s EXPORTED_FUNCTIONS="['_main']" -O2 --closure 0 src/web/enet/.libs/libenet.a
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/server.bc -o server.html -s EXPORTED_FUNCTIONS="['_main']" -O2 --closure 0 src/web/enet/.libs/libenet.a -s SOCKET_DEBUG=1 -s SOCKET_FORCED_MESSAGING=1
 
 master: libenet $(MASTER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_master $(MASTER_OBJS) $(MASTER_LIBS)  
