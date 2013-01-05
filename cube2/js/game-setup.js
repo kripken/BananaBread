@@ -1,5 +1,12 @@
 // Setup compiled code parameters and interaction with the web page
+
+function checkPageParam(param) {
+  return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
+}
+
 var Module = {
+  // If the url has 'serve' in it, run a listen server and let others connect to us
+  arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
   TOTAL_MEMORY: 50*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
@@ -178,6 +185,14 @@ Module.postLoadWorld = function() {
   setTimeout(function() {
     BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
   }, 1); // Do after startup finishes so music will be prepared up
+
+  if (checkPageParam('windowed')) {
+    Module.requestFullScreen = function() {
+      setTimeout(function() {
+        Module.onFullScreen(1);
+      }, 0);
+    }
+  }
 
   if (!Module.isFullScreen) {
     // Pause and fade out until the user presses fullscreen
