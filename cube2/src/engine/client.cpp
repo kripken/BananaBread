@@ -222,7 +222,7 @@ void gets2c()           // get updates from the server
         conoutf("attempting to connect...");
         connmillis = totalmillis;
         ++connattempts; 
-        if(connattempts > 3)
+        if(connattempts > 10)
         {
             conoutf("\f3could not connect to server");
             abortconnect();

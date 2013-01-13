@@ -1,12 +1,33 @@
 // Setup compiled code parameters and interaction with the web page
 
-function checkPageParam(param) {
-  return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
+function checkPageParam(name) {
+  var params = (window.location.search ? window.location.search.substring(1) : '').split(',');
+  for(var i = 0, l = params.length; i < l; ++ i) {
+    var param = params[i].split('=')[0];
+    if(param === name) return true;
+  }
+  return false;
+}
+
+function getPageParam(name) {
+  if(!checkPageParam(name)) {
+    return undefined;
+  }
+  var values = [];
+  var params = (window.location.search ? window.location.search.substring(1) : '').split(',');
+  for(var i = 0, l = params.length; i < l; ++ i) {
+    var param = params[i].split('=')[0];
+    var value = params[i].split('=')[1];
+    if(param === name)
+      values.push(value);
+  }
+  return values;
 }
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
-  arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
+  arguments: checkPageParam('serve') ? ['-d1'] : [],
+  remote: getPageParam('remote'),
   TOTAL_MEMORY: 50*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],

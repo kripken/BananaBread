@@ -1210,7 +1210,7 @@ int main(int argc, char **argv)
     atexit(enet_deinitialize);
     enet_time_set(0);
 #if EMSCRIPTEN
-    setvar("serverport", 28780); // unless overrided by an argument, use a different port than client, to work with relaying
+    // setvar("serverport", 28780); // unless overrided by an argument, use a different port than client, to work with relaying
 #endif
     for(int i = 1; i<argc; i++) if(argv[i][0]!='-' || !serveroption(argv[i])) gameargs.add(argv[i]);
     game::parseoptions(gameargs);
