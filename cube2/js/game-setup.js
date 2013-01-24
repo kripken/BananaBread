@@ -7,7 +7,6 @@ function checkPageParam(param) {
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
-  TOTAL_MEMORY: 50*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
   postRun: [],
