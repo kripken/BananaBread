@@ -8,23 +8,22 @@ function checkPageParam(param) {
   return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
 }
 
+Date.realNow = Date.now;
 if (checkPageParam('deterministic')) {
+  print('<< determinizing >>');
   (function() {
     var MAGIC = 0;
     Math.random = function() {
       MAGIC = Math.pow(MAGIC + 1.8912, 3) % 1;
       return MAGIC;
     };
-    Date.realNow = Date.now;
-    var TIME = Date.now();
+    var TIME = 10000;
     Date.now = function() {
       TIME += 10;
       return TIME;
     };
     performance.now = Date.now;
   })();
-} else {
-  Date.realNow = Date.now;
 }
 
 var Module = {

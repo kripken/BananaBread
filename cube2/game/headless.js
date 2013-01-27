@@ -4,8 +4,6 @@
 
 //== HEADLESS ==//
 
-if (!Date.realNow) Date.realNow = Date.now;
-
 var headlessPrint = function(x) {
   //print(x);
 }
@@ -765,10 +763,9 @@ var document = {
 var alert = function(x) {
   print(x);
 };
-var originalDateNow = Date.now;
 var performance = {
   now: function() {
-    return originalDateNow.call(Date);
+    return Date.now();
   },
 };
 function fixPath(path) {
