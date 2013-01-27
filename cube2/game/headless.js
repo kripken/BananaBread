@@ -5,6 +5,10 @@
 
 if (!Date.realNow) Date.realNow = Date.now;
 
+var headlessPrint = function(x) {
+  //print(x);
+}
+
 var window = {
   location: {
     toString: function() {
@@ -18,25 +22,25 @@ var window = {
   uid: 0,
   requestAnimationFrame: function(func) {
     func.uid = window.uid++;
-    print('adding raf ' + func.uid);
+    headlessPrint('adding raf ' + func.uid);
     window.rafs.push(func);
   },
   setTimeout: function(func, ms) {
     func.uid = window.uid++;
-    print('adding timeout ' + func.uid);
+    headlessPrint('adding timeout ' + func.uid);
     window.timeouts.push({
       func: func,
       when: window.fakeNow + (ms || 0)
     });
     window.timeouts.sort(function(x, y) { return y.when - x.when });
   },
-  onIdle: function(){ print('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
+  onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
   runEventLoop: function() {
     // run forever until an exception stops this replay
     var iter = 0;
     while (1) {
       var start = Date.realNow();
-      print('event loop: ' + (iter++));
+      headlessPrint('event loop: ' + (iter++));
       if (window.rafs.length == 0 && window.timeouts.length == 0) {
         if (window.onIdle) {
           window.onIdle();
@@ -49,7 +53,7 @@ var window = {
       window.rafs = [];
       for (var i = 0; i < currRafs.length; i++) {
         var raf = currRafs[i];
-        print('calling raf: ' + raf.uid);// + ': ' + raf.toString().substring(0, 50));
+        headlessPrint('calling raf: ' + raf.uid);// + ': ' + raf.toString().substring(0, 50));
         raf();
       }
       // timeouts
@@ -58,12 +62,12 @@ var window = {
       window.timeouts = [];
       while (timeouts.length && timeouts[timeouts.length-1].when <= now) {
         var timeout = timeouts.pop();
-        print('calling timeout: ' + timeout.func.uid);// + ': ' + timeout.func.toString().substring(0, 50));
+        headlessPrint('calling timeout: ' + timeout.func.uid);// + ': ' + timeout.func.toString().substring(0, 50));
         timeout.func();
       }
       // increment 'time'
       window.fakeNow += 16.666;
-      print('main event loop iteration took ' + (Date.realNow() - start) + ' ms');
+      headlessPrint('main event loop iteration took ' + (Date.realNow() - start) + ' ms');
     }
   },
   URL: {
@@ -714,9 +718,9 @@ var document = {
       case 'script': {
         var ret = {};
         window.setTimeout(function() {
-          print('loading script: ' + ret.src);
+          headlessPrint('loading script: ' + ret.src);
           load(ret.src);
-          print('   script loaded.');
+          headlessPrint('   script loaded.');
           if (ret.onload) {
             window.setTimeout(function() {
               ret.onload(); // yeah yeah this might vanish
@@ -819,7 +823,7 @@ var Worker = function(workerPath) {
   var workerCode = read(workerPath);
   workerCode = workerCode.replace(/Module/g, 'zzModuleyy' + (Worker.id++)). // prevent collision with the global Module object. Note that this becomes global, so we need unique ids
                           replace(/\nonmessage = /, '\nvar onmessage = '); // workers commonly do "onmessage = ", we need to varify that to sandbox
-  print('loading worker ' + workerPath + ' : ' + workerCode.substring(0, 50));
+  headlessPrint('loading worker ' + workerPath + ' : ' + workerCode.substring(0, 50));
   eval(workerCode); // will implement onmessage()
 
   function duplicateJSON(json) {
@@ -834,18 +838,18 @@ var Worker = function(workerPath) {
   this.terminate = function(){};
   this.postMessage = function(msg) {
     msg.messageId = Worker.messageId++;
-    print('main thread sending message ' + msg.messageId + ' to worker ' + workerPath);
+    headlessPrint('main thread sending message ' + msg.messageId + ' to worker ' + workerPath);
     window.setTimeout(function() {
-      print('worker ' + workerPath + ' receiving message ' + msg.messageId);
+      headlessPrint('worker ' + workerPath + ' receiving message ' + msg.messageId);
       onmessage({ data: duplicateJSON(msg) });
     });
   };
   var thisWorker = this;
   var postMessage = function(msg) {
     msg.messageId = Worker.messageId++;
-    print('worker ' + workerPath + ' sending message ' + msg.messageId);
+    headlessPrint('worker ' + workerPath + ' sending message ' + msg.messageId);
     window.setTimeout(function() {
-      print('main thread receiving message ' + msg.messageId + ' from ' + workerPath);
+      headlessPrint('main thread receiving message ' + msg.messageId + ' from ' + workerPath);
       thisWorker.onmessage({ data: duplicateJSON(msg) });
     });
   };
