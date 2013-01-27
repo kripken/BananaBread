@@ -1,5 +1,9 @@
 // Setup compiled code parameters and interaction with the web page
 
+var shell = typeof window == 'undefined';
+
+if (shell) load('game/headless.js');
+
 function checkPageParam(param) {
   return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
 }
@@ -524,6 +528,7 @@ if (typeof Recorder != 'undefined') {
           loadChildScript('game/preload_character.js', function() {
             loadChildScript('game/preload_' + preload + '.js', function() {
               loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
+              //loadChildScript('game/bb.asm.js');
             });
           });
         });
@@ -550,4 +555,8 @@ if (typeof Recorder != 'undefined') {
     window.location = 'index.html';
   }, false);
 })();
+
+//
+
+if (shell) window.runEventLoop();
 
