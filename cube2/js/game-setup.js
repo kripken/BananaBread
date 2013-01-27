@@ -8,6 +8,23 @@ function checkPageParam(param) {
   return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
 }
 
+if (checkPageParam('deterministic')) (function() {
+  var MAGIC = 0;
+  Math.random = function() {
+    MAGIC = Math.pow(MAGIC + 1.8912, 3) % 1;
+    return MAGIC;
+  };
+  var TIME = 0;
+  Date.now = function() {
+    TIME += 0.05;
+    return TIME;
+  };
+  performance.now = function() {
+    TIME += 0.05;
+    return TIME;
+  };
+})();
+
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
@@ -451,16 +468,14 @@ function CameraPath(data) { // TODO: namespace this
   }
 
   var queryString = window.location.search ? window.location.search.substring(1) : "";
-  var urlParts, debug;
+  var urlParts;
 
   try {
     urlParts = queryString.split(',');
-    debug = queryString.indexOf('debug') >= 0;
   }
   catch(e){
     // default to sanity if url parsing fails
     urlParts = ['low','low'];
-    debug = false;
   }
 
   var setup = urlParts[0], preload = urlParts[1];
@@ -486,8 +501,10 @@ function CameraPath(data) { // TODO: namespace this
         loadChildScript('game/preload_base.js', function() {
           loadChildScript('game/preload_character.js', function() {
             loadChildScript('game/preload_' + preload + '.js', function() {
-              loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
-              //loadChildScript('game/bb.asm.js');
+              var scriptParts = ['bb'];
+              if (checkPageParam('asm')) scriptParts.push('asm');
+              if (checkPageParam('debug')) scriptParts.push('debug');
+              loadChildScript('game/' + scriptParts.join('.') + '.js');
             });
           });
         });
