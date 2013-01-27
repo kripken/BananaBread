@@ -96,6 +96,26 @@ var Module = {
   }
 };
 
+if (Module.benchmark) {
+  Module.print('<< start preload >>');
+  preloadStartTime = Date.realNow();
+
+  Module.preRun.push(function() {
+    __ATMAIN__.push({ func: function() {
+      Module.print('<< start startup >>');
+      Module.startupStartTime = Date.realNow();
+    } });
+  });
+
+  Module.showFinalNumbers = function() {;
+    var end = Date.realNow();
+    Module.print('finished, times:');
+    Module.print('  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds');
+    Module.print('  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds');
+    Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
+  };
+}
+
 // Checks for features we cannot run without
 // Note: Modify this for your needs. If your level does not use
 //       texture compression, remove the check for it here.
@@ -262,6 +282,7 @@ Module.postLoadWorld = function() {
   }
 
   if (Module.benchmark) {
+    Module.print('<< start game >>');
     Module.gameStartTime = Date.realNow();
   }
 };

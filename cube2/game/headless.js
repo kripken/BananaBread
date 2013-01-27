@@ -75,10 +75,7 @@ var window = {
       window.fakeNow += 16.666;
       headlessPrint('main event loop iteration took ' + (Date.realNow() - start) + ' ms');
     }
-
-    var end = Date.realNow();
-    Module.print('finished, times:');
-    Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
+    if (Module.showFinalNumbers) Module.showFinalNumbers();
   },
   URL: {
     createObjectURL: function(x) {
