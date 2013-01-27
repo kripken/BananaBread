@@ -17,7 +17,7 @@ if (checkPageParam('deterministic')) (function() {
   Date.realNow = Date.now;
   var TIME = Date.now();
   Date.now = function() {
-    TIME += 5;
+    TIME += 10;
     return TIME;
   };
   performance.now = Date.now;
