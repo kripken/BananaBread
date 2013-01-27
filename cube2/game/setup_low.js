@@ -11,7 +11,7 @@ Module.tweakDetail = function() {
 
 Module.loadDefaultMap = function() {
   if (Module.benchmark) {
-    BananaBread.execute('sleep 10 [ effic colos ; addbot 50 ; addbot 50 ; addbot 50 ] ]'); // run 3 bots immediately
+    BananaBread.execute('sleep 10 [ effic colos ; addbot 50 ; addbot 60 ; addbot 70 ; addbot 80 ] ]'); // run some bots immediately
   } else {
     BananaBread.execute('sleep 10 [ effic colos ; sleep 20000 [ addbot 50 ] ]');
   }
