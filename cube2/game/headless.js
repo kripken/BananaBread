@@ -3,12 +3,14 @@
 
 //== HEADLESS ==//
 
+if (!Date.realNow) Date.realNow = Date.now;
+
 var window = {
   location: {
     toString: function() {
-      return 'game.html?low,low,asm,benchmark';//,deterministic';
+      return 'game.html?low,low,asm,benchmark,deterministic';
     },
-    search: '?low,low,asm,benchmark',//,deterministic',
+    search: '?low,low,asm,benchmark,deterministic',
   },
   fakeNow: 0, // we don't use Date.now()
   rafs: [],
@@ -33,7 +35,7 @@ var window = {
     // run forever until an exception stops this replay
     var iter = 0;
     while (1) {
-      var start = Date.now();
+      var start = Date.realNow();
       print('event loop: ' + (iter++));
       if (window.rafs.length == 0 && window.timeouts.length == 0) {
         if (window.onIdle) {
@@ -61,7 +63,7 @@ var window = {
       }
       // increment 'time'
       window.fakeNow += 16.666;
-      print('main event loop iteration took ' + (Date.now() - start) + ' ms');
+      print('main event loop iteration took ' + (Date.realNow() - start) + ' ms');
     }
   },
   URL: {

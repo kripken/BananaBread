@@ -14,15 +14,13 @@ if (checkPageParam('deterministic')) (function() {
     MAGIC = Math.pow(MAGIC + 1.8912, 3) % 1;
     return MAGIC;
   };
-  var TIME = 0;
+  Date.realNow = Date.now;
+  var TIME = Date.now();
   Date.now = function() {
-    TIME += 0.05;
+    TIME += 5;
     return TIME;
   };
-  performance.now = function() {
-    TIME += 0.05;
-    return TIME;
-  };
+  performance.now = Date.now;
 })();
 
 var Module = {
