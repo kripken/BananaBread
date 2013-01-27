@@ -1,5 +1,6 @@
 
-// from emscripten src/headless.js, with %s modified and removed Recorder stuff and commented 'additional setup'
+// from emscripten src/headless.js, with %s modified and removed Recorder stuff and commented 'additional setup',
+// plus some refactoring
 
 //== HEADLESS ==//
 
@@ -10,12 +11,17 @@ var headlessPrint = function(x) {
 }
 
 var window = {
+  // adjustable parameters
   location: {
     toString: function() {
       return 'game.html?low,low,asm,benchmark,deterministic';
     },
     search: '?low,low,asm,benchmark,deterministic',
   },
+  onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
+  dirsToDrop: 1, // go back to root dir if first_js is in a subdir
+  //
+
   fakeNow: 0, // we don't use Date.now()
   rafs: [],
   timeouts: [],
@@ -34,7 +40,6 @@ var window = {
     });
     window.timeouts.sort(function(x, y) { return y.when - x.when });
   },
-  onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
   runEventLoop: function() {
     // run forever until an exception stops this replay
     var iter = 0;
@@ -766,8 +771,7 @@ var performance = {
 };
 function fixPath(path) {
   if (path[0] == '/') path = path.substring(1);
-  var dirsToDrop = 1; // go back to root dir if first_js is in a subdir
-  for (var i = 0; i < dirsToDrop; i++) {
+  for (var i = 0; i < window.dirsToDrop; i++) {
     path = '../' + path;
   }
   return path
