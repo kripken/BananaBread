@@ -8,20 +8,24 @@ function checkPageParam(param) {
   return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
 }
 
-if (checkPageParam('deterministic')) (function() {
-  var MAGIC = 0;
-  Math.random = function() {
-    MAGIC = Math.pow(MAGIC + 1.8912, 3) % 1;
-    return MAGIC;
-  };
+if (checkPageParam('deterministic')) {
+  (function() {
+    var MAGIC = 0;
+    Math.random = function() {
+      MAGIC = Math.pow(MAGIC + 1.8912, 3) % 1;
+      return MAGIC;
+    };
+    Date.realNow = Date.now;
+    var TIME = Date.now();
+    Date.now = function() {
+      TIME += 10;
+      return TIME;
+    };
+    performance.now = Date.now;
+  })();
+} else {
   Date.realNow = Date.now;
-  var TIME = Date.now();
-  Date.now = function() {
-    TIME += 10;
-    return TIME;
-  };
-  performance.now = Date.now;
-})();
+}
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
@@ -255,6 +259,10 @@ Module.postLoadWorld = function() {
       Module.readySound.play();
       Module.readySound = null;
     }
+  }
+
+  if (Module.benchmark) {
+    Module.gameStartTime = Date.realNow();
   }
 };
 

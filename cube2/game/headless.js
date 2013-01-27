@@ -20,6 +20,7 @@ var window = {
   },
   onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
   dirsToDrop: 1, // go back to root dir if first_js is in a subdir
+  iters: 2000, // set to infinity to run forever
   //
 
   fakeNow: 0, // we don't use Date.now()
@@ -43,7 +44,7 @@ var window = {
   runEventLoop: function() {
     // run forever until an exception stops this replay
     var iter = 0;
-    while (1) {
+    while (this.iters--) {
       var start = Date.realNow();
       headlessPrint('event loop: ' + (iter++));
       if (window.rafs.length == 0 && window.timeouts.length == 0) {
@@ -74,6 +75,10 @@ var window = {
       window.fakeNow += 16.666;
       headlessPrint('main event loop iteration took ' + (Date.realNow() - start) + ' ms');
     }
+
+    var end = Date.realNow();
+    Module.print('finished, times:');
+    Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
   },
   URL: {
     createObjectURL: function(x) {
