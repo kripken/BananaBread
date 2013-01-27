@@ -6,9 +6,9 @@
 var window = {
   location: {
     toString: function() {
-      return 'game.html?low,low';
+      return 'game.html?low,low,benchmark';
     },
-    search: '?low,low',
+    search: '?low,low,benchmark',
   },
   fakeNow: 0, // we don't use Date.now()
   rafs: [],

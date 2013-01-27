@@ -11,6 +11,7 @@ function checkPageParam(param) {
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
+  benchmark: checkPageParam('benchmark'),
   failed: false,
   preRun: [],
   postRun: [],
@@ -240,26 +241,6 @@ Module.postLoadWorld = function() {
       Module.readySound = null;
     }
   }
-
-  if (replayingRecording) {
-    Module.startupFinish = Recorder.pnow();
-
-    Recorder.onFinish.push(function() {
-      var now = Recorder.pnow();
-      var elapsedFromStart = now - Module.startupFinish;
-      console.log('elapsed from start : ' + elapsedFromStart + ' ms');
-      var cancelFS = document.mozCancelFullScreen || document.webkitCancelFullScreen;
-      cancelFS.call(document);
-    });
-
-    if (SearchArgs["autoplay"] == "low") {
-      setTimeout(function() { Module.fullscreenLow(); }, 100);
-    } else if (SearchArgs["autoplay"] == "high") {
-      setTimeout(function() { Module.fullscreenHigh(); }, 100);
-    }
-  } else if (typeof Recorder != 'undefined') {
-    Recorder.pnow(); // equalize between record and replay
-  }
 };
 
 Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
@@ -456,28 +437,6 @@ function CameraPath(data) { // TODO: namespace this
       Module.requestAnimationFrame(moveCamera);
     }
     Module.fullscreenCallbacks.push(moveCamera);
-  }
-}
-
-// Benchmarking glue
-
-var replayingRecording = false;
-
-if (typeof Recorder != 'undefined') {
-  Module.fullscreenCallbacks.push(function() {
-    Recorder.start();
-  });
-
-  replayingRecording = Recorder.replaying;
-
-  if (replayingRecording) {
-    Recorder.onFinish.push(function() {
-      console.log('startup   : ' + (Module.startupFinish - Module.startupStart) + ' ms');
-    });
-
-    Module.startupStart = Recorder.pnow();
-  } else {
-    Recorder.pnow(); // equalize between record and replay
   }
 }
 
