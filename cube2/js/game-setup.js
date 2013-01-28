@@ -111,12 +111,14 @@ if (Module.benchmark) {
   });
 
   Module.postMainLoop = function() {
-    Module.benchmark.iter++;
-    Module.progressElement.value = Module.benchmark.iter; // TODO: check if this affects performance
-    if (Module.benchmark.iter == 1) {
+    var iter = Module.benchmark.iter++;
+    if (iter == 1) {
       Module.progressElement.hidden = false;
       Module.progressElement.max = Module.benchmark.totalIters;
-    } else if (Module.benchmark.iter == Module.benchmark.totalIters) {
+      BananaBread.execute('spectator 1 ; nextfollow'); // do not get shot at by bots
+    } else if (iter % 10 == 1) {
+      Module.progressElement.value = iter; // TODO: check if this affects performance
+    } else if (iter >= Module.benchmark.totalIters) {
       window.stopped = true;
       Browser.mainLoop.pause();
 
@@ -125,6 +127,8 @@ if (Module.benchmark) {
       Module.print('  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds');
       Module.print('  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds');
       Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
+    } else if (iter % 333 == 5) {
+      BananaBread.execute('nextfollow');
     }
   };
 }
