@@ -23,7 +23,7 @@ if (checkPageParam('deterministic')) {
     };
     var TIME = 10000;
     Date.now = function() {
-      TIME += 10;
+      TIME += 17;
       return TIME;
     };
     performance.now = Date.now;
