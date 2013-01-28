@@ -33,7 +33,7 @@ if (checkPageParam('deterministic')) {
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
-  benchmark: checkPageParam('benchmark'),
+  benchmark: checkPageParam('benchmark') ? { totalIters: 2000, iter: 0 } : null,
   failed: false,
   preRun: [],
   postRun: [],
@@ -48,10 +48,10 @@ var Module = {
   },
   canvas: document.getElementById('canvas'),
   statusMessage: 'Starting...',
+  progressElement: document.getElementById('progress'),
   setStatus: function(text) {
     if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
     var statusElement = document.getElementById('status-text');
-    var progressElement = document.getElementById('progress');
     if (Module.finishedDataFileDownloads >= 1 && Module.finishedDataFileDownloads < Module.expectedDataFileDownloads) {
       // If we are in the middle of multiple datafile downloads, do not show preloading progress - show only download progress
       var m2 = text.match(/([^ ]+) .*/);
@@ -62,13 +62,13 @@ var Module = {
     var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
     if (m) {
       text = m[1];
-      progressElement.value = parseInt(m[2])*100;
-      progressElement.max = parseInt(m[4])*100;
-      progressElement.hidden = false;
+      Module.progressElement.value = parseInt(m[2])*100;
+      Module.progressElement.max = parseInt(m[4])*100;
+      Module.progressElement.hidden = false;
     } else {
-      progressElement.value = null;
-      progressElement.max = null;
-      progressElement.hidden = true;
+      Module.progressElement.value = null;
+      Module.progressElement.max = null;
+      Module.progressElement.hidden = true;
     }
     statusElement.innerHTML = text;
   },
@@ -110,12 +110,22 @@ if (Module.benchmark) {
     } });
   });
 
-  Module.showFinalNumbers = function() {;
-    var end = Date.realNow();
-    Module.print('finished, times:');
-    Module.print('  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds');
-    Module.print('  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds');
-    Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
+  Module.postMainLoop = function() {
+    Module.benchmark.iter++;
+    Module.progressElement.value = Module.benchmark.iter; // TODO: check if this affects performance
+    if (Module.benchmark.iter == 1) {
+      Module.progressElement.hidden = false;
+      Module.progressElement.max = Module.benchmark.totalIters;
+    } else if (Module.benchmark.iter == Module.benchmark.totalIters) {
+      window.stopped = true;
+      Browser.mainLoop.pause();
+
+      var end = Date.realNow();
+      Module.print('finished, times:');
+      Module.print('  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds');
+      Module.print('  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds');
+      Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
+    }
   };
 }
 
