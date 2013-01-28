@@ -17,11 +17,13 @@
       <div class="status">
         <div class="status-content">
           <div class="progress-container">
-            <span id="status-text">Downloading...</span>
+            <span id="status-text"></span>
             <progress value="0" max="100" id="progress"></progress>
           </div>
-          <a class="fullscreen-button resume">Go!</a>
-          <textarea id="output" rows="10"></textarea>
+          <div class="status-content fullscreen-buttons">
+            <a class="fullscreen-button go">Go!</a>
+          </div>
+          <canvas id="canvas" class="" oncontextmenu="event.preventDefault()"></canvas>
         </div>
       </div>
       <div class="section">
@@ -34,17 +36,12 @@
     </div>
     <script>
 
-var pageParams = '?low,low,asm,benchmark,deterministic';
+var pageParams = 'low,low,asm,windowed,benchmark,deterministic';
 
-var resumeButton = document.querySelector('.fullscreen-button.resume');
-resumeButton.addEventListener('click', function(e){
+var goButton = document.querySelector('.fullscreen-button.go');
+goButton.addEventListener('click', function(e){
+  document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
   var js = document.createElement('script');
-  js.onload = function() {
-    var element = document.getElementById('output');
-    Module.print = function(text) {
-      element.value += text + '\n';
-    };
-  };
   js.src = 'js/game-setup.js';
   document.body.appendChild(js);
 }, false);

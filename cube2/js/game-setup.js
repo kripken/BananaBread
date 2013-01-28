@@ -152,7 +152,7 @@ if (Module.benchmark) {
 // Loading music. Will be stopped once the first frame of the game runs
 
 Module.loadingMusic = new Audio();
-Module.loadingMusic.src = 'assets/OutThere_0.ogg';
+if (!Module.benchmark) Module.loadingMusic.src = 'assets/OutThere_0.ogg';
 Module.loadingMusic.play();
 
 Module.readySound = new Audio();
@@ -233,6 +233,8 @@ Module.postLoadWorld = function() {
   }, 1); // Do after startup finishes so music will be prepared up
 
   if (checkPageParam('windowed')) {
+    Module.isFullScreen = 1;
+    document.querySelector('canvas').classList.remove('hide');
     Module.requestFullScreen = function() {
       setTimeout(function() {
         Module.onFullScreen(1);
