@@ -310,7 +310,7 @@ Module.autoexec = function(){}; // called during autoexec on load, so useful to 
 Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
 
 (function() {
-  var fraction = 0.70;
+  var fraction = 0.65;
   var desired = Math.min(fraction*screen.availWidth, fraction*screen.availHeight, 600);
   var w, h;
   if (screen.width >= screen.height) {
