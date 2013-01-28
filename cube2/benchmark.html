@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>BananaBench</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet" /-->
+  </head>
+  <body>
+    <!--a href="http://www.mozilla.org/" id="tabzilla">mozilla</a-->
+    <div id="main-container">
+      <div class="demo-title">BananaBench</div>
+      <div class="section">
+        <div class="title">The Tastiest Browser Benchmark</div>
+      </div>
+      <div class="status">
+        <div class="status-content">
+          <a class="fullscreen-button resume">Go!</a>
+          <textarea id="output" rows="10"></textarea>
+        </div>
+      </div>
+      <div class="section">
+        <div class="title">What is this?</div>
+          <ul>
+            <li>...........</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+    <script>
+
+var BENCHMARK = true;
+
+var resumeButton = document.querySelector('.fullscreen-button.resume');
+resumeButton.addEventListener('click', function(e){
+  var js = document.createElement('script');
+  js.onload = function() {
+    var element = document.getElementById('output');
+    Module.print = function(text) {
+      element.value += text + '\n';
+    };
+  };
+  js.src = 'js/game-setup.js';
+  document.body.appendChild(js);
+}, false);
+
+    </script>
+    <!--script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script-->
+  </body>
+</html>
+

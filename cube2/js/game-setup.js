@@ -4,8 +4,12 @@ var shell = typeof window == 'undefined';
 
 if (shell) load('game/headless.js');
 
+if (typeof pageParams === 'undefined') {
+  var pageParams = window.location.search || '';
+}
+
 function checkPageParam(param) {
-  return (window.location.search ? window.location.search.substring(1) : '').split(',').indexOf(param) >= 0
+  return pageParams.split(',').indexOf(param) >= 0
 }
 
 Date.realNow = Date.now;
@@ -493,17 +497,7 @@ function CameraPath(data) { // TODO: namespace this
     document.body.appendChild(js);
   }
 
-  var queryString = window.location.search ? window.location.search.substring(1) : "";
-  var urlParts;
-
-  try {
-    urlParts = queryString.split(',');
-  }
-  catch(e){
-    // default to sanity if url parsing fails
-    urlParts = ['low','low'];
-  }
-
+  var urlParts = pageParams.substr(1).split(',');
   var setup = urlParts[0], preload = urlParts[1];
 
   var levelTitleContainer = document.querySelector('.level-title span');
