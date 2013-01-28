@@ -31,5 +31,5 @@ put gl-matrix.js
 put zee-worker.js
 put alarmcreatemiltaryfoot_1.ogg
 
-rm bb.zip ; zip bb.zip index.html game.html `find game/ -name "*"` `find assets/ -name "*"` `find css/ -name "*"` `find js/ -name "*"` crunch-worker.js base.data character.data low.data medium.data high.data four.data five.data
+rm bb.zip ; zip bb.zip index.html game.html benchmark.html `find game/ -name "*"` `find assets/ -name "*"` `find css/ -name "*"` `find js/ -name "*"` crunch-worker.js base.data character.data low.data medium.data high.data four.data five.data
 
