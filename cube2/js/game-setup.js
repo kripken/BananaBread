@@ -7,6 +7,7 @@ if (shell) load('game/headless.js');
 if (typeof pageParams === 'undefined') {
   var pageParams = window.location.search || '';
 }
+if (pageParams[0] == '?') pageParams = pageParams.substr(1);
 
 function checkPageParam(param) {
   return pageParams.split(',').indexOf(param) >= 0
@@ -14,7 +15,6 @@ function checkPageParam(param) {
 
 Date.realNow = Date.now;
 if (checkPageParam('deterministic')) {
-  print('<< determinizing >>');
   (function() {
     var MAGIC = 0;
     Math.random = function() {
@@ -497,23 +497,25 @@ function CameraPath(data) { // TODO: namespace this
     document.body.appendChild(js);
   }
 
-  var urlParts = pageParams.substr(1).split(',');
+  var urlParts = pageParams.split(',');
   var setup = urlParts[0], preload = urlParts[1];
 
   var levelTitleContainer = document.querySelector('.level-title span');
-  var levelTitle;
-  switch(setup) {
-    case 'low':    levelTitle = 'Arena';        break;
-    case 'medium': levelTitle = 'Two Towers';   break;
-    case 'high':   levelTitle = 'Lava Chamber'; break;
-    case 'four':   levelTitle = 'Future';       break;
-    case 'five':   levelTitle = 'Lava Rooms';   break;
-    default: throw('unknown setup: ' + setup);
-  };
-  levelTitleContainer.innerHTML = levelTitle;
+  if (levelTitleContainer) {
+    var levelTitle;
+    switch(setup) {
+      case 'low':    levelTitle = 'Arena';        break;
+      case 'medium': levelTitle = 'Two Towers';   break;
+      case 'high':   levelTitle = 'Lava Chamber'; break;
+      case 'four':   levelTitle = 'Future';       break;
+      case 'five':   levelTitle = 'Lava Rooms';   break;
+      default: throw('unknown setup: ' + setup);
+    };
+    levelTitleContainer.innerHTML = levelTitle;
+  }
 
   var previewContainer = document.querySelector('.preview-content.' + setup );
-  previewContainer.classList.add('show');
+  if (previewContainer) previewContainer.classList.add('show');
 
   if(!Module.failed){
     loadChildScript('game/gl-matrix.js', function() {
@@ -535,19 +537,19 @@ function CameraPath(data) { // TODO: namespace this
 
 (function(){
   var lowResButton = document.querySelector('.fullscreen-button.low-res');
-  var highResButton = document.querySelector('.fullscreen-button.high-res');
-  var resumeButton = document.querySelector('.fullscreen-button.resume');
-  var quitButton = document.querySelector('.fullscreen-button.quit');
-  lowResButton.addEventListener('click', function(e){
+  if (lowResButton) lowResButton.addEventListener('click', function(e){
     Module.fullscreenLow();
   }, false);
-  highResButton.addEventListener('click', function(e){
+  var highResButton = document.querySelector('.fullscreen-button.high-res');
+  if (highResButton) highResButton.addEventListener('click', function(e){
     Module.fullscreenHigh();
   }, false);
-  resumeButton.addEventListener('click', function(e){
+  var resumeButton = document.querySelector('.fullscreen-button.resume');
+  if (resumeButton) resumeButton.addEventListener('click', function(e){
     Module.resume();
   }, false);
-  quitButton.addEventListener('click', function(e){
+  var quitButton = document.querySelector('.fullscreen-button.quit');
+  if (quitButton) quitButton.addEventListener('click', function(e){
     window.location = 'index.html';
   }, false);
 })();

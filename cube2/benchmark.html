@@ -16,6 +16,10 @@
       </div>
       <div class="status">
         <div class="status-content">
+          <div class="progress-container">
+            <span id="status-text">Downloading...</span>
+            <progress value="0" max="100" id="progress"></progress>
+          </div>
           <a class="fullscreen-button resume">Go!</a>
           <textarea id="output" rows="10"></textarea>
         </div>
@@ -30,7 +34,7 @@
     </div>
     <script>
 
-var BENCHMARK = true;
+var pageParams = '?low,low,asm,benchmark,deterministic';
 
 var resumeButton = document.querySelector('.fullscreen-button.resume');
 resumeButton.addEventListener('click', function(e){
