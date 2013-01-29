@@ -122,11 +122,17 @@ if (Module.benchmark) {
       window.stopped = true;
       Browser.mainLoop.pause();
 
+      // show results
+      document.querySelector('canvas').classList.add('hide');
+      document.getElementById('main_text').classList.remove('hide');
+      document.getElementById('main_text').innerHTML = 'results';
+
       var end = Date.realNow();
       Module.print('finished, times:');
       Module.print('  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds');
       Module.print('  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds');
       Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
+
     } else if (iter % 333 == 5) {
       BananaBread.execute('nextfollow');
     }
@@ -248,7 +254,6 @@ Module.postLoadWorld = function() {
 
   if (checkPageParam('windowed')) {
     Module.isFullScreen = 1;
-    document.querySelector('canvas').classList.remove('hide');
     Module.requestFullScreen = function() {
       setTimeout(function() {
         Module.onFullScreen(1);
@@ -303,6 +308,8 @@ Module.postLoadWorld = function() {
   if (Module.benchmark) {
     Module.print('<< start game >>');
     Module.gameStartTime = Date.realNow();
+    document.getElementById('main_text').classList.add('hide');
+    document.querySelector('canvas').classList.remove('hide');
   }
 };
 

@@ -20,7 +20,8 @@
           <div class="status-content fullscreen-buttons">
             <a class="fullscreen-button go">Go!</a>
           </div>
-          <canvas id="canvas" class="" oncontextmenu="event.preventDefault()"></canvas>
+          <canvas id="canvas" class="hide" oncontextmenu="event.preventDefault()"></canvas>
+          <span id="main_text" class="hide"></span>
         </div>
       </div>
       <div class="section">
@@ -51,6 +52,8 @@ var pageParams = 'low,low,asm,windowed,benchmark,deterministic';
 var goButton = document.querySelector('.fullscreen-button.go');
 goButton.addEventListener('click', function(e){
   document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
+  document.getElementById('main_text').classList.remove('hide');
+  document.getElementById('main_text').innerHTML = 'wait for it...';
   var js = document.createElement('script');
   js.src = 'js/game-setup.js';
   document.body.appendChild(js);
