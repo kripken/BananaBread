@@ -20,6 +20,8 @@ var window = {
   dirsToDrop: 1, // go back to root dir if first_js is in a subdir
   //
 
+  headless: true,
+
   stopped: false,
   fakeNow: 0, // we don't use Date.now()
   rafs: [],

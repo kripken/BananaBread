@@ -53,7 +53,7 @@ var goButton = document.querySelector('.fullscreen-button.go');
 goButton.addEventListener('click', function(e){
   document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
   document.getElementById('main_text').classList.remove('hide');
-  document.getElementById('main_text').innerHTML = 'wait for it...';
+  document.getElementById('main_text').innerHTML = 'Wait for it...';
   var js = document.createElement('script');
   js.src = 'js/game-setup.js';
   document.body.appendChild(js);

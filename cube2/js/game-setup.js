@@ -124,15 +124,18 @@ if (Module.benchmark) {
 
       // show results
       document.querySelector('canvas').classList.add('hide');
-      document.getElementById('main_text').classList.remove('hide');
-      document.getElementById('main_text').innerHTML = 'results';
-
+      var results = '';
       var end = Date.realNow();
-      Module.print('finished, times:');
-      Module.print('  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds');
-      Module.print('  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds');
-      Module.print('  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds');
-
+      results += 'finished, times:\n';
+      results += '  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds\n';
+      results += '  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds\n';
+      results += '  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds\n';
+      if (window.headless) {
+        Module.print(results);
+      } else {
+        document.getElementById('main_text').classList.remove('hide');
+        document.getElementById('main_text').innerHTML = results.replace(/\n/g, '<br>');
+      }
     } else if (iter % 333 == 5) {
       BananaBread.execute('nextfollow');
     }
@@ -308,7 +311,7 @@ Module.postLoadWorld = function() {
   if (Module.benchmark) {
     Module.print('<< start game >>');
     Module.gameStartTime = Date.realNow();
-    document.getElementById('main_text').classList.add('hide');
+    if (!window.headless) document.getElementById('main_text').classList.add('hide');
     document.querySelector('canvas').classList.remove('hide');
   }
 };
