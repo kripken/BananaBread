@@ -2,7 +2,10 @@
 
 var shell = typeof window == 'undefined';
 
-if (shell) load('game/headless.js');
+if (shell) {
+  load('game/headless.js');
+  load('game/headlessCanvas.js');
+}
 
 if (typeof pageParams === 'undefined') {
   var pageParams = window.location.search || '';
@@ -46,7 +49,7 @@ var Module = {
   printErr: function(text) {
     console.log(text);
   },
-  canvas: document.getElementById('canvas'),
+  canvas: checkPageParam('headlessCanvas') ? headlessCanvas() : document.getElementById('canvas'),
   statusMessage: 'Starting...',
   progressElement: document.getElementById('progress'),
   setStatus: function(text) {
@@ -84,16 +87,16 @@ var Module = {
       Module.setOpacity(1);
       Module.setStatus('');
       document.querySelector('.status .ingame').classList.add( 'hide' );
-      document.querySelector('canvas').classList.remove( 'paused' );
-      document.querySelector('canvas').classList.remove( 'hide' );
+      Module.canvas.classList.remove( 'paused' );
+      Module.canvas.classList.remove( 'hide' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
       Module.pauseMainLoop();
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
-      document.querySelector('canvas').classList.add( 'paused' );
+      Module.canvas.classList.add( 'paused' );
       document.querySelector('.status .ingame').classList.remove( 'hide' );
-      document.querySelector('canvas').classList.add( 'hide' );
+      Module.canvas.classList.add( 'hide' );
       //BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
   }
@@ -123,7 +126,7 @@ if (Module.benchmark) {
       Browser.mainLoop.pause();
 
       // show results
-      document.querySelector('canvas').classList.add('hide');
+      Module.canvas.classList.add('hide');
       var results = '';
       var end = Date.realNow();
       results += 'finished, times:\n';
@@ -154,6 +157,7 @@ if (Module.benchmark) {
     document.querySelector('.status-content.error').classList.remove('hide');
     Module.failed = true;
   }
+  if (checkPageParam('headlessCanvas')) return;
   try {
     var canvas = document.createElement('canvas');
   } catch(e){}
@@ -282,7 +286,7 @@ Module.postLoadWorld = function() {
 
     Module.fullscreenLow = function() {
       document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
-      document.querySelector('canvas').classList.remove('hide');
+      Module.canvas.classList.remove('hide');
       Module.requestFullScreen();
       Module.setOpacity(1);
       Module.setStatus('');
@@ -292,7 +296,7 @@ Module.postLoadWorld = function() {
 
     Module.fullscreenHigh = function() {
       document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
-      document.querySelector('canvas').classList.remove('hide');
+      Module.canvas.classList.remove('hide');
       Module.requestFullScreen();
       Module.setOpacity(1);
       Module.setStatus('');
@@ -312,7 +316,7 @@ Module.postLoadWorld = function() {
     Module.print('<< start game >>');
     Module.gameStartTime = Date.realNow();
     if (!window.headless) document.getElementById('main_text').classList.add('hide');
-    document.querySelector('canvas').classList.remove('hide');
+    Module.canvas.classList.remove('hide');
   }
 };
 

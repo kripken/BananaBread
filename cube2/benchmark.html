@@ -19,6 +19,7 @@
           </div>
           <div class="status-content fullscreen-buttons">
             <a class="fullscreen-button go">Go!</a>
+            <a class="fullscreen-button go-headless">Go Headless!</a>
           </div>
           <canvas id="canvas" class="hide" oncontextmenu="event.preventDefault()"></canvas>
           <span id="main_text" class="hide"></span>
@@ -45,15 +46,29 @@
         </p>
       </div>
     </div>
+
+    <script src='game/headlessCanvas.js'></script>
     <script>
 
 var pageParams = 'low,low,asm,windowed,benchmark,deterministic';
 
 var goButton = document.querySelector('.fullscreen-button.go');
-goButton.addEventListener('click', function(e){
+goButton.addEventListener('click', function(e) {
   document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
   document.getElementById('main_text').classList.remove('hide');
   document.getElementById('main_text').innerHTML = 'Wait for it...';
+  var js = document.createElement('script');
+  js.src = 'js/game-setup.js';
+  document.body.appendChild(js);
+}, false);
+
+var goButton = document.querySelector('.fullscreen-button.go-headless');
+goButton.addEventListener('click', function(e) {
+  pageParams += ',headlessCanvas';
+
+  document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
+  document.getElementById('main_text').classList.remove('hide');
+  document.getElementById('main_text').innerHTML = 'Simulating...';
   var js = document.createElement('script');
   js.src = 'js/game-setup.js';
   document.body.appendChild(js);
