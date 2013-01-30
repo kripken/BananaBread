@@ -1,8 +1,9 @@
 var SearchArgs = {};
 (function() {
-  var searchArgs = window.location.search.split("&");
+  var searchArgs = window.location.search.substr(1).split("&");
   for (var i = 0; i < searchArgs.length; ++i) {
     var eqsplit = searchArgs[i].split("=");
+    if (eqsplit[0].length < 1) continue;
     if (eqsplit.length == 1) {
       SearchArgs[eqsplit[0]] = true;
     } else {

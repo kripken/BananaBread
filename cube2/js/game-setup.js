@@ -1,33 +1,34 @@
 // Setup compiled code parameters and interaction with the web page
 
-function checkPageParam(name) {
-  var params = (window.location.search ? window.location.search.substring(1) : '').split(',');
-  for(var i = 0, l = params.length; i < l; ++ i) {
-    var param = params[i].split('=')[0];
-    if(param === name) return true;
+var Query = {
+  parse: function parse(queryString) {
+    var result = {};
+    var parts = queryString.split('&');
+    parts.forEach(function(part) {
+      var key = part.split('=')[0];
+      if(!result.hasOwnProperty(key))
+        result[key] = [];
+      var value = part.split('=')[1];
+      if(undefined !== value)
+        result[key].push(value);
+    });
+    return result;
+  },
+  defined: function defined(params, key) {
+    return (params.hasOwnProperty(key));
   }
-  return false;
-}
+};
 
-function getPageParam(name) {
-  if(!checkPageParam(name)) {
-    return undefined;
-  }
-  var values = [];
-  var params = (window.location.search ? window.location.search.substring(1) : '').split(',');
-  for(var i = 0, l = params.length; i < l; ++ i) {
-    var param = params[i].split('=')[0];
-    var value = params[i].split('=')[1];
-    if(param === name)
-      values.push(value);
-  }
-  return values;
-}
+var params = Query.parse(window.location.search.substring(1));
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
-  arguments: checkPageParam('serve') ? ['-d1'] : [],
-  remote: getPageParam('remote'),
+  arguments: Query.defined(params, 'serve') ? ['-d1'] : [],
+  host: Query.defined(params, 'serve') ? true : false,
+  webrtc: {
+    broker: Query.defined(params, 'webrtc-broker') ? params['webrtc-broker'] : undefined,
+    session: Query.defined(params, 'webrtc-session') ? params['webrtc-session'] : undefined
+  },
   TOTAL_MEMORY: 50*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
@@ -207,7 +208,7 @@ Module.postLoadWorld = function() {
     BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
   }, 1); // Do after startup finishes so music will be prepared up
 
-  if (checkPageParam('windowed')) {
+  if (Query.defined(params, 'windowed')) {
     Module.requestFullScreen = function() {
       setTimeout(function() {
         Module.onFullScreen(1);
@@ -509,20 +510,9 @@ if (typeof Recorder != 'undefined') {
     document.body.appendChild(js);
   }
 
-  var queryString = window.location.search ? window.location.search.substring(1) : "";
-  var urlParts, debug;
-
-  try {
-    urlParts = queryString.split(',');
-    debug = queryString.indexOf('debug') >= 0;
-  }
-  catch(e){
-    // default to sanity if url parsing fails
-    urlParts = ['low','low'];
-    debug = false;
-  }
-
-  var setup = urlParts[0], preload = urlParts[1];
+  var setup = Query.defined(params, 'setup') ? params['setup'][0] : 'low';
+  var preload = Query.defined(params, 'preload') ? params['preload'][0] : 'low';
+  var debug = Query.defined(params, 'debug') ? true: false;
 
   var levelTitleContainer = document.querySelector('.level-title span');
   var levelTitle;
