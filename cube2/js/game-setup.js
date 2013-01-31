@@ -113,13 +113,15 @@ if (Module.benchmark) {
     } });
   });
 
+  Module.benchmark.progressTick = Math.floor(Module.benchmark.totalIters / 100);
+
   Module.postMainLoop = function() {
     var iter = Module.benchmark.iter++;
     if (iter == 1) {
       Module.progressElement.hidden = false;
       Module.progressElement.max = Module.benchmark.totalIters;
       BananaBread.execute('spectator 1 ; nextfollow'); // do not get shot at by bots
-    } else if (iter % 10 == 1) {
+    } else if (iter % Module.benchmark.progressTick == 1) {
       Module.progressElement.value = iter; // TODO: check if this affects performance
     } else if (iter >= Module.benchmark.totalIters) {
       window.stopped = true;
