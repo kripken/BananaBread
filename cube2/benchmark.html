@@ -65,6 +65,9 @@ goButton.addEventListener('click', function(e) {
 var goButton = document.querySelector('.fullscreen-button.go-headless');
 goButton.addEventListener('click', function(e) {
   pageParams += ',headlessCanvas';
+  window.requestAnimationFrame = function(x) {
+    setTimeout(x, 1);
+  };
 
   document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
   document.getElementById('main_text').classList.remove('hide');
