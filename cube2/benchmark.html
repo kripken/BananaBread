@@ -68,6 +68,13 @@ goButton.addEventListener('click', function(e) {
   window.requestAnimationFrame = function(x) {
     setTimeout(x, 1);
   };
+  var realAudio = Audio;
+  Audio = function() {
+    var ret = new realAudio();
+    ret.play = ret.pause = function(){ console.log('play|pause') };
+    ret.cloneNode = function() { console.log('clone'); return this };
+    return ret;
+  }
 
   document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
   document.getElementById('main_text').classList.remove('hide');
