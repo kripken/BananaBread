@@ -260,10 +260,12 @@ Module.postLoadWorld = function() {
   }, 1); // Do after startup finishes so music will be prepared up
 
   if (checkPageParam('windowed')) {
+    Module.canvas.classList.remove('hide');
     Module.isFullScreen = 1;
     Module.requestFullScreen = function() {
       setTimeout(function() {
         Module.onFullScreen(1);
+        Module.canvas.classList.remove('hide');
       }, 0);
     }
   }
