@@ -115,7 +115,13 @@ if (Module.benchmark) {
 
   Module.benchmark.progressTick = Math.floor(Module.benchmark.totalIters / 100);
 
+  Module.preMainLoop = function() {
+    if (Module.gameStartTime) Module.frameStartTime = Date.realNow();
+  };
+
   Module.postMainLoop = function() {
+    if (Module.gameStartTime) Module.gameTotalTime += Date.realNow() - Module.frameStartTime;
+
     var iter = Module.benchmark.iter++;
     if (iter == 1) {
       Module.progressElement.hidden = false;
@@ -134,7 +140,8 @@ if (Module.benchmark) {
       results += 'finished, times:\n';
       results += '  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds\n';
       results += '  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds\n';
-      results += '  gameplay: ' + (end - Module.gameStartTime)/1000 + ' seconds\n';
+      results += '  gameplay: ' + (end - Module.gameStartTime)/1000 + ' total seconds\n';
+      results += '  gameplay: ' + Module.gameTotalTime/1000 + ' JS seconds\n';
       if (window.headless) {
         Module.print(results);
       } else {
@@ -319,6 +326,7 @@ Module.postLoadWorld = function() {
   if (Module.benchmark) {
     Module.print('<< start game >>');
     Module.gameStartTime = Date.realNow();
+    Module.gameTotalTime = 0;
     if (!window.headless) document.getElementById('main_text').classList.add('hide');
     Module.canvas.classList.remove('hide');
   }
