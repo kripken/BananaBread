@@ -394,6 +394,10 @@ CYBER1_FILES = $(CB_TEXTURES) \
                packages/base/cyber1.cfg \
                packages/base/cyber1.wpt
 
+COLONY_FILES = $(ZOOM_TEXTURES) \
+               packages/base/colony.ogz \
+               packages/base/colony.cfg               
+
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
 HUDGUNS_FILES = packages/models/hudguns/ \
@@ -421,6 +425,7 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py mp.data --preload $(COLONY_FILES) --pre-run > game/preload_mp.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a
 
