@@ -12,7 +12,7 @@ Module.tweakDetail = function() {
 */
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ effic colony ]');
+  BananaBread.execute('sleep 10 [ effic zo ]');
 };
 
 Module.autoexec = function() {
