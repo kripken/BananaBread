@@ -25,7 +25,7 @@ var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: Query.defined(params, 'serve') ? ['-d1'] : [],
   host: Query.defined(params, 'serve') ? true : false,
-  join: Query.defined(params, 'join') ? true : false,
+  join: Query.defined(params, 'webrtc-session') ? true : false,
   webrtc: {
     broker: Query.defined(params, 'webrtc-broker') ? params['webrtc-broker'] : undefined,
     session: Query.defined(params, 'webrtc-session') ? params['webrtc-session'] : undefined
