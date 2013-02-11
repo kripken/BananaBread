@@ -20,26 +20,46 @@
 
 	console.log(brokerUrl);
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', brokerUrl + '/list?application=bananabread');
-	xhr.onreadystatechange = function() {
-		if(4 !== xhr.readyState) return;
-		if(!(200 === xhr.status || 201 === xhr.status)) {
-      console.error(xhr.statusText + ': ' + xhr.responseText);
-    }
+	var sessions = {};
 
-    display(JSON.parse(xhr.responseText));
-	};
-	xhr.send(null);
+	var listing = new EventSource(brokerUrl + '/list?application=bananabread');
+	listing.addEventListener('list', function(event) {
+		var data = JSON.parse(event.data);
+		data.forEach(function(session) {
+			var sid = session['sid'];
+			sessions[sid] = session;
+		});
+		display(data);
+	});
+	listing.addEventListener('insert', function(event) {
+		var data = JSON.parse(event.data);
+		data.forEach(function(session) {
+			var sid = session['sid'];
+			sessions[sid] = session;
+		});
+		display(data);
+	});
+	listing.addEventListener('delete', function(event) {
+		var data = JSON.parse(event.data);
+		data.forEach(function(sid) {
+			var session = sessions[sid];
+			var element = session.element;
+			console.log('removing', element);
+			element.parentNode.removeChild(element);			
+			delete sessions[sid];
+		});
+	});
 
 	function display(sessions) {
-		sessions = sessions || [];		
-		sessions.forEach(function(session) {
-			console.info(session);
+		sessions = sessions || {};
+		var sids = Object.keys(sessions);
+		sids.forEach(function(sid) {
+			var session = sessions[sid];
 			var div = document.getElementById('sessions');
-			var node = document.createElement('div');
-			node.innerHTML = new Date(session['created']).toString() + '|' + session['application'] + '|' + '<a href="' + session['url'] + '">join</a>';
-			div.appendChild(node);
+			var element = document.createElement('div');
+			session.element = element;
+			element.innerHTML = new Date(session['created']).toString() + '|' + session['application'] + '|' + '<a href="' + session['url'] + '">join</a>';
+			div.appendChild(element);			
 		});
 	};
 </script>
