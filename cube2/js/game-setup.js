@@ -124,6 +124,14 @@ var Module = {
                     canvas['mozRequestPointerLock'] ||
                     canvas['webkitRequestPointerLock'];
   if (!pointerLock) fail('pointer lock/mouse lock');
+  if (!navigator.mozGetUserMedia) {
+    fail("getUserMedia");
+    return;
+  }
+  if (!window.mozRTCPeerConnection) {
+    redirect("PeerConnection");
+    return;
+  }
 })();
 
 // Loading music. Will be stopped once the first frame of the game runs

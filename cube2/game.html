@@ -66,7 +66,6 @@
             <a class="fullscreen-button low-res">Low Resolution</a>
             <a class="fullscreen-button high-res">High Resolution</a>
             <div class="warning">Warning: High Resolution mode will run more slowly on older/slower machines.</div>
-            <div id="remote-link">Waiting...</div>
           </div>
         </div>
       </div>
@@ -103,6 +102,23 @@
             <li>Mesa on Firefox 15 on Linux does not support compressed textures, but it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=774134">works in Firefox 16</a>.</li>
           </ul>
         </p>
+        <div class="title">Multiplayer</div>
+        <p>
+          Experimental multiplayer is enabled on Level 6. In order to play you must do the following things:
+          <ul>
+            <li>Run the latest version of <a href="http://nightly.mozilla.org">Firefox Nightly</a>. You must close all other versions of Firefox before starting Nightly or run Nightly with '-no-remote'. If you already have Nightly installed, make sure it's up to date before proceeding.</li>
+            <li>Enable WebRTC in Nightly by navigating to 'about:config'. Search for 'media.navigator.enabled' and 'media.peerconnection.enabled' and set them to 'true'. Restart Nightly.</li>
+          </ul>
+        </p>
+        <p>
+          Known issues:
+          <ul>
+            <li>WebRTC is still experimental and does not work in some network configurations at this time. If the game loads but you are unable to connect, this may be the issue.</li>
+            <li>You must stay in fullscreen mode to host or join a game and to stay connected in multiplayer. If you exit fullscreen, incoming connection attempts will fail and any active connections may be broken.</li>
+            <li>The game currently ends when the map timer runs out.</li>
+          </ul>
+        </p>
+        </div>
       </div>
       <div class="section">
         <p><a href="index.html">&lt; Back to Main Page</a></p>

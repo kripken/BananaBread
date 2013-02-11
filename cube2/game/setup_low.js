@@ -12,10 +12,3 @@ Module.tweakDetail = function() {
 Module.loadDefaultMap = function() {
   BananaBread.execute('sleep 10 [ effic colos ]');
 };
-
-Module.autoexec = function() {
-	if(false === Module['host']) {
-		console.log('connecting to host');
-		BananaBread.execute('connect');
-	}
-};
