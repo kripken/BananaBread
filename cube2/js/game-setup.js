@@ -85,7 +85,7 @@ var Module = {
       document.querySelector('canvas').classList.remove( 'hide' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
-      Module.pauseMainLoop();
+      //Module.pauseMainLoop();
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
       document.querySelector('canvas').classList.add( 'paused' );
@@ -424,7 +424,7 @@ BananaBread.Effects = {
             return false;
           }
         });
-      
+
         shots.push.apply(shots, newShots);
 
         if (shots.length == 0) this.totalMs = 0;
