@@ -26,7 +26,7 @@
 	var hosts = {};
 	var filter = {
 		'metadata': {
-			'name': '*'
+			'name': '^BananaBread$'
 		}
 	};
 
@@ -38,10 +38,14 @@
 		console.error(error);
 	});
 	socket.on('truncate', function(list) {
+		clear();
 		append(list);
 	});
 	socket.on('append', function(host) {
 		append([host]);
+	});
+	socket.on('update', function(host) {
+		update([host]);
 	});
 	socket.on('remove', function(route) {
 		remove([route]);
@@ -59,6 +63,16 @@
 		return urlParts.join('?');
 	};
 
+	function clear() {
+		hosts = {};
+		var div = document.getElementById('list');
+		var parent = div.parentNode;
+		parent.removeChild(div);
+		div = document.createElement('div');
+		div.id = 'list';
+		parent.appendChild(div);
+	};
+
 	function append(list) {
 		list = list || [];
 		list.forEach(function(host) {
@@ -68,8 +82,26 @@
 			host.element = element;
 			var name = host['metadata']['name'] || '';
 			var url = setQuery(host['url'], 'webrtc-session=' + host['route']);
-			element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + '<a href="' + url + '">join</a>';
+			var connected = host['metadata']['connected'];
+			var connectLimit = host['metadata']['connect-limit'];
+			element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + '/' + connectLimit + ' | <a href="' + url + '">join</a>';
 			div.appendChild(element);
+		});
+	};
+
+	function update(list) {
+		list = list || [];
+		list.forEach(function(host) {
+			if(hosts[host['route']]) {
+				var element = hosts[host['route']].element;
+				var name = host['metadata']['name'] || '';
+				var url = setQuery(host['url'], 'webrtc-session=' + host['route']);
+				var connected = host['metadata']['connected'];
+				var connectLimit = host['metadata']['connect-limit'];
+				element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + '/' + connectLimit + ' | <a href="' + url + '">join</a>';
+				host.element = element;
+				hosts[host['route']] = host;
+			}
 		});
 	};
 

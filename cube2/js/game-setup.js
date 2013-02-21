@@ -20,12 +20,14 @@ var Query = {
 };
 
 var params = Query.parse(window.location.search.substring(1));
+console.log('params', params);
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: Query.defined(params, 'serve') ? ['-d1'] : [],
   host: Query.defined(params, 'serve') ? true : false,
   join: Query.defined(params, 'webrtc-session') ? true : false,
+  maxpeers: Query.defined(params, 'maxpeers') ? params['maxpeers'][0] : 6,
   webrtc: {
     broker: Query.defined(params, 'webrtc-broker') ? params['webrtc-broker'] : undefined,
     session: Query.defined(params, 'webrtc-session') ? params['webrtc-session'] : undefined
