@@ -100,7 +100,7 @@ void connectserv(const char *servername, int serverport, const char *serverpassw
         }
 #else
         // hardcoded connect to 127.0.0.1 FIXME
-        address.host = 0x0100007f;
+        address.host = 0x0100000a;
 #endif
 
     }
