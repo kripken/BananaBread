@@ -1,0 +1,18 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 15.02.2013 08:51:13
+
+newmtl 13___Default
+	Ns 14.00000000
+	Ni 1.50000000
+	d 1.00000000
+	Tr 0.00000000
+	Tf 1.00000000 1.00000000 1.00000000 
+	illum 2
+	Ka 0.58823532 0.58823532 0.58823532
+	Kd 0.58823532 0.58823532 0.58823532
+	Ks 0.81899995 0.81899995 0.81899995
+	Ke 0.00000000 0.00000000 0.00000000
+	map_Ka E:\DEV\Lee\gk_ammobox_01_cc.png
+	map_Kd E:\DEV\Lee\gk_ammobox_01_cc.png
+	map_Ke E:\DEV\Lee\gk_ammobox_01_si.png
+	map_bump Map__2_Normal_Bump.tga

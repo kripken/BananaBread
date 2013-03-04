@@ -24,7 +24,7 @@ ifneq (,$(findstring MINGW,$(PLATFORM)))
 WINDRES= windres
 CLIENT_INCLUDES= $(INCLUDES) -Iinclude
 CLIENT_LIBS= -mwindows -Llib -lSDL -lSDL_image -lSDL_mixer -lzdll -lopengl32 -lenet -lws2_32 -lwinmm
-else	
+else
 CLIENT_INCLUDES= $(INCLUDES)
 CLIENT_LIBS= -Lenet/.libs -lenet -lX11 -lSDL_image -lSDL_mixer -lz -lGL
 endif
@@ -125,9 +125,9 @@ default: all
 all: client server
 
 enet/Makefile:
-	cp -r ../enet/* enet/  
+	cp -r ../enet/* enet/
 	cd enet; $(EMCONFIGURE) ./configure --enable-shared=no --enable-static=yes
-	
+
 libenet: enet/Makefile
 	$(EMMAKE) $(MAKE)	-C enet/ all
 
@@ -154,7 +154,7 @@ $(filter-out $(SERVER_OBJS),$(MASTER_OBJS)): CXXFLAGS += $(SERVER_INCLUDES)
 
 ifneq (,$(findstring MINGW,$(PLATFORM)))
 client: $(CLIENT_OBJS)
-	$(WINDRES) -I vcpp -i vcpp/mingw.rc -J rc -o vcpp/mingw.res -O coff 
+	$(WINDRES) -I vcpp -i vcpp/mingw.rc -J rc -o vcpp/mingw.res -O coff
 	$(CXX) $(CXXFLAGS) -o ../bin/sauerbraten.exe vcpp/mingw.res $(CLIENT_OBJS) $(CLIENT_LIBS)
 
 server: $(SERVER_OBJS)
@@ -492,62 +492,10 @@ ZO_TEXTURES =	`find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							packages/gk/future/panel_gk_018/panel_gk_018_nm.png \
 							packages/gk/future/panel_gk_018/panel_gk_018_sc.png \
 							packages/gk/future/panel_gk_018/panel_gk_018_hm.png \
-							#packages/gk/future/wall_plate_01_gk/wall_plate_01_gk_cc.png \
-							#packages/gk/future/wall_plate_01_gk/wall_plate_01_gk_nm.png \
-							#packages/gk/future/wall_plate_01_gk/wall_plate_01_gk_sc.png \
-							#packages/gk/future/wall_plate_01_gk/wall_plate_01_gk_hm.png \
-							#packages/gk/future/wall_plate_02_gk/wall_plate_02_gk_cc.png \
-							#packages/gk/future/wall_plate_02_gk/wall_plate_02_gk_nm.png \
-							#packages/gk/future/wall_plate_02_gk/wall_plate_02_gk_sc.png \
-							#packages/gk/future/wall_plate_02_gk/wall_plate_02_gk_hm.png \
-							#packages/gk/future/wall_plate_03_gk/wall_plate_03_gk_cc.png \
-							#packages/gk/future/wall_plate_03_gk/wall_plate_03_gk_nm.png \
-							#packages/gk/future/wall_plate_03_gk/wall_plate_03_gk_sc.png \
-							#packages/gk/future/wall_plate_03_gk/wall_plate_03_gk_hm.png \
-							#packages/gk/future/wall_plate_04_gk/wall_plate_04_gk_cc.png \
-							#packages/gk/future/wall_plate_04_gk/wall_plate_04_gk_nm.png \
-							#packages/gk/future/wall_plate_04_gk/wall_plate_04_gk_sc.png \
-							#packages/gk/future/wall_plate_04_gk/wall_plate_04_gk_hm.png \
-							#packages/gk/future/wall_plate_05_gk/wall_plate_05_gk_cc.png \
-							#packages/gk/future/wall_plate_05_gk/wall_plate_05_gk_nm.png \
-							#packages/gk/future/wall_plate_05_gk/wall_plate_05_gk_sc.png \
-							#packages/gk/future/wall_plate_05_gk/wall_plate_05_gk_hm.png \
-							#packages/gk/future/wall_plate_06_gk/wall_plate_06_gk_cc.png \
-							#packages/gk/future/wall_plate_06_gk/wall_plate_06_gk_nm.png \
-							#packages/gk/future/wall_plate_06_gk/wall_plate_06_gk_sc.png \
-							#packages/gk/future/wall_plate_06_gk/wall_plate_06_gk_hm.png \
-							#packages/gk/future/wall_plate_07_gk/wall_plate_07_gk_cc.png \
-							#packages/gk/future/wall_plate_07_gk/wall_plate_07_gk_nm.png \
-							#packages/gk/future/wall_plate_07_gk/wall_plate_07_gk_sc.png \
-							#packages/gk/future/wall_plate_07_gk/wall_plate_07_gk_hm.png \
-							#packages/gk/future/wall_plate_08_gk/wall_plate_08_gk_cc.png \
-							#packages/gk/future/wall_plate_08_gk/wall_plate_08_gk_nm.png \
-							#packages/gk/future/wall_plate_08_gk/wall_plate_08_gk_sc.png \
-							#packages/gk/future/wall_plate_08_gk/wall_plate_08_gk_hm.png \
-							#packages/gk/future/wall_plate_09_gk/wall_plate_09_gk_cc.png \
-							#packages/gk/future/wall_plate_09_gk/wall_plate_09_gk_nm.png \
-							#packages/gk/future/wall_plate_09_gk/wall_plate_09_gk_sc.png \
-							#packages/gk/future/wall_plate_09_gk/wall_plate_09_gk_hm.png \
-							#packages/gk/future/wall_plate_10_gk/wall_plate_10_gk_cc.png \
-							#packages/gk/future/wall_plate_10_gk/wall_plate_10_gk_nm.png \
-							#packages/gk/future/wall_plate_10_gk/wall_plate_10_gk_sc.png \
-							#packages/gk/future/wall_plate_10_gk/wall_plate_10_gk_hm.png \
-							#packages/gk/future/wall_plate_11_gk/wall_plate_11_gk_cc.png \
-							#packages/gk/future/wall_plate_11_gk/wall_plate_11_gk_nm.png \
-							#packages/gk/future/wall_plate_11_gk/wall_plate_11_gk_sc.png \
-							#packages/gk/future/wall_plate_11_gk/wall_plate_11_gk_hm.png \
 							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_cc.png \
 							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_nm.png \
 							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_sc.png \
 							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_hm.png \
-							#packages/gk/future/wall_plate_13_gk/wall_plate_13_gk_cc.png \
-							#packages/gk/future/wall_plate_13_gk/wall_plate_13_gk_nm.png \
-							#packages/gk/future/wall_plate_13_gk/wall_plate_13_gk_sc.png \
-							#packages/gk/future/wall_plate_13_gk/wall_plate_13_gk_hm.png \
-							#packages/gk/future/wall_plate_14_gk/wall_plate_14_gk_cc.png \
-							#packages/gk/future/wall_plate_14_gk/wall_plate_14_gk_nm.png \
-							#packages/gk/future/wall_plate_14_gk/wall_plate_14_gk_sc.png \
-							#packages/gk/future/wall_plate_14_gk/wall_plate_14_gk_hm.png \
 							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_cc.png \
 							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_nm.png \
 							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_sc.png \
@@ -556,18 +504,30 @@ ZO_TEXTURES =	`find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_nm.png \
 							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_sc.png \
 							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_hm.png \
-							packages/gk/future/wall_plate_16_gk_v2/wall_plate_16_gk_v2_cc.png \
-							packages/gk/future/wall_plate_16_gk_v2/wall_plate_16_gk_v2_nm.png \
-							packages/gk/future/wall_plate_16_gk_v2/wall_plate_16_gk_v2_sc.png \
-							packages/gk/future/wall_plate_16_gk_v2/wall_plate_16_gk_v2_hm.png \
-							#packages/gk/future/wall_plate_17_gk/wall_plate_17_gk_cc.png \
-							#packages/gk/future/wall_plate_17_gk/wall_plate_17_gk_nm.png \
-							#packages/gk/future/wall_plate_17_gk/wall_plate_17_gk_sc.png \
-							#packages/gk/future/wall_plate_17_gk/wall_plate_17_gk_hm.png
+							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_cc.png \
+							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_nm.png \
+							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_sc.png \
+							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_hm.png \
+							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_cc.png \
+							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_nm.png \
+							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_sc.png \
+							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_hm.png \
+							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_cc.png \
+							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_nm.png \
+							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_sc.png \
+							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_hm.png \
+							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.png \
+							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.png \
+							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_sc.png \
+							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_hm.png \
+							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_cc.png \
+							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_nm.png \
+							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_sc.png \
+							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_hm.png
 
 ZO_FILES = $(ZO_TEXTURES) \
 						packages/base/zo.ogz \
-						packages/base/zo.cfg               
+						packages/base/zo.cfg
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
@@ -588,7 +548,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 
 CRUNCH_QUALITY = 64
 
-client: client.bc
+packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --preload $(BASE_FILES) --pre-run > game/preload_base.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --preload $(COLOS_FILES) --pre-run > game/preload_low.js
@@ -597,18 +557,20 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py mp.data --preload $(ZO_FILES) --pre-run > game/preload_mp.js
+
+client: client.bc packages
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a
 
 server.bc:	libenet $(SERVER_OBJS)
-	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  
+	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)
 
 server:	server.bc
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/server.bc -o server.debug.html -s EXPORTED_FUNCTIONS="['_main']" -O2 --closure 0 src/web/enet/.libs/libenet.a
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/server.bc -o server.html -s EXPORTED_FUNCTIONS="['_main']" -O2 src/web/enet/.libs/libenet.a
 
 master: libenet $(MASTER_OBJS)
-	$(CXX) $(CXXFLAGS) -o sauer_master $(MASTER_OBJS) $(MASTER_LIBS)  
+	$(CXX) $(CXXFLAGS) -o sauer_master $(MASTER_OBJS) $(MASTER_LIBS)
 
 shared/cube2font.o: shared/cube2font.c
 	$(CXX) $(CXXFLAGS) -c -o $@ $< `freetype-config --cflags`
