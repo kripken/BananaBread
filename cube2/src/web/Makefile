@@ -529,6 +529,48 @@ ZO_FILES = $(ZO_TEXTURES) \
 						packages/base/zo.ogz \
 						packages/base/zo.cfg
 
+MO_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
+							`find packages/gk/modern/ -name "*.cfg"` \
+							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_cc.png \
+							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_hm.png \
+							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_nm.png \
+							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_sc.png \
+							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_cc.png \
+							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_hm.png \
+							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_nm.png \
+							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_sc.png \
+							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_cc.png \
+							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_hm.png \
+							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_nm.png \
+							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_sc.png \
+							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_cc.png \
+							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_hm.png \
+							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_nm.png \
+							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_sc.png \
+							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_cc.png \
+							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_hm.png \
+							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_nm.png \
+							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_sc.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_cc.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_cc_a.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_hm.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_hm_a.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_nm.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_nm_a.png \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_sc.png \
+							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_cc.png \
+							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_hm.png \
+							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_nm.png \
+							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_sc.png \
+							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_cc.png \
+							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_hm.png \
+							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_nm.png \
+							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_sc.png
+
+MO_FILES = $(MO_TEXTURES) \
+						packages/base/mo.ogz \
+						packages/base/mo.cfg
+
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
 HUDGUNS_FILES = packages/models/hudguns/ \
@@ -556,7 +598,8 @@ packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py mp.data --preload $(ZO_FILES) --pre-run > game/preload_mp.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data --preload $(ZO_FILES) --pre-run > game/preload_six.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data --preload $(MO_FILES) --pre-run > game/preload_seven.js
 
 client: client.bc packages
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a

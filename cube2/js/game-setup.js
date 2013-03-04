@@ -533,7 +533,8 @@ if (typeof Recorder != 'undefined') {
     case 'high':   levelTitle = 'Lava Chamber'; break;
     case 'four':   levelTitle = 'Future';       break;
     case 'five':   levelTitle = 'Lava Rooms';   break;
-    case 'mp':     levelTitle = 'Colony';       break;
+    case 'six':    levelTitle = 'Colony';       break;
+    case 'seven':  levelTitle = 'Bunker';       break;
     default: throw('unknown setup: ' + setup);
   };
   levelTitleContainer.innerHTML = levelTitle;
