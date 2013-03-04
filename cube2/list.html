@@ -83,8 +83,7 @@
 			var name = host['metadata']['name'] || '';
 			var url = setQuery(host['url'], 'webrtc-session=' + host['route']);
 			var connected = host['metadata']['connected'];
-			var connectLimit = host['metadata']['connect-limit'];
-			element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + '/' + connectLimit + ' | <a href="' + url + '">join</a>';
+			element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + ' | <a href="' + url + '">join</a>';
 			div.appendChild(element);
 		});
 	};
@@ -97,8 +96,7 @@
 				var name = host['metadata']['name'] || '';
 				var url = setQuery(host['url'], 'webrtc-session=' + host['route']);
 				var connected = host['metadata']['connected'];
-				var connectLimit = host['metadata']['connect-limit'];
-				element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + '/' + connectLimit + ' | <a href="' + url + '">join</a>';
+				element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + ' | <a href="' + url + '">join</a>';
 				host.element = element;
 				hosts[host['route']] = host;
 			}
