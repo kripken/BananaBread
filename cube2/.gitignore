@@ -23,4 +23,7 @@ restore.cfg
 servers.cfg
 *.diff
 *.crn
-
+game/preload_*.js
+game/bb*.js
+*.data
+server*.html
