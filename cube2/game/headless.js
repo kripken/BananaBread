@@ -154,6 +154,8 @@ var document = {
   body: {
     appendChild: function(){},
   },
+  exitPointerLock: function(){},
+  cancelFullScreen: function(){},
 };
 var alert = function(x) {
   print(x);
