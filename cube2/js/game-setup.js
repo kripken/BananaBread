@@ -32,7 +32,7 @@ var Module = {
     broker: Query.defined(params, 'webrtc-broker') ? params['webrtc-broker'] : undefined,
     session: Query.defined(params, 'webrtc-session') ? params['webrtc-session'] : undefined
   },
-  TOTAL_MEMORY: 50*1024*1024, // may need to adjust this for huge levels
+  TOTAL_MEMORY: 100*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
   postRun: [],
@@ -535,6 +535,7 @@ if (typeof Recorder != 'undefined') {
     case 'five':   levelTitle = 'Lava Rooms';   break;
     case 'six':    levelTitle = 'Colony';       break;
     case 'seven':  levelTitle = 'Bunker';       break;
+    case 'eight':  levelTitle = 'Submarine';    break;
     default: throw('unknown setup: ' + setup);
   };
   levelTitleContainer.innerHTML = levelTitle;

@@ -571,6 +571,10 @@ MO_FILES = $(MO_TEXTURES) \
 						packages/base/mo.ogz \
 						packages/base/mo.cfg
 
+SB2_FILES = $(MO_TEXTURES) \
+						packages/base/sb2.ogz \
+						packages/base/sb2.cfg
+
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
 HUDGUNS_FILES = packages/models/hudguns/ \
@@ -600,6 +604,7 @@ packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data --preload $(ZO_FILES) --pre-run > game/preload_six.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data --preload $(MO_FILES) --pre-run > game/preload_seven.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data --preload $(SB2_FILES) --pre-run > game/preload_eight.js
 
 client: client.bc packages
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a
