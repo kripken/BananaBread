@@ -567,6 +567,65 @@ MO_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_nm.png \
 							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_sc.png
 
+SKY_TEXTURES = `find packages/gk/fantasy/skyfantasy/ -name "*.png"` \
+							 `find packages/gk/fantasy/ -name "*.cfg"` \
+							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.jpg \
+							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.png \
+							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_sc.png \
+							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_hm.png \
+							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_cc.jpg \
+							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_nm.png \
+							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_sc.jpg \
+							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_hm.png \
+							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_sc.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_hm.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.png \
+							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_sc.png \
+							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_hm.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_cc.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_nm.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_sc.jpg \
+							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_hm.jpg \
+							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.jpg \
+							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.jpg \
+							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_sc.jpg \
+							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_hm.jpg \
+							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg \
+							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_nm.png \
+							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_sc.jpg \
+							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_hm.jpg \
+							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.jpg \
+							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.jpg \
+							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_sc.jpg \
+							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_hm.jpg \
+               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.jpg \
+               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_nm.jpg \
+               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_sc.jpg \
+               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_hm.jpg \
+							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.png \
+							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.png \
+							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_sc.png \
+							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_hm.png \
+							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.jpg \
+							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.jpg \
+							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_sc.jpg \
+							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_hm.jpg \
+							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.jpg \
+							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.jpg \
+							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_sc.jpg \
+							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_hm.jpg \
+							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.jpg \
+							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.jpg \
+							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_sc.jpg \
+							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_hm.jpg \
+							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.jpg \
+							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.jpg \
+							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_sc.jpg \
+							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_hm.jpg
+
 MO_FILES = $(MO_TEXTURES) \
 						packages/base/mo.ogz \
 						packages/base/mo.cfg
@@ -574,6 +633,14 @@ MO_FILES = $(MO_TEXTURES) \
 SB2_FILES = $(MO_TEXTURES) \
 						packages/base/sb2.ogz \
 						packages/base/sb2.cfg
+
+STARFOX_FILES = $(ZO_TEXTURES) \
+								packages/base/starfox.ogz \
+								packages/base/starfox.cfg
+
+SKY_FILES = $(SKY_TEXTURES) \
+						packages/base/sky.ogz \
+						packages/base/sky.cfg
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
@@ -605,6 +672,8 @@ packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data --preload $(ZO_FILES) --pre-run > game/preload_six.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data --preload $(MO_FILES) --pre-run > game/preload_seven.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data --preload $(SB2_FILES) --pre-run > game/preload_eight.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py nine.data --preload $(STARFOX_FILES) --pre-run > game/preload_nine.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py ten.data --preload $(SKY_FILES) --pre-run > game/preload_ten.js
 
 client: client.bc packages
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a
