@@ -660,24 +660,30 @@ FIREWORKS_FILES = $(BASE_FILES) \
 	                packages/skyboxes/philo/
 
 CRUNCH_QUALITY = 64
+#CRUNCH_FLAG="--crunch=$(CRUNCH_QUALITY)"
+CRUNCH_FLAG=""
 
 packages:
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --preload $(BASE_FILES) --pre-run > game/preload_base.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --preload $(COLOS_FILES) --pre-run > game/preload_low.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --preload $(TWO_TOWERS_FILES) --pre-run > game/preload_medium.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data --preload $(ZO_FILES) --pre-run > game/preload_six.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data --preload $(MO_FILES) --pre-run > game/preload_seven.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data --preload $(SB2_FILES) --pre-run > game/preload_eight.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py nine.data --preload $(STARFOX_FILES) --pre-run > game/preload_nine.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py ten.data --preload $(SKY_FILES) --pre-run > game/preload_ten.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data $(CRUNCH_FLAG) --preload $(BASE_FILES) --pre-run > game/preload_base.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data $(CRUNCH_FLAG) --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data $(CRUNCH_FLAG) --preload $(COLOS_FILES) --pre-run > game/preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data $(CRUNCH_FLAG) --preload $(TWO_TOWERS_FILES) --pre-run > game/preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data $(CRUNCH_FLAG) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data $(CRUNCH_FLAG) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data $(CRUNCH_FLAG) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data $(CRUNCH_FLAG) --preload $(ZO_FILES) --pre-run > game/preload_six.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data $(CRUNCH_FLAG) --preload $(MO_FILES) --pre-run > game/preload_seven.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data $(CRUNCH_FLAG) --preload $(SB2_FILES) --pre-run > game/preload_eight.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py nine.data $(CRUNCH_FLAG) --preload $(STARFOX_FILES) --pre-run > game/preload_nine.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py ten.data $(CRUNCH_FLAG) --preload $(SKY_FILES) --pre-run > game/preload_ten.js
+
+TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
 
 client: client.bc packages
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 --closure 0 src/web/enet/.libs/libenet.a
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a
+	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) --closure 0
+	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY)
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s ASM_JS=1
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s ASM_JS=1 -g
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)

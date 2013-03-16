@@ -20,11 +20,40 @@ var Query = {
 };
 
 var params = Query.parse(window.location.search.substring(1));
-console.log('params', params);
+console.info('params', params);
+
+var shell = typeof window == 'undefined';
+
+if (shell) {
+  load('game/headless.js');
+  load('game/headlessCanvas.js');
+}
+
+function checkPageParam(param) {
+  return Query.defined(params, param);
+}
+
+Date.realNow = Date.now;
+if (checkPageParam('deterministic')) {
+  (function() {
+    var MAGIC = 0;
+    Math.random = function() {
+      MAGIC = Math.pow(MAGIC + 1.8912, 3) % 1;
+      return MAGIC;
+    };
+    var TIME = 10000;
+    Date.now = function() {
+      TIME += 17;
+      return TIME;
+    };
+    performance.now = Date.now;
+  })();
+}
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
   arguments: Query.defined(params, 'serve') ? ['-d1'] : [],
+  benchmark: checkPageParam('benchmark') ? { totalIters: 2000, iter: 0 } : null,
   host: Query.defined(params, 'serve') ? true : false,
   join: Query.defined(params, 'webrtc-session') ? true : false,
   maxpeers: Query.defined(params, 'maxpeers') ? params['maxpeers'][0] : 6,
@@ -45,12 +74,12 @@ var Module = {
   printErr: function(text) {
     console.log(text);
   },
-  canvas: document.getElementById('canvas'),
+  canvas: checkPageParam('headlessCanvas') ? headlessCanvas() : document.getElementById('canvas'),
   statusMessage: 'Starting...',
+  progressElement: document.getElementById('progress'),
   setStatus: function(text) {
     if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
     var statusElement = document.getElementById('status-text');
-    var progressElement = document.getElementById('progress');
     if (Module.finishedDataFileDownloads >= 1 && Module.finishedDataFileDownloads < Module.expectedDataFileDownloads) {
       // If we are in the middle of multiple datafile downloads, do not show preloading progress - show only download progress
       var m2 = text.match(/([^ ]+) .*/);
@@ -61,13 +90,13 @@ var Module = {
     var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
     if (m) {
       text = m[1];
-      progressElement.value = parseInt(m[2])*100;
-      progressElement.max = parseInt(m[4])*100;
-      progressElement.hidden = false;
+      Module.progressElement.value = parseInt(m[2])*100;
+      Module.progressElement.max = parseInt(m[4])*100;
+      Module.progressElement.hidden = false;
     } else {
-      progressElement.value = null;
-      progressElement.max = null;
-      progressElement.hidden = true;
+      Module.progressElement.value = null;
+      Module.progressElement.max = null;
+      Module.progressElement.hidden = true;
     }
     statusElement.innerHTML = text;
   },
@@ -83,20 +112,72 @@ var Module = {
       Module.setOpacity(1);
       Module.setStatus('');
       document.querySelector('.status .ingame').classList.add( 'hide' );
-      document.querySelector('canvas').classList.remove( 'paused' );
-      document.querySelector('canvas').classList.remove( 'hide' );
+      Module.canvas.classList.remove( 'paused' );
+      Module.canvas.classList.remove( 'hide' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
       //Module.pauseMainLoop();
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
-      document.querySelector('canvas').classList.add( 'paused' );
+      Module.canvas.classList.add( 'paused' );
       document.querySelector('.status .ingame').classList.remove( 'hide' );
-      document.querySelector('canvas').classList.add( 'hide' );
+      Module.canvas.classList.add( 'hide' );
       //BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
   }
 };
+
+if (Module.benchmark) {
+  Module.print('<< start preload >>');
+  preloadStartTime = Date.realNow();
+
+  Module.preRun.push(function() {
+    __ATMAIN__.push({ func: function() {
+      Module.print('<< start startup >>');
+      Module.startupStartTime = Date.realNow();
+    } });
+  });
+
+  Module.benchmark.progressTick = Math.floor(Module.benchmark.totalIters / 100);
+
+  Module.preMainLoop = function() {
+    if (Module.gameStartTime) Module.frameStartTime = Date.realNow();
+  };
+
+  Module.postMainLoop = function() {
+    if (Module.gameStartTime) Module.gameTotalTime += Date.realNow() - Module.frameStartTime;
+
+    var iter = Module.benchmark.iter++;
+    if (iter == 1) {
+      Module.progressElement.hidden = false;
+      Module.progressElement.max = Module.benchmark.totalIters;
+      BananaBread.execute('spectator 1 ; nextfollow'); // do not get shot at by bots
+    } else if (iter % Module.benchmark.progressTick == 1) {
+      Module.progressElement.value = iter; // TODO: check if this affects performance
+    } else if (iter >= Module.benchmark.totalIters) {
+      window.stopped = true;
+      Browser.mainLoop.pause();
+
+      // show results
+      Module.canvas.classList.add('hide');
+      var results = '';
+      var end = Date.realNow();
+      results += 'finished, times:\n';
+      results += '  preload : ' + (Module.startupStartTime - preloadStartTime)/1000 + ' seconds\n';
+      results += '  startup : ' + (Module.gameStartTime - Module.startupStartTime)/1000 + ' seconds\n';
+      results += '  gameplay: ' + (end - Module.gameStartTime)/1000 + ' total seconds\n';
+      results += '  gameplay: ' + Module.gameTotalTime/1000 + ' JS seconds\n';
+      if (window.headless) {
+        Module.print(results);
+      } else {
+        document.getElementById('main_text').classList.remove('hide');
+        document.getElementById('main_text').innerHTML = results.replace(/\n/g, '<br>');
+      }
+    } else if (iter % 333 == 5) {
+      BananaBread.execute('nextfollow');
+    }
+  };
+}
 
 // Checks for features we cannot run without
 // Note: Modify this for your needs. If your level does not use
@@ -110,6 +191,7 @@ var Module = {
     document.querySelector('.status-content.error').classList.remove('hide');
     Module.failed = true;
   }
+  if (checkPageParam('headlessCanvas')) return;
   try {
     var canvas = document.createElement('canvas');
   } catch(e){}
@@ -139,7 +221,7 @@ var Module = {
 // Loading music. Will be stopped once the first frame of the game runs
 
 Module.loadingMusic = new Audio();
-Module.loadingMusic.src = 'assets/OutThere_0.ogg';
+if (!Module.benchmark) Module.loadingMusic.src = 'assets/OutThere_0.ogg';
 Module.loadingMusic.play();
 
 Module.readySound = new Audio();
@@ -220,9 +302,12 @@ Module.postLoadWorld = function() {
   }, 1); // Do after startup finishes so music will be prepared up
 
   if (Query.defined(params, 'windowed')) {
+    Module.canvas.classList.remove('hide');
+    Module.isFullScreen = 1;
     Module.requestFullScreen = function() {
       setTimeout(function() {
         Module.onFullScreen(1);
+        Module.canvas.classList.remove('hide');
       }, 0);
     }
   }
@@ -245,7 +330,7 @@ Module.postLoadWorld = function() {
 
     Module.fullscreenLow = function() {
       document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
-      document.querySelector('canvas').classList.remove('hide');
+      Module.canvas.classList.remove('hide');
       Module.requestFullScreen();
       Module.setOpacity(1);
       Module.setStatus('');
@@ -255,7 +340,7 @@ Module.postLoadWorld = function() {
 
     Module.fullscreenHigh = function() {
       document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
-      document.querySelector('canvas').classList.remove('hide');
+      Module.canvas.classList.remove('hide');
       Module.requestFullScreen();
       Module.setOpacity(1);
       Module.setStatus('');
@@ -271,24 +356,12 @@ Module.postLoadWorld = function() {
     }
   }
 
-  if (replayingRecording) {
-    Module.startupFinish = Recorder.pnow();
-
-    Recorder.onFinish.push(function() {
-      var now = Recorder.pnow();
-      var elapsedFromStart = now - Module.startupFinish;
-      console.log('elapsed from start : ' + elapsedFromStart + ' ms');
-      var cancelFS = document.mozCancelFullScreen || document.webkitCancelFullScreen;
-      cancelFS.call(document);
-    });
-
-    if (SearchArgs["autoplay"] == "low") {
-      setTimeout(function() { Module.fullscreenLow(); }, 100);
-    } else if (SearchArgs["autoplay"] == "high") {
-      setTimeout(function() { Module.fullscreenHigh(); }, 100);
-    }
-  } else if (typeof Recorder != 'undefined') {
-    Recorder.pnow(); // equalize between record and replay
+  if (Module.benchmark) {
+    Module.print('<< start game >>');
+    Module.gameStartTime = Date.realNow();
+    Module.gameTotalTime = 0;
+    if (!window.headless) document.getElementById('main_text').classList.add('hide');
+    Module.canvas.classList.remove('hide');
   }
 };
 
@@ -296,7 +369,7 @@ Module.autoexec = function(){}; // called during autoexec on load, so useful to 
 Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
 
 (function() {
-  var fraction = 0.70;
+  var fraction = 0.65;
   var desired = Math.min(fraction*screen.availWidth, fraction*screen.availHeight, 600);
   var w, h;
   if (screen.width >= screen.height) {
@@ -489,28 +562,6 @@ function CameraPath(data) { // TODO: namespace this
   }
 }
 
-// Benchmarking glue
-
-var replayingRecording = false;
-
-if (typeof Recorder != 'undefined') {
-  Module.fullscreenCallbacks.push(function() {
-    Recorder.start();
-  });
-
-  replayingRecording = Recorder.replaying;
-
-  if (replayingRecording) {
-    Recorder.onFinish.push(function() {
-      console.log('startup   : ' + (Module.startupFinish - Module.startupStart) + ' ms');
-    });
-
-    Module.startupStart = Recorder.pnow();
-  } else {
-    Recorder.pnow(); // equalize between record and replay
-  }
-}
-
 // Load scripts
 
 (function() {
@@ -543,7 +594,7 @@ if (typeof Recorder != 'undefined') {
   levelTitleContainer.innerHTML = levelTitle;
 
   var previewContainer = document.querySelector('.preview-content.' + setup );
-  previewContainer.classList.add('show');
+  if (previewContainer) previewContainer.classList.add('show');
 
   if(!Module.failed){
     loadChildScript('game/gl-matrix.js', function() {
@@ -551,7 +602,9 @@ if (typeof Recorder != 'undefined') {
         loadChildScript('game/preload_base.js', function() {
           loadChildScript('game/preload_character.js', function() {
             loadChildScript('game/preload_' + preload + '.js', function() {
-              loadChildScript('game/bb' + (debug ? '.debug' : '') + '.js');
+              var scriptParts = ['bb'];
+              if (checkPageParam('debug')) scriptParts.push('debug');
+              loadChildScript('game/' + scriptParts.join('.') + '.js');
             });
           });
         });
@@ -562,20 +615,24 @@ if (typeof Recorder != 'undefined') {
 
 (function(){
   var lowResButton = document.querySelector('.fullscreen-button.low-res');
-  var highResButton = document.querySelector('.fullscreen-button.high-res');
-  var resumeButton = document.querySelector('.fullscreen-button.resume');
-  var quitButton = document.querySelector('.fullscreen-button.quit');
-  lowResButton.addEventListener('click', function(e){
+  if (lowResButton) lowResButton.addEventListener('click', function(e){
     Module.fullscreenLow();
   }, false);
-  highResButton.addEventListener('click', function(e){
+  var highResButton = document.querySelector('.fullscreen-button.high-res');
+  if (highResButton) highResButton.addEventListener('click', function(e){
     Module.fullscreenHigh();
   }, false);
-  resumeButton.addEventListener('click', function(e){
+  var resumeButton = document.querySelector('.fullscreen-button.resume');
+  if (resumeButton) resumeButton.addEventListener('click', function(e){
     Module.resume();
   }, false);
-  quitButton.addEventListener('click', function(e){
+  var quitButton = document.querySelector('.fullscreen-button.quit');
+  if (quitButton) quitButton.addEventListener('click', function(e){
     window.location = 'index.html';
   }, false);
 })();
+
+//
+
+if (shell) window.runEventLoop();
 

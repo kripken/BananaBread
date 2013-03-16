@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>BananaBench</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet" /-->
+  </head>
+  <body>
+    <!--a href="http://www.mozilla.org/" id="tabzilla">mozilla</a-->
+    <div id="main-container">
+      <div class="demo-title">BananaBench</div>
+      <div class="status">
+        <div class="status-content">
+          <div class="progress-container">
+            <span id="status-text">Loading...</span>
+            <progress value="0" max="100" id="progress"></progress>
+          </div>
+          <div class="status-content fullscreen-buttons">
+            <a class="fullscreen-button go">Go!</a>
+            <a class="fullscreen-button go-headless">Go Headless!</a>
+          </div>
+          <canvas id="canvas" class="hide" oncontextmenu="event.preventDefault()"></canvas>
+          <span id="main_text" class="hide"></span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="title">BananaBench - The Tastiest Browser Benchmark</div>
+          <ul>
+            <li>BananaBench is a benchmark based on the BananaBread project. Most benchmarks tend to be artificial or to focus on a very narrow range of features, instead BananaBench is a complete, real-world game engine, and the benchmark code uses all of the following web features:
+              <ul>
+                <li>JavaScript</li>
+                <li>WebGL</li>
+                <li>Web workers</li>
+                <li>Image decoding</li>
+              </ul>
+              The JavaScript part includes code that does all of the following:
+              <ul>
+                <li>Physics simulation</li>
+                <li>Bot AI</li>
+                <li>Bytecode VM for the CubeScript language</li>
+              </ul>
+            </li>
+          </ul>
+        </p>
+      </div>
+    </div>
+
+    <script src='game/headlessCanvas.js'></script>
+    <script>
+
+var pageParams = 'low,low,asm,windowed,benchmark,deterministic';
+
+var goButton = document.querySelector('.fullscreen-button.go');
+goButton.addEventListener('click', function(e) {
+  document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
+  document.getElementById('main_text').classList.remove('hide');
+  document.getElementById('main_text').innerHTML = 'Wait for it...';
+  var js = document.createElement('script');
+  js.src = 'js/game-setup.js';
+  document.body.appendChild(js);
+}, false);
+
+var goButton = document.querySelector('.fullscreen-button.go-headless');
+goButton.addEventListener('click', function(e) {
+  pageParams += ',headlessCanvas';
+  window.requestAnimationFrame = function(x) {
+    setTimeout(x, 1);
+  };
+  var realAudio = Audio;
+  Audio = function() {
+    var ret = new realAudio();
+    ret.play = ret.pause = function(){ console.log('play|pause') };
+    ret.cloneNode = function() { console.log('clone'); return this };
+    return ret;
+  }
+
+  document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
+  document.getElementById('main_text').classList.remove('hide');
+  document.getElementById('main_text').innerHTML = 'Simulating...';
+  var js = document.createElement('script');
+  js.src = 'js/game-setup.js';
+  document.body.appendChild(js);
+}, false);
+
+    </script>
+    <!--script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script-->
+  </body>
+</html>
+
