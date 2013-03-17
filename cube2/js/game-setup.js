@@ -30,6 +30,7 @@ if (shell) {
 }
 
 function checkPageParam(param) {
+  console.log('checkPageParam:', param);
   return Query.defined(params, param);
 }
 
@@ -52,14 +53,13 @@ if (checkPageParam('deterministic')) {
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
-  arguments: Query.defined(params, 'serve') ? ['-d1'] : [],
+  arguments: checkPageParam('serve') ? ['-d1'] : [],
   benchmark: checkPageParam('benchmark') ? { totalIters: 2000, iter: 0 } : null,
-  host: Query.defined(params, 'serve') ? true : false,
-  join: Query.defined(params, 'webrtc-session') ? true : false,
-  maxpeers: Query.defined(params, 'maxpeers') ? params['maxpeers'][0] : 6,
+  host: checkPageParam('serve') ? true : false,
+  join: checkPageParam('webrtc-session') ? true : false,
   webrtc: {
-    broker: Query.defined(params, 'webrtc-broker') ? params['webrtc-broker'] : undefined,
-    session: Query.defined(params, 'webrtc-session') ? params['webrtc-session'] : undefined
+    broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : undefined,
+    session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined
   },
   TOTAL_MEMORY: 200*1024*1024, // may need to adjust this for huge levels
   failed: false,
@@ -301,7 +301,7 @@ Module.postLoadWorld = function() {
     BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
   }, 1); // Do after startup finishes so music will be prepared up
 
-  if (Query.defined(params, 'windowed')) {
+  if (checkPageParam('windowed')) {
     Module.canvas.classList.remove('hide');
     Module.isFullScreen = 1;
     Module.requestFullScreen = function() {
@@ -572,9 +572,8 @@ function CameraPath(data) { // TODO: namespace this
     document.body.appendChild(js);
   }
 
-  var setup = Query.defined(params, 'setup') ? params['setup'][0] : 'low';
-  var preload = Query.defined(params, 'preload') ? params['preload'][0] : 'low';
-  var debug = Query.defined(params, 'debug') ? true: false;
+  var setup = checkPageParam('setup') ? params['setup'][0] : 'low';
+  var preload = checkPageParam('preload') ? params['preload'][0] : 'low';
 
   var levelTitleContainer = document.querySelector('.level-title span');
   var levelTitle;

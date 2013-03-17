@@ -182,6 +182,7 @@ BASE_FILES = data/ \
              packages/caustics/ \
              packages/models/debris/ \
              packages/models/projectiles/ \
+             packages/models/pickup/ \
              packages/brushes/ \
              packages/hud/
              #packages/music/ \
@@ -525,10 +526,6 @@ ZO_TEXTURES =	`find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_sc.png \
 							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_hm.png
 
-ZO_FILES = $(ZO_TEXTURES) \
-						packages/base/zo.ogz \
-						packages/base/zo.cfg
-
 MO_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/modern/ -name "*.cfg"` \
 							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_cc.png \
@@ -626,21 +623,30 @@ SKY_TEXTURES = `find packages/gk/fantasy/skyfantasy/ -name "*.png"` \
 							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_sc.jpg \
 							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_hm.jpg
 
+ZO_FILES = $(ZO_TEXTURES) \
+						packages/base/zo.ogz \
+						packages/base/zo.cfg \
+						packages/base/zo.wpt
+
 MO_FILES = $(MO_TEXTURES) \
 						packages/base/mo.ogz \
-						packages/base/mo.cfg
+						packages/base/mo.cfg \
+						packages/base/mo.wpt \
 
 SB2_FILES = $(MO_TEXTURES) \
 						packages/base/sb2.ogz \
-						packages/base/sb2.cfg
+						packages/base/sb2.cfg \
+						packages/base/sb2.wpt
 
 STARFOX_FILES = $(ZO_TEXTURES) \
 								packages/base/starfox.ogz \
-								packages/base/starfox.cfg
+								packages/base/starfox.cfg \
+								packages/base/starfox.wpt
 
 SKY_FILES = $(SKY_TEXTURES) \
 						packages/base/sky.ogz \
-						packages/base/sky.cfg
+						packages/base/sky.cfg \
+						packages/base/sky.wpt
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
