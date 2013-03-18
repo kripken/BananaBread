@@ -116,7 +116,9 @@ var Module = {
       Module.canvas.classList.remove( 'hide' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
-      //Module.pauseMainLoop();
+      if(!(Module.host && Module.join)) {
+        Module.pauseMainLoop();
+      }
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
       Module.canvas.classList.add( 'paused' );
