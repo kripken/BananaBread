@@ -2,115 +2,43 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/list.css">
+	<script src="http://wrtcb.jit.su/socket.io/socket.io.js"></script>
 </head>
 <body>
-	Game hosts are listed below (if there are any!). Page is dynamically updated, so no need to refresh.<br>
-	---
-	<div id="list">
+	<h1>Bananabread Games List</h1>
+	<div id="main">
+		<div id="create-container">
+			<h2>Create a Game</h2>
+			<ul id="create-list">
+				<li>
+					<a>
+						<div class="game-image"></div>
+						<div class="game-container">
+							<h2 class="game-name">Game Name</h2>
+							<div class="game-type"></div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div id="join-container">
+			<h2>Join a Game</h2>
+			<ul id="join-list">
+				<li>
+					<a>
+						<div class="game-image"></div>
+						<div class="game-container">
+							<h2 class="game-name">Game Name</h2>
+							<div class="game-time"></div>
+							<div class="game-users"></div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
+	<div id="broker-url"></div>
 </body>
-<script src="http://wrtcb.jit.su/socket.io/socket.io.js"></script>
-<script>
-	var brokerUrl = 'http://wrtcb.jit.su:80';
-	if(window.location.search) {
-	  var params = window.location.search.substring(1).split('&');
-	  for(var i = 0; i < params.length; ++ i) {
-	    if(params[i].match('^webrtc-broker')) {
-	      brokerUrl = params[i].split('=')[1];
-	    }
-	  }
-	}
-
-	console.log(brokerUrl);
-
-	var hosts = {};
-	var filter = {
-		'metadata': {
-			'name': '^BananaBread$'
-		}
-	};
-
-	var socket = io.connect(brokerUrl + '/list');
-	socket.on('connect', function() {
-		socket.emit('list', filter);
-	});
-	socket.on('error', function(error) {
-		console.error(error);
-	});
-	socket.on('truncate', function(list) {
-		clear();
-		append(list);
-	});
-	socket.on('append', function(host) {
-		append([host]);
-	});
-	socket.on('update', function(host) {
-		update([host]);
-	});
-	socket.on('remove', function(route) {
-		remove([route]);
-	});
-
-	function setQuery(url, item) {
-		var urlParts = url.split('?');
-		if(urlParts.length < 2) {
-			urlParts[1] = item;
-		} else {
-			var query = urlParts[1].split('&');
-			query.push(item);
-			urlParts[1] = query.join('&');
-		}
-		return urlParts.join('?');
-	};
-
-	function clear() {
-		hosts = {};
-		var div = document.getElementById('list');
-		var parent = div.parentNode;
-		parent.removeChild(div);
-		div = document.createElement('div');
-		div.id = 'list';
-		parent.appendChild(div);
-	};
-
-	function append(list) {
-		list = list || [];
-		list.forEach(function(host) {
-			hosts[host['route']] = host;
-			var div = document.getElementById('list');
-			var element = document.createElement('div');
-			host.element = element;
-			var name = host['metadata']['name'] || '';
-			var url = setQuery(host['url'], 'webrtc-session=' + host['route']);
-			var connected = host['metadata']['connected'];
-			element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + ' | <a href="' + url + '">join</a>';
-			div.appendChild(element);
-		});
-	};
-
-	function update(list) {
-		list = list || [];
-		list.forEach(function(host) {
-			if(hosts[host['route']]) {
-				var element = hosts[host['route']].element;
-				var name = host['metadata']['name'] || '';
-				var url = setQuery(host['url'], 'webrtc-session=' + host['route']);
-				var connected = host['metadata']['connected'];
-				element.innerHTML = new Date(host['ctime']).toString() + ' | ' + name  + ' | ' + connected + ' | <a href="' + url + '">join</a>';
-				host.element = element;
-				hosts[host['route']] = host;
-			}
-		});
-	};
-
-	function remove(list) {
-		list = list || [];
-		list.forEach(function(route) {
-			var host = hosts[route];
-			var element = host.element;
-			element.parentNode.removeChild(element);
-			delete hosts[route];
-		});
-	};
-</script>
+<script src="js/list.js"></script>
 </html>
