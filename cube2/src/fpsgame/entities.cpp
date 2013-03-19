@@ -337,7 +337,7 @@ namespace entities
         putint(p, -1);
     }
 
-    void resetspawns() { loopv(ents) ents[i]->spawned = false; }
+    void resetspawns() { } // XXX EMSCRIPTEN - startup difference with us and native necessitates this loopv(ents) ents[i]->spawned = false; }
 
     void spawnitems(bool force)
     {
