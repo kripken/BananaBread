@@ -9,6 +9,8 @@ Module.tweakDetail = function() {
   BananaBread.execute('glare 1');
   BananaBread.execute('glarescale 1.75');
   BananaBread.execute('blurglare 7');
+  BananaBread.execute('waterreflect 1');
+  BananaBread.execute('waterrefract 1');
 };
 
 Module.loadDefaultMap = function() {

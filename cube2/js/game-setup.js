@@ -61,7 +61,7 @@ var Module = {
     broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : undefined,
     session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined
   },
-  TOTAL_MEMORY: 200*1024*1024, // may need to adjust this for huge levels
+  TOTAL_MEMORY: 256*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
   postRun: [],
