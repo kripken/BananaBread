@@ -12,7 +12,7 @@ Module.tweakDetail = function() {
 };
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ ffa starfox ]');
+  BananaBread.execute('sleep 10 [ effic starfox ]');
 };
 
 Module.autoexec = function() {

@@ -14,7 +14,7 @@ Module.tweakDetail = function() {
 };
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ ffa sb2 ]');
+  BananaBread.execute('sleep 10 [ effic sb2 ]');
 };
 
 Module.autoexec = function() {
