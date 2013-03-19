@@ -396,8 +396,6 @@ CYBER1_FILES = $(CB_TEXTURES) \
 
 ZO_TEXTURES =	`find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/future/ -name "*.cfg"` \
-							`find packages/models/ammo/ -name "*"` \
-             	`find packages/models/health/ -name "*"` \
 							packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
 							packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
 							packages/gk/future/diamond_plate_big_gk/diamond_plate_big_gk_cc.png \
