@@ -625,9 +625,9 @@ SKY_TEXTURES = `find packages/gk/fantasy/skyfantasy/ -name "*.png"` \
 							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_hm.jpg
 
 ZO_FILES = $(ZO_TEXTURES) \
-						packages/base/zo.ogz \
-						packages/base/zo.cfg \
-						packages/base/zo.wpt
+						packages/base/zo_min.ogz \
+						packages/base/zo_min.cfg \
+						packages/base/zo_min.wpt
 
 MO_FILES = $(MO_TEXTURES) \
 						packages/base/mo.ogz \
@@ -645,9 +645,9 @@ STARFOX_FILES = $(ZO_TEXTURES) \
 								packages/base/starfox.wpt
 
 SKY_FILES = $(SKY_TEXTURES) \
-						packages/base/sky.ogz \
-						packages/base/sky.cfg \
-						packages/base/sky.wpt
+						packages/base/sky_low.ogz \
+						packages/base/sky_low.cfg \
+						packages/base/sky_low.wpt
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
 
