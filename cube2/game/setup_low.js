@@ -16,3 +16,10 @@ Module.loadDefaultMap = function() {
     BananaBread.execute('sleep 10 [ effic colos ; sleep 20000 [ addbot 50 ] ]');
   }
 };
+
+Module.autoexec = function() {
+  if(true === Module['join']) {
+    console.log('connecting to host');
+    BananaBread.execute('connect');
+  }
+};

@@ -20,3 +20,9 @@ Module.loadDefaultMap = function() {
   BananaBread.execute('sleep 10 [ effic zoom ]');
 };
 
+Module.autoexec = function() {
+  if(true === Module['join']) {
+    console.log('connecting to host');
+    BananaBread.execute('connect');
+  }
+};
