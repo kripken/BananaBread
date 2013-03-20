@@ -445,70 +445,70 @@ canvas.paused {
   width: 100%;
   height: 100%;
   display: none;
+  position: relative;
+  background-size: cover;
 }
 
 .preview-content.show {
   display: block;
 }
 
-.preview-content.low {
-  background: url('../assets/screenshots/22.jpg');
-  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/22.jpg');
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/22.jpg');
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/22.jpg');
-  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/22.jpg');
-  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/22.jpg');
-  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/22.jpg');
+.preview-content::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0)));
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%);
+  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%);
+  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%);
+  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%);
   background-position: 5% 5%;
   background-size: 110% 110%;
+}
+
+
+.preview-content.low {
+  background-image: url('../assets/screenshots/22.jpg');
 }
 
 .preview-content.medium {
-  background: url('../assets/screenshots/02.jpg');
-  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/02.jpg');
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
-  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
-  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
-  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/02.jpg');
-  background-position: 5% 5%;
-  background-size: 110% 110%;
+  background-image: url('../assets/screenshots/02.jpg');
 }
 
 .preview-content.high {
-  background: url('../assets/screenshots/14.jpg');
-  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/14.jpg');
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/14.jpg');
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/14.jpg');
-  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/14.jpg');
-  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/14.jpg');
-  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/14.jpg');
-  background-position: 5% 5%;
-  background-size: 110% 110%;
+  background-image: url('../assets/screenshots/14.jpg');
 }
 
 .preview-content.four {
-  background: url('../assets/screenshots/03.jpg');
-  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/03.jpg');
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/03.jpg');
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/03.jpg');
-  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/03.jpg');
-  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/03.jpg');
-  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/03.jpg');
-  background-position: 5% 5%;
-  background-size: 110% 110%;
+  background-image: url('../assets/screenshots/03.jpg');
 }
 
 .preview-content.five {
-  background: url('../assets/screenshots/07.jpg');
-  background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0) 60%), url('../assets/screenshots/07.jpg');
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(10%,rgba(0,0,0,0.8)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(60%,rgba(0,0,0,0))), url('../assets/screenshots/07.jpg');
-  background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/07.jpg');
-  background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/07.jpg');
-  background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/07.jpg');
-  background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 10%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0) 60%), url('../assets/screenshots/07.jpg');
-  background-position: 5% 5%;
-  background-size: 110% 110%;
+  background-image: url('../assets/screenshots/07.jpg');
+}
+
+.preview-content.six {
+  background-image: url('../assets/screenshots/six.jpg');
+}
+
+.preview-content.seven {
+  background-image: url('../assets/screenshots/seven.jpg');
+}
+
+.preview-content.eight {
+  background-image: url('../assets/screenshots/eight.jpg');
+}
+
+.preview-content.nine {
+  background-image: url('../assets/screenshots/nine.jpg');
+}
+
+.preview-content.ten {
+  background-image: url('../assets/screenshots/ten.jpg');
 }
 
 .preview-content .description {
