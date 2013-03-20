@@ -5,61 +5,55 @@ var levels = [
     internalName: 'six',
     externalName: 'Colony',
     type: 'multiplayer',
-    url: 'game.html?setup=six&preload=six&debug&serve'
-  },
-  {
-    internalName: 'seven',
-    externalName: 'Bunker',
-    type: 'multiplayer',
-    url: 'game.html?setup=seven&preload=seven&debug&serve'
-  },
-  {
-    internalName: 'eight',
-    externalName: 'Hanger',
-    type: 'multiplayer',
-    url: 'game.html?setup=eight&preload=eight&debug&serve'
-  },
-  {
-    internalName: 'nine',
-    externalName: 'Ship',
-    type: 'multiplayer',
-    url: 'game.html?setup=nine&preload=nine&debug&serve'
+    url: 'game.html?setup=six&preload=six&serve'
   },
   {
     internalName: 'ten',
     externalName: 'Ruins',
     type: 'multiplayer',
-    url: 'game.html?setup=ten&preload=ten&debug&serve'
+    url: 'game.html?setup=ten&preload=ten&serve'
+  },
+  {
+    internalName: 'seven',
+    externalName: 'Bunker',
+    type: 'multiplayer',
+    url: 'game.html?setup=seven&preload=seven&serve'
+  },
+  {
+    internalName: 'eight',
+    externalName: 'Hanger',
+    type: 'multiplayer',
+    url: 'game.html?setup=eight&preload=eight&serve'
+  },
+  {
+    internalName: 'nine',
+    externalName: 'Ship',
+    type: 'multiplayer',
+    url: 'game.html?setup=nine&preload=nine&serve'
+  },
+  {
+    internalName: 'three',
+    externalName: 'Lava Chamber',
+    type: 'multiplayer',
+    url: 'game.html?setup=high&preload=high&serve'
+  },
+  {
+    internalName: 'four',
+    externalName: 'Future',
+    type: 'multiplayer',
+    url: 'game.html?setup=four&preload=four&serve'
+  },
+  {
+    internalName: 'five',
+    externalName: 'Lava Rooms',
+    type: 'multiplayer',
+    url: 'game.html?setup=five&preload=five&serve'
   },
   {
     internalName: 'one',
     externalName: 'Arena',
     type: 'singleplayer',
-    url: 'game.html?setup=low&preload=low&debug'
-  },
-  {
-    internalName: 'two',
-    externalName: 'Two Towers',
-    type: 'singleplayer',
-    url: 'game.html?setup=medium&preload=medium&debug'
-  },
-  {
-    internalName: 'three',
-    externalName: 'Lava Chamber',
-    type: 'singleplayer',
-    url: 'game.html?setup=high&preload=high&debug'
-  },
-  {
-    internalName: 'four',
-    externalName: 'Future',
-    type: 'singleplayer',
-    url: 'game.html?setup=four&preload=four&debug'
-  },
-  {
-    internalName: 'five',
-    externalName: 'Lava Rooms',
-    type: 'singleplayer',
-    url: 'game.html?setup=five&preload=five&debug'
+    url: 'game.html?setup=low&preload=low'
   }
 ];
 
@@ -150,7 +144,7 @@ function createListItemFromHost(host, element){
   newListItem.querySelector('.game-users').innerHTML = host['metadata']['connected']
     + ' Player' + (host['metadata']['connected'] !== 1 ? 's' : '');
   newListItem.querySelector('.game-name').innerHTML = host['metadata']['name'] || '';
-  
+
   var level = host.url.match(/setup=(\w+)[&$]/);
 
   if (level) {

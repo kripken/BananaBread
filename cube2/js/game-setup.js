@@ -210,6 +210,7 @@ if (Module.benchmark) {
                     canvas['mozRequestPointerLock'] ||
                     canvas['webkitRequestPointerLock'];
   if (!pointerLock) fail('pointer lock/mouse lock');
+  /*
   if (!navigator.mozGetUserMedia) {
     fail("getUserMedia");
     return;
@@ -218,6 +219,7 @@ if (Module.benchmark) {
     redirect("PeerConnection");
     return;
   }
+  */
 })();
 
 // Loading music. Will be stopped once the first frame of the game runs
