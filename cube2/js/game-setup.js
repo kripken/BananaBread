@@ -19,8 +19,43 @@ var Query = {
   }
 };
 
+function setQuery(url, item) {
+  var urlParts = url.split('?');
+  if(urlParts.length < 2) {
+    urlParts[1] = item;
+  } else {
+    var query = urlParts[1].split('&');
+    query.push(item);
+    urlParts[1] = query.join('&');
+  }
+  return urlParts.join('?');
+};
+
+function clearQuery(url, item) {
+  var urlParts = url.split('?');
+  if(urlParts.length < 2) {
+    return url;
+  } else {
+    var query = urlParts[1].split('&');
+    var result = [];
+    query.forEach(function(queryPart) {
+      if(!queryPart.split('=')[0].match('^' + item + '$'))
+        result.push(queryPart);
+    });
+    urlParts[1] = result.join('&');
+    if(urlParts[1].length < 1)
+      return urlParts[0];
+    else
+      return urlParts.join('?');
+  }
+};
+
 var params = Query.parse(window.location.search.substring(1));
 console.info('params', params);
+
+var url = window.location.toString();
+url = clearQuery(url, 'serve');
+url = clearQuery(url, 'windowed');
 
 var shell = typeof window == 'undefined';
 

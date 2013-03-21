@@ -705,7 +705,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 	                packages/skyboxes/philo/
 
 CRUNCH_QUALITY = 64
-CRUNCH_FLAG="--crunch=$(CRUNCH_QUALITY)"
+CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
 # CRUNCH_FLAG=""
 
 packages:
