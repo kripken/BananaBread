@@ -24,36 +24,6 @@ var levels = [
     externalName: 'Hanger',
     type: 'multiplayer',
     url: 'game.html?setup=eight&preload=eight&serve'
-  },
-  {
-    internalName: 'nine',
-    externalName: 'Ship',
-    type: 'multiplayer',
-    url: 'game.html?setup=nine&preload=nine&serve'
-  },
-  {
-    internalName: 'three',
-    externalName: 'Lava Chamber',
-    type: 'multiplayer',
-    url: 'game.html?setup=high&preload=high&serve'
-  },
-  {
-    internalName: 'four',
-    externalName: 'Future',
-    type: 'multiplayer',
-    url: 'game.html?setup=four&preload=four&serve'
-  },
-  {
-    internalName: 'five',
-    externalName: 'Lava Rooms',
-    type: 'multiplayer',
-    url: 'game.html?setup=five&preload=five&serve'
-  },
-  {
-    internalName: 'one',
-    externalName: 'Arena',
-    type: 'singleplayer',
-    url: 'game.html?setup=low&preload=low'
   }
 ];
 
