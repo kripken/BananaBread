@@ -609,6 +609,49 @@ function CameraPath(data) { // TODO: namespace this
   }
 }
 
+var levels = {
+  'low': {
+    'title': 'Arena',
+    'preload': 'low',
+    'textures': 'fantasy'
+  },
+  'medium': {
+    'title': 'Two Towers',
+    'preload': 'medium',
+    'textures': 'fantasy'
+  },
+  'high': {
+    'title': 'Lava Chamber',
+    'preload': 'high',
+    'textures': 'future'
+  },
+  'six': {
+    'title': 'Colony',
+    'preload': 'six',
+    'textures': 'future'
+  },
+  'seven': {
+    'title': 'Bunker',
+    'preload': 'seven',
+    'textures': 'modern'
+  },
+  'eight': {
+    'title': 'Hanger',
+    'preload': 'eight',
+    'textures': 'modern'
+  },
+  'nine': {
+    'title': 'Ship',
+    'preload': 'nine',
+    'textures': 'future'
+  },
+  'ten': {
+    'title': 'Ruins',
+    'preload': 'ten',
+    'textures': 'fantasy'
+  }
+};
+
 // Load scripts
 
 (function() {
@@ -620,10 +663,12 @@ function CameraPath(data) { // TODO: namespace this
   }
 
   var setup = checkPageParam('setup') ? params['setup'][0] : 'low';
-  var preload = checkPageParam('preload') ? params['preload'][0] : 'low';
+  // var preload = checkPageParam('preload') ? params['preload'][0] : 'low';
+  // var textures = checkPageParam('textures') ? params['textures'][0] : 'fantasy';
 
   var levelTitleContainer = document.querySelector('.level-title span');
   var levelTitle;
+  /*
   switch(setup) {
     case 'low':    levelTitle = 'Arena';        break;
     case 'medium': levelTitle = 'Two Towers';   break;
@@ -637,6 +682,12 @@ function CameraPath(data) { // TODO: namespace this
     case 'ten':    levelTitle = 'Ruins';        break;
     default: throw('unknown setup: ' + setup);
   };
+  */
+  if(!levels.hasOwnProperty(setup)) {
+    throw('unknown setup: ' + setup);
+  } else {
+    levelTitle = levels[setup]['title'];
+  }
   levelTitleContainer.innerHTML = levelTitle;
 
   var previewContainer = document.querySelector('.preview-content.' + setup );
@@ -647,10 +698,12 @@ function CameraPath(data) { // TODO: namespace this
       loadChildScript('game/setup_' + setup + '.js', function() {
         loadChildScript('game/preload_base.js', function() {
           loadChildScript('game/preload_character.js', function() {
-            loadChildScript('game/preload_' + preload + '.js', function() {
-              var scriptParts = ['bb'];
-              if (checkPageParam('debug')) scriptParts.push('debug');
-              loadChildScript('game/' + scriptParts.join('.') + '.js');
+            loadChildScript('game/preload_' + levels[setup]['preload'] + '.js', function() {
+              loadChildScript('game/preload_' + levels[setup]['textures'] + '.js', function() {
+                var scriptParts = ['bb'];
+                if (checkPageParam('debug')) scriptParts.push('debug');
+                loadChildScript('game/' + scriptParts.join('.') + '.js');
+              })
             });
           });
         });

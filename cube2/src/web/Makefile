@@ -186,22 +186,7 @@ BASE_FILES = data/ \
              packages/hud/
              #packages/music/ \
 
-SILLY_FILES = packages/base/silly.ogz \
-              packages/base/silly.cfg \
-              packages/base/silly_msg.png \
-              packages/models/nut/ \
-              packages/yo_frankie \
-	            packages/skyboxes/philo/
-
-MD_FILES = packages/base/md.ogz \
-           packages/base/md.cfg \
-           $(FANTASY_TEXTURES)
-
-# Tip: use 'listtex' in the engine to check which textures are actually used! That is how these lists were generated.
-TWO_TOWERS_FILES =  packages/base/two_towers.ogz \
-                    packages/base/two_towers.cfg \
-                    packages/base/two_towers.wpt \
-                    packages/gk/fantasy/skyfantasyJPG/ \
+FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
                     `find packages/gk/fantasy -name "*.cfg"` \
                     packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.dds \
                     packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.dds \
@@ -240,201 +225,7 @@ TWO_TOWERS_FILES =  packages/base/two_towers.ogz \
                     packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
                     packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds
 
-ZOOM_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
-								`find packages/gk/future/ -name "*.cfg"` \
-								packages/gk/future/panel_gk_000/panel_gk_000_nm.png \
-								packages/gk/future/panel_gk_000/panel_gk_000_cc.png \
-								packages/gk/future/panel_gk_000/panel_gk_000_sc.png \
-								packages/gk/future/panel_gk_000/panel_gk_000_hm.png \
-								packages/gk/future/panel_gk_001/panel_gk_001_cc.png \
-								packages/gk/future/panel_gk_001/panel_gk_001_nm.png \
-								packages/gk/future/panel_gk_001/panel_gk_001_sc.png \
-								packages/gk/future/panel_gk_001/panel_gk_001_hm.png \
-								packages/gk/future/panel_gk_002/panel_gk_002_cc.png \
-								packages/gk/future/panel_gk_002/panel_gk_002_nm.png \
-								packages/gk/future/panel_gk_002/panel_gk_002_sc.png \
-								packages/gk/future/panel_gk_002/panel_gk_002_hm.png \
-								packages/gk/future/panel_gk_003/panel_gk_003_cc.png \
-								packages/gk/future/panel_gk_003/panel_gk_003_nm.png \
-								packages/gk/future/panel_gk_003/panel_gk_003_sc.png \
-								packages/gk/future/panel_gk_003/panel_gk_003_hm.png \
-								packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
-								packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
-								packages/gk/future/panel_gk_004/panel_gk_004_cc.png \
-								packages/gk/future/panel_gk_004/panel_gk_004_nm.png \
-								packages/gk/future/panel_gk_004/panel_gk_004_sc.png \
-								packages/gk/future/panel_gk_004/panel_gk_004_hm.png \
-								packages/gk/future/panel_gk_005/panel_gk_005_cc.png \
-								packages/gk/future/panel_gk_005/panel_gk_005_nm.png \
-								packages/gk/future/panel_gk_005/panel_gk_005_sc.png \
-								packages/gk/future/panel_gk_005/panel_gk_005_hm.png \
-								packages/gk/future/panel_gk_006/panel_gk_006_cc.png \
-								packages/gk/future/panel_gk_006/panel_gk_006_nm.png \
-								packages/gk/future/panel_gk_006/panel_gk_006_sc.png \
-								packages/gk/future/panel_gk_006/panel_gk_006_hm.png \
-								packages/gk/future/panel_gk_007/panel_gk_007_cc.png \
-								packages/gk/future/panel_gk_007/panel_gk_007_nm.png \
-								packages/gk/future/panel_gk_007/panel_gk_007_sc.png \
-								packages/gk/future/panel_gk_007/panel_gk_007_hm.png \
-								packages/gk/future/panel_gk_008/panel_gk_008_cc.png \
-								packages/gk/future/panel_gk_008/panel_gk_008_nm.png \
-								packages/gk/future/panel_gk_008/panel_gk_008_sc.png \
-								packages/gk/future/panel_gk_008/panel_gk_008_hm.png \
-								packages/gk/future/panel_gk_009/panel_gk_009_cc.png \
-								packages/gk/future/panel_gk_009/panel_gk_009_nm.png \
-								packages/gk/future/panel_gk_009/panel_gk_009_sc.png \
-								packages/gk/future/panel_gk_009/panel_gk_009_hm.png \
-								packages/gk/future/panel_gk_010/panel_gk_010_cc.png \
-								packages/gk/future/panel_gk_010/panel_gk_010_nm.png \
-								packages/gk/future/panel_gk_010/panel_gk_010_sc.png \
-								packages/gk/future/panel_gk_010/panel_gk_010_hm.png \
-								packages/gk/future/panel_gk_011/panel_gk_011_cc.png \
-								packages/gk/future/panel_gk_011/panel_gk_011_nm.png \
-								packages/gk/future/panel_gk_011/panel_gk_011_sc.png \
-								packages/gk/future/panel_gk_011/panel_gk_011_hm.png \
-								packages/gk/future/panel_gk_012/panel_gk_012_cc.png \
-								packages/gk/future/panel_gk_012/panel_gk_012_nm.png \
-								packages/gk/future/panel_gk_012/panel_gk_012_sc.png \
-								packages/gk/future/panel_gk_012/panel_gk_012_hm.png \
-								packages/gk/future/panel_gk_014/panel_gk_014_cc.png \
-								packages/gk/future/panel_gk_014/panel_gk_014_nm.png \
-								packages/gk/future/panel_gk_014/panel_gk_014_sc.png \
-								packages/gk/future/panel_gk_014/panel_gk_014_hm.png \
-								packages/gk/future/panel_gk_015/panel_gk_015_cc.png \
-								packages/gk/future/panel_gk_015/panel_gk_015_nm.png \
-								packages/gk/future/panel_gk_015/panel_gk_015_sc.png \
-								packages/gk/future/panel_gk_015/panel_gk_015_hm.png \
-								packages/gk/future/panel_gk_016/panel_gk_016_cc.png \
-								packages/gk/future/panel_gk_016/panel_gk_016_nm.png \
-								packages/gk/future/panel_gk_016/panel_gk_016_sc.png \
-								packages/gk/future/panel_gk_016/panel_gk_016_hm.png \
-								packages/gk/future/panel_gk_017/panel_gk_017_cc.png \
-								packages/gk/future/panel_gk_017/panel_gk_017_nm.png \
-								packages/gk/future/panel_gk_017/panel_gk_017_sc.png \
-								packages/gk/future/panel_gk_017/panel_gk_017_hm.png \
-								packages/gk/future/panel_gk_018/panel_gk_018_cc.png \
-								packages/gk/future/panel_gk_018/panel_gk_018_nm.png \
-								packages/gk/future/panel_gk_018/panel_gk_018_sc.png \
-								packages/gk/future/panel_gk_018/panel_gk_018_hm.png \
-								packages/gk/future/lamps_01_gk/lamps_01_gk_cc.png \
-								packages/gk/future/lamps_01_gk/lamps_01_gk_sc.png \
-								packages/gk/future/lamps_01_gk/lamps_01_gk_nm.png \
-								packages/gk/future/lamps_01_gk/lamps_01_gk_hm.png \
-								packages/gk/future/lamps_01_gk/lamps_01_gk_si.png
-
-ZOOM_FILES = packages/base/zoom.ogz \
-             packages/base/zoom.cfg \
-             packages/base/zoom.wpt \
-             $(ZOOM_TEXTURES)
-
-ZOOMIN_FILES = packages/base/zoomin.ogz \
-               packages/base/zoomin.cfg \
-               packages/base/zoomin.wpt \
-               $(ZOOM_TEXTURES)
-
-ZOOMOUT_FILES = packages/base/zoomout.ogz \
-                packages/base/zoomout.cfg \
-                packages/base/zoomout.wpt \
-                $(ZOOM_TEXTURES)
-
-MD2_FILES = packages/base/md2.ogz \
-            packages/base/md2.cfg \
-            packages/base/md2.wpt \
-            $(FANTASY_TEXTURES)
-
-FFFLAG_FILES = packages/models/ffflag/md5.cfg \
-               `find packages/models/ffflag/ -name "*.dds"` \
-               `find packages/models/ffflag/ -name "*.md5mesh"` \
-               `find packages/models/ffflag/ -name "*.md5anim"`
-
-FFPIT_FILES = packages/models/ffpit/md5.cfg \
-              `find packages/models/ffpit/ -name "*.dds"` \
-              `find packages/models/ffpit/ -name "*.md5mesh"`
-
-COLOS_FILES = packages/base/colos.ogz \
-              packages/base/colos.cfg \
-              packages/base/colos.wpt \
-              $(FFFLAG_FILES) \
-              $(FFPIT_FILES) \
-              packages/gk/fantasy/skyfantasyJPG/ \
-              `find packages/gk/fantasy -name "*.cfg"` \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.jpg \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.png \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_sc.png \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_hm.png \
-              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.jpg \
-              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.jpg \
-              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_sc.jpg \
-              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_hm.jpg \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.jpg \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.png \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_sc.png \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_hm.jpg \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.jpg \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.jpg \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_sc.jpg \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_hm.jpg \
-              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.jpg \
-              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.jpg \
-              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_sc.jpg \
-              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_hm.jpg \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.png \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.png \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_sc.png \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_hm.png \
-              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.jpg \
-              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.jpg \
-              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_sc.jpg \
-              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_hm.jpg \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.jpg \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.jpg \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_sc.jpg \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_hm.jpg \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.jpg \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.jpg \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.jpg \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.jpg \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_sc.jpg \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_hm.jpg \
-              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.jpg \
-              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.jpg \
-              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_sc.jpg \
-              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_hm.jpg
-
-CAVE_FILES = packages/base/cave.ogz \
-             packages/base/cave.cfg \
-             $(FANTASY_TEXTURES) \
-             $(EXTRA_FANTASY_TEXTURES)
-
-MD3_FILES = packages/base/md3.ogz \
-            packages/base/md3.cfg \
-            $(FANTASY_TEXTURES)
-
-TT_FILES = packages/base/tt.ogz \
-           packages/base/tt.cfg \
-           `find packages/gk/fantasy/skyfantasyJPG/ -name "*.jpg"`
-
-CB_TEXTURES = packages/gk/cyber/ \
-              packages/gk/cyber/cybersky/
-
-CB_FILES = $(CB_TEXTURES) \
-           packages/base/cb.ogz \
-           packages/base/cb.cfg
-
-CB2_FILES = $(CB_TEXTURES) \
-            packages/base/cb2.ogz \
-            packages/base/cb2.cfg
-
-CW_FILES = $(CB_TEXTURES) \
-            packages/base/gk_cyber_world.ogz \
-            packages/base/gk_cyber_world.cfg
-
-CYBER1_FILES = $(CB_TEXTURES) \
-               packages/base/cyber1.ogz \
-               packages/base/cyber1.cfg \
-               packages/base/cyber1.wpt
-
-ZO_TEXTURES =	`find packages/gk/future/skysfJPG/ -name "*.jpg"` \
+FUTURE_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/future/ -name "*.cfg"` \
 							packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
 							packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
@@ -565,7 +356,7 @@ ZO_TEXTURES =	`find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_sc.png \
 							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_hm.png
 
-MO_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
+MODERN_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/modern/ -name "*.cfg"` \
 							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_cc.png \
 							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_hm.png \
@@ -603,87 +394,91 @@ MO_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_nm.png \
 							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_sc.png
 
-SKY_TEXTURES = `find packages/gk/fantasy/skyfantasy/ -name "*.png"` \
-							 `find packages/gk/fantasy/ -name "*.cfg"` \
-							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.jpg \
-							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.png \
-							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_sc.png \
-							 packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_hm.png \
-							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_cc.jpg \
-							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_nm.png \
-							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_sc.jpg \
-							 packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_hm.png \
-							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_sc.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_hm.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.png \
-							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_sc.png \
-							 packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_hm.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_cc.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_nm.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_sc.jpg \
-							 packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_hm.jpg \
-							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.jpg \
-							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.jpg \
-							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_sc.jpg \
-							 packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_hm.jpg \
-							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg \
-							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_nm.png \
-							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_sc.jpg \
-							 packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_hm.jpg \
-							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.jpg \
-							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.jpg \
-							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_sc.jpg \
-							 packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_hm.jpg \
-               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.jpg \
-               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_nm.jpg \
-               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_sc.jpg \
-               packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_hm.jpg \
-							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.png \
-							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.png \
-							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_sc.png \
-							 packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_hm.png \
-							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.jpg \
-							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.jpg \
-							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_sc.jpg \
-							 packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_hm.jpg \
-							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.jpg \
-							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.jpg \
-							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_sc.jpg \
-							 packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_hm.jpg \
-							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.jpg \
-							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.jpg \
-							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_sc.jpg \
-							 packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_hm.jpg \
-							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.jpg \
-							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.jpg \
-							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_sc.jpg \
-							 packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_hm.jpg
+#CYBER_TEXTURES = packages/gk/cyber/ \
+#                 packages/gk/cyber/cybersky/
 
-ZO_FILES = $(ZO_TEXTURES) \
-						packages/base/zo_min.ogz \
+# Tip: use 'listtex' in the engine to check which textures are actually used! That is how these lists were generated.
+TWO_TOWERS_FILES =  packages/base/two_towers.ogz \
+                    packages/base/two_towers.cfg \
+                    packages/base/two_towers.wpt
+
+ZOOM_FILES = packages/base/zoom.ogz \
+             packages/base/zoom.cfg \
+             packages/base/zoom.wpt
+
+#ZOOMIN_FILES = packages/base/zoomin.ogz \
+#               packages/base/zoomin.cfg \
+#               packages/base/zoomin.wpt
+
+#ZOOMOUT_FILES = packages/base/zoomout.ogz \
+#                packages/base/zoomout.cfg \
+#                packages/base/zoomout.wpt
+
+#MD2_FILES = packages/base/md2.ogz \
+#            packages/base/md2.cfg \
+#            packages/base/md2.wpt \
+#            $(FANTASY_TEXTURES)
+
+FFFLAG_FILES = packages/models/ffflag/md5.cfg \
+               `find packages/models/ffflag/ -name "*.dds"` \
+               `find packages/models/ffflag/ -name "*.md5mesh"` \
+               `find packages/models/ffflag/ -name "*.md5anim"`
+
+FFPIT_FILES = packages/models/ffpit/md5.cfg \
+              `find packages/models/ffpit/ -name "*.dds"` \
+              `find packages/models/ffpit/ -name "*.md5mesh"`
+
+COLOS_FILES = packages/base/colos.ogz \
+              packages/base/colos.cfg \
+              packages/base/colos.wpt \
+              $(FFFLAG_FILES) \
+              $(FFPIT_FILES)
+
+#CAVE_FILES = packages/base/cave.ogz \
+#             packages/base/cave.cfg \
+#             $(FANTASY_TEXTURES) \
+#             $(EXTRA_FANTASY_TEXTURES)
+
+#MD3_FILES = packages/base/md3.ogz \
+#            packages/base/md3.cfg \
+#            $(FANTASY_TEXTURES)
+
+#TT_FILES = packages/base/tt.ogz \
+#           packages/base/tt.cfg
+
+#CB_FILES = $(CB_TEXTURES) \
+#           packages/base/cb.ogz \
+#           packages/base/cb.cfg
+
+#CB2_FILES = $(CB_TEXTURES) \
+#            packages/base/cb2.ogz \
+#            packages/base/cb2.cfg
+
+#CW_FILES = $(CB_TEXTURES) \
+#            packages/base/gk_cyber_world.ogz \
+#            packages/base/gk_cyber_world.cfg
+
+#CYBER1_FILES = packages/base/cyber1.ogz \
+#               packages/base/cyber1.cfg \
+#               packages/base/cyber1.wpt
+
+ZO_FILES = 	packages/base/zo_min.ogz \
 						packages/base/zo_min.cfg \
 						packages/base/zo_min.wpt
 
-MO_FILES = $(MO_TEXTURES) \
-						packages/base/mo.ogz \
+MO_FILES = 	packages/base/mo.ogz \
 						packages/base/mo.cfg \
 						packages/base/mo.wpt \
 
-SB2_FILES = $(MO_TEXTURES) \
-						packages/base/sb2.ogz \
+SB2_FILES = packages/base/sb2.ogz \
 						packages/base/sb2.cfg \
 						packages/base/sb2.wpt
 
-STARFOX_FILES = $(ZO_TEXTURES) \
-								packages/base/starfox.ogz \
+STARFOX_FILES = packages/base/starfox.ogz \
 								packages/base/starfox.cfg \
 								packages/base/starfox.wpt
 
-SKY_FILES = $(SKY_TEXTURES) \
-						packages/base/sky_low.ogz \
+SKY_FILES = packages/base/sky_low.ogz \
 						packages/base/sky_low.cfg \
 						packages/base/sky_low.wpt
 
@@ -698,11 +493,11 @@ SNOUTX10K_MODEL_FILES = packages/models/vwep/ \
 CHARACTER_FILES = $(SNOUTX10K_MODEL_FILES) \
                   $(HUDGUNS_FILES)
 
-FIREWORKS_FILES = $(BASE_FILES) \
-                  packages/base/fireworks.ogz \
-                  packages/sounds/olpc/MichaelBierylo/sfx_DoorSlam.wav \
-                  packages/yo_frankie \
-	                packages/skyboxes/philo/
+#FIREWORKS_FILES = $(BASE_FILES) \
+#                  packages/base/fireworks.ogz \
+#                  packages/sounds/olpc/MichaelBierylo/sfx_DoorSlam.wav \
+#                  packages/yo_frankie \
+#	                packages/skyboxes/philo/
 
 CRUNCH_QUALITY = 64
 CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
@@ -711,11 +506,14 @@ CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
 packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data $(CRUNCH_FLAG) --preload $(BASE_FILES) --pre-run > game/preload_base.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data $(CRUNCH_FLAG) --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py future.data $(CRUNCH_FLAG) --preload $(FUTURE_TEXTURES) --pre-run > game/preload_future.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fantasy.data $(CRUNCH_FLAG) --preload $(FANTASY_TEXTURES) --pre-run > game/preload_fantasy.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py modern.data $(CRUNCH_FLAG) --preload $(MODERN_TEXTURES) --pre-run > game/preload_modern.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data $(CRUNCH_FLAG) --preload $(COLOS_FILES) --pre-run > game/preload_low.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data $(CRUNCH_FLAG) --preload $(TWO_TOWERS_FILES) --pre-run > game/preload_medium.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data $(CRUNCH_FLAG) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data $(CRUNCH_FLAG) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data $(CRUNCH_FLAG) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data $(CRUNCH_FLAG) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data $(CRUNCH_FLAG) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data $(CRUNCH_FLAG) --preload $(ZO_FILES) --pre-run > game/preload_six.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data $(CRUNCH_FLAG) --preload $(MO_FILES) --pre-run > game/preload_seven.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data $(CRUNCH_FLAG) --preload $(SB2_FILES) --pre-run > game/preload_eight.js

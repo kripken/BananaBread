@@ -5,19 +5,49 @@ var levels = [
     internalName: 'six',
     externalName: 'Colony',
     type: 'multiplayer',
-    url: 'game.html?setup=six&preload=six&serve'
+    url: 'game.html?setup=six&serve'
   },
   {
-    internalName: 'ten',
-    externalName: 'Ruins',
+    internalName: 'one',
+    externalName: 'Arena',
     type: 'multiplayer',
-    url: 'game.html?setup=ten&preload=ten&serve'
+    url: 'game.html?setup=low&serve'
   },
   {
     internalName: 'seven',
     externalName: 'Bunker',
     type: 'multiplayer',
-    url: 'game.html?setup=seven&preload=seven&serve'
+    url: 'game.html?setup=seven&serve'
+  },
+  {
+    internalName: 'nine',
+    externalName: 'Ship',
+    type: 'multiplayer',
+    url: 'game.html?setup=nine&serve'
+  },
+  {
+    internalName: 'three',
+    externalName: 'Lava Chamber',
+    type: 'multiplayer',
+    url: 'game.html?setup=high&serve'
+  },
+  {
+    internalName: 'ten',
+    externalName: 'Ruins',
+    type: 'multiplayer',
+    url: 'game.html?setup=ten&serve'
+  },
+  {
+    internalName: 'eight',
+    externalName: 'Hanger',
+    type: 'multiplayer',
+    url: 'game.html?setup=eight&serve'
+  },
+  {
+    internalName: 'two',
+    externalName: 'Two Towers',
+    type: 'multiplayer',
+    url: 'game.html?setup=medium&serve'
   }
 ];
 
