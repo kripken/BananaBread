@@ -407,8 +407,8 @@ CHARACTER_FILES = $(SNOUTX10K_MODEL_FILES) \
 #	                packages/skyboxes/philo/
 
 CRUNCH_QUALITY = 64
-CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
-# CRUNCH_FLAG=""
+#CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
+CRUNCH_FLAG=
 
 packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data $(CRUNCH_FLAG) --preload $(BASE_FILES) --pre-run > game/preload_base.js
