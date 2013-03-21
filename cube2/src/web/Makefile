@@ -194,12 +194,10 @@ FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
                     packages/gk/fantasy/rock_formation_gk_v02/rock_formation_gk_v02_nm.dds \
                     packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
                     packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.dds \
-                    packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
-                    packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.dds \
                     packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.dds \
                     packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.dds \
-                    packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
-                    packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
+                    packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_cc.dds \
+                    packages/gk/fantasy/castell_wall_gk_v03/castell_wall_gk_v03_nm.dds \
                     packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
                     packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
                     packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.dds \
@@ -208,191 +206,100 @@ FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
                     packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.dds \
                     packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.dds \
                     packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_nm.dds \
-                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.dds \
-                    packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_nm.dds \
-                    packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.dds \
-                    packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.dds \
                     packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.dds \
                     packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.dds \
                     packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.dds \
                     packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.dds \
                     packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
                     packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
-                    packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
-                    packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
                     packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
                     packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds \
-                    packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
-                    packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds
+                    packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.dds \
+                    packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.dds
 
 FUTURE_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/future/ -name "*.cfg"` \
+							packages/gk/future/panel_gk_000/panel_gk_000_cc.dds \
+							packages/gk/future/panel_gk_000/panel_gk_000_nm.dds \
+							packages/gk/future/panel_gk_001/panel_gk_001_cc.dds \
+							packages/gk/future/panel_gk_001/panel_gk_001_nm.dds \
+							packages/gk/future/panel_gk_002/panel_gk_002_cc.dds \
+							packages/gk/future/panel_gk_002/panel_gk_002_nm.dds \
+							packages/gk/future/panel_gk_003/panel_gk_003_cc.dds \
+							packages/gk/future/panel_gk_003/panel_gk_003_nm.dds \
 							packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
 							packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
-							packages/gk/future/diamond_plate_big_gk/diamond_plate_big_gk_cc.png \
-							packages/gk/future/diamond_plate_big_gk/diamond_plate_big_gk_nm.png \
-							packages/gk/future/diamond_plate_big_gk/diamond_plate_big_gk_sc.png \
-							packages/gk/future/diamond_plate_big_gk/diamond_plate_big_gk_hm.png \
-							packages/gk/future/diamond_plate_gk/diamond_plate_gk_cc.png \
-							packages/gk/future/diamond_plate_gk/diamond_plate_gk_nm.png \
-							packages/gk/future/diamond_plate_gk/diamond_plate_gk_sc.png \
-							packages/gk/future/diamond_plate_gk/diamond_plate_gk_hm.png \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_cc.png \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_nm.png \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_sc.png \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_hm.png \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_si.png \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_cc.png \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_nm.png \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_sc.png \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_hm.png \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_si.png \
-							packages/gk/future/panel_gk_000/panel_gk_000_cc.png \
-							packages/gk/future/panel_gk_000/panel_gk_000_nm.png \
-							packages/gk/future/panel_gk_000/panel_gk_000_sc.png \
-							packages/gk/future/panel_gk_000/panel_gk_000_hm.png \
-							packages/gk/future/panel_gk_001/panel_gk_001_cc.png \
-							packages/gk/future/panel_gk_001/panel_gk_001_nm.png \
-							packages/gk/future/panel_gk_001/panel_gk_001_sc.png \
-							packages/gk/future/panel_gk_001/panel_gk_001_hm.png \
-							packages/gk/future/panel_gk_002/panel_gk_002_cc.png \
-							packages/gk/future/panel_gk_002/panel_gk_002_nm.png \
-							packages/gk/future/panel_gk_002/panel_gk_002_sc.png \
-							packages/gk/future/panel_gk_002/panel_gk_002_hm.png \
-							packages/gk/future/panel_gk_003/panel_gk_003_cc.png \
-							packages/gk/future/panel_gk_003/panel_gk_003_nm.png \
-							packages/gk/future/panel_gk_003/panel_gk_003_sc.png \
-							packages/gk/future/panel_gk_003/panel_gk_003_hm.png \
-							packages/gk/future/panel_gk_004/panel_gk_004_cc.png \
-							packages/gk/future/panel_gk_004/panel_gk_004_nm.png \
-							packages/gk/future/panel_gk_004/panel_gk_004_sc.png \
-							packages/gk/future/panel_gk_004/panel_gk_004_hm.png \
-							packages/gk/future/panel_gk_005/panel_gk_005_cc.png \
-							packages/gk/future/panel_gk_005/panel_gk_005_nm.png \
-							packages/gk/future/panel_gk_005/panel_gk_005_sc.png \
-							packages/gk/future/panel_gk_005/panel_gk_005_hm.png \
-							packages/gk/future/panel_gk_006/panel_gk_006_cc.png \
-							packages/gk/future/panel_gk_006/panel_gk_006_nm.png \
-							packages/gk/future/panel_gk_006/panel_gk_006_sc.png \
-							packages/gk/future/panel_gk_006/panel_gk_006_hm.png \
-							packages/gk/future/panel_gk_007/panel_gk_007_cc.png \
-							packages/gk/future/panel_gk_007/panel_gk_007_nm.png \
-							packages/gk/future/panel_gk_007/panel_gk_007_sc.png \
-							packages/gk/future/panel_gk_007/panel_gk_007_hm.png \
-							packages/gk/future/panel_gk_008/panel_gk_008_cc.png \
-							packages/gk/future/panel_gk_008/panel_gk_008_nm.png \
-							packages/gk/future/panel_gk_008/panel_gk_008_sc.png \
-							packages/gk/future/panel_gk_008/panel_gk_008_hm.png \
-							packages/gk/future/panel_gk_009/panel_gk_009_cc.png \
-							packages/gk/future/panel_gk_009/panel_gk_009_nm.png \
-							packages/gk/future/panel_gk_009/panel_gk_009_sc.png \
-							packages/gk/future/panel_gk_009/panel_gk_009_hm.png \
-							packages/gk/future/panel_gk_010/panel_gk_010_cc.png \
-							packages/gk/future/panel_gk_010/panel_gk_010_nm.png \
-							packages/gk/future/panel_gk_010/panel_gk_010_sc.png \
-							packages/gk/future/panel_gk_010/panel_gk_010_hm.png \
-							packages/gk/future/panel_gk_011/panel_gk_011_cc.png \
-							packages/gk/future/panel_gk_011/panel_gk_011_nm.png \
-							packages/gk/future/panel_gk_011/panel_gk_011_sc.png \
-							packages/gk/future/panel_gk_011/panel_gk_011_hm.png \
-							packages/gk/future/panel_gk_012/panel_gk_012_cc.png \
-							packages/gk/future/panel_gk_012/panel_gk_012_nm.png \
-							packages/gk/future/panel_gk_012/panel_gk_012_sc.png \
-							packages/gk/future/panel_gk_012/panel_gk_012_hm.png \
-							packages/gk/future/panel_gk_013/panel_gk_013_cc.png \
-							packages/gk/future/panel_gk_013/panel_gk_013_nm.png \
-							packages/gk/future/panel_gk_013/panel_gk_013_sc.png \
-							packages/gk/future/panel_gk_013/panel_gk_013_hm.png \
-							packages/gk/future/panel_gk_014/panel_gk_014_cc.png \
-							packages/gk/future/panel_gk_014/panel_gk_014_nm.png \
-							packages/gk/future/panel_gk_014/panel_gk_014_sc.png \
-							packages/gk/future/panel_gk_014/panel_gk_014_hm.png \
-							packages/gk/future/panel_gk_015/panel_gk_015_cc.png \
-							packages/gk/future/panel_gk_015/panel_gk_015_nm.png \
-							packages/gk/future/panel_gk_015/panel_gk_015_sc.png \
-							packages/gk/future/panel_gk_015/panel_gk_015_hm.png \
-							packages/gk/future/panel_gk_016/panel_gk_016_cc.png \
-							packages/gk/future/panel_gk_016/panel_gk_016_nm.png \
-							packages/gk/future/panel_gk_016/panel_gk_016_sc.png \
-							packages/gk/future/panel_gk_016/panel_gk_016_hm.png \
-							packages/gk/future/panel_gk_017/panel_gk_017_cc.png \
-							packages/gk/future/panel_gk_017/panel_gk_017_nm.png \
-							packages/gk/future/panel_gk_017/panel_gk_017_sc.png \
-							packages/gk/future/panel_gk_017/panel_gk_017_hm.png \
-							packages/gk/future/panel_gk_018/panel_gk_018_cc.png \
-							packages/gk/future/panel_gk_018/panel_gk_018_nm.png \
-							packages/gk/future/panel_gk_018/panel_gk_018_sc.png \
-							packages/gk/future/panel_gk_018/panel_gk_018_hm.png \
-							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_cc.png \
-							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_nm.png \
-							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_sc.png \
-							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_hm.png \
-							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_cc.png \
-							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_nm.png \
-							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_sc.png \
-							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_hm.png \
-							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_cc.png \
-							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_nm.png \
-							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_sc.png \
-							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_hm.png \
-							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_cc.png \
-							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_nm.png \
-							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_sc.png \
-							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_hm.png \
-							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_cc.png \
-							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_nm.png \
-							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_sc.png \
-							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_hm.png \
-							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_cc.png \
-							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_nm.png \
-							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_sc.png \
-							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_hm.png \
-							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.png \
-							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.png \
-							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_sc.png \
-							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_hm.png \
-							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_cc.png \
-							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_nm.png \
-							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_sc.png \
-							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_hm.png
+							packages/gk/future/panel_gk_005/panel_gk_005_cc.dds \
+							packages/gk/future/panel_gk_005/panel_gk_005_nm.dds \
+							packages/gk/future/panel_gk_006/panel_gk_006_cc.dds \
+							packages/gk/future/panel_gk_006/panel_gk_006_nm.dds \
+							packages/gk/future/panel_gk_007/panel_gk_007_cc.dds \
+							packages/gk/future/panel_gk_007/panel_gk_007_nm.dds \
+							packages/gk/future/panel_gk_008/panel_gk_008_cc.dds \
+							packages/gk/future/panel_gk_008/panel_gk_008_nm.dds \
+							packages/gk/future/panel_gk_009/panel_gk_009_cc.dds \
+							packages/gk/future/panel_gk_009/panel_gk_009_nm.dds \
+							packages/gk/future/panel_gk_010/panel_gk_010_cc.dds \
+							packages/gk/future/panel_gk_010/panel_gk_010_nm.dds \
+							packages/gk/future/panel_gk_011/panel_gk_011_cc.dds \
+							packages/gk/future/panel_gk_011/panel_gk_011_nm.dds \
+							packages/gk/future/panel_gk_012/panel_gk_012_cc.dds \
+							packages/gk/future/panel_gk_012/panel_gk_012_nm.dds \
+							packages/gk/future/panel_gk_013/panel_gk_013_cc.dds \
+							packages/gk/future/panel_gk_013/panel_gk_013_nm.dds \
+							packages/gk/future/panel_gk_014/panel_gk_014_cc.dds \
+							packages/gk/future/panel_gk_014/panel_gk_014_nm.dds \
+							packages/gk/future/panel_gk_015/panel_gk_015_cc.dds \
+							packages/gk/future/panel_gk_015/panel_gk_015_nm.dds \
+							packages/gk/future/panel_gk_016/panel_gk_016_cc.dds \
+							packages/gk/future/panel_gk_016/panel_gk_016_nm.dds \
+							packages/gk/future/panel_gk_017/panel_gk_017_cc.dds \
+							packages/gk/future/panel_gk_017/panel_gk_017_nm.dds \
+							packages/gk/future/panel_gk_018/panel_gk_018_cc.dds \
+							packages/gk/future/panel_gk_018/panel_gk_018_nm.dds \
+							packages/gk/future/lamps_01_gk/lamps_01_gk_cc.dds \
+							packages/gk/future/lamps_01_gk/lamps_01_gk_nm.dds \
+							packages/gk/future/lamps_01_gk/lamps_01_gk_si.dds \
+							packages/gk/future/lamps_02_gk/lamps_02_gk_cc.dds \
+							packages/gk/future/lamps_02_gk/lamps_02_gk_nm.dds \
+							packages/gk/future/lamps_02_gk/lamps_02_gk_si.dds \
+							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_cc.dds \
+							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_nm.dds \
+							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_cc.dds \
+							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_nm.dds \
+							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_cc.dds \
+							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_nm.dds \
+							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_cc.dds \
+							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_nm.dds \
+							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_cc.dds \
+							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_nm.dds \
+							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_cc.dds \
+							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_nm.dds \
+							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.dds \
+							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.dds \
+							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_cc.dds \
+							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_nm.dds
 
 MODERN_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/modern/ -name "*.cfg"` \
-							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_cc.png \
-							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_hm.png \
-							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_nm.png \
-							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_sc.png \
-							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_cc.png \
-							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_hm.png \
-							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_nm.png \
-							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_sc.png \
-							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_cc.png \
-							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_hm.png \
-							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_nm.png \
-							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_sc.png \
-							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_cc.png \
-							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_hm.png \
-							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_nm.png \
-							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_sc.png \
-							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_cc.png \
-							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_hm.png \
-							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_nm.png \
-							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_sc.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_cc.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_cc_a.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_hm.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_hm_a.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_nm.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_nm_a.png \
-							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_sc.png \
-							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_cc.png \
-							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_hm.png \
-							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_nm.png \
-							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_sc.png \
-							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_cc.png \
-							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_hm.png \
-							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_nm.png \
-							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_sc.png
+							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_cc.dds \
+							packages/gk/modern/bunker_wall_gk_01/bunker_wall_gk_01_nm.dds \
+							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_cc.dds \
+							packages/gk/modern/bunker_wall_gk_02/bunker_wall_gk_02_nm.dds \
+							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_cc.dds \
+							packages/gk/modern/bunker_wall_gk_03/bunker_wall_gk_03_nm.dds \
+							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_cc.dds \
+							packages/gk/modern/bunker_wall_gk_04/bunker_wall_gk_04_nm.dds \
+							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_cc.dds \
+							packages/gk/modern/bunker_wall_gk_05/bunker_wall_gk_05_nm.dds \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_cc.dds \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_nm.dds \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_cc_a.dds \
+							packages/gk/modern/bunker_wall_gk_06/bunker_wall_gk_06_nm_a.dds \
+							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_cc.dds \
+							packages/gk/modern/bunker_wall_gk_07/bunker_wall_gk_07_nm.dds \
+							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_cc.dds \
+							packages/gk/modern/bunker_wall_gk_08/bunker_wall_gk_08_nm.dds
 
 #CYBER_TEXTURES = packages/gk/cyber/ \
 #                 packages/gk/cyber/cybersky/
