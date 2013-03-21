@@ -59,7 +59,15 @@ var Module = {
   join: checkPageParam('webrtc-session') ? true : false,
   webrtc: {
     broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : undefined,
-    session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined
+    session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined,
+    hostOptions: {
+      'url': url,
+      'listed': true,
+      'metadata': {
+        'name': 'BananaBread',
+        'connected': 1
+      }
+    }
   },
   TOTAL_MEMORY: 256*1024*1024, // may need to adjust this for huge levels
   failed: false,

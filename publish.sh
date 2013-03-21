@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rsync -avz --exclude packages --exclude src cube2/* output
+rsync -avc --files-from=manifest.txt cube2/ output/

@@ -18,12 +18,6 @@ var levels = [
     externalName: 'Bunker',
     type: 'multiplayer',
     url: 'game.html?setup=seven&preload=seven&serve'
-  },
-  {
-    internalName: 'eight',
-    externalName: 'Hanger',
-    type: 'multiplayer',
-    url: 'game.html?setup=eight&preload=eight&serve'
   }
 ];
 
