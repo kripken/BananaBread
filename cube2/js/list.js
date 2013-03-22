@@ -57,7 +57,7 @@ var levels = [
   }
 ];
 
-var brokerUrl = 'http://wrtcb.jit.su:80';
+var brokerUrl = 'http://mdsw.ch:8080';
 
 if (window.location.search) {
   var params = window.location.search.substring(1).split('&');
@@ -81,7 +81,7 @@ var listElement = document.querySelector('#join-list');
 var listItemElement = listElement.querySelector('li');
 listElement.removeChild(listItemElement);
 
-var socket = io.connect(brokerUrl + '/list');
+var socket = io.connect(brokerUrl + '/list', {secure: true});
 socket.on('connect', function() {
   socket.emit('list', filter);
 });

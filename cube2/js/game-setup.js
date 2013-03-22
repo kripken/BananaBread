@@ -93,7 +93,7 @@ var Module = {
   host: checkPageParam('serve') ? true : false,
   join: checkPageParam('webrtc-session') ? true : false,
   webrtc: {
-    broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : undefined,
+    broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : 'https://mdsw.ch:8080',
     session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined,
     hostOptions: {
       'url': url,
