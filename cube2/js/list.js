@@ -9,12 +9,14 @@ var levels = [
     url: 'game.html?setup=six&serve'
   },
   */
+  /*
   {
     internalName: 'one',
     externalName: 'Arena',
     type: 'multiplayer',
     url: 'game.html?setup=low&serve'
   },
+  */
   {
     internalName: 'seven',
     externalName: 'Bunker',
@@ -49,12 +51,14 @@ var levels = [
     type: 'multiplayer',
     url: 'game.html?setup=eight&serve'
   },
+  /*
   {
     internalName: 'two',
     externalName: 'Two Towers',
     type: 'multiplayer',
     url: 'game.html?setup=medium&serve'
   }
+  */
 ];
 
 var brokerUrl = 'http://wrtcb.jit.su:80';

@@ -662,7 +662,7 @@ var levels = {
     document.body.appendChild(js);
   }
 
-  var setup = checkPageParam('setup') ? params['setup'][0] : 'low';
+  var setup = checkPageParam('setup') ? params['setup'][0] : 'seven';
   // var preload = checkPageParam('preload') ? params['preload'][0] : 'low';
   // var textures = checkPageParam('textures') ? params['textures'][0] : 'fantasy';
 

@@ -187,6 +187,7 @@ BASE_FILES = data/ \
              #packages/music/ \
 
 FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
+									 `find packages/gk/fantasy/skyfantasy/ -name "*"` \
                     `find packages/gk/fantasy -name "*.cfg"` \
                     packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.dds \
                     packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.dds \
@@ -218,67 +219,67 @@ FANTASY_TEXTURES = packages/gk/fantasy/skyfantasyJPG/ \
                     packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.dds
 
 FUTURE_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
-							`find packages/gk/future/ -name "*.cfg"` \
-							packages/gk/future/panel_gk_000/panel_gk_000_cc.dds \
-							packages/gk/future/panel_gk_000/panel_gk_000_nm.dds \
-							packages/gk/future/panel_gk_001/panel_gk_001_cc.dds \
-							packages/gk/future/panel_gk_001/panel_gk_001_nm.dds \
-							packages/gk/future/panel_gk_002/panel_gk_002_cc.dds \
-							packages/gk/future/panel_gk_002/panel_gk_002_nm.dds \
-							packages/gk/future/panel_gk_003/panel_gk_003_cc.dds \
-							packages/gk/future/panel_gk_003/panel_gk_003_nm.dds \
-							packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
-							packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
-							packages/gk/future/panel_gk_005/panel_gk_005_cc.dds \
-							packages/gk/future/panel_gk_005/panel_gk_005_nm.dds \
-							packages/gk/future/panel_gk_006/panel_gk_006_cc.dds \
-							packages/gk/future/panel_gk_006/panel_gk_006_nm.dds \
-							packages/gk/future/panel_gk_007/panel_gk_007_cc.dds \
-							packages/gk/future/panel_gk_007/panel_gk_007_nm.dds \
-							packages/gk/future/panel_gk_008/panel_gk_008_cc.dds \
-							packages/gk/future/panel_gk_008/panel_gk_008_nm.dds \
-							packages/gk/future/panel_gk_009/panel_gk_009_cc.dds \
-							packages/gk/future/panel_gk_009/panel_gk_009_nm.dds \
-							packages/gk/future/panel_gk_010/panel_gk_010_cc.dds \
-							packages/gk/future/panel_gk_010/panel_gk_010_nm.dds \
-							packages/gk/future/panel_gk_011/panel_gk_011_cc.dds \
-							packages/gk/future/panel_gk_011/panel_gk_011_nm.dds \
-							packages/gk/future/panel_gk_012/panel_gk_012_cc.dds \
-							packages/gk/future/panel_gk_012/panel_gk_012_nm.dds \
-							packages/gk/future/panel_gk_013/panel_gk_013_cc.dds \
-							packages/gk/future/panel_gk_013/panel_gk_013_nm.dds \
-							packages/gk/future/panel_gk_014/panel_gk_014_cc.dds \
-							packages/gk/future/panel_gk_014/panel_gk_014_nm.dds \
-							packages/gk/future/panel_gk_015/panel_gk_015_cc.dds \
-							packages/gk/future/panel_gk_015/panel_gk_015_nm.dds \
-							packages/gk/future/panel_gk_016/panel_gk_016_cc.dds \
-							packages/gk/future/panel_gk_016/panel_gk_016_nm.dds \
-							packages/gk/future/panel_gk_017/panel_gk_017_cc.dds \
-							packages/gk/future/panel_gk_017/panel_gk_017_nm.dds \
-							packages/gk/future/panel_gk_018/panel_gk_018_cc.dds \
-							packages/gk/future/panel_gk_018/panel_gk_018_nm.dds \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_cc.dds \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_nm.dds \
-							packages/gk/future/lamps_01_gk/lamps_01_gk_si.dds \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_cc.dds \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_nm.dds \
-							packages/gk/future/lamps_02_gk/lamps_02_gk_si.dds \
-							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_cc.dds \
-							packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_nm.dds \
-							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_cc.dds \
-							packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_nm.dds \
-							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_cc.dds \
-							packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_nm.dds \
-							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_cc.dds \
-							packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_nm.dds \
-							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_cc.dds \
-							packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_nm.dds \
-							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_cc.dds \
-							packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_nm.dds \
-							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.dds \
-							packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.dds \
-							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_cc.dds \
-							packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_nm.dds
+										`find packages/gk/future/ -name "*.cfg"` \
+										packages/gk/future/panel_gk_000/panel_gk_000_cc.dds \
+										packages/gk/future/panel_gk_000/panel_gk_000_nm.dds \
+										packages/gk/future/panel_gk_001/panel_gk_001_cc.dds \
+										packages/gk/future/panel_gk_001/panel_gk_001_nm.dds \
+										packages/gk/future/panel_gk_002/panel_gk_002_cc.dds \
+										packages/gk/future/panel_gk_002/panel_gk_002_nm.dds \
+										packages/gk/future/panel_gk_003/panel_gk_003_cc.dds \
+										packages/gk/future/panel_gk_003/panel_gk_003_nm.dds \
+										packages/gk/future/panel_gk_004/panel_gk_004_cc.dds \
+										packages/gk/future/panel_gk_004/panel_gk_004_nm.dds \
+										packages/gk/future/panel_gk_005/panel_gk_005_cc.dds \
+										packages/gk/future/panel_gk_005/panel_gk_005_nm.dds \
+										packages/gk/future/panel_gk_006/panel_gk_006_cc.dds \
+										packages/gk/future/panel_gk_006/panel_gk_006_nm.dds \
+										packages/gk/future/panel_gk_007/panel_gk_007_cc.dds \
+										packages/gk/future/panel_gk_007/panel_gk_007_nm.dds \
+										packages/gk/future/panel_gk_008/panel_gk_008_cc.dds \
+										packages/gk/future/panel_gk_008/panel_gk_008_nm.dds \
+										packages/gk/future/panel_gk_009/panel_gk_009_cc.dds \
+										packages/gk/future/panel_gk_009/panel_gk_009_nm.dds \
+										packages/gk/future/panel_gk_010/panel_gk_010_cc.dds \
+										packages/gk/future/panel_gk_010/panel_gk_010_nm.dds \
+										packages/gk/future/panel_gk_011/panel_gk_011_cc.dds \
+										packages/gk/future/panel_gk_011/panel_gk_011_nm.dds \
+										packages/gk/future/panel_gk_012/panel_gk_012_cc.dds \
+										packages/gk/future/panel_gk_012/panel_gk_012_nm.dds \
+										packages/gk/future/panel_gk_013/panel_gk_013_cc.dds \
+										packages/gk/future/panel_gk_013/panel_gk_013_nm.dds \
+										packages/gk/future/panel_gk_014/panel_gk_014_cc.dds \
+										packages/gk/future/panel_gk_014/panel_gk_014_nm.dds \
+										packages/gk/future/panel_gk_015/panel_gk_015_cc.dds \
+										packages/gk/future/panel_gk_015/panel_gk_015_nm.dds \
+										packages/gk/future/panel_gk_016/panel_gk_016_cc.dds \
+										packages/gk/future/panel_gk_016/panel_gk_016_nm.dds \
+										packages/gk/future/panel_gk_017/panel_gk_017_cc.dds \
+										packages/gk/future/panel_gk_017/panel_gk_017_nm.dds \
+										packages/gk/future/panel_gk_018/panel_gk_018_cc.dds \
+										packages/gk/future/panel_gk_018/panel_gk_018_nm.dds \
+										packages/gk/future/lamps_01_gk/lamps_01_gk_cc.dds \
+										packages/gk/future/lamps_01_gk/lamps_01_gk_nm.dds \
+										packages/gk/future/lamps_01_gk/lamps_01_gk_si.dds \
+										packages/gk/future/lamps_02_gk/lamps_02_gk_cc.dds \
+										packages/gk/future/lamps_02_gk/lamps_02_gk_nm.dds \
+										packages/gk/future/lamps_02_gk/lamps_02_gk_si.dds \
+										packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_cc.dds \
+										packages/gk/future/wall_plate_12_gk/wall_plate_12_gk_nm.dds \
+										packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_cc.dds \
+										packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_nm.dds \
+										packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_cc.dds \
+										packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_nm.dds \
+										packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_cc.dds \
+										packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_nm.dds \
+										packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_cc.dds \
+										packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_nm.dds \
+										packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_cc.dds \
+										packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_nm.dds \
+										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.dds \
+										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.dds \
+										packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_cc.dds \
+										packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_nm.dds
 
 MODERN_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 							`find packages/gk/modern/ -name "*.cfg"` \
@@ -305,12 +306,12 @@ MODERN_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 #                 packages/gk/cyber/cybersky/
 
 # Tip: use 'listtex' in the engine to check which textures are actually used! That is how these lists were generated.
-TWO_TOWERS_FILES =  packages/base/two_towers.ogz \
-                    packages/base/two_towers.cfg \
+TWO_TOWERS_FILES =  packages/base/two_towers.cfg \
+										packages/base/two_towers.ogz \
                     packages/base/two_towers.wpt
 
-ZOOM_FILES = packages/base/zoom.ogz \
-             packages/base/zoom.cfg \
+ZOOM_FILES = packages/base/zoom.cfg \
+						 packages/base/zoom.ogz \
              packages/base/zoom.wpt
 
 #ZOOMIN_FILES = packages/base/zoomin.ogz \
@@ -335,8 +336,8 @@ FFPIT_FILES = packages/models/ffpit/md5.cfg \
               `find packages/models/ffpit/ -name "*.dds"` \
               `find packages/models/ffpit/ -name "*.md5mesh"`
 
-COLOS_FILES = packages/base/colos.ogz \
-              packages/base/colos.cfg \
+COLOS_FILES = packages/base/colos.cfg \
+							packages/base/colos.ogz \
               packages/base/colos.wpt \
               $(FFFLAG_FILES) \
               $(FFPIT_FILES)
@@ -369,24 +370,24 @@ COLOS_FILES = packages/base/colos.ogz \
 #               packages/base/cyber1.cfg \
 #               packages/base/cyber1.wpt
 
-ZO_FILES = 	packages/base/zo_min.ogz \
-						packages/base/zo_min.cfg \
+ZO_FILES = 	packages/base/zo_min.cfg \
+						packages/base/zo_min.ogz \
 						packages/base/zo_min.wpt
 
-MO_FILES = 	packages/base/mo.ogz \
-						packages/base/mo.cfg \
+MO_FILES = 	packages/base/mo.cfg \
+						packages/base/mo.ogz \
 						packages/base/mo.wpt \
 
-SB2_FILES = packages/base/sb2.ogz \
-						packages/base/sb2.cfg \
+SB2_FILES = packages/base/sb2.cfg \
+						packages/base/sb2.ogz \
 						packages/base/sb2.wpt
 
-STARFOX_FILES = packages/base/starfox.ogz \
-								packages/base/starfox.cfg \
+STARFOX_FILES = packages/base/starfox.cfg \
+								packages/base/starfox.ogz \
 								packages/base/starfox.wpt
 
-SKY_FILES = packages/base/sky_low.ogz \
-						packages/base/sky_low.cfg \
+SKY_FILES = packages/base/sky_low.cfg \
+						packages/base/sky_low.ogz \
 						packages/base/sky_low.wpt
 
 FRANKIE_MODEL_FILES = packages/models/frankie/
@@ -407,8 +408,8 @@ CHARACTER_FILES = $(SNOUTX10K_MODEL_FILES) \
 #	                packages/skyboxes/philo/
 
 CRUNCH_QUALITY = 64
-#CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
-CRUNCH_FLAG=
+CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
+#CRUNCH_FLAG=
 
 packages:
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data $(CRUNCH_FLAG) --preload $(BASE_FILES) --pre-run > game/preload_base.js
