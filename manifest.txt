@@ -13,8 +13,8 @@ list.html
 #future.data
 fantasy.data
 modern.data
-#low.data
-#medium.data
+low.data
+medium.data
 #high.data
 #four.data
 #five.data
