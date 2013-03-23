@@ -1,14 +1,12 @@
 (function(){
 
 var levels = [
-  /*
   {
     internalName: 'six',
     externalName: 'Colony',
     type: 'multiplayer',
     url: 'game.html?setup=six&serve'
   },
-  */
   {
     internalName: 'one',
     externalName: 'Arena',
@@ -29,14 +27,12 @@ var levels = [
     url: 'game.html?setup=nine&serve'
   },
   */
-  /*
   {
     internalName: 'three',
     externalName: 'Lava Chamber',
     type: 'multiplayer',
     url: 'game.html?setup=high&serve'
   },
-  */
   {
     internalName: 'ten',
     externalName: 'Ruins',

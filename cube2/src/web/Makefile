@@ -270,6 +270,8 @@ FUTURE_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 										packages/gk/future/wall_plate_15_gk/wall_plate_15_gk_nm.dds \
 										packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_cc.dds \
 										packages/gk/future/wall_plate_16_gk/wall_plate_16_gk_nm.dds \
+										packages/gk/future/wall_plate_16_gk_v2/wall_plate_16_gk_v2_cc.dds \
+										packages/gk/future/wall_plate_16_gk_v2/wall_plate_16_gk_v2_nm.dds \
 										packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_cc.dds \
 										packages/gk/future/wall_plate_20_gk/wall_plate_20_gk_nm.dds \
 										packages/gk/future/wall_plate_21_gk/wall_plate_21_gk_cc.dds \
@@ -278,6 +280,10 @@ FUTURE_TEXTURES = `find packages/gk/future/skysfJPG/ -name "*.jpg"` \
 										packages/gk/future/wall_plate_22_gk/wall_plate_22_gk_nm.dds \
 										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.dds \
 										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.dds \
+										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_cc.png \
+										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_nm.png \
+										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_sc.png \
+										packages/gk/future/wall_plate_23_gk/wall_plate_23_gk_hm.png \
 										packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_cc.dds \
 										packages/gk/future/wall_plate_24_gk/wall_plate_24_gk_nm.dds
 
