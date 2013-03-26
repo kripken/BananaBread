@@ -50,6 +50,22 @@ function clearQuery(url, item) {
   }
 };
 
+var multiplayerSupported = false;
+if(window.mozRTCPeerConnection) {
+  try {
+    var pc = new window.mozRTCPeerConnection();
+    if(pc.createDataChannel) {
+      multiplayerSupported = true;
+    }
+  } catch(e) {
+  }
+}
+
+if(multiplayerSupported)
+  console.info('webrtc multiplayer supported');
+else
+  console.info('webrtc multiplayer not supported');
+
 var params = Query.parse(window.location.search.substring(1));
 console.info('params', params);
 
@@ -88,10 +104,10 @@ if (checkPageParam('deterministic')) {
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
-  arguments: checkPageParam('serve') ? ['-d1'] : [],
+  arguments: (checkPageParam('serve') && multiplayerSupported) ? ['-d1'] : [],
   benchmark: checkPageParam('benchmark') ? { totalIters: 2000, iter: 0 } : null,
-  host: checkPageParam('serve') ? true : false,
-  join: checkPageParam('webrtc-session') ? true : false,
+  host: (checkPageParam('serve') && multiplayerSupported) ? true : false,
+  join: (checkPageParam('webrtc-session') && multiplayerSupported) ? true : false,
   webrtc: {
     broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : 'https://mdsw.ch:8080',
     session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined,
