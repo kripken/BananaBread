@@ -55,6 +55,11 @@ var levels = [
 
 var brokerUrl = 'http://mdsw.ch:8080';
 
+var pathname = window.location.pathname;
+var applicationUrl = window.location.hostname + pathname.substring(0, pathname.lastIndexOf('/'));
+applicationUrl = "developer.cdn.mozilla.net/media/uploads/demos/a/z/azakai/3baf4ad7e600cbda06ec46efec5ec3b8/bananabread_1364348082_demo_package";
+console.info(applicationUrl);
+
 if (window.location.search) {
   var params = window.location.search.substring(1).split('&');
   for (var i = 0; i < params.length; ++ i) {
@@ -68,6 +73,7 @@ document.querySelector('#broker-url').innerHTML = 'Broker: ' + brokerUrl;
 
 var hosts = {};
 var filter = {
+  'url': applicationUrl,
   'metadata': {
     'name': '^BananaBread$'
   }
