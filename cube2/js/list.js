@@ -54,6 +54,7 @@ var levels = [
 ];
 
 var brokerUrl = 'http://mdsw.ch:8080';
+var filterUrl = undefined;
 
 var pathname = window.location.pathname;
 var applicationUrl = window.location.hostname + pathname.substring(0, pathname.lastIndexOf('/'));
@@ -64,6 +65,8 @@ if (window.location.search) {
   for (var i = 0; i < params.length; ++ i) {
     if (params[i].match('^webrtc-broker')) {
       brokerUrl = params[i].split('=')[1];
+    } else if(params[i].match('^filter-url')) {
+      filterUrl = params[i].split('=')[1];
     }
   }
 }
@@ -72,7 +75,7 @@ document.querySelector('#broker-url').innerHTML = 'Broker: ' + brokerUrl;
 
 var hosts = {};
 var filter = {
-  'url': applicationUrl,
+  'url': filterUrl || applicationUrl,
   'metadata': {
     'name': '^BananaBread$'
   }
