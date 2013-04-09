@@ -567,7 +567,7 @@ function CameraPath(data) { // TODO: namespace this
             loadChildScript('game/preload_' + preload + '.js', function() {
               var scriptParts = ['bb'];
               if (checkPageParam('debug')) scriptParts.push('debug');
-              loadChildScript('game/' + scriptParts.join('.') + '.js');
+              loadChildScript(scriptParts.join('.') + '.js');
             });
           });
         });
