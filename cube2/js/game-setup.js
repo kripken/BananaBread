@@ -741,7 +741,7 @@ var levels = {
               loadChildScript('game/preload_' + levels[setup]['textures'] + '.js', function() {
                 var scriptParts = ['bb'];
                 if (checkPageParam('debug')) scriptParts.push('debug');
-                loadChildScript('game/' + scriptParts.join('.') + '.js');
+                loadChildScript(scriptParts.join('.') + '.js');
               })
             });
           });

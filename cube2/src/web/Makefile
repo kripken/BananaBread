@@ -438,8 +438,8 @@ packages:
 TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
 
 client: client.bc packages
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s ASM_JS=1
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o game/bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s ASM_JS=1 -g
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s ASM_JS=1
+	#cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.debug.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -O2 src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s ASM_JS=1 -g
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)
