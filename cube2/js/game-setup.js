@@ -118,6 +118,29 @@ var Module = {
         'name': 'BananaBread',
         'connected': 1
       }
+    },
+    onpeer: function(peer, route) {
+      if(!host && route) {
+        peer.connect(route);
+      } else {
+        console.log(route);
+        peer.listen(Module['webrtc']['hostOptions']);
+      }
+    },
+    onconnect: function(peer) {
+      if(Module['host']) {
+        ++ Module['webrtc']['hostOptions']['metadata']['connected'];
+        peer.listen(Module['webrtc']['hostOptions']);
+      }
+    },
+    ondisconnect: function(peer) {
+      if(Module['host']) {
+        -- Module['webrtc']['hostOptions']['metadata']['connected'];
+        peer.listen(Module['webrtc']['hostOptions']);
+      }
+    },
+    onerror: function(error) {
+      console.error(error);
     }
   },
   TOTAL_MEMORY: 256*1024*1024, // may need to adjust this for huge levels

@@ -53,7 +53,7 @@ var levels = [
   }
 ];
 
-var brokerUrl = 'http://mdsw.ch:8080';
+var brokerUrl = 'https://mdsw.ch:8080';
 var filterUrl = undefined;
 
 var pathname = window.location.pathname;
@@ -85,7 +85,7 @@ var listElement = document.querySelector('#join-list');
 var listItemElement = listElement.querySelector('li');
 listElement.removeChild(listItemElement);
 
-var socket = io.connect(brokerUrl + '/list', {secure: true});
+var socket = io.connect(brokerUrl + '/list');
 socket.on('connect', function() {
   socket.emit('list', filter);
 });
