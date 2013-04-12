@@ -23,3 +23,5 @@ seven.data
 eight.data
 nine.data
 ten.data
+bb.js
+bb.js.mem

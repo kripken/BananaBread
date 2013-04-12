@@ -120,9 +120,9 @@ var Module = {
       }
     },
     onpeer: function(peer, route) {
-      if(!host && route) {
-        peer.connect(route);
-      } else {
+      if(Module['join'] && Module['webrtc']['session']) {
+        peer.connect(Module['webrtc']['session']);
+      } else if(Module['host']) {
         console.log(route);
         peer.listen(Module['webrtc']['hostOptions']);
       }

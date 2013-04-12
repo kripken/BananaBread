@@ -24,6 +24,8 @@ servers.cfg
 *.diff
 *.crn
 game/preload_*.js
-game/bb*.js
+bb*.js
+bb*.js.mem
 *.data
 server*.html
+server*.html.mem
