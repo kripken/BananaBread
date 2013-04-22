@@ -17,7 +17,7 @@ var window = {
     search: '?low,low,asm,benchmark,deterministic',
   },
   onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
-  dirsToDrop: 1, // go back to root dir if first_js is in a subdir
+  dirsToDrop: 0, // go back to root dir if first_js is in a subdir
   //
 
   headless: true,
