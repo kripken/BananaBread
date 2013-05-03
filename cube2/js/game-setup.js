@@ -239,10 +239,12 @@ Module.setOpacity = function(opacity) {
   var more = 'border: 1px solid black';
   var styleSheet = document.styleSheets[0];
   var rules = styleSheet.cssRules;
-  for (var i = 0; i < rules.length; i++) {
-    if (rules[i].cssText.substr(0, rule.length) == rule) {
-      styleSheet.deleteRule(i);
-      i--;
+  if (rules) {
+    for (var i = 0; i < rules.length; i++) {
+      if (rules[i].cssText.substr(0, rule.length) == rule) {
+        styleSheet.deleteRule(i);
+        i--;
+      }
     }
   }
   styleSheet.insertRule(rule + ' { opacity: ' + opacity + '; ' + (more || '') + ' }', 0);
