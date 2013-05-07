@@ -416,24 +416,25 @@ CHARACTER_FILES = $(SNOUTX10K_MODEL_FILES) \
 
 CRUNCH_QUALITY = 64
 CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
-#CRUNCH_FLAG=
+#CACHE_FLAG=--use-preload-cache
+CACHE_FLAG=
 
 packages:
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data $(CRUNCH_FLAG) --preload $(BASE_FILES) --pre-run > game/preload_base.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data $(CRUNCH_FLAG) --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py future.data $(CRUNCH_FLAG) --preload $(FUTURE_TEXTURES) --pre-run > game/preload_future.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fantasy.data $(CRUNCH_FLAG) --preload $(FANTASY_TEXTURES) --pre-run > game/preload_fantasy.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py modern.data $(CRUNCH_FLAG) --preload $(MODERN_TEXTURES) --pre-run > game/preload_modern.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data $(CRUNCH_FLAG) --preload $(COLOS_FILES) --pre-run > game/preload_low.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data $(CRUNCH_FLAG) --preload $(TWO_TOWERS_FILES) --pre-run > game/preload_medium.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data $(CRUNCH_FLAG) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data $(CRUNCH_FLAG) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data $(CRUNCH_FLAG) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data $(CRUNCH_FLAG) --preload $(ZO_FILES) --pre-run > game/preload_six.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data $(CRUNCH_FLAG) --preload $(MO_FILES) --pre-run > game/preload_seven.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data $(CRUNCH_FLAG) --preload $(SB2_FILES) --pre-run > game/preload_eight.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py nine.data $(CRUNCH_FLAG) --preload $(STARFOX_FILES) --pre-run > game/preload_nine.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py ten.data $(CRUNCH_FLAG) --preload $(SKY_FILES) --pre-run > game/preload_ten.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(BASE_FILES) --pre-run > game/preload_base.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(CHARACTER_FILES) --pre-run > game/preload_character.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py future.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(FUTURE_TEXTURES) --pre-run > game/preload_future.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py fantasy.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(FANTASY_TEXTURES) --pre-run > game/preload_fantasy.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py modern.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(MODERN_TEXTURES) --pre-run > game/preload_modern.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(COLOS_FILES) --pre-run > game/preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(TWO_TOWERS_FILES) --pre-run > game/preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py six.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(ZO_FILES) --pre-run > game/preload_six.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py seven.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(MO_FILES) --pre-run > game/preload_seven.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py eight.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(SB2_FILES) --pre-run > game/preload_eight.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py nine.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(STARFOX_FILES) --pre-run > game/preload_nine.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py ten.data $(CRUNCH_FLAG) $(CACHE_FLAG) --preload $(SKY_FILES) --pre-run > game/preload_ten.js
 
 TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
 
