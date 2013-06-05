@@ -216,10 +216,12 @@ if (Module.benchmark) {
   preloadStartTime = Date.realNow();
 
   Module.preRun.push(function() {
-    __ATMAIN__.push({ func: function() {
+    var main = Module._main;
+    Module._main = function() {
       Module.print('<< start startup >>');
       Module.startupStartTime = Date.realNow();
-    } });
+      return main.apply(null, arguments);
+    };
   });
 
   Module.benchmark.progressTick = Math.floor(Module.benchmark.totalIters / 100);
@@ -240,7 +242,7 @@ if (Module.benchmark) {
       Module.progressElement.value = iter; // TODO: check if this affects performance
     } else if (iter >= Module.benchmark.totalIters) {
       window.stopped = true;
-      Browser.mainLoop.pause();
+      Module.pauseMainLoop();
 
       // show results
       Module.canvas.classList.add('hide');
@@ -419,7 +421,7 @@ Module.postLoadWorld = function() {
     Module.fullscreenLow = function() {
       document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
       Module.canvas.classList.remove('hide');
-      Module.requestFullScreen();
+      Module.requestFullScreen(true);
       Module.setOpacity(1);
       Module.setStatus('');
       Module.resumeMainLoop();
@@ -429,7 +431,7 @@ Module.postLoadWorld = function() {
     Module.fullscreenHigh = function() {
       document.querySelector('.status-content.fullscreen-buttons').classList.add('hide');
       Module.canvas.classList.remove('hide');
-      Module.requestFullScreen();
+      Module.requestFullScreen(true);
       Module.setOpacity(1);
       Module.setStatus('');
       BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
