@@ -1,5 +1,6 @@
 *.o
 *.gch
+*.bc
 src/native/fpsgame/*.h
 src/native/engine/*.h
 src/native/shared/*.h
