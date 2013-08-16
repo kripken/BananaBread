@@ -425,7 +425,7 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOM_FILES) --pre-run > game/preload_high.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) --pre-run > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) --pre-run > game/preload_five.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) --closure 1
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc src/web/libz.a -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) --closure 1 -s LEGACY_GL_EMULATION=1
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  
