@@ -15,6 +15,7 @@ var window = {
       return 'game.html?low,low,asm,benchmark,deterministic';
     },
     search: '?low,low,asm,benchmark,deterministic',
+    pathname: 'game.html',
   },
   onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
   dirsToDrop: 0, // go back to root dir if first_js is in a subdir
@@ -82,6 +83,7 @@ var window = {
     },
     revokeObjectURL: function(x) {},
   },
+  encodeURIComponent: function(x) { return x },
 };
 var setTimeout = window.setTimeout;
 var document = {
