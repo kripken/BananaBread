@@ -15,6 +15,7 @@ var window = {
       return 'game.html?low,low,asm,benchmark,deterministic';
     },
     search: '?low,low,asm,benchmark,deterministic',
+    pathname: 'game.html',
   },
   onIdle: function(){ headlessPrint('triggering click'); document.querySelector('.fullscreen-button.low-res').callEventListeners('click'); window.onIdle = null; },
   dirsToDrop: 0, // go back to root dir if first_js is in a subdir
@@ -76,16 +77,6 @@ var window = {
       headlessPrint('main event loop iteration took ' + (Date.realNow() - start) + ' ms');
     }
   },
-  URL: {
-    createObjectURL: function(x) {
-      return x; // the blob itself is returned
-    },
-    revokeObjectURL: function(x) {},
-  },
-};
-var setTimeout = window.setTimeout;
-var document = {
-  headless: true,
   eventListeners: {},
   addEventListener: function(id, func) {
     var listeners = this.eventListeners[id];
@@ -100,6 +91,20 @@ var document = {
       listeners.forEach(function(listener) { listener() });
     }
   },
+  URL: {
+    createObjectURL: function(x) {
+      return x; // the blob itself is returned
+    },
+    revokeObjectURL: function(x) {},
+  },
+  encodeURIComponent: function(x) { return x },
+};
+var setTimeout = window.setTimeout;
+var document = {
+  headless: true,
+  eventListeners: {},
+  addEventListener: window.addEventListener,
+  callEventListeners: window.callEventListeners,
   getElementById: function(id) {
     switch(id) {
       case 'canvas': {

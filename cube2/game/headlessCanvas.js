@@ -567,6 +567,7 @@ function headlessCanvas() {
             scissor: function(){},
             colorMask: function(){},
             lineWidth: function(){},
+            vertexAttrib4fv: function(){},
           };
         }
         case '2d': {
