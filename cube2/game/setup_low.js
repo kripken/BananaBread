@@ -21,7 +21,13 @@ Module.loadDefaultMap = function() {
     }
     BananaBread.execute('showfps 0 ; sleep 10 [ effic colos ; ' + bots.join(' ; ') + ' ]');
   } else {
-    BananaBread.execute('sleep 10 [ effic colos ; sleep 20000 [ addbot 50 ] ]');
+    BananaBread.execute('sleep 10 [ effic colos ]');
   }
 };
 
+Module.autoexec = function() {
+  if(true === Module['join']) {
+    console.log('connecting to host');
+    BananaBread.execute('connect');
+  }
+};

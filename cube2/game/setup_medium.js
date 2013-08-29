@@ -12,6 +12,7 @@ Module.tweakDetail = function() {
   BananaBread.execute('waterreflect 1');
   BananaBread.execute('waterrefract 1');
 
+/*
   new CameraPath({
     steps: [{
       position: LinearMath.vec3.create([3201.224, 2654.501, 1547.068]),
@@ -80,9 +81,16 @@ Module.tweakDetail = function() {
     timeScale: 4.33,
     sigma: 0.75
   }).execute();
+*/
 };
 
 Module.loadDefaultMap = function() {
   BananaBread.execute('sleep 10 [ effic two_towers ]');
 };
 
+Module.autoexec = function() {
+  if(true === Module['join']) {
+    console.log('connecting to host');
+    BananaBread.execute('connect');
+  }
+};

@@ -1,5 +1,6 @@
 *.o
 *.gch
+*.bc
 src/native/fpsgame/*.h
 src/native/engine/*.h
 src/native/shared/*.h
@@ -23,4 +24,9 @@ restore.cfg
 servers.cfg
 *.diff
 *.crn
-
+game/preload_*.js
+bb*.js
+bb*.js.mem
+*.data
+server*.html
+server*.html.mem

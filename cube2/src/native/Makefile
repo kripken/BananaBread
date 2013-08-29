@@ -1,4 +1,4 @@
-CXXFLAGS= -O0 -fomit-frame-pointer -g -I/home/alon/Dev/emscripten/system/include/emscripten
+CXXFLAGS= -O0 -fomit-frame-pointer -g -I/home/ack/work/emscripten/system/include/emscripten
 override CXXFLAGS+= -Wall -fsigned-char -fno-exceptions -fno-rtti
 
 PLATFORM= $(shell uname -s)

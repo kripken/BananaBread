@@ -32,35 +32,15 @@
         </div>
         <div id="slide-counter"></div>
       </div>
-      <div id="menu">
-        <a class="menu-item" href="game.html?low,low">
-          <div class="overlay"></div>
-          <div class="title">Play: Level 1</div>
-          <div class="sub-title">Arena</div>
-        </a>
-        <a class="menu-item" href="game.html?medium,medium">
-          <div class="overlay"></div>
-          <div class="title">Play: Level 2</div>
-          <div class="sub-title">Two Towers</div>
-        </a>
-        <a class="menu-item" href="game.html?high,high">
-          <div class="overlay"></div>
-          <div class="title">Play: Level 3</div>
-          <div class="sub-title">Lava Chamber</div>
-        </a>
-        <a class="menu-item" href="game.html?four,four">
-          <div class="overlay"></div>
-          <div class="title">Play: Level 4 (experimental)</div>
-          <div class="sub-title">Future</div>
-        </a>
-        <a class="menu-item" href="game.html?five,five">
-          <div class="overlay"></div>
-          <div class="title">Play: Level 5 (experimental)</div>
-          <div class="sub-title">Lava Rooms</div>
-        </a>
+      <div class="section" id="requirements">
+        You will need:
+        <ul>
+          <li>Browser that supports WebGL with compressed textures, fullscreen and pointer lock</li>
+          <li>Multiplayer requires WebRTC Data Channels with binary data support. This is present in Firefox (<a href="http://nightly.mozilla.org">Nightly</a>), but not yet in Chrome (<a href="https://code.google.com/p/webrtc/issues/detail?id=1408&q=binary&colspec=ID%20Pri%20Mstone%20ReleaseBlock%20Area%20Status%20Owner%20Summary">open issue</a>)</li>
+        </ul>
       </div>
-      <div id="video">
-        <div class="overlay"></div>
+      <a href="list.html" id="play-button">Start playing</a>
+      <div class="section" id="video">
         <iframe width="640" height="360" src="http://www.youtube.com/embed/mIYmxPdtsl4?rel=0" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="section" id="about">
@@ -74,17 +54,6 @@
           <li><a href="http://mozakai.blogspot.com/2012/05/emscripten-opengl-webgl-conversion.html">http://mozakai.blogspot.com/2012/05/emscripten-opengl-webgl-conversion.html</a></li>
           <li><a href="http://mozakai.blogspot.com/2012/07/bananabread-or-any-compiled-codebase.html">http://mozakai.blogspot.com/2012/07/bananabread-or-any-compiled-codebase.html</a></li>
         </ul>
-      </div>
-      <div class="section" id="gameplay">
-        <div class="title">Gameplay Instructions</div>
-          <ul>
-            <li>Move with WASD, jump with space, look around with the mouse.</li>
-            <li>Shoot with the mouse, change weapons with 1-5.</li>
-            <li>You can change some settings using the main menu (press 0 or <code>`</code>). For example, add another bot with "add bot", or change the resolution with options->res.</li>
-            <li>'e' toggles edit mode, which lets you fly around the map and actually modify it.</li>
-            <li>Press 9 to toggle thirdperson mode (to see your own character)</li>
-          </ul>
-        </p>
       </div>
       <div class="section">
         <div class="title">Resources</div>
@@ -101,6 +70,7 @@
             BananaBread and Emscripten Development
             <div class="name"><a href="https://github.com/kripken">Alon "kripken" Zakai</a></div>
             <div class="name"><a href="https://github.com/ehsan">Ehsan Akhgari</a></div>
+            <div class="name"><a href="https://github.com/modeswitch">Alan "ack" Kligman</a></div>
           </div>
           <div class="role">
             Art and Content
@@ -134,30 +104,9 @@
             <div class="name">
               <a href="http://sauerbraten.org/">sauerbraten.org</a>
             </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="section" id="troubleshooting">
-      <div class="title">Troubleshooting</div>
-      <p>
-        Please note that up to date versions of modern browers are needed to run this demo, and it will not launch if it detects crucial features are missing.
-        <ul>
-          <li>The demo works properly in the stable releases of Firefox (since August 2012) and Chrome (since September 2012).</li>
-          <li>The demo should also work in any browser that supports the necessary web standards: Pointer lock, WebGL, compressed textures, fullscreen, and typed arrays.</li>
-          <li>If you have trouble with WebGL, get help <a href="http://get.webgl.org/">here</a>.</li>
-        </ul>
-      </p>
-      <p>
-        See the project <b><a href="https://github.com/kripken/BananaBread/wiki/FAQ">FAQ</a></b> (specifically the technical part) for solutions to common problems.
-      </p>
-      <p>
-        Known issues:
-        <ul>
-          <li>Internet Explorer can't run the demo because it does not support WebGL yet. Please ask Microsoft to support it.</li>
-          <li>Older versions of Safari lack Float64Array and cannot run the compiled code.</li>
-          <li>Sound <a href="https://code.google.com/p/chromium/issues/detail?id=138454">has some glitches in Chrome</a>.</li>
-          <li>Mesa on Firefox 15 on Linux does not support compressed textures, but it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=774134">works in Firefox 16</a>.</li>
-        </ul>
-      </p>
     </div>
     <footer></footer>
     <script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script>

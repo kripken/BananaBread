@@ -1,5 +1,78 @@
 // Setup compiled code parameters and interaction with the web page
 
+var Query = {
+  parse: function parse(queryString) {
+    var result = {};
+    var parts = queryString.split('&');
+    parts.forEach(function(part) {
+      var key = part.split('=')[0];
+      if(!result.hasOwnProperty(key))
+        result[key] = [];
+      var value = part.split('=')[1];
+      if(undefined !== value)
+        result[key].push(value);
+    });
+    return result;
+  },
+  defined: function defined(params, key) {
+    return (params.hasOwnProperty(key));
+  }
+};
+
+function setQuery(url, item) {
+  var urlParts = url.split('?');
+  if(urlParts.length < 2) {
+    urlParts[1] = item;
+  } else {
+    var query = urlParts[1].split('&');
+    query.push(item);
+    urlParts[1] = query.join('&');
+  }
+  return urlParts.join('?');
+};
+
+function clearQuery(url, item) {
+  var urlParts = url.split('?');
+  if(urlParts.length < 2) {
+    return url;
+  } else {
+    var query = urlParts[1].split('&');
+    var result = [];
+    query.forEach(function(queryPart) {
+      if(!queryPart.split('=')[0].match('^' + item + '$'))
+        result.push(queryPart);
+    });
+    urlParts[1] = result.join('&');
+    if(urlParts[1].length < 1)
+      return urlParts[0];
+    else
+      return urlParts.join('?');
+  }
+};
+
+var multiplayerSupported = false;
+if(window.mozRTCPeerConnection) {
+  try {
+    var pc = new window.mozRTCPeerConnection();
+    if(pc.createDataChannel) {
+      multiplayerSupported = true;
+    }
+  } catch(e) {
+  }
+}
+
+if(multiplayerSupported)
+  console.info('webrtc multiplayer supported');
+else
+  console.info('webrtc multiplayer not supported');
+
+var params = Query.parse(window.location.search.substring(1));
+console.info('params', params);
+
+var url = window.location.toString();
+url = clearQuery(url, 'serve');
+url = clearQuery(url, 'windowed');
+
 var shell = typeof window == 'undefined';
 
 if (shell) {
@@ -7,13 +80,9 @@ if (shell) {
   load('game/headlessCanvas.js');
 }
 
-if (typeof pageParams === 'undefined') {
-  var pageParams = window.location.search || '';
-}
-if (pageParams[0] == '?') pageParams = pageParams.substr(1);
-
 function checkPageParam(param) {
-  return pageParams.split(',').indexOf(param) >= 0
+  console.log('checkPageParam:', param);
+  return Query.defined(params, param);
 }
 
 Date.realNow = Date.now;
@@ -35,8 +104,46 @@ if (checkPageParam('deterministic')) {
 
 var Module = {
   // If the url has 'serve' in it, run a listen server and let others connect to us
-  arguments: checkPageParam('serve') ? ['-d1', '-j28780'] : [],
+  arguments: (checkPageParam('serve') && multiplayerSupported) ? ['-d1'] : [],
   benchmark: checkPageParam('benchmark') ? { totalIters: 2000, iter: 0 } : null,
+  host: (checkPageParam('serve') && multiplayerSupported) ? true : false,
+  join: (checkPageParam('webrtc-session') && multiplayerSupported) ? true : false,
+  webrtc: {
+    broker: checkPageParam('webrtc-broker') ? params['webrtc-broker'] : 'https://mdsw.ch:8080',
+    session: checkPageParam('webrtc-session') ? params['webrtc-session'] : undefined,
+    hostOptions: {
+      'url': url,
+      'listed': true,
+      'metadata': {
+        'name': 'BananaBread',
+        'connected': 1
+      }
+    },
+    onpeer: function(peer, route) {
+      if(Module['join'] && Module['webrtc']['session']) {
+        peer.connect(Module['webrtc']['session']);
+      } else if(Module['host']) {
+        console.log(route);
+        peer.listen(Module['webrtc']['hostOptions']);
+      }
+    },
+    onconnect: function(peer) {
+      if(Module['host']) {
+        ++ Module['webrtc']['hostOptions']['metadata']['connected'];
+        peer.listen(Module['webrtc']['hostOptions']);
+      }
+    },
+    ondisconnect: function(peer) {
+      if(Module['host']) {
+        -- Module['webrtc']['hostOptions']['metadata']['connected'];
+        peer.listen(Module['webrtc']['hostOptions']);
+      }
+    },
+    onerror: function(error) {
+      console.error(error);
+    }
+  },
+  TOTAL_MEMORY: 256*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
   postRun: [],
@@ -91,7 +198,9 @@ var Module = {
       Module.canvas.classList.remove( 'hide' );
       //BananaBread.execute('musicvol $oldmusicvol'); // XXX TODO: need to restart the music by name here
     } else {
-      Module.pauseMainLoop();
+      if(!(Module.host && Module.join)) {
+        Module.pauseMainLoop();
+      }
       Module.setOpacity(0.333);
       Module.setStatus('<b>paused (enter fullscreen to resume)</b>');
       Module.canvas.classList.add( 'paused' );
@@ -185,6 +294,16 @@ if (Module.benchmark) {
                     canvas['mozRequestPointerLock'] ||
                     canvas['webkitRequestPointerLock'];
   if (!pointerLock) fail('pointer lock/mouse lock');
+  /*
+  if (!navigator.mozGetUserMedia) {
+    fail("getUserMedia");
+    return;
+  }
+  if (!window.mozRTCPeerConnection) {
+    redirect("PeerConnection");
+    return;
+  }
+  */
 })();
 
 // Loading music. Will be stopped once the first frame of the game runs
@@ -470,7 +589,7 @@ BananaBread.Effects = {
             return false;
           }
         });
-      
+
         shots.push.apply(shots, newShots);
 
         if (shots.length == 0) this.totalMs = 0;
@@ -533,6 +652,49 @@ function CameraPath(data) { // TODO: namespace this
   }
 }
 
+var levels = {
+  'low': {
+    'title': 'Arena',
+    'preload': 'low',
+    'textures': 'fantasy'
+  },
+  'medium': {
+    'title': 'Two Towers',
+    'preload': 'medium',
+    'textures': 'fantasy'
+  },
+  'high': {
+    'title': 'Lava Chamber',
+    'preload': 'high',
+    'textures': 'future'
+  },
+  'six': {
+    'title': 'Colony',
+    'preload': 'six',
+    'textures': 'future'
+  },
+  'seven': {
+    'title': 'Bunker',
+    'preload': 'seven',
+    'textures': 'modern'
+  },
+  'eight': {
+    'title': 'Hanger',
+    'preload': 'eight',
+    'textures': 'modern'
+  },
+  'nine': {
+    'title': 'Ship',
+    'preload': 'nine',
+    'textures': 'future'
+  },
+  'ten': {
+    'title': 'Ruins',
+    'preload': 'ten',
+    'textures': 'fantasy'
+  }
+};
+
 // Load scripts
 
 (function() {
@@ -543,22 +705,33 @@ function CameraPath(data) { // TODO: namespace this
     document.body.appendChild(js);
   }
 
-  var urlParts = pageParams.split(',');
-  var setup = urlParts[0], preload = urlParts[1];
+  var setup = checkPageParam('setup') ? params['setup'][0] : 'seven';
+  // var preload = checkPageParam('preload') ? params['preload'][0] : 'low';
+  // var textures = checkPageParam('textures') ? params['textures'][0] : 'fantasy';
 
   var levelTitleContainer = document.querySelector('.level-title span');
-  if (levelTitleContainer) {
-    var levelTitle;
-    switch(setup) {
-      case 'low':    levelTitle = 'Arena';        break;
-      case 'medium': levelTitle = 'Two Towers';   break;
-      case 'high':   levelTitle = 'Lava Chamber'; break;
-      case 'four':   levelTitle = 'Future';       break;
-      case 'five':   levelTitle = 'Lava Rooms';   break;
-      default: throw('unknown setup: ' + setup);
-    };
-    levelTitleContainer.innerHTML = levelTitle;
+  var levelTitle;
+  /*
+  switch(setup) {
+    case 'low':    levelTitle = 'Arena';        break;
+    case 'medium': levelTitle = 'Two Towers';   break;
+    case 'high':   levelTitle = 'Lava Chamber'; break;
+    case 'four':   levelTitle = 'Future';       break;
+    case 'five':   levelTitle = 'Lava Rooms';   break;
+    case 'six':    levelTitle = 'Colony';       break;
+    case 'seven':  levelTitle = 'Bunker';       break;
+    case 'eight':  levelTitle = 'Hanger';       break;
+    case 'nine':   levelTitle = 'Ship';         break;
+    case 'ten':    levelTitle = 'Ruins';        break;
+    default: throw('unknown setup: ' + setup);
+  };
+  */
+  if(!levels.hasOwnProperty(setup)) {
+    throw('unknown setup: ' + setup);
+  } else {
+    levelTitle = levels[setup]['title'];
   }
+  levelTitleContainer.innerHTML = levelTitle;
 
   var previewContainer = document.querySelector('.preview-content.' + setup );
   if (previewContainer) previewContainer.classList.add('show');
@@ -568,10 +741,12 @@ function CameraPath(data) { // TODO: namespace this
       loadChildScript('game/setup_' + setup + '.js', function() {
         loadChildScript('game/preload_base.js', function() {
           loadChildScript('game/preload_character.js', function() {
-            loadChildScript('game/preload_' + preload + '.js', function() {
-              var scriptParts = ['bb'];
-              if (checkPageParam('debug')) scriptParts.push('debug');
-              loadChildScript(scriptParts.join('.') + '.js');
+            loadChildScript('game/preload_' + levels[setup]['preload'] + '.js', function() {
+              loadChildScript('game/preload_' + levels[setup]['textures'] + '.js', function() {
+                var scriptParts = ['bb'];
+                if (checkPageParam('debug')) scriptParts.push('debug');
+                loadChildScript(scriptParts.join('.') + '.js');
+              })
             });
           });
         });

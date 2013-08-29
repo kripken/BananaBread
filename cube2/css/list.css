@@ -1,0 +1,279 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('Open-Sans-Italic'),
+    url('../assets/fonts/OpenSans-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('Open-Sans-Bold'),
+    url('../assets/fonts/OpenSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('Open-Sans-Regular'),
+    url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Bebas';
+  font-weight: 400;
+  src: local('Bebas'), local('Bebas'),
+    url('../assets/fonts/BEBAS___-webfont.ttf') format('truetype');
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font: 14pt 'Open Sans';
+  background: url('../assets/bg.jpg');
+  background: -moz-linear-gradient(left,  rgba(0,0,0,1) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%), url('../assets/bg.jpg'); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,1)), color-stop(20%,rgba(0,0,0,0)), color-stop(80%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1))), url('../assets/bg.jpg'); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%), url('../assets/bg.jpg'); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%), url('../assets/bg.jpg'); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%), url('../assets/bg.jpg'); /* IE10+ */
+  background: linear-gradient(to right,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,1) 100%), url('../assets/bg.jpg'); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 ); /* IE6-9 */
+  color: rgb(200, 200, 200);
+  margin: 1em;
+  padding: 1em;
+}
+
+h1, h2, h3, h4, .game-name {
+  font-family: 'Bebas';
+  text-shadow:  rgba(0, 0, 0, 0.9) 0.1em 0.1em 0.5em;
+}
+
+.game-name {
+  margin: 0;
+  text-shadow:  rgba(0, 0, 0, 0.9) 0.15em 0.15em 0.2em;
+}
+
+#main {
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+}
+
+#join-container {
+  width: 65%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#create-container {
+  width: 30%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#create-container .game-image {
+
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+  padding: 5px;
+}
+
+ul li {
+  height: 120px;
+  box-shadow: 2px 2px 5px rgba(25, 25, 25, 0.9);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  transition: background 0.05s;
+  -moz-transition: background 0.05s;
+  -webkit-transition: background 0.05s;
+  -o-transition: background 0.05s;
+  -ms-transition: background 0.05s;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.game-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.game-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.game-name {
+  z-index: 2;
+}
+
+.game-time {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.game-users {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#join-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  height: 100%;
+  width: 100%
+}
+
+#join-game-container {
+  width: 80%;
+  height: 120px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: -60px;
+  top: 50%;
+  background: rgba(50, 50, 50, 1);
+  padding: 10px;
+}
+
+#broker-url {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-size: .5em;
+}
+
+.join-game-button {
+  cursor: pointer;
+  height: 3em;
+  width: 6em;
+  margin: 10px;
+  text-align: center;
+  line-height: 3em;
+  box-shadow: 2px 2px 5px rgba(25, 25, 25, 0.9);
+  display: inline-block;
+  color: #fff;
+}
+
+#join-game-buttons {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 5px;
+  z-index: 5;
+}
+
+.join-button {
+  background: rgb(47, 146, 226);
+}
+
+.join-button:hover {
+  background: rgb(67, 166, 226);
+}
+
+.cancel-button {
+  background: rgb(218, 61, 30);
+}
+
+.cancel-button:hover {
+  background: rgb(218, 81, 50);
+}
+
+#join-game-container .game-container {
+  background: rgba(50, 50, 50, 1);
+}
+
+ul li {
+  margin-bottom: .5em;
+}
+
+ul li:hover .game-image {
+  opacity: 1.0;
+}
+
+ul li a {
+  color: inherit;
+}
+
+.game-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 110%;
+  opacity: 0.5;
+  background-image: url('../assets/screenshots/22_mini.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.05s;
+  -moz-transition: opacity 0.05s;
+  -webkit-transition: opacity 0.05s;
+  -o-transition: opacity 0.05s;
+  -ms-transition: opacity 0.05s;
+}
+
+.game-image.one {
+  background-image: url('../assets/screenshots/22_mini.jpg');
+}
+
+.game-image.two {
+  background-image: url('../assets/screenshots/15_mini.jpg');
+}
+
+.game-image.three {
+  background-image: url('../assets/screenshots/14_mini.jpg');
+}
+
+.game-image.four {
+  background-image: url('../assets/screenshots/03_mini.jpg');
+}
+
+.game-image.five {
+  background-image: url('../assets/screenshots/07_mini.jpg');
+}
+
+.game-image.six {
+  background-image: url('../assets/screenshots/six_mini.jpg');
+}
+
+.game-image.seven {
+  background-image: url('../assets/screenshots/seven_mini.jpg');
+}
+
+.game-image.eight {
+  background-image: url('../assets/screenshots/eight_mini.jpg');
+}
+
+.game-image.nine {
+  background-image: url('../assets/screenshots/nine_mini.jpg');
+}
+
+.game-image.ten {
+  background-image: url('../assets/screenshots/ten_mini.jpg');
+}
+
+.game-type {
+  font-size: .8em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

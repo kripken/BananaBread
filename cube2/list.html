@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/list.css">
+</head>
+<body>
+	<h1>Bananabread Games List</h1>
+	<div id="main">
+		<div id="create-container">
+			<h2>Create a Game</h2>
+			<ul id="create-list">
+				<li>
+					<a>
+						<div class="game-image"></div>
+						<div class="game-container">
+							<h2 class="game-name">Game Name</h2>
+							<div class="game-type"></div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div id="join-container">
+			<h2>Join a Game</h2>
+			<ul id="join-list">
+				<li>
+					<a>
+						<div class="game-image"></div>
+						<div class="game-container">
+							<h2 class="game-name">Game Name</h2>
+							<div class="game-time"></div>
+							<div class="game-users"></div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="broker-url"></div>
+</body>
+<script src="js/socket.io.js"></script>
+<script src="js/list.js"></script>
+</html>
