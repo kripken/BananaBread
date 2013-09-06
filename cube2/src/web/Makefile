@@ -336,6 +336,8 @@ COLOS_FILES = packages/base/colos.ogz \
               $(FFPIT_FILES) \
               packages/gk/fantasy/skyfantasyJPG/ \
               `find packages/gk/fantasy -name "*.cfg"` \
+              packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.dds \
+              packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_nm.dds \
               packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.dds \
               packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.dds \
               packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
