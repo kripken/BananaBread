@@ -3099,9 +3099,18 @@ void listtexcube(cube &c)
         loopi(8) listtexcube(c.children[i]);
 }
 
+int printtexturei;
+
+void printtexture(Texture *t)
+{
+  printf("%d - texture %s - %d\n", printtexturei++, t->name, t->id);
+}
+
 //! List the textures actually used
 void listtex()
 {
+    printf("textures in map\n");
+
     listtextures = new hashtable<int, int>;
     maxlisted = -1;
     loopi(8) listtexcube(worldroot[i]);
@@ -3110,7 +3119,44 @@ void listtex()
             loopj(slots[i]->sts.length())
                 printf("%s\r\n", slots[i]->sts[j].name);
     delete listtextures;
+
+    printf("\ntextures in list\n");
+    printtexturei = 0;
+    enumerate(textures, Texture, tex, printtexture(&tex));
 }
 
 COMMAND(listtex, "");
+
+GLuint getglid(const char *name)
+{
+    Texture *t = textureload(name, 0, false, true);
+    return t ? t->id : 0;
+}
+
+COMMAND(getglid, "s");
+
+void updatetex()
+//const char *name)
+//, void *pixels)
+{
+    const char *name = "packages/<dds>gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg&packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_sc.jpg";
+    char *pixels = (char *)worldroot; // whatevah
+
+    Texture *t = textures.access(path(name, true));
+    if (!t)
+    {
+        conoutf(CON_WARN, "can't find %s to update\n", name);
+        return;
+    }
+
+    GLenum format = texformat(t->bpp);
+    setuptexparameters(t->id, pixels, t->clamp, 1, format, GL_TEXTURE_2D);
+    int x = 0, y = 0, w = t->w, h = t->h;
+    glTexImage2D(GL_TEXTURE_2D, 0, format, t->w, t->h, 0, format, GL_UNSIGNED_BYTE, NULL);
+    glTexSubImage2D (GL_TEXTURE_2D, 0, x, y, w, h, format, GL_UNSIGNED_BYTE, pixels);  
+}
+
+COMMAND(updatetex, "");
+
+//gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg
 
