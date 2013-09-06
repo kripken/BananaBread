@@ -1225,7 +1225,7 @@ void main3(void *arg)
 #else
     game::setplayermodelinfo("snoutx10k", "snoutx10k", "snoutx10k", "snoutx10k/hudguns", NULL, NULL, NULL, NULL, NULL, "snoutx10k", "snoutx10k", "snoutx10k", true);
     game::setplayermodelinfo("frankie", "frankie", "frankie", NULL, "nada", NULL, NULL, NULL, NULL, "frankie", "frankie", "frankie", false);
-    execute("sleep 10 [ effic silly ]");
+    execute("sleep 1 [ effic colos ]");
 #endif
 
     logoutf("init: mainloop");
