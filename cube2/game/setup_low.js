@@ -21,7 +21,6 @@ Module.tweakDetail = function() {
       if (!glid) return;
       var gl = Module.ctx;
       gl.bindTexture(gl.TEXTURE_2D, GL.textures[glid]);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
     }, 1000/10);
   }, true);
