@@ -12,6 +12,7 @@ Module.tweakDetail = function() {
     BananaBread.execute('maxdynlights 0');
   }
 
+  // based on https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL
   var video = document.createElement('video');
   video.addEventListener("canplaythrough", function() {
     video.play();

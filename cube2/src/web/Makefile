@@ -219,8 +219,7 @@ TWO_TOWERS_FILES =  packages/base/two_towers.ogz \
                     packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
                     packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
                     packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
-                    packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.dds \
-                    packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_nm.dds \
+                    packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg \
                     packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.dds \
                     packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.dds \
                     packages/gk/fantasy/wooden_roof_tiles_gk_v01/wooden_roof_tiles_gk_v01_cc.dds \

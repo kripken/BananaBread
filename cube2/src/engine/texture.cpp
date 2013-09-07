@@ -716,6 +716,7 @@ int texalign(void *data, int w, int bpp)
     
 static Texture *newtexture(Texture *t, const char *rname, ImageData &s, int clamp = 0, bool mipit = true, bool canreduce = false, bool transient = false, int compress = 0)
 {
+mipit = false; // XXX XXX XXX
     if(!t)
     {
         char *key = newstring(rname);
@@ -3130,16 +3131,18 @@ COMMAND(listtex, "");
 extern "C" {
 GLuint EMSCRIPTEN_KEEPALIVE getglid()
 {
-    Texture *t = textureload("packages/<dds>gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg&packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_sc.jpg", 0, false, true);
+    Texture *t = textureload("packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg", 0, false, true);
     return t ? t->id : 0;
 }
 }
+
+COMMAND(getglid, "");
 
 void updatetex()
 //const char *name)
 //, void *pixels)
 {
-    const char *name = "packages/<dds>gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg&packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_sc.jpg";
+    const char *name = "packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg";
     char *pixels = (char *)worldroot; // whatevah
 
     Texture *t = textures.access(path(name, true));
