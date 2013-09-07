@@ -3127,13 +3127,13 @@ void listtex()
 
 COMMAND(listtex, "");
 
-GLuint getglid(const char *name)
+extern "C" {
+GLuint EMSCRIPTEN_KEEPALIVE getglid()
 {
-    Texture *t = textureload(name, 0, false, true);
+    Texture *t = textureload("packages/<dds>gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg&packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_sc.jpg", 0, false, true);
     return t ? t->id : 0;
 }
-
-COMMAND(getglid, "s");
+}
 
 void updatetex()
 //const char *name)
