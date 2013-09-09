@@ -12,6 +12,11 @@ Module.tweakDetail = function() {
     BananaBread.execute('maxdynlights 0');
   }
 
+  var boon = document.createElement('script');
+  boon.src = 'miniBoon.js';
+  document.body.appendChild(boon);
+
+  /*
   // based on https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL
   var video = document.createElement('video');
   video.addEventListener("canplaythrough", function() {
@@ -30,6 +35,7 @@ Module.tweakDetail = function() {
   video.src = 'Firefox.ogv';
   video.crossOrigin = 'anonymous';
   document.body.appendChild(video);
+  */
 };
 
 Module.loadDefaultMap = function() {

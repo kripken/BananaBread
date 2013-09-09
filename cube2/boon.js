@@ -1,6 +1,6 @@
 
 if (typeof Module === 'undefined') Module = {};
-Module.arguments = ['-nofullscreen', '-nosound', '-width', '512', '-height', '512'];
+Module.arguments = ['-nofullscreen', '-nosound', '-width', '256', '-height', '256'];
 Module.screenIsReadOnly = true;
 (function() {
   var start = 0;
