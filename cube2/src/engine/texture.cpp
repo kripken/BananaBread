@@ -3131,7 +3131,7 @@ COMMAND(listtex, "");
 extern "C" {
 GLuint EMSCRIPTEN_KEEPALIVE getglid()
 {
-    Texture *t = textureload("packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg", 0, false, true);
+    Texture *t = textureload("packages/models/screen/skin.jpg", 0, false, true);
     return t ? t->id : 0;
 }
 }
@@ -3142,7 +3142,7 @@ void updatetex()
 //const char *name)
 //, void *pixels)
 {
-    const char *name = "packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.jpg";
+    const char *name = "packages/models/screen/skin.jpg";
     char *pixels = (char *)worldroot; // whatevah
 
     Texture *t = textures.access(path(name, true));
