@@ -10,9 +10,9 @@ v  5 -50  -50
 
 # texture verts
 vt 0.0 0.0
-vt 0.0 1.0
-vt 1.0 1.0
 vt 1.0 0.0
+vt 1.0 1.0
+vt 0.0 1.0
 
 # normal verts - TODO
 vn 1.0 1.0 1.0
