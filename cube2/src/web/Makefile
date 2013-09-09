@@ -328,11 +328,16 @@ FFPIT_FILES = packages/models/ffpit/md5.cfg \
               `find packages/models/ffpit/ -name "*.dds"` \
               `find packages/models/ffpit/ -name "*.md5mesh"`
 
+SCREEN_FILES = `find packages/models/screen/ -name "*.cfg"` \
+               `find packages/models/screen/ -name "*.jpg"` \
+               `find packages/models/screen/ -name "*.obj"`
+
 COLOS_FILES = packages/base/colos.ogz \
               packages/base/colos.cfg \
               packages/base/colos.wpt \
               $(FFFLAG_FILES) \
               $(FFPIT_FILES) \
+              $(SCREEN_FILES) \
               packages/gk/fantasy/skyfantasyJPG/ \
               `find packages/gk/fantasy -name "*.cfg"` \
               packages/gk/fantasy/stone_ground_gk_v01/stone_ground_gk_v01_cc.dds \
