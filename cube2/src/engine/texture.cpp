@@ -716,7 +716,6 @@ int texalign(void *data, int w, int bpp)
     
 static Texture *newtexture(Texture *t, const char *rname, ImageData &s, int clamp = 0, bool mipit = true, bool canreduce = false, bool transient = false, int compress = 0)
 {
-mipit = false; // XXX XXX XXX
     if(!t)
     {
         char *key = newstring(rname);
