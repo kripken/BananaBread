@@ -61,8 +61,13 @@
 
   ['keydown', 'keyup', 'keypress'].forEach(function(event) {
     document.addEventListener(event, function(event) {
-      worker.postMessage({ target: 'document', event: cloneEvent(event) });
       event.preventDefault();
+      var event = cloneEvent(event);
+      //console.log(event.keyCode);
+      switch (event.keyCode) {
+        case 220: event.keyCode = 27; break; // map | to escape
+      }
+      worker.postMessage({ target: 'document', event: event });
     });
   });
 
