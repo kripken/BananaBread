@@ -39,7 +39,7 @@ Module.tweakDetail = function() {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
       }
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-    }, 1000/10);
+    }, 1000/30);
   }, true);
   video.preload = 'auto';
   video.loop = true;
