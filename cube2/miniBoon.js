@@ -71,11 +71,20 @@
   var glid = 0;
   setInterval(function() {
     if (!Boon.drawBuffer) return;
-    if (!glid) glid = Module._getglid();
+    if (!glid) {
+      var first = true;
+      glid = Module._getglid();
+    }
     if (!glid) return;
     var gl = Module.ctx;
     gl.bindTexture(gl.TEXTURE_2D, GL.textures[glid]);
+    if (first) {
+      // disable mipmap for this texture
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 256, 0, gl.RGBA, gl.UNSIGNED_BYTE, Boon.drawBuffer);
+    gl.bindTexture(gl.TEXTURE_2D, null);
   }, 1000/10);
 
 })();
