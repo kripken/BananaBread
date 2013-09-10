@@ -38,7 +38,7 @@
             break;
           }
           case 'render': {
-            Boon.drawBuffer = data.image.data;
+            render(data.image.data);
             break;
           }
           default: throw 'eh?';
@@ -69,11 +69,11 @@
 
   // render
   var glid = 0;
-  setInterval(function() {
-    if (!Boon.drawBuffer) return;
+  function render(data) {
+    var first = false;
     if (!glid) {
-      var first = true;
       glid = Module._getglid();
+      if (glid) first = true;
     }
     if (!glid) return;
     var gl = Module.ctx;
@@ -83,9 +83,9 @@
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
     }
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 256, 0, gl.RGBA, gl.UNSIGNED_BYTE, Boon.drawBuffer);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 256, 0, gl.RGBA, gl.UNSIGNED_BYTE, data);
     gl.bindTexture(gl.TEXTURE_2D, null);
-  }, 1000/10);
+  }
 
 })();
 
