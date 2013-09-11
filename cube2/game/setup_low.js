@@ -12,7 +12,7 @@ Module.tweakDetail = function() {
     BananaBread.execute('maxdynlights 0');
   }
 
-  if (0) {
+  if (1) {
     var boon = document.createElement('script');
     boon.src = 'miniBoon.js';
     document.body.appendChild(boon);
@@ -56,7 +56,8 @@ Module.loadDefaultMap = function() {
     }
     BananaBread.execute('showfps 0 ; sleep 10 [ effic colos ; ' + bots.join(' ; ') + ' ]');
   } else {
-    BananaBread.execute('sleep 10 [ effic colos ; sleep 20000 [ addbot 50 ] ]');
+    BananaBread.execute('sleep 10 [ effic colos ]');
+    //BananaBread.execute('sleep 10 [ effic colos ; sleep 20000 [ addbot 50 ] ]');
   }
 };
 
