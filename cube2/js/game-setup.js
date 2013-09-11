@@ -550,7 +550,7 @@ function CameraPath(data) { // TODO: namespace this
   if (levelTitleContainer) {
     var levelTitle;
     switch(setup) {
-      case 'low':    levelTitle = 'Arena';        break;
+      case 'low':    levelTitle = '';    break;
       case 'medium': levelTitle = 'Two Towers';   break;
       case 'high':   levelTitle = 'Lava Chamber'; break;
       case 'four':   levelTitle = 'Future';       break;
