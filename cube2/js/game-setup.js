@@ -187,15 +187,6 @@ if (Module.benchmark) {
   if (!pointerLock) fail('pointer lock/mouse lock');
 })();
 
-// Loading music. Will be stopped once the first frame of the game runs
-
-Module.loadingMusic = new Audio();
-if (!Module.benchmark) Module.loadingMusic.src = 'assets/OutThere_0.ogg';
-Module.loadingMusic.play();
-
-Module.readySound = new Audio();
-Module.readySound.src = 'assets/alarmcreatemiltaryfoot_1.ogg';
-
 // Pre-unzip ogz files, we can do this in parallel in a worker during preload
 
 (function() {
@@ -259,10 +250,6 @@ Module.fullscreenCallbacks = [];
 Module.postLoadWorld = function() {
   document.title = 'BananaBread';
 
-  if (Module.loadingMusic) {
-    Module.loadingMusic.pause();
-    Module.loadingMusic = null;
-  }
   Module.tweakDetail();
 
   BananaBread.execute('sensitivity 10');
@@ -321,10 +308,6 @@ Module.postLoadWorld = function() {
     };
 
     // All set!
-    if (Module.readySound) {
-      Module.readySound.play();
-      Module.readySound = null;
-    }
   }
 
   if (Module.benchmark) {
