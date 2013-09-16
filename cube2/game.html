@@ -3,21 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title></title>
+    <title>FPS in an FPS</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet" />
   </head>
   <body>
     <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
     <div id="main-container">
-      <div class="demo-title">Bananabread Demo</div>
+      <div class="demo-title">We heard you like FPS games</div>
       <div class="section progress-area">
         <div class="status">
           <div class="status-content loading">
             <div class="preview">
               <div class="preview-content low">
                 <div class="description">
-                  We heard you like first person shooters
                 </div>
               </div>
               <div class="preview-content medium">
@@ -65,6 +64,22 @@
         </div>
       </div>
       <div class="section">
+        <h2>Controls</h2>
+        <h3>Outer game (<a href="https://github.com/kripken/BananaBread/">BananaBread</a>, a port of the <a href="http://sauerbraten.org/">Cube 2/Sauerbraten</a> FPS)</h3>
+        <ul>
+          <li><b>WASD</b> to move</li>
+          <li><b>Mouse</b> to orient and shoot</li>
+          <li><b>Space</b> to jump</li>
+          <li><b>e</b> to toggle edit mode</li>
+          <li><b>`</b> open menu (add/remove bots, etc.)</li>
+        </ul>
+        <h3>Inner game (<a href="https://github.com/kripken/boon">Boon</a> = Doom code/<a href="http://prboom.sourceforge.net/">PrBoom</a> + <a href="http://www.nongnu.org/freedoom/">Freedoom</a> content)</h3>
+        <ul>
+          <li><b>Arrow keys</b> to move</li>
+          <li><b>Control</b> to shoot</li>
+          <li><b>Space</b> to activate (aliased with outer game...)</li>
+          <li><b>|</b> open menu (start game, change keybindings, etc.)</li>
+        </ul>
       </div>
     <canvas id="canvas" class="hide" oncontextmenu="event.preventDefault()"></canvas>
     <!--textarea id="stdout" cols="100" rows="8"></textarea-->
