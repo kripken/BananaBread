@@ -50,8 +50,8 @@ Module.tweakDetail = function() {
         canvas.width = canvas.width; // clear it
         var data = "<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512'>" +
                      "<foreignObject width='100%' height='100%'>" +
-                       "<div xmlns='http://www.w3.org/1999/xhtml' style='font-size:18px; background-color: white'>" +
-                         "<span style='margin-left: 10px; color: #773311; text-shadow:0 0 3px red;'>" + text + "</span>" + //  style=''
+                       "<div xmlns='http://www.w3.org/1999/xhtml' style='font-size:18px; background-color: #200C05'>" +
+                         "<span style='margin-left: 10px; color: #ff9955; text-shadow:0 0 3px red;'>" + text + "</span>" + //  style=''
                        "</div>" +
                      "</foreignObject>" +
                    "</svg>";
