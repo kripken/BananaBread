@@ -72,7 +72,7 @@ Module.tweakDetail = function() {
             tweet = tweet.replace('class="user"', 'style="font-weight: bold"');
             tweet = tweet.replace('class="timePosted"', 'style="font-style: italic"');
             console.log(JSON.stringify(tweet, null, '  '));
-            html += '<p>' + tweet + '</p><hr></hr>';
+            html += '<p>' + tweet + '</p><hr style="color: black"></hr>';
             n++;
           }
           html += '';
