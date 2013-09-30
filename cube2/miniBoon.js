@@ -77,7 +77,7 @@
   function render(data) {
     var first = false;
     if (!glid) {
-      glid = Module._getglid();
+      glid = Module._getglid(2);
       if (glid) first = true;
     }
     if (!glid) return;

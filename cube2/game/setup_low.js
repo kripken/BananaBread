@@ -15,9 +15,9 @@ Module.tweakDetail = function() {
   var first = false;
   var glid = 0;
 
-  function uploadTexture(element, mip) {
+  function uploadTexture(id, element, mip) {
     if (!glid) {
-      glid = Module._getglid();
+      glid = Module._getglid(id);
       if (glid) first = true;
     }
     if (!glid) return false;
@@ -87,7 +87,7 @@ Module.tweakDetail = function() {
         html = html.replace(/[\n'&]/g, '');
         for (var i = 0; i < 20; i++) html = html.replace(/  /g, ' ')
         render(html, function doRender(canvas) {
-          if (!uploadTexture(canvas, true)) {
+          if (!uploadTexture(0, canvas, true)) {
             setTimeout(function() {
               doRender(canvas);
             }, 500);
@@ -111,7 +111,7 @@ Module.tweakDetail = function() {
     video.addEventListener("canplaythrough", function() {
       video.play();
       setInterval(function() {
-        uploadTexture(video);
+        uploadTexture(1, video);
       }, 1000/30);
     }, true);
     video.preload = 'auto';

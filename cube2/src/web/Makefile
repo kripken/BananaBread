@@ -328,9 +328,15 @@ FFPIT_FILES = packages/models/ffpit/md5.cfg \
               `find packages/models/ffpit/ -name "*.dds"` \
               `find packages/models/ffpit/ -name "*.md5mesh"`
 
-SCREEN_FILES = `find packages/models/screen/ -name "*.cfg"` \
-               `find packages/models/screen/ -name "*.jpg"` \
-               `find packages/models/screen/ -name "*.obj"`
+SCREEN_FILES = `find packages/models/screen0/ -name "*.cfg"` \
+               `find packages/models/screen0/ -name "*.jpg"` \
+               `find packages/models/screen0/ -name "*.obj"` \
+               `find packages/models/screen1/ -name "*.cfg"` \
+               `find packages/models/screen1/ -name "*.jpg"` \
+               `find packages/models/screen1/ -name "*.obj"` \
+               `find packages/models/screen2/ -name "*.cfg"` \
+               `find packages/models/screen2/ -name "*.jpg"` \
+               `find packages/models/screen2/ -name "*.obj"`
 
 COLOS_FILES = packages/base/colos.ogz \
               packages/base/colos.cfg \

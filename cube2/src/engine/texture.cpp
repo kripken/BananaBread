@@ -3128,14 +3128,17 @@ void listtex()
 COMMAND(listtex, "");
 
 extern "C" {
-GLuint EMSCRIPTEN_KEEPALIVE getglid()
+GLuint EMSCRIPTEN_KEEPALIVE getglid(int x)
 {
-    Texture *t = textureload("packages/models/screen/skin.jpg", 0, false, true);
+    char *name = "packages/models/screenX/skin.jpg";
+    name[22] = '0' + x;
+    printf("getglid %d - %s\n", x, name);
+    Texture *t = textureload(name, 0, false, true);
     return t ? t->id : 0;
 }
 }
 
-COMMAND(getglid, "");
+COMMAND(getglid, "i");
 
 void updatetex()
 //const char *name)
