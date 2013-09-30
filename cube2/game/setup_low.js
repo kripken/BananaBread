@@ -15,7 +15,7 @@ Module.tweakDetail = function() {
   var first = false;
   var glid = 0;
 
-  function uploadTexture(element) {
+  function uploadTexture(element, mip) {
     if (!glid) {
       glid = Module._getglid();
       if (glid) first = true;
@@ -23,10 +23,12 @@ Module.tweakDetail = function() {
     if (!glid) return false;
     var gl = Module.ctx;
     gl.bindTexture(gl.TEXTURE_2D, GL.textures[glid]);
-    if (first) {
+    if (first && !mip) {
       // disable mipmap for this texture
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    } else if (mip) {
+      gl.generateMipmap(gl.TEXTURE_2D);
     }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, element);
     return true;
@@ -85,7 +87,7 @@ Module.tweakDetail = function() {
         html = html.replace(/[\n'&]/g, '');
         for (var i = 0; i < 20; i++) html = html.replace(/  /g, ' ')
         render(html, function doRender(canvas) {
-          if (!uploadTexture(canvas)) {
+          if (!uploadTexture(canvas, true)) {
             setTimeout(function() {
               doRender(canvas);
             }, 500);
