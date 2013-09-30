@@ -12,15 +12,17 @@ Module.tweakDetail = function() {
     BananaBread.execute('maxdynlights 0');
   }
 
-  var first = false;
-  var glid = 0;
+  var glids = {};
 
   function uploadTexture(id, element, mip) {
-    if (!glid) {
-      glid = Module._getglid(id);
-      if (glid) first = true;
+    var first = false;
+    if (!glids[id]) {
+      glids[id] = Module._getglid(id);
+      if (glids[id]) first = true;
     }
+    var glid = glids[id];
     if (!glid) return false;
+    assert(GL.textures[glid]);
     var gl = Module.ctx;
     gl.bindTexture(gl.TEXTURE_2D, GL.textures[glid]);
     if (first && !mip) {
@@ -31,6 +33,7 @@ Module.tweakDetail = function() {
       gl.generateMipmap(gl.TEXTURE_2D);
     }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, element);
+    gl.bindTexture(gl.TEXTURE_2D, null);
     return true;
   }
 
@@ -98,13 +101,16 @@ Module.tweakDetail = function() {
 
     tweety.src = 'tweety.js';
     document.body.appendChild(tweety);
+  }
 
-  } else if (0) {
+  if (0) {
     // boon
     var boon = document.createElement('script');
     boon.src = 'miniBoon.js';
     document.body.appendChild(boon);
-  } else {
+  }
+
+  if (1) {
     // video
     // based on https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL
     var video = document.createElement('video');
