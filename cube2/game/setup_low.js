@@ -103,7 +103,7 @@ Module.tweakDetail = function() {
     document.body.appendChild(tweety);
   }
 
-  if (0) {
+  if (1) {
     // boon
     var boon = document.createElement('script');
     boon.src = 'miniBoon.js';
