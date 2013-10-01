@@ -12,6 +12,8 @@ Module.tweakDetail = function() {
     BananaBread.execute('maxdynlights 0');
   }
 
+  BananaBread.execute('thirdperson 1');
+
   var glids = {};
 
   function uploadTexture(id, element, mip) {
