@@ -40,6 +40,8 @@ Module.tweakDetail = function() {
   }
 
   if (1) {
+    var updateTweets = null;
+
     var tweety = document.createElement('script');
 
     tweety.onload = function() {
@@ -88,21 +90,41 @@ Module.tweakDetail = function() {
         twitterFetcher.fetch('384367035376873472', 'example1', 5, false, true, true, '', false, handleTweets, false);
       }
 
-      getTweets(function(html) {
-        html = html.replace(/[\n'&]/g, '');
-        for (var i = 0; i < 20; i++) html = html.replace(/  /g, ' ')
-        render(html, function doRender(canvas) {
-          if (!uploadTexture(0, canvas, true)) {
-            setTimeout(function() {
-              doRender(canvas);
-            }, 500);
-          }
-        });
-      });
+      updateTweets = function() {
+        console.log('updating tweets');
+
+        ctx.fillStyle = '#200c05';
+        ctx.fillRect(0, 0, 512, 512);
+        uploadTexture(0, canvas, true);
+
+        setTimeout(function() {
+          getTweets(function(html) {
+            html = html.replace(/[\n'&]/g, '');
+            for (var i = 0; i < 20; i++) html = html.replace(/  /g, ' ')
+            render(html, function doRender(canvas) {
+              if (!uploadTexture(0, canvas, true)) {
+                setTimeout(function() {
+                  doRender(canvas);
+                }, 500);
+              }
+            });
+          });
+        }, 100); // slight lag, to show an update is happening
+      };
+
+      updateTweets();
     };
 
     tweety.src = 'tweety.js';
     document.body.appendChild(tweety);
+
+    ['keyup'].forEach(function(event) {
+      document.addEventListener(event, function(event) {
+        if (event.keyCode === 85) { // 'u'
+          updateTweets();
+        }
+      });
+    });
   }
 
   if (1) {
