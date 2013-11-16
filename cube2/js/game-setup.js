@@ -53,6 +53,7 @@ var Module = {
   statusMessage: 'Starting...',
   progressElement: document.getElementById('progress'),
   setStatus: function(text) {
+console.log(text);
     if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
     var statusElement = document.getElementById('status-text');
     if (Module.finishedDataFileDownloads >= 1 && Module.finishedDataFileDownloads < Module.expectedDataFileDownloads) {
