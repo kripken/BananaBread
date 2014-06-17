@@ -358,6 +358,7 @@ Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to ma
 // Public API
 
 var BananaBread = {
+  // TODO: use api.js
   init: function() {
     BananaBread.setPlayerModelInfo = Module.cwrap('_ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', null,
       ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'number']);
