@@ -50,5 +50,6 @@ var BananaBread = {
   },
 };
 
+Module.postRun = Module.postRun || [];
 Module.postRun.push(BananaBread.init);
 
