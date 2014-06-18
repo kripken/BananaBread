@@ -200,6 +200,7 @@ Module.readySound.src = 'assets/alarmcreatemiltaryfoot_1.ogg';
 // Pre-unzip ogz files, we can do this in parallel in a worker during preload
 
 (function() {
+  // TODO: use zee.js
   var zeeWorker = new Worker('game/zee-worker.js');
 
   var zeeCallbacks = [];

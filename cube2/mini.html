@@ -1292,13 +1292,20 @@
     </script>
 
     <script>
-      Module.autoexec = function(){
-        BananaBread.execute('screenres 640 480');
+      Module.desiredWidth = 640;
+      Module.desiredHeight = 480;
+      Module.autoexec = function() {
+        Module.setStatus('');
       };
-      Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
+      Module.postLoadWorld = function() {
+        Module.tweakDetail();
+        BananaBread.execute('sensitivity 10');
+        BananaBread.execute('clearconsole');
+      };
     </script>
 
     <script async src="js/api.js"></script>
+    <script async src="js/zee.js"></script>
     <script async src="game/gl-matrix.js.js"></script>
     <script async src="game/setup_low.js"></script>
     <script async src="game/preload_base.js"></script>
