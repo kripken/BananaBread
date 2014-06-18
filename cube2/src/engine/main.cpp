@@ -1192,7 +1192,7 @@ void main3(void *arg)
 #if !EMSCRIPTEN
     execfile(game::autoexec(), false);
 #else
-    emscripten_run_script("Module['autoexec']()");
+    emscripten_run_script("if (Module['autoexec']) Module['autoexec']()");
 #endif
     initing = NOT_INITING;
 
