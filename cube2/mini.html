@@ -1292,7 +1292,9 @@
     </script>
 
     <script>
-      Module.autoexec = function(){}; // called during autoexec on load, so useful to tweak settings that require gl restart
+      Module.autoexec = function(){
+        BananaBread.execute('screenres 640 480');
+      };
       Module.tweakDetail = function(){}; // called from postLoadWorld, so useful to make changes after the map has been loaded
     </script>
 
