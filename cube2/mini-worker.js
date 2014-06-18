@@ -1,3 +1,15 @@
+var Module = {
+  desiredWidth: 640,
+  desiredHeight: 480,
+  autoexec: function() {
+    Module.setStatus('');
+  },
+  postLoadWorld: function() {
+    Module.tweakDetail();
+    BananaBread.execute('sensitivity 10');
+    BananaBread.execute('clearconsole');
+  }
+};
 
 importScripts('game/gl-matrix.js');
 
