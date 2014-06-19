@@ -144,7 +144,7 @@ void restorebackground()
 void renderbackground(const char *caption, Texture *mapshot, const char *mapname, const char *mapinfo, bool restore, bool force)
 {
 #if EMSCRIPTEN
-    //return;
+    return;
 #endif
 
     if(!inbetweenframes && !force) return;
@@ -326,7 +326,7 @@ float loadprogress = 0;
 void renderprogress(float bar, const char *text, GLuint tex, bool background)   // also used during loading
 {
 #if EMSCRIPTEN
-    //return;
+    return;
 #endif
 
     if(!inbetweenframes || envmapping) return;
