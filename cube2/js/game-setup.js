@@ -572,7 +572,7 @@ function CameraPath(data) { // TODO: namespace this
         loadChildScript('game/preload_base.js', function() {
           loadChildScript('game/preload_character.js', function() {
             loadChildScript('game/preload_' + preload + '.js', function() {
-              var scriptParts = ['bb'];
+              var scriptParts = ['bb-main'];
               if (checkPageParam('debug')) scriptParts.push('debug');
               loadChildScript(scriptParts.join('.') + '.js');
             });
