@@ -1,4 +1,3 @@
-
 The BananaBread Engine
 ======================
 
@@ -80,7 +79,10 @@ Running
 
 0. Run
      python -m SimpleHTTPServer 8888
+   or
+     php -S localhost:8888
    in cube2/
+   
 
 1. Load localhost:8888 in your browser
 
