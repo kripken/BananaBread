@@ -415,7 +415,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 
 CRUNCH_QUALITY = 64
 
-TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
+TOTAL_MEMORY = 35000000 # May need to adjust this for very large levels
 
 client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --crunch=$(CRUNCH_QUALITY) --preload $(BASE_FILES) > game/preload_base.js
@@ -425,7 +425,7 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOM_FILES) > game/preload_high.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) > game/preload_five.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1 -s ALLOW_MEMORY_GROWTH=1
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  
