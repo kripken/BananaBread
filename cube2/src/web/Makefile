@@ -33,7 +33,7 @@ endif
 ifeq ($(PLATFORM),Linux)
 CLIENT_LIBS+= -lrt
 endif
-CLIENT_OBJS= \
+CLIENT_OBJS1= \
 	shared/crypto.o \
 	shared/geom.o \
 	shared/stream.o \
@@ -60,7 +60,8 @@ CLIENT_OBJS= \
 	engine/octa.o \
 	engine/octaedit.o \
 	engine/octarender.o \
-	engine/physics.o \
+	engine/physics.o
+CLIENT_OBJS2= \
 	engine/pvs.o \
 	engine/rendergl.o \
 	engine/rendermodel.o \
@@ -88,6 +89,7 @@ CLIENT_OBJS= \
 	fpsgame/server.o \
 	fpsgame/waypoint.o \
 	fpsgame/weapon.o
+CLIENT_OBJS= $(CLIENT_OBJS1) $(CLIENT_OBJS2)
 
 CLIENT_PCH= shared/cube.h.gch engine/engine.h.gch fpsgame/game.h.gch
 
@@ -170,6 +172,12 @@ install: all
 else
 client.bc:	libenet $(CLIENT_OBJS)
 	$(CXX) $(CXXFLAGS) -o client.bc $(CLIENT_OBJS) $(CLIENT_LIBS)
+
+client1.bc:	libenet $(CLIENT_OBJS1)
+	$(CXX) $(CXXFLAGS) -o client1.bc $(CLIENT_OBJS1) $(CLIENT_LIBS)
+
+client2.bc:	libenet $(CLIENT_OBJS2)
+	$(CXX) $(CXXFLAGS) -o client2.bc $(CLIENT_OBJS2) $(CLIENT_LIBS)
 
 BASE_FILES = data/ \
              packages/textures/ \
@@ -426,6 +434,12 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) > game/preload_five.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1 -s ALLOW_MEMORY_GROWTH=1
+
+client1: client1.bc
+	cd .. ; cd .. ; EMCC_FORCE_STDLIBS="gl,libc,libcextra" $(CXX) $(CXXFLAGS) src/web/client1.bc -o bb1.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1 -s ALLOW_MEMORY_GROWTH=1 -s SIDE_MODULE=1 -g2 -s ASSERTIONS=0 -s SAFE_HEAP=0 --memory-init-file 0
+
+client2: client2.bc
+	cd .. ; cd .. ; EMCC_FORCE_STDLIBS="gl,libc,libcextra" $(CXX) $(CXXFLAGS) src/web/client2.bc -o bb2.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1 -s ALLOW_MEMORY_GROWTH=1 -s MAIN_MODULE=1 -g2 -s ASSERTIONS=0 -s SAFE_HEAP=0 --memory-init-file 0
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  

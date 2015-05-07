@@ -107,15 +107,6 @@ if (Module.benchmark) {
   Module.print('<< start preload >>');
   preloadStartTime = Date.realNow();
 
-  Module.preRun.push(function() {
-    var main = Module._main;
-    Module._main = function() {
-      Module.print('<< start startup >>');
-      Module.startupStartTime = Date.realNow();
-      return main.apply(null, arguments);
-    };
-  });
-
   Module.benchmark.progressTick = Math.floor(Module.benchmark.totalIters / 100);
 
   Module.preMainLoop = function() {
