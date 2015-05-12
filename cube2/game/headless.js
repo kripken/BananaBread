@@ -145,7 +145,15 @@ var document = {
         });
         return ret;
       }
-      default: throw 'createElement ' + what;
+      case 'div': {
+        return {
+          appendChild: function() {},
+          requestFullScreen: function() {
+            return document.getElementById('canvas').requestFullScreen();
+          },
+        };
+      }
+      default: throw 'createElement ' + what + new Error().stack;
     }
   },
   elements: {},
