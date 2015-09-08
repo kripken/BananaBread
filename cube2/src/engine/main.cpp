@@ -1021,6 +1021,7 @@ static char *load = NULL, *initscript = NULL;
 int main(int argc, char **argv)
 {
 #if EMSCRIPTEN
+    emscripten_init_lz4();
     emscripten_hide_mouse(); // we render our own cursor
     // Debugging: Start logging to off
     //emscripten_run_script("GL.debug = Runtime.debug = false;");
