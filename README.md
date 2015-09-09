@@ -15,8 +15,6 @@ A live demo is available here: **[Stable Demo](https://developer.mozilla.org/dem
 
 There is a non-stable testing version here: http://dl.dropbox.com/u/80664946/index.html
 
-We also have a silly non-game example, http://www.syntensity.com/static/night14/fireworks.html
-
 
 Overview
 --------
@@ -51,18 +49,16 @@ Building
 
 Get emscripten and its dependencies,
 
-  http://emscripten.org/
+  http://emscripten.org
 
 It's recommended to go through the emscripten tutorial to see that it is set
 up properly.
 
 You will also need crunch if you want smaller downloads,
 
-  http://code.google.com/p/crunch/
+  https://github.com/richgel999/crunch
 
-Build in crnlib using the Makefile (if it isn't in the release yet, see the
-issue filed on their site where we submitted it,
-http://code.google.com/p/crunch/issues/detail?id=1 ). You can disable
+Build in crnlib using the Makefile. You can disable
 crunch if you don't want it, remove all mentions of crunch in
 `cube2/src/web/Makefile`.
 
@@ -70,7 +66,7 @@ Then do `make` in `cube2/src/web` for a web build. You can also do `make` in
 `cube2/src/native` for a native linux build.
 
 If you have any problems building, feel free to file an issue here or to
-find us on emscripten IRC (see emscripten site).
+find us on emscripten IRC (see [emscripten site](http://emscripten.org)).
 
 See needed.txt for some possibly useful scripts to package the output.
 
@@ -143,7 +139,7 @@ your projects, including commercial ones. If a directory does not
 contain a specific license file, then it is new artwork created for
 this project, which has the CC-BY license,
 
-http://creativecommons.org/licenses/by/3.0/
+https://creativecommons.org/licenses/by/3.0/
 
 and copyright is held by the Mozilla Foundation.
 
