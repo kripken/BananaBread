@@ -418,13 +418,13 @@ CRUNCH_QUALITY = 64
 TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
 
 client: client.bc
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --crunch=$(CRUNCH_QUALITY) --preload $(BASE_FILES) > game/preload_base.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --crunch=$(CRUNCH_QUALITY) --preload $(CHARACTER_FILES) > game/preload_character.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --crunch=$(CRUNCH_QUALITY) --preload $(COLOS_FILES) > game/preload_low.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --crunch=$(CRUNCH_QUALITY) --preload $(TWO_TOWERS_FILES) > game/preload_medium.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOM_FILES) > game/preload_high.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) > game/preload_four.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) > game/preload_five.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(BASE_FILES) > game/preload_base.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(CHARACTER_FILES) > game/preload_character.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(COLOS_FILES) > game/preload_low.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(TWO_TOWERS_FILES) > game/preload_medium.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(ZOOM_FILES) > game/preload_high.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(CYBER1_FILES) > game/preload_four.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --use-preload-plugins --crunch=$(CRUNCH_QUALITY) --preload $(ZOOMOUT_FILES) > game/preload_five.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.js -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1
 
 server.bc:	libenet $(SERVER_OBJS)
