@@ -179,8 +179,8 @@ BASE_FILES = data/ \
              packages/sounds/aard/ \
              packages/sounds/q009/ \
              packages/sounds/yo_frankie/ \
-             packages/gk/lava/lava_cc.png \
-             packages/gk/lava/lava_nm.png \
+             packages/gk/lava/lava_cc.jpg \
+             packages/gk/lava/lava_nm.jpg \
              packages/caustics/ \
              packages/models/debris/ \
              packages/models/projectiles/ \
@@ -321,12 +321,12 @@ MD2_FILES = packages/base/md2.ogz \
             $(FANTASY_TEXTURES)
 
 FFFLAG_FILES = packages/models/ffflag/md5.cfg \
-               `find packages/models/ffflag/ -name "*.png"` \
+               `find packages/models/ffflag/ -name "*.jpg"` \
                `find packages/models/ffflag/ -name "*.md5mesh"` \
                `find packages/models/ffflag/ -name "*.md5anim"`
 
 FFPIT_FILES = packages/models/ffpit/md5.cfg \
-              `find packages/models/ffpit/ -name "*.png"` \
+              `find packages/models/ffpit/ -name "*.jpg"` \
               `find packages/models/ffpit/ -name "*.md5mesh"`
 
 COLOS_FILES = packages/base/colos.ogz \
@@ -337,16 +337,16 @@ COLOS_FILES = packages/base/colos.ogz \
               packages/gk/fantasy/skyfantasyJPG/ \
               `find packages/gk/fantasy -name "*.cfg"` \
               packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.jpg \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.png \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_sc.png \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_hm.png \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.jpg \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_sc.jpg \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_hm.jpg \
               packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.jpg \
               packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.jpg \
               packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_sc.jpg \
               packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_hm.jpg \
               packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.jpg \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.png \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_sc.png \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.jpg \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_sc.jpg \
               packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_hm.jpg \
               packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.jpg \
               packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.jpg \
@@ -356,10 +356,10 @@ COLOS_FILES = packages/base/colos.ogz \
               packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.jpg \
               packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_sc.jpg \
               packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_hm.jpg \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.png \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.png \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_sc.png \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_hm.png \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.jpg \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.jpg \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_sc.jpg \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_hm.jpg   \
               packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.jpg \
               packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.jpg \
               packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_sc.jpg \
@@ -429,7 +429,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 
 CRUNCH_QUALITY = 64
 
-TOTAL_MEMORY = 134217728 # May need to adjust this for very large levels
+TOTAL_MEMORY = 100663296 # May need to adjust this for very large levels
 
 client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --use-preload-plugins  --preload $(BASE_FILES) > game/preload_base.js
