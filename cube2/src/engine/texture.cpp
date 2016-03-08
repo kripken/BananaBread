@@ -1118,7 +1118,7 @@ static vec parsevec(const char *arg)
     return v;
 }
 
-VAR(usedds, 0, 1, 1);
+VAR(usedds, 0, 0, 1);
 VAR(dbgdds, 0, 0, 1);
 
 static bool texturedata(ImageData &d, const char *tname, Slot::Tex *tex = NULL, bool msg = true, int *compress = NULL)

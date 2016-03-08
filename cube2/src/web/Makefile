@@ -179,8 +179,8 @@ BASE_FILES = data/ \
              packages/sounds/aard/ \
              packages/sounds/q009/ \
              packages/sounds/yo_frankie/ \
-             packages/gk/lava/lava_cc.dds \
-             packages/gk/lava/lava_nm.dds \
+             packages/gk/lava/lava_cc.png \
+             packages/gk/lava/lava_nm.png \
              packages/caustics/ \
              packages/models/debris/ \
              packages/models/projectiles/ \
@@ -321,12 +321,12 @@ MD2_FILES = packages/base/md2.ogz \
             $(FANTASY_TEXTURES)
 
 FFFLAG_FILES = packages/models/ffflag/md5.cfg \
-               `find packages/models/ffflag/ -name "*.dds"` \
+               `find packages/models/ffflag/ -name "*.png"` \
                `find packages/models/ffflag/ -name "*.md5mesh"` \
                `find packages/models/ffflag/ -name "*.md5anim"`
 
 FFPIT_FILES = packages/models/ffpit/md5.cfg \
-              `find packages/models/ffpit/ -name "*.dds"` \
+              `find packages/models/ffpit/ -name "*.png"` \
               `find packages/models/ffpit/ -name "*.md5mesh"`
 
 COLOS_FILES = packages/base/colos.ogz \
@@ -336,32 +336,46 @@ COLOS_FILES = packages/base/colos.ogz \
               $(FFPIT_FILES) \
               packages/gk/fantasy/skyfantasyJPG/ \
               `find packages/gk/fantasy -name "*.cfg"` \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.dds \
-              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.dds \
-              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.dds \
-              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.dds \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.dds \
-              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.dds \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.dds \
-              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.dds \
-              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.dds \
-              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.dds \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.dds \
-              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.dds \
-              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.dds \
-              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.dds \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.dds \
-              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.dds \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.dds \
-              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.dds \
-              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.dds \
-              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.dds
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_cc.jpg \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_nm.png \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_sc.png \
+              packages/gk/fantasy/rock_formation_gk_v01/rock_formation_gk_v01_hm.png \
+              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_cc.jpg \
+              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_nm.jpg \
+              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_sc.jpg \
+              packages/gk/fantasy/castell_wall_gk_v01/castell_wall_gk_v01_hm.jpg \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_cc.jpg \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_nm.png \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_sc.png \
+              packages/gk/fantasy/castell_wall_gk_v02/castell_wall_gk_v02_hm.jpg \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_cc.jpg \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_nm.jpg \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_sc.jpg \
+              packages/gk/fantasy/castell_wall_trim_gk_v01/castell_wall_trim_gk_v01_hm.jpg \
+              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_cc.jpg \
+              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_nm.jpg \
+              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_sc.jpg \
+              packages/gk/fantasy/stone_ground_tiles_gk_v01/stone_ground_tiles_gk_v01_hm.jpg \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_cc.png \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_nm.png \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_sc.png \
+              packages/gk/fantasy/wooden_planks_gk_v01/wooden_planks_gk_v01_hm.png \
+              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_cc.jpg \
+              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_nm.jpg \
+              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_sc.jpg \
+              packages/gk/fantasy/castell_plaster_gk_v01/castell_plaster_gk_v01_hm.jpg \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_cc.jpg \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_nm.jpg \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_sc.jpg \
+              packages/gk/fantasy/iron_plates_gk_v01/iron_plates_gk_v01_hm.jpg \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_cc.jpg \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_nm.jpg \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_sc.jpg \
+              packages/gk/fantasy/iron_trim_gk_v01/iron_trim_gk_v01_hm.jpg \
+              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_cc.jpg \
+              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_nm.jpg \
+              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_sc.jpg \
+              packages/gk/fantasy/iron_intersection_gk_v01/iron_intersection_gk_v01_hm.jpg
 
 CAVE_FILES = packages/base/cave.ogz \
              packages/base/cave.cfg \
@@ -415,7 +429,7 @@ FIREWORKS_FILES = $(BASE_FILES) \
 
 CRUNCH_QUALITY = 64
 
-TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
+TOTAL_MEMORY = 134217728 # May need to adjust this for very large levels
 
 client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --use-preload-plugins  --preload $(BASE_FILES) > game/preload_base.js
@@ -425,7 +439,7 @@ client: client.bc
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --use-preload-plugins  --preload $(ZOOM_FILES) > game/preload_high.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --use-preload-plugins  --preload $(CYBER1_FILES) > game/preload_four.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --use-preload-plugins  --preload $(ZOOMOUT_FILES) > game/preload_five.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.html --shell-file mini.html -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1 -s NO_EXIT_RUNTIME=1 -s BINARYEN=1 -s "BINARYEN_SCRIPTS='spidermonkify.py'"
+	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.html --shell-file mini.html -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 --closure 0 -O3  -s USE_ZLIB=1 -s NO_EXIT_RUNTIME=1 #-s BINARYEN=1 -s "BINARYEN_SCRIPTS='spidermonkify.py'"
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  
