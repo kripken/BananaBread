@@ -14,14 +14,6 @@ Module.tweakDetail = function() {
 };
 
 Module.loadDefaultMap = function() {
-  if (Module.benchmark) {
-    var bots = [];
-    for (var i = 0; i < 30; i++) {
-      bots.push('addbot ' + (i+50));
-    }
-    BananaBread.execute('showfps 0 ; sleep 10 [ effic colos ; ' + bots.join(' ; ') + ' ]');
-  } else {
-    BananaBread.execute('sleep 10 [ effic colos ; sleep 20000 [ addbot 50 ] ]');
-  }
+  BananaBread.execute('sleep 10 [ effic colos ; sleep 100 [ addbot 60 ; addbot 60 ; sleep 10 [ spectator 1 ; sleep 10 [ follow 1 ; sleep 10 [ nextfollow -1 ] ] ] ] ]');
 };
 
