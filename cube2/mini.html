@@ -1195,10 +1195,7 @@
     <div class="emscripten" id="status">Downloading...</div>
 
 <span id='controls'>
-  <span><input type="checkbox" id="resize">Resize canvas</span>
-  <span><input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
-  <span><input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, 
-                                                                            document.getElementById('resize').checked)">
+  <span><input type="button" value="Fullscreen" onclick="Module.goFullScreen()">
   </span>
 </span>
 
@@ -1279,7 +1276,17 @@
         monitorRunDependencies: function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-        }
+        },
+        goFullScreen: function() {
+          Module.requestFullScreen(true, false);
+        },
+        onFullScreen: function(isFullScreen) {
+          if (isFullScreen) {
+            BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
+          } else {
+            BananaBread.execute('screenres ' + 640 + ' ' + 480);
+          }
+        },
       };
       Module.setStatus('Downloading...');
       window.onerror = function() {
