@@ -1194,15 +1194,20 @@
     <div class="spinner" id='spinner'></div>
     <div class="emscripten" id="status">Downloading...</div>
 
-<span id='controls'>
-  <span><input type="button" value="Fullscreen" onclick="Module.goFullScreen()">
-  </span>
-</span>
+    <span id='controls'>
+      <span><input type="button" value="Fullscreen" onclick="Module.goFullScreen()">
+      </span>
+    </span>
 
     <div class="emscripten">
       <progress value="0" max="100" id="progress" hidden=1></progress>
     </div>
 
+    <br>
+    <center>
+      Once the game loads you should see an icon for <a href="https://twitter.com/horse_wasm">horse_wasm</a> if <b>WebAssembly</b> is executed, or <a href="https://twitter.com/horse_js">horse_js</a> if <b>asm.js</b> is used as fallback instead. See web console for more details. 
+    </center>
+    <br>
     
     <div class="emscripten_border">
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
@@ -1325,11 +1330,6 @@
 
     {{{ SCRIPT }}}
 
-    <br>
-    <hr>
-    <center>
-      You should see an icon for <a href="https://twitter.com/horse_wasm">horse_wasm</a> if WebAssembly is executed, or <a href="https://twitter.com/horse_js">horse_js</a> if asm.js is used as fallback instead. See web console for more details. 
-    </center>
   </body>
 </html>
 
