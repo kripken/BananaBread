@@ -11,7 +11,7 @@ See the **[FAQ](https://github.com/kripken/BananaBread/wiki/FAQ)**.
 Demos
 -----
 
-**[A live demo is available](https://kripken.github.io/BananaBread/cube2/index.html)**.
+**[A live demo is available](https://kripken.github.io/BananaBread/cube2/bb.html)**. Note that it requires [WebAssembly](http://webassembly.org/).
 
 
 Overview
