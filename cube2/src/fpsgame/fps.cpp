@@ -1,21 +1,18 @@
 #include "game.h"
 
+#include <emscripten.h>
+
 // XXX EMSCRIPTEN: Add a temporary customizable logo in the upper right.
 void drawlogo()
 {
     static int total = 0;
     extern int curtime;
     const int end = 3500;
-    if (total > end + 2000) return;
     total += curtime;
-    settexture("packages/hud/ff.png");
+    static bool wasm = EM_ASM_INT_V({ return Module["usingWasm"] });
+    settexture(wasm ? "packages/hud/wasm.png" : "packages/hud/js.png");
     extern SDL_Surface *screen;
-    float sz = screen->w/17, x = screen->w - sz*1.1, y = sz*0.1, tsz = 1, tx = 0, ty = 1;
-    if (total > end)
-    {
-        float f = (total - end)/1000.0f;
-        x += f*f*f*sz;
-    }
+    float sz = screen->w/17, x = wasm ? sz*0.1 : screen->w - sz*1.1, y = sz*0.1, tsz = 1, tx = 0, ty = 1;
     glBegin(GL_TRIANGLE_STRIP);
     glTexCoord2f(tx,     ty);     glVertex2f(x,    y);
     glTexCoord2f(tx+tsz, ty);     glVertex2f(x+sz, y);
