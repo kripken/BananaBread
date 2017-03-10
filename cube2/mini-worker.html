@@ -1194,15 +1194,19 @@
     <div class="spinner" id='spinner'></div>
     <div class="emscripten" id="status">Downloading...</div>
 
-    <span id='controls'>
-      <span><input type="button" value="Fullscreen" onclick="Module.goFullScreen()">
-      </span>
-    </span>
+<span id='controls'>
+  <span><input type="checkbox" id="resize">Resize canvas</span>
+  <span><input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
+  <span><input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, 
+                                                                            document.getElementById('resize').checked)">
+  </span>
+</span>
 
     <div class="emscripten">
       <progress value="0" max="100" id="progress" hidden=1></progress>
     </div>
 
+    
     <div class="emscripten_border">
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
@@ -1249,10 +1253,6 @@
           // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
           canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
 
-          canvas.addEventListener('click', function() {
-            canvas.requestPointerLock();
-          });
-
           return canvas;
         })(),
         setStatus: function(text) {
@@ -1279,17 +1279,7 @@
         monitorRunDependencies: function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-        },
-        goFullScreen: function() {
-          Module.requestFullScreen(true, false);
-        },
-        onFullScreen: function(isFullScreen) {
-          if (isFullScreen) {
-            BananaBread.execute('screenres ' + screen.width + ' ' + screen.height);
-          } else {
-            BananaBread.execute('screenres ' + 640 + ' ' + 480);
-          }
-        },
+        }
       };
       Module.setStatus('Downloading...');
       window.onerror = function() {
@@ -1301,28 +1291,9 @@
       };
     </script>
 
-    <script>
-      Module.desiredWidth = 640;
-      Module.desiredHeight = 480;
-      Module.autoexec = function() {
-        Module.setStatus('');
-      };
-      Module.postLoadWorld = function() {
-        Module.tweakDetail();
-        BananaBread.execute('sensitivity 10');
-        BananaBread.execute('clearconsole');
-      };
-    </script>
+    <!-- see comment at top of mini-worker.js -->
 
-    <script async src="js/api.js"></script>
-    <script async src="js/zee.js"></script>
-    <script async src="game/gl-matrix.js"></script>
-    <script async src="game/setup_low.js"></script>
-    <script async src="game/preload_base.js"></script>
-    <script async src="game/preload_character.js"></script>
-    <script async src="game/preload_low.js"></script>
-
-    {{{ SCRIPT }}}
+    <script src="bb.js"></script>
 
   </body>
 </html>
