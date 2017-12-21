@@ -143,7 +143,7 @@ void restorebackground()
 
 void renderbackground(const char *caption, Texture *mapshot, const char *mapname, const char *mapinfo, bool restore, bool force)
 {
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     return;
 #endif
 
@@ -325,7 +325,7 @@ float loadprogress = 0;
 
 void renderprogress(float bar, const char *text, GLuint tex, bool background)   // also used during loading
 {
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     return;
 #endif
 
@@ -1020,7 +1020,7 @@ static char *load = NULL, *initscript = NULL;
 
 int main(int argc, char **argv)
 {
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     emscripten_hide_mouse(); // we render our own cursor
     // Debugging: Start logging to off
     //emscripten_run_script("GL.debug = Runtime.debug = false;");
@@ -1146,7 +1146,7 @@ int main(int argc, char **argv)
     inbetweenframes = true;
     renderbackground("starting..."); //"initializing...");
 
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     emscripten_set_main_loop(main_loop_caller, 0, 0);
     emscripten_set_main_loop_expected_blockers(28);
 #endif
@@ -1219,7 +1219,7 @@ void main3(void *arg)
 
     if(initscript) execute(initscript);
 
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     emscripten_run_script("Module['setPlayerModels']()");
     emscripten_run_script("Module['loadDefaultMap']()");
 #else

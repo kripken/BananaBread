@@ -1053,7 +1053,7 @@ void logoutfv(const char *fmt, va_list args)
 
 #endif
 
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
 #include <emscripten.h>
 
 void emscripten_main_loop_caller() {
@@ -1077,7 +1077,7 @@ void rundedicatedserver()
 		}
 		serverslice(true, 5);
 	}
-#elif EMSCRIPTEN
+#elif __EMSCRIPTEN__
     emscripten_set_main_loop(emscripten_main_loop_caller, 0, 0);
 #else
     for(;;) serverslice(true, 5);
@@ -1209,7 +1209,7 @@ int main(int argc, char **argv)
     if(enet_initialize()<0) fatal("Unable to initialise network module");
     atexit(enet_deinitialize);
     enet_time_set(0);
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     setvar("serverport", 28780); // unless overrided by an argument, use a different port than client, to work with relaying
 #endif
     for(int i = 1; i<argc; i++) if(argv[i][0]!='-' || !serveroption(argv[i])) gameargs.add(argv[i]);

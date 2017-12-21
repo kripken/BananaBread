@@ -2,7 +2,7 @@
 
 #include "engine.h"
 
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
 
@@ -1010,7 +1010,7 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     int &loadingstart = load_world_loadingstart;
     loadingstart = SDL_GetTicks();
     setmapfilenames(mname, cname);
-#if EMSCRIPTEN // we gunzip the ogz file in parallel during preloading, to speed this up
+#if __EMSCRIPTEN__ // we gunzip the ogz file in parallel during preloading, to speed this up
     stream *f = openrawfile(ogzname, "rb");
 #else
     stream *f = opengzfile(ogzname, "rb");
@@ -1346,7 +1346,7 @@ void load_world_6(void *)
 
     startmap(cname ? cname : mname);
     
-#if EMSCRIPTEN
+#if __EMSCRIPTEN__
     // Do stuff like stop the loading music etc., and play music (right here, at the very end of world loading)
     emscripten_run_script("Module['postLoadWorld']()");
 #endif
