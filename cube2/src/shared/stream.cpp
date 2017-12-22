@@ -445,7 +445,7 @@ int listfiles(const char *dir, const char *ext, vector<char *> &files)
 }
 
 #ifndef STANDALONE
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
 static int rwopsseek(SDL_RWops *rw, int pos, int whence)
 #else
 static long rwopsseek(SDL_RWops *rw, long pos, int whence)
@@ -456,7 +456,7 @@ static long rwopsseek(SDL_RWops *rw, long pos, int whence)
     return -1;
 }
 
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
 static int rwopsread(SDL_RWops *rw, void *buf, int size, int nmemb)
 #else
 static size_t rwopsread(SDL_RWops *rw, void *buf, size_t size, size_t nmemb)
@@ -466,7 +466,7 @@ static size_t rwopsread(SDL_RWops *rw, void *buf, size_t size, size_t nmemb)
     return f->read(buf, size*nmemb)/size;
 }
 
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
 static int rwopswrite(SDL_RWops *rw, const void *buf, int size, int nmemb)
 #else
 static size_t rwopswrite(SDL_RWops *rw, const void *buf, size_t size, size_t nmemb)

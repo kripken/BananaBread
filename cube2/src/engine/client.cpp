@@ -88,7 +88,7 @@ void connectserv(const char *servername, int serverport, const char *serverpassw
 
     if(servername)
     {
-#if !EMSCRIPTEN
+#if !__EMSCRIPTEN__
         if(strcmp(servername, connectname)) setsvar("connectname", servername);
         if(serverport != connectport) setvar("connectport", serverport);
         addserver(servername, serverport, serverpassword && serverpassword[0] ? serverpassword : NULL);

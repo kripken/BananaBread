@@ -318,7 +318,7 @@ void pasteconsole()
     int decoded = decodeutf8((uchar *)&commandbuf[commandlen], int(sizeof(commandbuf)-1-commandlen), cb, cblen);
     commandbuf[commandlen + decoded] = '\0';
     free(cb);
-#elif !defined(EMSCRIPTEN)
+#elif !defined(__EMSCRIPTEN__)
     SDL_SysWMinfo wminfo;
     SDL_VERSION(&wminfo.version); 
     wminfo.subsystem = SDL_SYSWM_X11;
