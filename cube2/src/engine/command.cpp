@@ -1440,7 +1440,7 @@ static const uint *runcode(const uint *code, tagval &result)
             }
             case CODE_VALI|RET_STR:
             {
-                char s[4] = { (op>>8)&0xFF, (op>>16)&0xFF, (op>>24)&0xFF, '\0' };
+                char s[4] = { (char)((op>>8)&0xFF), (char)((op>>16)&0xFF), (char)((op>>24)&0xFF), '\0' };
                 args[numargs++].setstr(newstring(s));
                 continue;
             }

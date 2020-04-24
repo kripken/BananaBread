@@ -2226,7 +2226,7 @@ void setfullbrightlevel(int fullbrightlevel)
 {
     if(lightmaptexs.length() > LMID_BRIGHT)
     {
-        uchar bright[3] = { fullbrightlevel, fullbrightlevel, fullbrightlevel };
+        uchar bright[3] = { (uchar)(fullbrightlevel), (uchar)(fullbrightlevel), (uchar)(fullbrightlevel) };
         createtexture(lightmaptexs[LMID_BRIGHT].id, 1, 1, bright, 0, 1);
     }
     initlights();
@@ -2404,7 +2404,7 @@ void genreservedlightmaptexs()
     createtexture(lightmaptexs[LMID_AMBIENT].id, 1, 1, unlit, 0, 1);
     bvec front(128, 128, 255);
     createtexture(lightmaptexs[LMID_AMBIENT1].id, 1, 1, &front, 0, 1);
-    uchar bright[3] = { fullbrightlevel, fullbrightlevel, fullbrightlevel };
+    uchar bright[3] = { (uchar)(fullbrightlevel), (uchar)(fullbrightlevel), (uchar)(fullbrightlevel) };
     createtexture(lightmaptexs[LMID_BRIGHT].id, 1, 1, bright, 0, 1);
     createtexture(lightmaptexs[LMID_BRIGHT1].id, 1, 1, &front, 0, 1);
     uchar dark[3] = { 0, 0, 0 };
