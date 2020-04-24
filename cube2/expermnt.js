@@ -14160,6 +14160,7 @@ var asmLibraryArg = {
 
  "Reflect.apply": Reflect.apply,
  "Reflect.construct": Reflect.construct,
+ "Array": Array,
 
  "nh": _IMG_Load,
  "mh": _IMG_Load_RW,
