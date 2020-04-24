@@ -14157,6 +14157,10 @@ function intArrayFromString(stringy, dontAddNull, length) {
 }
 
 var asmLibraryArg = {
+
+ "Reflect.apply": Reflect.apply,
+ "Reflect.construct": Reflect.construct,
+
  "nh": _IMG_Load,
  "mh": _IMG_Load_RW,
  "lh": _Mix_AllocateChannels,
