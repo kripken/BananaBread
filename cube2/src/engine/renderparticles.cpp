@@ -736,7 +736,7 @@ struct varenderer : partrenderer
 
             #define SETCOLOR(r, g, b, a) \
             do { \
-                uchar col[4] = { r, g, b, a }; \
+                uchar col[4] = { (uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a) }; \
                 loopi(4) memcpy(vs[i].color.v, col, sizeof(col)); \
             } while(0) 
             #define SETMODCOLOR SETCOLOR((p->color[0]*blend)>>8, (p->color[1]*blend)>>8, (p->color[2]*blend)>>8, 255)

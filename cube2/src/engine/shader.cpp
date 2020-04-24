@@ -2105,9 +2105,9 @@ struct tmu
 #define INVALIDTMU \
 { \
     0, \
-    { -1, -1, -1, -1 }, \
-    { 0, { 0, 0, 0, ~0 }, { 0, 0, 0, 0 }, 0 }, \
-    { 0, { 0, 0, 0, ~0 }, { 0, 0, 0, 0 }, 0 } \
+    { (unsigned int)(-1), (unsigned int)(-1), (unsigned int)(-1), (unsigned int)(-1) }, \
+    { 0, { 0, 0, 0, (unsigned int)(~0) }, { 0, 0, 0, 0 }, 0 }, \
+    { 0, { 0, 0, 0, (unsigned int)(~0) }, { 0, 0, 0, 0 }, 0 } \
 }
 
 #define INITTMU \
