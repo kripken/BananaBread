@@ -5996,6 +5996,7 @@ var GL = {
  makeContextCurrent: function(contextHandle) {
   GL.currentContext = GL.contexts[contextHandle];
   Module.ctx = GLctx = GL.currentContext && GL.currentContext.GLctx;
+  Module['asm']['set_gl_context'](GLctx);
   return !(contextHandle && !GLctx);
  },
  getContext: function(contextHandle) {
