@@ -14162,6 +14162,8 @@ var asmLibraryArg = {
  "Reflect.construct": Reflect.construct,
  "Array": Array,
 
+ "glEnable": WebGLRenderingContext.prototype.enable,
+
  "nh": _IMG_Load,
  "mh": _IMG_Load_RW,
  "lh": _Mix_AllocateChannels,
