@@ -7787,6 +7787,8 @@ function _emscripten_glAttachShader(program, shader) {
  GLctx.attachShader(GL.programs[program], GL.shaders[shader]);
 }
 
+// waka
+
 function _glEnable(x0) {
  GLctx["enable"](x0);
 }
@@ -14158,11 +14160,14 @@ function intArrayFromString(stringy, dontAddNull, length) {
 
 var asmLibraryArg = {
 
+ // waka
+
  "Reflect.apply": Reflect.apply,
  "Reflect.construct": Reflect.construct,
- "Array": Array,
-
+ "Reflect.set": Reflect.set,
+ "Array_i": [0],
  "glEnable": WebGLRenderingContext.prototype.enable,
+ "glDisable": WebGLRenderingContext.prototype.disable,
 
  "nh": _IMG_Load,
  "mh": _IMG_Load_RW,
