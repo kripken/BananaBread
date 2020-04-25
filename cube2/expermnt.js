@@ -14168,6 +14168,7 @@ var asmLibraryArg = {
  "Array_i": [0],
  "glEnable": WebGLRenderingContext.prototype.enable,
  "glDisable": WebGLRenderingContext.prototype.disable,
+ "glIsEnabled": WebGLRenderingContext.prototype.isEnabled,
 
  "nh": _IMG_Load,
  "mh": _IMG_Load_RW,
@@ -14396,7 +14397,6 @@ var asmLibraryArg = {
  "Wd": _emscripten_glGetVertexAttribiv,
  "Vd": _emscripten_glHint,
  "Ud": _emscripten_glIsBuffer,
- "Td": _emscripten_glIsEnabled,
  "Sd": _emscripten_glIsFramebuffer,
  "Rd": _emscripten_glIsProgram,
  "Qd": _emscripten_glIsQueryEXT,
@@ -14564,7 +14564,6 @@ var asmLibraryArg = {
  "pa": _glGetString,
  "oa": _glGetTexLevelParameteriv,
  "cb": _glHint,
- "Ea": _glIsEnabled,
  "Hb": _glLightModelfv,
  "Da": _glLightfv,
  "bb": _glLineWidth,
