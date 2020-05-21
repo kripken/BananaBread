@@ -1,12 +1,12 @@
 
 # You must define the EMSCRIPTEN env var
 
-CXX = $(EMSCRIPTEN)/emcc
-EMCONFIGURE = $(EMSCRIPTEN)/emconfigure
-EMMAKE = $(EMSCRIPTEN)/emmake
+CXX = emcc
+EMCONFIGURE = emconfigure
+EMMAKE = emmake
 
 CXXFLAGS= -O3 -s USE_ZLIB=1
-override CXXFLAGS+= -Wall -fsigned-char -fno-exceptions -fno-rtti
+override CXXFLAGS+= -Wall -Wno-inline-new-delete -Wno-c++11-narrowing -Wno-undefined-bool-conversion -fsigned-char -fno-exceptions -fno-rtti
 
 PLATFORM= emscripten
 PLATFORM_PREFIX= native
@@ -417,14 +417,15 @@ CRUNCH_QUALITY = 64
 
 TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
 
+EMSCRIPTEN_ROOT = $(dir $(shell which emcc))
 client: client.bc
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --use-preload-plugins  --preload $(BASE_FILES) > game/preload_base.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --use-preload-plugins  --preload $(CHARACTER_FILES) > game/preload_character.js
-	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --use-preload-plugins  --preload $(COLOS_FILES) > game/preload_low.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py medium.data --use-preload-plugins  --preload $(TWO_TOWERS_FILES) > game/preload_medium.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --use-preload-plugins  --preload $(ZOOM_FILES) > game/preload_high.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --use-preload-plugins  --preload $(CYBER1_FILES) > game/preload_four.js
-	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --use-preload-plugins  --preload $(ZOOMOUT_FILES) > game/preload_five.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py base.data --use-preload-plugins  --preload $(BASE_FILES) > game/preload_base.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py character.data --use-preload-plugins  --preload $(CHARACTER_FILES) > game/preload_character.js
+	cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py low.data --use-preload-plugins  --preload $(COLOS_FILES) > game/preload_low.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py medium.data --use-preload-plugins  --preload $(TWO_TOWERS_FILES) > game/preload_medium.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py high.data --use-preload-plugins  --preload $(ZOOM_FILES) > game/preload_high.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py four.data --use-preload-plugins  --preload $(CYBER1_FILES) > game/preload_four.js
+	#cd .. ; cd .. ; python $(EMSCRIPTEN_ROOT)/tools/file_packager.py five.data --use-preload-plugins  --preload $(ZOOMOUT_FILES) > game/preload_five.js
 	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.html --shell-file mini.html -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 -Oz -s USE_ZLIB=1 -s NO_EXIT_RUNTIME=1 -s WASM=1 -s 'BINARYEN_TRAP_MODE="clamp"' -s FORCE_FILESYSTEM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["cwrap"]' # --closure 1 -s IGNORE_CLOSURE_COMPILER_ERRORS=1
 
 server.bc:	libenet $(SERVER_OBJS)
