@@ -1,5 +1,10 @@
+# You must define the EMSCRIPTEN env var (this is normally done by
+# running via `emmake`)
+#
 
-# You must define the EMSCRIPTEN env var
+ifndef EMSCRIPTEN
+$(error EMSCRIPTEN is not set.  You can set it yourself, or run via emmake)
+endif
 
 CXX = $(EMSCRIPTEN)/emcc
 EMCONFIGURE = $(EMSCRIPTEN)/emconfigure
