@@ -60,8 +60,8 @@ Build in crnlib using the Makefile. You can disable
 crunch if you don't want it, remove all mentions of crunch in
 `cube2/src/web/Makefile`.
 
-Then do `make` in `cube2/src/web` for a web build. (You can also do `make` in
-`cube2/src/native` for a native linux build.)
+Then do `emmake make` in `cube2/src/web` for a web build. (You can also do
+`make` in `cube2/src/native` for a native linux build.)
 
 You can then run bb.html to see the output.
 
