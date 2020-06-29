@@ -10,7 +10,8 @@ CXX = $(EMSCRIPTEN)/emcc
 EMCONFIGURE = $(EMSCRIPTEN)/emconfigure
 EMMAKE = $(EMSCRIPTEN)/emmake
 
-CXXFLAGS= -O3 -s USE_ZLIB=1 -std=c++03 -w
+# -O2+ fails on new emscripten, likely due to undefined behavior somewhere...
+CXXFLAGS= -O1 -s USE_ZLIB=1 -std=c++03 -w
 override CXXFLAGS+= -Wall -fsigned-char -fno-exceptions -fno-rtti
 
 PLATFORM= emscripten
