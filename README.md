@@ -52,18 +52,10 @@ Get emscripten and its dependencies,
 It's recommended to go through the emscripten tutorial to see that it is set
 up properly.
 
-You will also need crunch if you want smaller downloads,
+Then do `emmake make client -j8` in `cube2/src/web` for a web build.
+(You can also do `make` in `cube2/src/native` for a native linux build.)
 
-  https://github.com/richgel999/crunch
-
-Build in crnlib using the Makefile. You can disable
-crunch if you don't want it, remove all mentions of crunch in
-`cube2/src/web/Makefile`.
-
-Then do `emmake make` in `cube2/src/web` for a web build. (You can also do
-`make` in `cube2/src/native` for a native linux build.)
-
-You can then run bb.html to see the output.
+You can then run `bb.html` (in `cube2/`) to see the output.
 
 If you have any problems building, feel free to file an issue here or to
 find us on emscripten IRC (see [emscripten site](http://emscripten.org)).
