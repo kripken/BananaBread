@@ -174,9 +174,6 @@ master: $(MASTER_OBJS)
 
 install: all
 else
-client.bc:	libenet $(CLIENT_OBJS)
-	$(CXX) $(CXXFLAGS) -o client.bc $(CLIENT_OBJS) $(CLIENT_LIBS)
-
 BASE_FILES = data/ \
              packages/textures/ \
              packages/fonts/ \
@@ -423,7 +420,7 @@ CRUNCH_QUALITY = 64
 
 TOTAL_MEMORY = 67108864 # May need to adjust this for very large levels
 
-client: client.bc
+client:	libenet $(CLIENT_OBJS)
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py base.data --use-preload-plugins  --preload $(BASE_FILES) > game/preload_base.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py character.data --use-preload-plugins  --preload $(CHARACTER_FILES) > game/preload_character.js
 	cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py low.data --use-preload-plugins  --preload $(COLOS_FILES) > game/preload_low.js
@@ -431,7 +428,7 @@ client: client.bc
 	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py high.data --use-preload-plugins  --preload $(ZOOM_FILES) > game/preload_high.js
 	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py four.data --use-preload-plugins  --preload $(CYBER1_FILES) > game/preload_four.js
 	#cd .. ; cd .. ; python $(EMSCRIPTEN)/tools/file_packager.py five.data --use-preload-plugins  --preload $(ZOOMOUT_FILES) > game/preload_five.js
-	cd .. ; cd .. ; $(CXX) $(CXXFLAGS) src/web/client.bc -o bb.html --shell-file mini.html -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" src/web/enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 -Oz -s USE_ZLIB=1 -s NO_EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["cwrap"]' --profiling # --closure 1 -s IGNORE_CLOSURE_COMPILER_ERRORS=1
+	$(CXX) $(CXXFLAGS) $(CLIENT_OBJS) $(CLIENT_LIBS) -o ../../bb.html --shell-file ../../mini.html -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_main', '__ZN4game18setplayermodelinfoEPKcS1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_b', '__Z7executePKc', '__Z10executestrPKc', '_setforcecamera', '_bb_splash', '_bb_playsoundname']" enet/.libs/libenet.a -s TOTAL_MEMORY=$(TOTAL_MEMORY) -s LEGACY_GL_EMULATION=1 -Oz -s USE_ZLIB=1 -s NO_EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["cwrap"]' --profiling # --closure 1 -s IGNORE_CLOSURE_COMPILER_ERRORS=1
 
 server.bc:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o server.bc $(SERVER_OBJS) $(SERVER_LIBS)  
