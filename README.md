@@ -2,6 +2,14 @@
 The BananaBread Engine
 ======================
 
+---
+
+Notice
+------
+BananaBread is no longer under active development. A fork of this project, [cfoust/sour](https://github.com/cfoust/sour), has continued the effort. Among other things, it adds support for multiplayer servers, upgrades the engine to the latest version of Sauerbraten, and supports all of the game's maps.
+
+---
+
 A port of the Cube 2/Sauerbraten 3D game engine/first person shooter to the
 web, compiling C++ and OpenGL to JavaScript and WebGL using Emscripten.
 
