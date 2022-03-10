@@ -23,7 +23,7 @@ Demos
 
 
 Overview
---------
+-------
 
 Cube 2 is a compact and efficient 3D game engine. By compiling it
 to JavaScript and WebGL you can run a complete first person
