@@ -4,6 +4,7 @@ The BananaBread Engine
 
 ---
 
+
 Notice
 ------
 BananaBread is no longer under active development. A fork of this project, [cfoust/sour](https://github.com/cfoust/sour), has continued the effort. Among other things, it adds support for multiplayer servers, upgrades the engine to the latest version of Sauerbraten, and supports all of the game's maps.
@@ -17,13 +18,13 @@ See the **[FAQ](https://github.com/kripken/BananaBread/wiki/FAQ)**.
 
 
 Demos
------
+---
 
 **[A live demo is available](https://kripken.github.io/BananaBread/cube2/bb.html)**. Note that it requires [WebAssembly](http://webassembly.org/).
 
 
 Overview
---------
+-------
 
 Cube 2 is a compact and efficient 3D game engine. By compiling it
 to JavaScript and WebGL you can run a complete first person

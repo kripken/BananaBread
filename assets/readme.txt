@@ -1,4 +1,3 @@
-
 These directories contain sources for the snountx10k model and weapons.
 
 (C) John 'geartrooper' Siar
